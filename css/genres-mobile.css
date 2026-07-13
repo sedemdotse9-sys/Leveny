@@ -1,0 +1,245 @@
+/* ============================================================
+   GENRES-MOBILE.CSS — Leveny
+   Mobile genre results view: matches the desktop dark theme
+   with #f5c518 yellow accent. No glassmorphism.
+============================================================ */
+
+@media screen and (max-width: 768px) {
+
+    /* ============================================================
+       GENRE RESULTS VIEW
+       Hidden by default, shown when a genre is picked
+    ============================================================ */
+    #mobileGenreView {
+        display: none;
+        position: relative;
+        z-index: 1;
+        padding: 0 12px 100px;
+        background: #0a0a0a;
+        min-height: 100vh;
+    }
+
+    #mobileGenreView.visible {
+        display: block;
+    }
+
+    /* When genre view is active, hide the normal homepage sections */
+    body.genre-active #mobileSearchWrapper,
+    body.genre-active #mobileCategoryBar,
+    body.genre-active #mobileFeatured,
+    body.genre-active .mob-section-label,
+    body.genre-active #mobileMoviesSection {
+        display: none !important;
+    }
+
+    /* ============================================================
+       TOP BAR: back button + genre title
+    ============================================================ */
+    .mob-genre-topbar {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 0 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        margin-bottom: 16px;
+    }
+
+    .mob-genre-back-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1px solid #f5c518;
+        background: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: #f5c518;
+        font-size: 15px;
+        flex-shrink: 0;
+        transition: background 0.2s, transform 0.2s;
+    }
+
+    .mob-genre-back-btn:active {
+        transform: scale(0.88);
+        background: rgba(245, 197, 24, 0.15);
+    }
+
+    .mob-genre-view-title {
+        font-family: 'Bebas Neue', Rockwell, sans-serif;
+        font-size: 22px;
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: 1px;
+        flex: 1;
+    }
+
+    /* Genre accent underline on title */
+    .mob-genre-view-title span {
+        display: inline-block;
+        border-bottom: 2px solid #f5c518;
+        padding-bottom: 2px;
+    }
+
+    /* ============================================================
+       GENRE SLIDE HEADER (genre name + description banner)
+    ============================================================ */
+    .mob-genre-slide-header {
+        text-align: center;
+        margin-bottom: 20px;
+        padding: 16px;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .mob-genre-slide-header h2 {
+        font-family: 'Bebas Neue', Rockwell, sans-serif;
+        font-size: 28px;
+        color: #f5c518;
+        margin-bottom: 6px;
+        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+        letter-spacing: 1.5px;
+    }
+
+    .mob-genre-slide-header p {
+        color: rgba(255, 255, 255, 0.75);
+        font-size: 13px;
+        margin: 0 auto;
+        max-width: 320px;
+        line-height: 1.5;
+    }
+
+    /* ============================================================
+       GENRE COLOR THEMES — mirrors desktop slides
+    ============================================================ */
+    #mobileGenreView[data-genre="action"]     { background: linear-gradient(135deg, #0a2e5c, #1a3a6a); }
+    #mobileGenreView[data-genre="superhero"]  { background: linear-gradient(135deg, #1a1a2e, #2a2a3e); }
+    #mobileGenreView[data-genre="animation"]  { background: linear-gradient(135deg, #ff6b35, #ff8b35); }
+    #mobileGenreView[data-genre="fantasy"]    { background: linear-gradient(135deg, #9c27b0, #ba68c8); }
+    #mobileGenreView[data-genre="scifi"]      { background: linear-gradient(135deg, #00695c, #00897b); }
+    #mobileGenreView[data-genre="family"]     { background: linear-gradient(135deg, #4caf50, #66bb6a); }
+    #mobileGenreView[data-genre="thriller"]   { background: linear-gradient(135deg, #37474f, #546e7a); }
+    #mobileGenreView[data-genre="horror"]     { background: linear-gradient(135deg, #c62828, #e53935); }
+    #mobileGenreView[data-genre="musical"]    { background: linear-gradient(135deg, #d81b60, #ec407a); }
+
+    /* ============================================================
+       MOVIE GRID — 2-col layout
+    ============================================================ */
+    #mobileGenreGrid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    /* Movie card — matches desktop .movie-card-slider feel */
+    #mobileGenreGrid .mob-movie-card {
+        background: rgba(0, 0, 0, 0.45);
+        border-radius: 10px;
+        overflow: hidden;
+        text-decoration: none;
+        color: #ffffff;
+        display: block;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        border: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    #mobileGenreGrid .mob-movie-card:active {
+        transform: scale(0.97);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    #mobileGenreGrid .mob-movie-card img {
+        width: 100%;
+        aspect-ratio: 2 / 3;
+        object-fit: cover;
+        display: block;
+        border-bottom: 2px solid rgba(245, 197, 24, 0.35);
+    }
+
+    #mobileGenreGrid .mob-movie-info {
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.65);
+    }
+
+    #mobileGenreGrid .mob-movie-info h4 {
+        font-size: 13px;
+        font-weight: 700;
+        margin: 0 0 4px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: #ffffff;
+    }
+
+    #mobileGenreGrid .mob-movie-info p {
+        font-size: 11px;
+        color: #aaaaaa;
+        margin: 0;
+    }
+
+    /* Yellow star/rating accent */
+    #mobileGenreGrid .mob-movie-rating {
+        font-size: 11px;
+        color: #f5c518;
+        margin-top: 3px;
+        font-weight: 600;
+    }
+
+    /* ============================================================
+       PAGINATION
+    ============================================================ */
+    #mobileGenrePagination {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 6px 0 10px;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+    }
+
+    .mob-page-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.06);
+        color: #cccccc;
+        font-family: Rockwell, sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+    }
+
+    .mob-page-btn.active {
+        background: #f5c518;
+        border-color: #f5c518;
+        color: #000000;
+        box-shadow: 0 0 10px rgba(245, 197, 24, 0.4);
+    }
+
+    .mob-page-btn:active {
+        transform: scale(0.9);
+    }
+
+    .mob-page-btn:hover:not(.active) {
+        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(255, 255, 255, 0.3);
+        color: #ffffff;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    #mobileFooter,
+    #mobileGenreView { display: none !important; }
+}
+
+body.genre-active #mobileMoviesPagination {
+    display: none !important;
+}

@@ -1,0 +1,68 @@
+/* ============================================================
+   movies.js — Leveny
+   SINGLE SOURCE OF TRUTH for all movies.
+   To add a new movie: just add one entry to this array.
+   Everything else (desktop search, mobile search on every
+   movie page, discover pages) updates automatically.
+   
+   discover: 1=blue, 2=yellow, 3=green, 4=red, 5=dark, 6=orange, 7=purple
+============================================================ */
+
+const LEVENY_MOVIES = [
+    { title: "Avatar: The Way of Water",        href: "../movies/avatar_way_of_water_movie.html",         genre: "scifi",     poster: "images/posters/avatar_water.jpg",    discover: 1 },
+    { title: "The Meg",                          href: "../movies/the_meg_movie.html",                     genre: "action",    poster: "images/posters/themeg.jpg",           discover: 1 },
+    { title: "The Little Mermaid",               href: "../movies/the_littlemermaid_movie.html",           genre: "family",    poster: "images/posters/littlemermaid.jpg",    discover: 1 },
+    { title: "Finding Dory",                     href: "../movies/finding_dory_movie.html",                genre: "animation", poster: "images/posters/findingdory.jpg",      discover: 1 },
+    { title: "Percy Jackson: The Lightening Thief",  href: "../movies/percy_jackson_movie.html",               genre: "fantasy",   poster: "images/posters/percyjackson.jpg",     discover: 1 },
+    { title: "Sonic: The Hedgehog",              href: "../movies/sonic_movie.html",                       genre: "scifi",     poster: "images/posters/sonic.jpg",            discover: 1 },
+    { title: "Lilo and Stitch",                  href: "../movies/lilo_stitch_movie.html",                 genre: "animation", poster: "images/posters/lilo.jpg",             discover: 1 },
+    { title: "Tron: Legacy",                     href: "../movies/tron_movie.html",                        genre: "scifi",     poster: "images/posters/tron.jpg",             discover: 1 },
+    { title: "Jurassic World: Dominion",         href: "../movies/jurassic_park_dominion_movie.html",      genre: "action",    poster: "images/posters/jurassic_dominion.jpg", discover: 2 },
+    { title: "The Beekeeper",                    href: "../movies/the_beekeeper_movie.html",               genre: "action",    poster: "images/posters/bee.jpg",              discover: 2 },
+    { title: "Transformers: Bumblebee",          href: "../movies/bumblebee_movie.html",                   genre: "scifi",     poster: "images/posters/bumble.jpg",           discover: 2 },
+    { title: "Jumanji: Welcome to the Jungle",   href: "../movies/jumanji_movie.html",                     genre: "action",    poster: "images/posters/jumanji.jpg",          discover: 2 },
+    { title: "Knives Out",                       href: "../movies/knives_out_movie.html",                  genre: "thriller",  poster: "images/posters/knives.jpg",           discover: 2 },
+    { title: "Minions: Rise of Gru",             href: "../movies/minions_rise_of_gru_movie.html",         genre: "animation", poster: "images/posters/minions.jpg",          discover: 2 },
+    { title: "Uncharted",                        href: "../movies/uncharted_movie.html",                   genre: "action",    poster: "images/posters/uncharted.jpg",        discover: 2 },
+    { title: "Wolverine",                        href: "../movies/wolverine_movie.html",                   genre: "superhero", poster: "images/posters/wolver.jpg",           discover: 2 },
+    { title: "Ben 10",                           href: "../movies/ben_10_movie.html",                      genre: "animation", poster: "images/posters/ben_10.jpg",           discover: 3 },
+    { title: "Green Lantern",                    href: "../movies/green_lantern_movie.html",               genre: "superhero", poster: "images/posters/gl.jpg",               discover: 3 },
+    { title: "The Jungle Book",                      href: "../movies/jungle_book_movie.html",                 genre: "family",    poster: "images/posters/jb.jpg",               discover: 3 },
+    { title: "The Matrix",                       href: "../movies/the_matrix_movie.html",                  genre: "scifi",     poster: "images/posters/ma.jpg",               discover: 3 },
+    { title: "Oz: The Great and Powerful",       href: "../movies/the_wizard_of_oz_movie.html",            genre: "fantasy",   poster: "images/posters/oz.jpg",               discover: 3 },
+    { title: "Shrek 2",                          href: "../movies/shrek_2_movie.html",                     genre: "animation", poster: "images/posters/sh.jpg",               discover: 3 },
+    { title: "Raya and the Last Dragon",         href: "../movies/raya_and_the_last_dragon_movie.html",    genre: "animation", poster: "images/posters/ry.jpg",               discover: 3 },
+    { title: "Wicked",                           href: "../movies/wicked_movie.html",                      genre: "musical",   poster: "images/posters/wi.jpg",               discover: 3 },
+    { title: "Deadpool",                         href: "../movies/deadpool_movie.html",                    genre: "superhero", poster: "images/posters/deadpool.jpg",         discover: 4 },
+    { title: "Descendants: Rise of Red",         href: "../movies/descendants_rise_of_red_movie.html",     genre: "musical",   poster: "images/posters/dr.jpg",               discover: 4 },
+    { title: "It: Chapter One",                  href: "../movies/it_movie.html",                          genre: "horror",    poster: "images/posters/it.jpg",               discover: 4 },
+    { title: "Superman: Legacy",                         href: "../movies/superman_movie.html",                    genre: "superhero", poster: "images/posters/su.jpg",               discover: 4 },
+    { title: "Mulan",                            href: "../movies/mulan_movie.html",                       genre: "fantasy",   poster: "images/posters/mu.jpg",               discover: 4 },
+    { title: "Turning Red",                      href: "../movies/turning_red_movie.html",                 genre: "animation", poster: "images/posters/tr.jpg",               discover: 4 },
+    { title: "Spider-Man: No Way Home",          href: "../movies/spider_man_no_way_home_movie.html",      genre: "superhero", poster: "images/posters/sp.jpg",               discover: 4 },
+    { title: "Red One",                          href: "../movies/red_one_movie.html",                     genre: "family",    poster: "images/posters/ro.jpg",               discover: 4 },
+    { title: "Batman: The Dark Knight",          href: "../movies/batman_the_dark_knigt_movie.html",       genre: "superhero", poster: "images/posters/batman_dark.jpg",      discover: 5 },
+    { title: "Cruella",                          href: "../movies/cruella_movie.html",                     genre: "family",    poster: "images/posters/cr.jpg",               discover: 5 },
+    { title: "Scream 5",                           href: "../movies/scream_movie.html",                      genre: "horror",    poster: "images/posters/sc.jpg",               discover: 5 },
+    { title: "Game of Thrones",                  href: "../movies/game_of_thrones_movie.html",             genre: "fantasy",   poster: "images/posters/gt.jpg",               discover: 5 },
+    { title: "A Quiet Place",                    href: "../movies/a_quiet_place_movie.html",               genre: "thriller",  poster: "images/posters/qp.jpg",               discover: 5 },
+    { title: "Twilight",                         href: "../movies/twilight_movie.html",                    genre: "fantasy",   poster: "images/posters/tw.jpg",               discover: 5 },
+    { title: "Maleficent: Mistress of Evil",     href: "../movies/maleficent_movie.html",                  genre: "fantasy",   poster: "images/posters/ml.jpg",               discover: 5 },
+    { title: "Knives Out: Wake Up Dead Man",     href: "../movies/knives_out_wake_up_dead_man_movie.html", genre: "thriller",  poster: "images/posters/kowu.jpg",             discover: 5 },
+    { title: "The Lion King",                    href: "../movies/lion_king_movie.html",                   genre: "family",    poster: "images/posters/lion_king.jpg",        discover: 6 },
+    { title: "The Lorax",                        href: "../movies/the_lorax_movie.html",                   genre: "animation", poster: "images/posters/lr.jpg",               discover: 6 },
+    { title: "Despicable Me",                    href: "../movies/despicable_me_movie.html",               genre: "animation", poster: "images/posters/dm.jpg",               discover: 6 },
+    { title: "Mufasa: The Lion King",            href: "../movies/mufasa_movie.html",                      genre: "family",    poster: "images/posters/mf.jpg",               discover: 6 },
+    { title: "Dune",                             href: "../movies/dune_movie.html",                        genre: "scifi",     poster: "images/posters/dn.jpg",               discover: 6 },
+    { title: "Hunger Games",                     href: "../movies/hunger_games_movie.html",                genre: "action",    poster: "images/posters/hg.jpg",               discover: 6 },
+    { title: "Hercules",                         href: "../movies/hercules_movie.html",                    genre: "fantasy",   poster: "images/posters/he.jpg",               discover: 6 },
+    { title: "Sinners",                          href: "../movies/sinners_movie.html",                     genre: "thriller",  poster: "images/posters/si.jpg",               discover: 6 },
+    { title: "Ballerina",                        href: "../movies/ballerina_movie.html",                   genre: "action",    poster: "images/posters/bal.jpg",              discover: 7 },
+    { title: "Black Panther: Wakanda Forever",     href: "../movies/black_panther_II_movie.html",            genre: "superhero", poster: "images/posters/black_panther.jpg",    discover: 7 },
+    { title: "Wish",                             href: "../movies/wish_movie.html",                        genre: "animation", poster: "images/posters/wish.jpg",             discover: 7 },
+    { title: "Descendants 3",                    href: "../movies/descendants_3_movie.html",               genre: "musical",   poster: "images/posters/descendants.jpg",      discover: 7 },
+    { title: "Aladdin",                          href: "../movies/aladdin_movie.html",                     genre: "animation", poster: "images/posters/alad.jpg",             discover: 7 },
+    { title: "Kpop Demon Hunters",               href: "../movies/kpop_demon_hunters_movie.html",          genre: "animation", poster: "images/posters/kpop.jpg",             discover: 7 },
+    { title: "Monster High",                     href: "../movies/monster_high_movie.html",                genre: "musical",   poster: "images/posters/mh.jpg",               discover: 7 },
+    { title: "Tangled",                          href: "../movies/tangled_movie.html",                     genre: "animation", poster: "images/posters/tangled.jpg",          discover: 7 },
+];

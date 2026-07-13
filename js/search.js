@@ -1,0 +1,140 @@
+/* ============================================================
+   search.js — Leveny
+   Handles BOTH desktop and mobile search.
+   All movie data lives in movies.js (LEVENY_MOVIES).
+   Never hardcode movies here — edit movies.js only.
+============================================================ */
+
+/* ============================================================
+   DESKTOP SEARCH
+   Targets: #searchInput + #searchDropdown
+   Used on: index.html, genres.html, movie_request.html
+            and the desktop layout of every movie page
+============================================================ */
+if (localStorage.getItem('leveny-dark') === 'true') document.documentElement.classList.add('dark-mode');
+document.addEventListener("DOMContentLoaded", () => {
+    const searchInput    = document.getElementById("searchInput");
+    const searchDropdown = document.getElementById("searchDropdown");
+
+    if (searchInput && searchDropdown) {
+
+        // ★ CHANGED — adjust path based on whether we're on homepage or a movie page
+        const isDesktopMoviePage = window.location.pathname.includes('/movies/');
+        const desktopMovies = LEVENY_MOVIES.map(m => ({
+            title: m.title,
+            link:  isDesktopMoviePage ? m.href : m.href.replace('../movies/', 'movies/')
+        }));
+
+        function renderDesktopDropdown(results) {
+            searchDropdown.innerHTML = "";
+            if (!results.length) { searchDropdown.style.display = "none"; return; }
+
+            results.slice(0, 8).forEach(movie => {
+                const item = document.createElement("div");
+                item.className   = "dropdown-item";
+                item.textContent = movie.title;
+                item.onclick = () => { searchInput.value = ""; searchDropdown.style.display = "none"; window.location.href = movie.link; };
+                searchDropdown.appendChild(item);
+            });
+
+            searchDropdown.style.display = "block";
+        }
+
+        searchInput.addEventListener("input", () => {
+            const query = searchInput.value.toLowerCase().trim();
+            if (!query) { searchDropdown.style.display = "none"; return; }
+            renderDesktopDropdown(
+                desktopMovies.filter(m => m.title.toLowerCase().includes(query))
+            );
+        });
+
+        document.addEventListener("click", e => {
+            if (!searchDropdown.contains(e.target) && e.target !== searchInput) {
+                searchDropdown.style.display = "none";
+            }
+        });
+
+        searchInput.value = "";
+    }
+});
+
+
+/* ============================================================
+   MOBILE SEARCH + DARK MODE
+   Targets: #mobMovieSearchInput + #mobMovieSearchDrop
+   Used on: every movie HTML page (mobile layout only)
+============================================================ */
+// ★ CHANGED — wait for full page before looking for mobile elements
+window.addEventListener('load', () => {
+    if (window.innerWidth <= 768) {
+
+        /* ---------- Dark Mode ---------- */
+        const stored      = localStorage.getItem('leveny-dark');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        let isDark = stored !== null ? stored === 'true' : prefersDark;
+
+        function applyDark() {
+            document.body.classList.toggle('dark-mode', isDark);
+            document.documentElement.classList.toggle('dark-mode', isDark);
+            const btn = document.getElementById('mobThemeToggle');
+            if (btn) btn.textContent = isDark ? '☀️' : '🌙';
+        }
+
+        // Run on page load
+        applyDark();
+
+        document.getElementById('mobThemeToggle')?.addEventListener('click', () => {
+            isDark = !isDark;
+            localStorage.setItem('leveny-dark', isDark);
+            applyDark();
+        });
+
+        /* ---------- Mobile Search ---------- */
+        // ★ CHANGED — support both homepage IDs and movie-page IDs
+        const mobInput = document.getElementById('mobMovieSearchInput') || document.getElementById('mobileSearchInput');
+        const mobDrop  = document.getElementById('mobMovieSearchDrop')  || document.getElementById('mobileSearchResults');
+
+        if (mobInput && mobDrop) {
+
+            mobInput.addEventListener('input', () => {
+                const q = mobInput.value.trim().toLowerCase();
+                if (!q) { mobDrop.style.display = 'none'; return; }
+
+                const matches = LEVENY_MOVIES.filter(m =>
+                    m.title.toLowerCase().includes(q)
+                );
+
+                mobDrop.style.display = 'block';
+                // ★ CHANGED — detect if we're on homepage or a movie page
+                const isMoviePage = window.location.pathname.includes('/movies/');
+
+                mobDrop.innerHTML = matches.length
+                    ? matches.map(m => {
+                        // ★ CHANGED — homepage needs "movies/..." but movie pages need "../movies/..."
+                        const href = isMoviePage ? m.href : m.href.replace('../movies/', 'movies/');
+                        return `<div class="mob-search-drop-item" data-href="${href}">
+                            <i class="fas fa-film"></i>${m.title}
+                        </div>`;
+                }).join('')
+                    : `<div class="mob-search-drop-item">
+                           <i class="fas fa-search"></i>No results for "${q}"
+                       </div>`;
+
+                mobDrop.querySelectorAll('.mob-search-drop-item[data-href]').forEach(el => {
+                el.addEventListener('click', () => {
+                    mobInput.value = "";
+                    mobDrop.style.display = 'none';
+                    window.location.href = el.dataset.href;
+                });
+                });
+            });
+
+            document.addEventListener('click', e => {
+                // ★ CHANGED — support both wrapper IDs
+                if (!e.target.closest('#mobMovieSearchBar') && !e.target.closest('#mobileSearchWrapper')) {
+                    mobDrop.style.display = 'none';
+                }
+            });
+        }
+    }
+});

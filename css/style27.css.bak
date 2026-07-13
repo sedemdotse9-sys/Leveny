@@ -1,0 +1,774 @@
+/* -------------------- RESET -------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background: url(../images/backgrounds/superman_backg.jpg) center/cover fixed no-repeat;
+  color: #f5f5f5;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: -1;
+}
+
+/* -------------------- SHARED GENRES DROPDOWN -------------------- */
+.shared-dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.shared-dropdown .genre-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  font-size: 22px;
+}
+
+.shared-dropdown .genre-link i {
+  font-size: 15px;
+  margin-right: 10px;
+}
+
+.shared-dropdown .genre-link:hover {
+  color: yellow;
+  transition: 0.3s;
+}
+
+.shared-dropdown .dropdown-arrow {
+  cursor: pointer;
+  color: white;
+  font-size: 12px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.shared-dropdown .dropdown-arrow:hover {
+  color: yellow;
+}
+
+.shared-dropdown .dropdown-arrow.active .fa-chevron-down {
+  transform: rotate(180deg);
+}
+
+.shared-dropdown .dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: rgba(0, 0, 0, 0.95);
+  min-width: 220px;
+  border-radius: 8px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: fadeIn 0.3s;
+  margin-top: 5px;
+}
+
+.shared-dropdown .dropdown-content.show {
+  display: block;
+}
+
+.shared-dropdown .dropdown-content a {
+  font-family: "Rockwell", "sans-serif";
+  font-size: 17px;
+  color: white;
+  padding: 12px 20px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s;
+}
+
+.shared-dropdown .dropdown-content a:last-child {
+  border-bottom: none;
+}
+
+.shared-dropdown .dropdown-content a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  padding-left: 25px;
+  color: yellow;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* -------------------- HEADER / NAVBAR -------------------- */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 80px;
+  z-index: 2000;
+}
+
+.nav_bar {
+  font-family: "Rockwell", "sans-serif";
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 70px;
+}
+
+.logo {
+  font-size: 30px;
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 4px;
+  font-weight: 100;
+}
+
+.nav_links {
+  list-style: none;
+  display: flex;
+  gap: 35px;
+  margin-left: auto;
+}
+
+.nav_links a {
+  text-decoration: none;
+  color: white;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+}
+
+.nav_links a i {
+  margin-right: 8px;
+  font-size: 15px;
+}
+
+.nav_links a:hover {
+  color: yellow;
+}
+
+header hr {
+  width: calc(100% - 140px);
+  margin: 6px auto 0;
+  border: none;
+  border-top: 2px solid;
+  border-image: linear-gradient(to right, white 50%, transparent) 1;
+  margin-top: -6px;
+}
+
+/* -------------------- LAYOUT -------------------- */
+.movie-page {
+  display: flex;
+  gap: 80px;
+  padding: 140px 80px 60px;
+}
+
+/* -------------------- VIDEO SECTION -------------------- */
+.video-section {
+  max-width: 750px;
+}
+
+.video-section video {
+  width: 700px;
+  height: 430px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.6);
+}
+
+.download-btn {
+  margin-top: 25px;
+  padding: 12px;
+  width: 700px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.7);
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.download-btn:hover {
+  background: rgba(255,255,255,0.9);
+}
+
+.download-btn a {
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
+  font-family: Rockwell, sans-serif;
+}
+
+.download-btn i {
+  margin-right: 8px;
+}
+
+
+/* ---- Frosted Glass on Desktop Video ---- */
+.frost-wrap {
+  position: relative;
+  width: 700px;
+}
+
+.frost-wrap iframe {
+  width: 700px;
+  height: 430px;
+  border-radius: 12px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.6);
+  border: none;
+  display: block;
+  filter: blur(10px);
+  transition: filter 0.4s ease;
+}
+
+.frost-wrap.unblurred iframe {
+  filter: blur(0);
+}
+
+.frost-click {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+.frost-wrap.unblurred .frost-click {
+  display: none;
+}
+
+/* -------------------- DETAILS SECTION -------------------- */
+.details-section {
+  max-width: 520px;
+}
+
+.movie-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  letter-spacing: 3px;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  margin-bottom: 25px;
+  font-weight: 200;
+}
+
+/* -------------------- SEARCH BOX -------------------- */
+.search-box {
+  position: relative;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+  width: 100%;
+}
+
+.search-box input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid white;
+  padding: 10px;
+  color: white;
+  font-family: Rockwell, sans-serif;
+  font-size: 16px;
+}
+
+.search-box input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.search-box input::placeholder {
+  color: #f5f5f5;
+  font-family: Rockwell, sans-serif;
+}
+
+.search-box button {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.search-box button:hover {
+  color: yellow;
+}
+
+/* -------------------- SEARCH DROPDOWN -------------------- */
+.search-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+  background: rgba(0,0,0,0.95);
+  border-radius: 5px;
+  display: none;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  transition: all 0.2s ease;
+}
+
+.dropdown-item {
+  padding: 10px 12px;
+  cursor: pointer;
+  color: white;
+  font-family: 'Rockwell', sans-serif;
+  font-size: 16px;
+}
+
+.dropdown-item:hover {
+  background: yellow;
+  color: black;
+}
+
+/* -------------------- INFO / SUMMARY -------------------- */
+.info {
+  font-family: Bahnschrift, sans-serif;
+  margin-bottom: 20px;
+}
+
+.info span {
+  background: yellow;
+  color: black;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.summary {
+  font-family: Rockwell, sans-serif;
+  line-height: 1.4;
+  word-spacing: 4px;
+  margin-bottom: 40px;
+}
+
+/* -------------------- RELATED MOVIES -------------------- */
+.related-movies {
+  display: flex;
+  gap: 35px;
+}
+
+.related-card {
+  width: 230px;
+  text-align: center;
+}
+
+.poster {
+  display: block;
+  width: 230px;
+  height: 130px;
+  border-radius: 15px;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 10px;
+}
+
+.poster:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.related-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 1px;
+  color: white;
+  margin-top: 8px;
+  font-weight: 400;
+  text-align: right;
+}
+
+/* -------------------- FOOTER -------------------- */
+footer {
+  text-align: center;
+  margin: 40px 0;
+  font-size: 14px;
+  font-family: Rockwell, sans-serif;
+}
+
+/* -------------------- RESPONSIVE DESIGN -------------------- */
+
+/* Large Tablets (1024px and below) */
+@media screen and (max-width: 1024px) {
+  .nav_bar {
+    padding: 0 40px;
+  }
+
+  .nav_links {
+    gap: 25px;
+  }
+
+  .nav_links a {
+    font-size: 18px;
+  }
+
+  .movie-page {
+    gap: 40px;
+    padding: 140px 40px 60px;
+  }
+
+  .video-section video,
+  .download-btn {
+    width: 550px;
+  }
+
+  .video-section video {
+    height: 340px;
+  }
+
+  .details-section {
+    max-width: 400px;
+  }
+
+  .related-movies {
+    gap: 25px;
+  }
+
+  .related-card {
+    width: 180px;
+  }
+
+  .poster {
+    width: 180px;
+    height: 110px;
+  }
+
+  .related-title {
+    font-size: 18px;
+  }
+}
+
+/* Small Tablets / Large Phones (768px and below) */
+@media screen and (max-width: 768px) {
+  .movie-page {
+    flex-direction: column;
+    gap: 30px;
+    padding: 120px 30px 40px;
+  }
+
+  .video-section {
+    max-width: 100%;
+  }
+
+  .video-section video,
+  .download-btn {
+    width: 100%;
+  }
+
+  .video-section video {
+    height: auto;
+    min-height: 300px;
+  }
+
+  .details-section {
+    max-width: 100%;
+  }
+
+  .search-box {
+    position: relative;
+    right: auto;
+    top: auto;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .search-box input {
+    width: 100%;
+  }
+
+  .search-dropdown {
+    width: 100%;
+  }
+
+  .related-movies {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .related-card {
+    width: calc(50% - 10px);
+  }
+
+  .poster {
+    width: 100%;
+    height: 130px;
+  }
+
+  .movie-title {
+    font-size: 28px;
+  }
+
+  /* Navbar adjustments */
+  .nav_bar {
+    flex-wrap: wrap;
+    padding: 10px 30px;
+    height: auto;
+    background: rgba(0, 0, 0, 0.9);
+  }
+
+  .nav_links {
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-left: 0;
+    width: 100%;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .nav_links a {
+    font-size: 16px;
+  }
+
+  .dropdown-content {
+    position: fixed;
+    top: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 300px;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  header hr {
+    width: calc(100% - 60px);
+    margin: 5px 0 0 30px;
+  }
+}
+
+/* Mobile Phones (480px and below) */
+@media screen and (max-width: 480px) {
+  .movie-page {
+    padding: 100px 20px 30px;
+  }
+
+  .video-section video {
+    min-height: 220px;
+  }
+
+  .download-btn {
+    padding: 10px;
+  }
+
+  .download-btn a {
+    font-size: 16px;
+  }
+
+  .movie-title {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+
+  .info {
+    font-size: 14px;
+  }
+
+  .summary {
+    font-size: 14px;
+    line-height: 1.3;
+    margin-bottom: 25px;
+  }
+
+  .related-movies {
+    gap: 15px;
+  }
+
+  .related-card {
+    width: 100%;
+  }
+
+  .poster {
+    height: 150px;
+  }
+
+  .related-title {
+    font-size: 16px;
+    margin-top: 5px;
+  }
+
+  /* Navbar adjustments */
+  .nav_bar {
+    padding: 8px 15px;
+  }
+
+  .logo {
+  font-size: 30px;
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 4px;
+  font-weight: 100;
+}
+
+  .nav_links {
+    gap: 10px;
+  }
+
+  .nav_links a {
+    font-size: 14px;
+  }
+
+  .nav_links a i {
+    font-size: 12px;
+    margin-right: 5px;
+  }
+
+  .shared-dropdown .genre-link {
+    font-size: 14px;
+  }
+
+  .dropdown-arrow {
+    font-size: 10px;
+  }
+
+  .dropdown-content a {
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+
+  header hr {
+    width: calc(100% - 30px);
+    margin: 5px 0 0 15px;
+  }
+}
+
+/* Small Mobile Phones (360px and below) */
+@media screen and (max-width: 360px) {
+  .nav_links {
+    gap: 8px;
+  }
+
+  .nav_links a {
+    font-size: 12px;
+  }
+
+  .shared-dropdown .genre-link {
+    font-size: 12px;
+  }
+}
+
+/* Landscape Mode */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+  .movie-page {
+    padding: 100px 30px 30px;
+  }
+
+  .video-section video {
+    min-height: 180px;
+  }
+
+  .related-movies {
+    flex-wrap: nowrap;
+  }
+
+  .related-card {
+    width: 150px;
+  }
+
+  .poster {
+    height: 90px;
+  }
+
+  .nav_links {
+    flex-wrap: nowrap;
+  }
+}
+
+/* Tablet Landscape / Small Laptops */
+@media screen and (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
+  .movie-page {
+    gap: 40px;
+  }
+
+  .video-section video,
+  .download-btn {
+    width: 500px;
+  }
+
+  .video-section video {
+    height: 300px;
+  }
+
+  .details-section {
+    max-width: 350px;
+  }
+}
+
+/* Ensure images don't overflow */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Touch-friendly adjustments */
+@media (hover: none) and (pointer: coarse) {
+  .movie-item:hover img {
+    transform: none;
+  }
+
+  .poster:hover {
+    transform: none;
+  }
+
+  .nav_links a:hover {
+    color: white;
+  }
+
+  .nav_links a:active {
+    color: yellow;
+  }
+
+  .dropdown-arrow {
+    padding: 8px;
+  }
+
+  .dropdown-content a {
+    padding: 15px 20px;
+  }
+}
+
+/* Fix for notch phones */
+@supports (padding: max(0px)) {
+  .nav_bar {
+    padding-left: max(70px, env(safe-area-inset-left));
+    padding-right: max(70px, env(safe-area-inset-right));
+  }
+
+  @media screen and (max-width: 768px) {
+    .nav_bar {
+      padding-left: max(30px, env(safe-area-inset-left));
+      padding-right: max(30px, env(safe-area-inset-right));
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .nav_bar {
+      padding-left: max(15px, env(safe-area-inset-left));
+      padding-right: max(15px, env(safe-area-inset-right));
+    }
+  }
+}
+
+
+/* ---- Hide ALL mobile elements on desktop ---- */
+@media screen and (min-width: 769px) {
+  #mobHeader,
+  #mobMovieSearchBar,
+  #mobPage,
+  #mobBottomNav,
+  #mobGenrePanel,
+  #mobGenreBackdrop { display: none !important; }
+}

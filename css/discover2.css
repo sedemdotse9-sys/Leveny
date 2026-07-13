@@ -1,0 +1,599 @@
+/* discover2.css - YELLOW THEME with exact discover1 poster sizes */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.discover-body {
+    background: linear-gradient(180deg, 
+        #ffcc00 0%,           
+        #ffd633 20%,          
+        #ffe066 40%,          
+        #fff0b3 70%,          
+        #fffae6 90%,          
+        #ffffff 100%
+    );
+    min-height: 100vh;
+    font-family: Rockwell, sans-serif;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.discover-body::-webkit-scrollbar {
+    display: none;
+}
+
+/* Header - Unchanged */
+header {
+    width: 100%;
+    height: 80px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2000;
+    background: linear-gradient(to bottom, 
+        rgba(179, 143, 0, 0.95) 0%,   
+        rgba(204, 163, 0, 0.85) 100% 
+    );
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.nav_bar {
+    display: flex;
+    align-items: center;
+    padding: 0 70px;
+}
+
+.nav_bar .logo {
+    color: #333;
+    font-size: 30px;
+    text-shadow: 1px 1px 3px rgba(255,255,255,0.5);
+}
+
+.nav_links {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 35px;
+}
+
+.nav_links a {
+    text-decoration: none;
+    color: #333;
+    font-size: 21px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s;
+}
+
+.nav_links a i {
+    font-size: 15px;
+    margin-right: 10px;
+}
+
+.nav_links a:hover {
+    color: #1a3a5f;
+    transform: translateY(-2px);
+}
+
+.nav_links a.active {
+    color: #1a3a5f;
+    font-weight: bold;
+}
+
+header hr {
+    position: relative;
+    top: 25px;
+    width: calc(100% - 140px);
+    margin: 55px 0 0 70px;
+    border: none;
+    border-top: 2px solid;
+    border-image: linear-gradient(to right, rgba(51,51,51,0.8) 50%, transparent 100%) 1;
+    position: absolute;
+    bottom: -25px;
+}
+
+/* Search bar - Unchanged */
+.search-box {
+    position: absolute;
+    right: 70px;
+    top: 105px;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    z-index: 4000;
+}
+
+.search-box input {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #333;
+    color: #333;
+    outline: none;
+    padding: 5px 8px;
+    width: 350px;
+    font-size: 16px;
+    font-family: inherit;
+}
+
+.search-box input::placeholder {
+    color: rgba(51, 51, 51, 0.7);
+}
+
+.search-box input:focus {
+    border-bottom: 2px solid #1a3a5f;
+}
+
+.search-box button {
+    background: transparent;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.search-box button:hover {
+    color: #1a3a5f;
+}
+
+.search-dropdown {
+    position: absolute;
+    top: 35px;
+    right: 0;
+    background: rgba(255, 204, 0, 0.95);
+    border: 1px solid rgba(51,51,51,0.2);
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+    border-radius: 5px;
+    z-index: 5000;
+    display: none;
+}
+
+.dropdown-item {
+    padding: 8px 12px;
+    color: #333;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(51,51,51,0.1);
+}
+
+.dropdown-item:hover {
+    background: #1a3a5f;
+    color: white;
+}
+
+/* Main Content - Unchanged */
+.discover-wrapper {
+    margin-top: 110px;
+    padding: 40px 70px 100px;
+    min-height: calc(100vh - 200px);
+}
+
+/* FIXED PAGE TITLE - Matches red theme's #8b0000 approach */
+.page-title {
+    color: #ffcc00; /* FIXED: Perfect yellow theme match (first gradient color) */
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    margin-bottom: 40px;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(255,255,255,0.5);
+    letter-spacing: 1.5px;
+}
+
+/* Movies Grid - Matches discover1/2/3/4/5/6/7 exactly */
+.movies-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 30px;
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+/* ========== EXACT DISCOVER1 POSTER DESIGN - Yellow themed ========== */
+.grid-movie-item {
+    text-decoration: none;
+    color: white;
+    position: relative;
+    height: 294px; /* EXACTLY matches others */
+    border-radius: 20px; /* Matches others */
+    overflow: hidden;
+    background: linear-gradient(145deg, #b38f00, #998000);
+    box-shadow: 
+        0 20px 40px rgba(102, 77, 0, 0.4),
+        0 0 0 1px rgba(255, 215, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex;
+    flex-direction: column;
+}
+
+.grid-movie-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, 
+        rgba(255, 215, 0, 0.1) 0%,
+        rgba(255, 200, 0, 0.05) 50%,
+        rgba(255, 185, 0, 0.1) 100%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 1;
+}
+
+.grid-movie-item:hover::before {
+    opacity: 1;
+}
+
+/* EXACT IMAGE SIZE - 224px height */
+.grid-movie-item .movie-image-container {
+    position: relative;
+    width: 100%;
+    height: 224px; /* EXACTLY matches others */
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.grid-movie-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    filter: brightness(1.05) contrast(1.1) saturate(1.15);
+    will-change: transform;
+}
+
+.grid-movie-item:hover img {
+    transform: scale(1.08) translateY(-5px);
+    filter: brightness(1.15) contrast(1.15) saturate(1.2);
+}
+
+.grid-movie-item .image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(0, 0, 0, 0.1) 30%,
+        rgba(102, 77, 0, 0.4) 70%,
+        rgba(77, 58, 0, 0.7) 100%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.grid-movie-item:hover .image-overlay {
+    opacity: 1;
+}
+
+.movie-title {
+    padding: 15px; /* Matches others */
+    background: rgba(26, 42, 58, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 215, 0, 0.1);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.movie-title h4 {
+    font-size: 14px; /* Matches others */
+    font-weight: 700;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: linear-gradient(135deg, #ffffff, #fff0b3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.3px;
+}
+
+.movie-title p {
+    font-size: 12px; /* Matches others */
+    color: rgba(255, 215, 0, 0.9);
+    margin: 0;
+    font-weight: 500;
+}
+
+.grid-movie-item:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 
+        0 35px 70px rgba(102, 77, 0, 0.6),
+        0 0 0 1px rgba(255, 215, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Empty state - Yellow theme */
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    border: 2px dashed rgba(255, 204, 0, 0.5);
+}
+
+.empty-state i {
+    font-size: 4rem;
+    color: rgba(255, 204, 0, 0.3);
+    margin-bottom: 20px;
+}
+
+.empty-state h3 {
+    color: #333;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+.empty-state p {
+    color: #666;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+/* Pagination - Yellow theme */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(51,51,51,0.1);
+}
+
+.pagination-btn {
+    background: rgba(255, 204, 0, 0.2);
+    border: 1px solid rgba(255, 204, 0, 0.4);
+    color: #333;
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background: #1a3a5f;
+    color: white;
+    border-color: #1a3a5f;
+    transform: translateY(-2px);
+}
+
+.pagination-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.page-numbers {
+    display: flex;
+    gap: 8px;
+}
+
+.page-number {
+    background: rgba(255, 204, 0, 0.15);
+    border: 1px solid rgba(255, 204, 0, 0.3);
+    color: #333;
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.25s;
+}
+
+.page-number:hover {
+    background: rgba(255, 204, 0, 0.3);
+}
+
+.page-number.active {
+    background: #1a3a5f;
+    color: white;
+    border-color: #1a3a5f;
+}
+
+/* Footer - Unchanged */
+footer {
+    text-align: center;
+    color: #333;
+    padding: 20px;
+    font-family: Rockwell, sans-serif;
+    font-size: 14px;
+    background: transparent;
+}
+
+footer a {
+  color: white;
+  text-decoration: none;
+}
+
+/* Responsive - EXACTLY matches discover1/2/3/4/5/6/7 */
+@media (max-width: 1400px) {
+    .movies-grid {
+        grid-template-columns: repeat(5, 1fr);
+        max-width: 1300px;
+    }
+    .grid-movie-item {
+        height: 278px;
+    }
+    .grid-movie-item .movie-image-container {
+        height: 211px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .movies-grid {
+        grid-template-columns: repeat(4, 1fr);
+        max-width: 1100px;
+        gap: 25px;
+    }
+    .grid-movie-item {
+        height: 265px;
+    }
+    .grid-movie-item .movie-image-container {
+        height: 201px;
+    }
+    .page-title {
+        font-size: 3.5rem;
+    }
+}
+
+@media (max-width: 1100px) {
+    .movies-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 22px;
+    }
+    .grid-movie-item {
+        height: 252px;
+    }
+    .grid-movie-item .movie-image-container {
+        height: 191px;
+    }
+    .page-title {
+        font-size: 3.2rem;
+    }
+    .search-box input {
+        width: 250px;
+    }
+}
+
+@media (max-width: 900px) {
+    .movies-grid {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 800px;
+        gap: 25px;
+    }
+    .grid-movie-item {
+        height: 237px;
+    }
+    .grid-movie-item .movie-image-container {
+        height: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    .discover-wrapper {
+        padding: 30px 20px 80px;
+    }
+    .movies-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        max-width: 100%;
+    }
+    .grid-movie-item {
+        height: 224px;
+    }
+    .grid-movie-item .movie-image-container {
+        height: 170px;
+    }
+    .page-title {
+        font-size: 2.8rem;
+        margin-bottom: 30px;
+    }
+    .nav_bar {
+        padding: 0 20px;
+    }
+    header hr {
+        width: calc(100% - 40px);
+        margin-left: 20px;
+    }
+    .search-box {
+        right: 20px;
+    }
+    .search-box input {
+        width: 200px;
+    }
+}
+
+@media (max-width: 600px) {
+    .movies-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    .grid-movie-item {
+        height: 208px;
+    }
+    .grid-movie-item .movie-image-container {
+        height: 158px;
+    }
+    .page-title {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .movies-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+    }
+    .grid-movie-item {
+        height: 192px;
+    }
+    .grid-movie-item .movie-image-container {
+        height: 146px;
+    }
+    .page-title {
+        font-size: 2.3rem;
+    }
+    .nav_links {
+        gap: 15px;
+    }
+    .nav_links a {
+        font-size: 18px;
+    }
+    .nav_links a i {
+        margin-right: 5px;
+    }
+    .search-box {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        margin-left: auto;
+        margin-right: 20px;
+        margin-top: 10px;
+    }
+    .search-box input {
+        width: 180px;
+    }
+    .empty-state {
+        padding: 40px 15px;
+    }
+    .empty-state h3 {
+        font-size: 1.5rem;
+    }
+    .empty-state p {
+        font-size: 1rem;
+    }
+}
