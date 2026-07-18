@@ -265,7 +265,26 @@
         backdrop-filter: blur(20px);
         border: 1px solid var(--mob-accent-dim-light);
         box-shadow: 0 8px 30px var(--mob-accent-dim-light);
-      }
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--mob-accent, #00A8FF) transparent;
+}
+#mobMovieSearchDrop::-webkit-scrollbar {
+    width: 8px;
+}
+#mobMovieSearchDrop::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 8px 0;
+}
+#mobMovieSearchDrop::-webkit-scrollbar-thumb {
+    background: var(--mob-accent, #00A8FF);
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+
+
 
       body.dark-mode #mobMovieSearchDrop {
         background: rgba(18,18,18,0.97);
@@ -685,7 +704,7 @@
   </style>
 </head>
 
-<body>
+<body data-current-movie="aladdin_movie.html">
   <!-- ============================================================
        DESKTOP LAYOUT — completely unchanged
   ============================================================ -->
@@ -777,17 +796,7 @@
       </p>
 
       <!-- RELATED MOVIES -->
-      <div class="related-movies">
-        <div class="related-card">
-          <a href="descendants_3_movie.html" class="poster" style="background-image: url('../images/backgrounds/descendants_3_backg.jpg');"></a>
-          <p class="related-title">Descendants 3</p>
-        </div>
-        
-        <div class="related-card">
-          <a href="kpop_demon_hunters_movie.html" class="poster" style="background-image: url('../images/backgrounds/kpop_demon_hunters_backg.jpg');"></a>
-          <p class="related-title">Kpop Demon Hunters</p>
-        </div>
-      </div>
+      <div class="related-movies"></div>
 
     </section>
 
@@ -844,39 +853,10 @@
     </div>
 
     <div id="mobRelatedLabel">You Might Also Like</div>
-    <div id="mobRelatedGrid">
-      <a href="descendants_3_movie.html" class="mob-related-card">
-        <img src="../images/posters/descendants.jpg" alt="Descendants 3" loading="lazy">
-        <div class="mob-related-card-info">
-          <div class="mob-related-card-title">Descendants 3</div>
-          <div class="mob-related-card-genre">Fantasy</div>
-        </div>
-      </a>
-      <a href="kpop_demon_hunters_movie.html" class="mob-related-card">
-        <img src="../images/posters/kpop.jpg" alt="Kpop Demon Hunters" loading="lazy">
-        <div class="mob-related-card-info">
-          <div class="mob-related-card-title">Kpop Demon Hunters</div>
-          <div class="mob-related-card-genre">Animation</div>
-        </div>
-      </a>
-      <a href="shrek2_movie.html" class="mob-related-card">
-        <img src="../images/posters/sh.jpg" alt="Shrek 2" loading="lazy">
-        <div class="mob-related-card-info">
-          <div class="mob-related-card-title">Shrek 2</div>
-          <div class="mob-related-card-genre">Animation</div>
-        </div>
-      </a>
-      <a href="wicked_movie.html" class="mob-related-card">
-        <img src="../images/posters/wi.jpg" alt="Wicked" loading="lazy">
-        <div class="mob-related-card-info">
-          <div class="mob-related-card-title">Wicked</div>
-          <div class="mob-related-card-genre">Fantasy</div>
-        </div>
-      </a>
-      <div id="mobFooter">
+    <div id="mobRelatedGrid"></div>
+  <div id="mobFooter">
         <a href="../disclaimer.html">Disclaimer!</a>
       </div>
-    </div>
 
   </div>
 
@@ -927,6 +907,7 @@
        SCRIPTS
   ============================================================ -->
   <script src="../js/movies.js"></script>
+  <script src="../js/related.js"></script>
   <script src="../js/script.js"></script>
   <script src="../js/search.js"></script>
 

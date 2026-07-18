@@ -1,3 +1,3 @@
-localStorage.removeItem('leveny_tour_seen')
+localStorage.removeItem('leveny_seen_tutorial');
 
 https://vidsrc.sbs/embed/movie/533535

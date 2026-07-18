@@ -232,103 +232,83 @@ footer a {
     body.dark-mode #mobileSearchInput::placeholder { color: #555; }
 
     #mobileSearchResults {
-        display: none;
-        position: relative;
-        margin: -6px 12px 0;
-        border-radius: 16px;
-        z-index: 9999;         /* ← must beat mobileFeatured, cards, everything */
-        max-height: 280px;
-        overflow:auto;
-        background: #ffffff;
-        /* backdrop-filter: blur(20px); */
-        box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-        scrollbar-width: auto;
-    }
-
-    #mobileSearchResults::-webkit-scrollbar {
     display: none;
-    }
+    position: relative;
+    margin: -6px 12px 0;
+    border-radius: 16px;
+    z-index: 9999;
+    max-height: 280px;
+    overflow: auto;
+    background: #ffffff;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent, #00A8FF) transparent;
+    overscroll-behavior: contain;
+}
 
-    body.dark-mode #mobileSearchResults {
-        background: rgba(18,18,18,0.97);
-        border: 1px solid var(--accent-dim);
-        box-shadow: 0 8px 30px rgba(0,0,0,0.7), 0 0 0 1px var(--accent-dim);
-    }
+/* === AUTO-INJECTED: search scrollbar fix === */
+#mobileSearchResults::-webkit-scrollbar {
+    width: 8px;
+}
 
-    #mobileSearchResults .mob-search-drop-item {
-        padding: 12px 16px;
-        color: #111;
-        font-size: 14px;
-        font-family: Rockwell, sans-serif;
-        border-bottom: 1px solid rgba(0,0,0,0.06);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
+#mobileSearchResults::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 8px 0;
+}
 
-    body.dark-mode #mobileSearchResults .mob-search-drop-item {
-        color: #ddd;
-        border-bottom-color: rgba(255,255,255,0.06);
-    }
+#mobileSearchResults::-webkit-scrollbar-thumb {
+    background: var(--accent, #00A8FF);
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
 
-    #mobileSearchResults .mob-search-drop-item:last-child { border-bottom: none; }
-    #mobileSearchResults .mob-search-drop-item:active { background: rgba(0,0,0,0.05); }
-    body.dark-mode #mobileSearchResults .mob-search-drop-item:active { background: var(--accent-dim); }
-    #mobileSearchResults .mob-search-drop-item i { color: #bbb; font-size: 12px; }
-    body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accent); }
 
-    /* ============================================================
-       CATEGORY PILLS
-    ============================================================ */
-    /* #mobileCategoryBar {
-        display: flex;
-        gap: 8px;
-        padding: 0 12px 14px;
-        overflow-x: auto;
-        scrollbar-width: none;
-        -webkit-overflow-scrolling: touch;
-    }
+body.dark-mode #mobileSearchResults {
+    background: rgba(18,18,18,0.97);
+    border: 1px solid var(--accent-dim);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.7), 0 0 0 1px var(--accent-dim);
+}
 
-    #mobileCategoryBar::-webkit-scrollbar { display: none; }
+#mobileSearchResults::-webkit-scrollbar {
+    width: 8px;
+}
 
-    .mob-pill {
-        flex-shrink: 0;
-        padding: 7px 16px;
-        border-radius: 20px;
-        font-size: 13px;
-        font-family: Rockwell, sans-serif;
-        cursor: pointer;
-        white-space: nowrap;
-        transition: all 0.25s ease;
+#mobileSearchResults::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 8px 0;
+}
 
-        background: rgba(255,255,255,0.45);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        color: #333;
-        border: 1px solid rgba(255,255,255,0.55);
-    }
+#mobileSearchResults::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
 
-    body.dark-mode .mob-pill {
-        background: rgba(255,255,255,0.05);
-        color: #888;
-        border: 1px solid rgba(255,255,255,0.08);
-    }
+#mobileSearchResults .mob-search-drop-item {
+    padding: 12px 16px;
+    color: #111;
+    font-size: 14px;
+    font-family: Rockwell, sans-serif;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
-    .mob-pill.active {
-        background: var(--accent);
-        color: #fff;
-        border-color: transparent;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-    }
+body.dark-mode #mobileSearchResults .mob-search-drop-item {
+    color: #ddd;
+    border-bottom-color: rgba(255,255,255,0.06);
+}
 
-    body.dark-mode .mob-pill.active {
-        background: var(--accent-dim);
-        color: var(--accent);
-        border-color: var(--accent);
-        box-shadow: 0 0 10px var(--accent-glow),
-                    inset 0 0 8px var(--accent-dim);
-    } */
+#mobileSearchResults .mob-search-drop-item:last-child { border-bottom: none; }
+#mobileSearchResults .mob-search-drop-item:active { background: rgba(0,0,0,0.05); }
+body.dark-mode #mobileSearchResults .mob-search-drop-item:active { background: var(--accent-dim); }
+#mobileSearchResults .mob-search-drop-item i { color: #bbb; font-size: 12px; }
+body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accent); }
+
 
     /* ============================================================
        FEATURED BANNER
@@ -410,7 +390,7 @@ footer a {
         font-size: 12px;
         font-weight: 700;
         padding: 7px 28px;
-        border-radius: 20px;
+        border-radius: 10px;
         letter-spacing: 0.3px;
         margin-left: -5px;
         transition: background 1s ease, box-shadow 1s ease;

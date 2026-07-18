@@ -222,13 +222,55 @@ header {
     position: absolute;
     top: 35px;
     right: 0;
-    background: rgba(0,0,0,0.9);
+    background: rgba(0, 0, 0, 0.97);
     width: 100%;
     max-height: 300px;
     overflow-y: auto;
     border-radius: 5px;
     z-index: 5000;
     display: none;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #ffcc00 transparent;
+}
+
+/* === AUTO-INJECTED: search scrollbar fix === */
+.search-dropdown::-webkit-scrollbar {
+    width: 8px;
+}
+
+.search-dropdown::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 6px 0;
+}
+
+.search-dropdown::-webkit-scrollbar-thumb {
+    background: #ffcc00;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+
+.search-dropdown {
+    scrollbar-width: thin;
+    scrollbar-color: #ffcc00 transparent;
+}
+
+.search-dropdown::-webkit-scrollbar {
+    width: 8px;
+}
+
+.search-dropdown::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 6px 0;
+}
+
+.search-dropdown::-webkit-scrollbar-thumb {
+    background: #ffcc00;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
 }
 
 .dropdown-item {
@@ -267,7 +309,7 @@ header {
 
 .slide1 { background: url(../images/backgrounds/way.jpg) center/cover no-repeat; filter: brightness(70%); }
 .slide2 { background: url(../images/backgrounds/jw.jpg) center/cover no-repeat; filter: brightness(70%); }
-.slide3 { background: url(../images/backgrounds/bt.jpg) center/cover no-repeat; filter: brightness(70%); }
+.slide3 { background: url(../images/backgrounds/tg.jpg) center/cover no-repeat; filter: brightness(70%); }
 .slide4 { background: url(../images/backgrounds/dp.jpg) center/cover no-repeat; filter: brightness(70%); }
 .slide5 { background: url(../images/backgrounds/batman.jpg) center/cover no-repeat; filter: brightness(70%); }
 .slide6 { background: url(../images/backgrounds/liki.jpg) center/cover no-repeat; filter: brightness(70%); }
@@ -439,6 +481,7 @@ header hr {
     border-image: linear-gradient(to right, white 50%, transparent 100%) 1;
 }
 
+
 /* -------------------- RESPONSIVE DESIGN -------------------- */
 
 /* Large Tablets (1024px and below) */
@@ -484,7 +527,9 @@ header hr {
 
   .related-movies {
     gap: 25px;
-  }
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
 
   .related-card {
     width: 180px;

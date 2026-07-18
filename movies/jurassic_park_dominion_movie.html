@@ -266,7 +266,26 @@
         backdrop-filter: blur(20px);
         border: 1px solid var(--mob-accent-dim-light);
         box-shadow: 0 8px 30px var(--mob-accent-dim-light);
-      }
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--mob-accent, #00A8FF) transparent;
+}
+#mobMovieSearchDrop::-webkit-scrollbar {
+    width: 8px;
+}
+#mobMovieSearchDrop::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 8px 0;
+}
+#mobMovieSearchDrop::-webkit-scrollbar-thumb {
+    background: var(--mob-accent, #00A8FF);
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+
+
 
       body.dark-mode #mobMovieSearchDrop {
         background: rgba(18,18,18,0.97);
@@ -684,7 +703,7 @@
   </style>
 </head>
 
-<body>
+<body data-current-movie="jurassic_park_dominion_movie.html">
 
   <!-- ============================================================
        DESKTOP LAYOUT — completely unchanged
@@ -772,12 +791,7 @@
       </p>
 
       <!-- RELATED MOVIES -->
-      <div class="related-movies">
-        <div class="related-card">
-          <a href="avatar_way_of_water_movie.html" class="poster" style="background-image: url('../images/backgrounds/awow.jpg');"></a>
-          <p class="related-title">Avatar: Way of Water</p>
-        </div>
-      </div>
+      <div class="related-movies"></div>
 
     </section>
 
@@ -834,18 +848,10 @@
     </div>
 
     <div id="mobRelatedLabel">You Might Also Like</div>
-    <div id="mobRelatedGrid">
-      <a href="avatar_way_of_water_movie.html" class="mob-related-card">
-        <img src="../images/posters/awow.jpg" alt="Avatar: Way of Water" loading="lazy">
-        <div class="mob-related-card-info">
-          <div class="mob-related-card-title">Avatar: Way of Water</div>
-          <div class="mob-related-card-genre">Action</div>
-        </div>
-      </a>
-      <div id="mobFooter">
+    <div id="mobRelatedGrid"></div>
+  <div id="mobFooter">
         <a href="../disclaimer.html">Disclaimer!</a>
       </div>
-    </div>
 
   </div>
 
@@ -897,6 +903,7 @@
        SCRIPTS
   ============================================================ -->
   <script src="../js/movies.js"></script>
+  <script src="../js/related.js"></script>
   <script src="../js/script.js"></script>
   <script src="../js/search.js"></script>
 

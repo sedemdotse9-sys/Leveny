@@ -265,7 +265,26 @@
         backdrop-filter: blur(20px);
         border: 1px solid var(--mob-accent-dim-light);
         box-shadow: 0 8px 30px var(--mob-accent-dim-light);
-      }
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--mob-accent, #00A8FF) transparent;
+}
+#mobMovieSearchDrop::-webkit-scrollbar {
+    width: 8px;
+}
+#mobMovieSearchDrop::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 8px 0;
+}
+#mobMovieSearchDrop::-webkit-scrollbar-thumb {
+    background: var(--mob-accent, #00A8FF);
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+
+
 
       body.dark-mode #mobMovieSearchDrop {
         background: rgba(18,18,18,0.97);
@@ -685,7 +704,7 @@
   </style>
 </head>
 
-<body>
+<body data-current-movie="monster_high_movie.html">
 
   <!-- ============================================================
        DESKTOP LAYOUT — completely unchanged
@@ -730,7 +749,7 @@
     <!-- VIDEO -->
     <section class="video-section">
       <div class="frost-wrap" id="frostWrap">
-        <iframe src="https://vidsrc.me/embed/movie/tt15670926"
+        <iframe src="https://vidsrc.me/embed/movie/tt1447981"
           width="100%" height="430"
           frameborder="0" allowfullscreen
           allow="autoplay; fullscreen">
@@ -777,17 +796,7 @@
       </p>
 
       <!-- RELATED MOVIES -->
-      <div class="related-movies">
-        <div class="related-card">
-          <a href="kpop_demon_hunters_movie.html" class="poster" style="background-image: url('../images/backgrounds/kpop_demon_hunters_backg.jpg');"></a>
-          <p class="related-title">Kpop Demon Hunters</p>
-        </div>
-        
-        <div class="related-card">
-          <a href="tangled_movie.html" class="poster" style="background-image: url('../images/backgrounds/tangled_backg.jpg');"></a>
-          <p class="related-title">Tangled</p>
-        </div>
-      </div>
+      <div class="related-movies"></div>
 
     </section>
 
@@ -815,7 +824,7 @@
 
     <div id="mobVideoWrap">
       <div id="mobFrostWrap">
-        <iframe src="https://vidsrc.me/embed/movie/tt15670926"
+        <iframe src="https://vidsrc.me/embed/movie/tt1447981"
           width="100%" height="240"
           frameborder="0" allowfullscreen
           allow="autoplay; fullscreen; picture-in-picture">
@@ -844,39 +853,10 @@
     </div>
 
     <div id="mobRelatedLabel">You Might Also Like</div>
-    <div id="mobRelatedGrid">
-      <a href="kpop_demon_hunters_movie.html" class="mob-related-card">
-        <img src="../images/posters/kpop.jpg" alt="Kpop Demon Hunters" loading="lazy">
-        <div class="mob-related-card-info">
-          <div class="mob-related-card-title">Kpop Demon Hunters</div>
-          <div class="mob-related-card-genre">Animation</div>
-        </div>
-      </a>
-      <a href="tangled_movie.html" class="mob-related-card">
-        <img src="../images/posters/tangled.jpg" alt="Tangled" loading="lazy">
-        <div class="mob-related-card-info">
-          <div class="mob-related-card-title">Tangled</div>
-          <div class="mob-related-card-genre">Animation</div>
-        </div>
-      </a>
-      <a href="wicked_movie.html" class="mob-related-card">
-        <img src="../images/posters/wi.jpg" alt="Wicked" loading="lazy">
-        <div class="mob-related-card-info">
-          <div class="mob-related-card-title">Wicked</div>
-          <div class="mob-related-card-genre">Fantasy</div>
-        </div>
-      </a>
-      <a href="wizard_of_oz_movie.html" class="mob-related-card">
-        <img src="../images/posters/oz.jpg" alt="The Wizard of Oz" loading="lazy">
-        <div class="mob-related-card-info">
-          <div class="mob-related-card-title">The Wizard of Oz</div>
-          <div class="mob-related-card-genre">Musical</div>
-        </div>
-      </a>
-      <div id="mobFooter">
+    <div id="mobRelatedGrid"></div>
+  <div id="mobFooter">
         <a href="../disclaimer.html">Disclaimer!</a>
       </div>
-    </div>
 
   </div>
 
@@ -927,6 +907,7 @@
        SCRIPTS
   ============================================================ -->
   <script src="../js/movies.js"></script>
+  <script src="../js/related.js"></script>
   <script src="../js/script.js"></script>
   <script src="../js/search.js"></script>
 

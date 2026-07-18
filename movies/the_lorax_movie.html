@@ -254,7 +254,26 @@
         backdrop-filter: blur(20px);
         border: 1px solid var(--mob-accent-dim-light);
         box-shadow: 0 8px 30px var(--mob-accent-dim-light);
-      }
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--mob-accent, #00A8FF) transparent;
+}
+#mobMovieSearchDrop::-webkit-scrollbar {
+    width: 8px;
+}
+#mobMovieSearchDrop::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 8px 0;
+}
+#mobMovieSearchDrop::-webkit-scrollbar-thumb {
+    background: var(--mob-accent, #00A8FF);
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+
+
 
       body.dark-mode #mobMovieSearchDrop {
         background: rgba(18,18,18,0.97);
@@ -665,7 +684,7 @@
   </style>
 </head>
 
-<body>
+<body data-current-movie="the_lorax_movie.html">
 
   <!-- ============================================================
        DESKTOP LAYOUT — completely unchanged
@@ -733,16 +752,7 @@
       <p class="summary">
         In the artificial, plastic town of Thneedville, a boy named Ted goes on a quest to find a real tree to impress his crush, Audrey. He ventures outside the city walls to find the reclusive Once-ler, who tells him the story of how he discovered the beautiful Truffula Tree valley and met its guardian, The Lorax.
       </p>
-      <div class="related-movies">
-        <div class="related-card">
-          <a href="despicable_me_movie.html" class="poster" style="background-image: url('../images/backgrounds/despicable_me_backg.jpg');"></a>
-          <p class="related-title">Despicable Me</p>
-        </div>
-        <div class="related-card">
-          <a href="the_beekeeper_movie.html" class="poster" style="background-image: url('../images/backgrounds/bk.jpg');"></a>
-          <p class="related-title">The Beekeeper</p>
-        </div>
-      </div>
+      <div class="related-movies"></div>
     </section>
   </main>
 
@@ -797,39 +807,10 @@
     </div>
 
     <div id="mobRelatedLabel">You Might Also Like</div>
-    <div id="mobRelatedGrid">
-      <a href="despicable_me_movie.html" class="mob-related-card">
-        <img src="../images/posters/despicable_me.jpg" alt="Despicable Me" loading="lazy">
-        <div class="mob-related-card-info">
-          <div class="mob-related-card-title">Despicable Me</div>
-          <div class="mob-related-card-genre">Animation</div>
-        </div>
-      </a>
-      <a href="the_bad_guys_movie.html" class="mob-related-card">
-        <img src="../images/posters/the_bad_guys.jpg" alt="The Bad Guys" loading="lazy">
-        <div class="mob-related-card-info">
-          <div class="mob-related-card-title">The Bad Guys</div>
-          <div class="mob-related-card-genre">Animation</div>
-        </div>
-      </a>
-      <a href="kung_fu_panda_movie.html" class="mob-related-card">
-        <img src="../images/posters/kung_fu_panda.jpg" alt="Kung Fu Panda" loading="lazy">
-        <div class="mob-related-card-info">
-          <div class="mob-related-card-title">Kung Fu Panda</div>
-          <div class="mob-related-card-genre">Animation</div>
-        </div>
-      </a>
-      <a href="over_the_hedge_movie.html" class="mob-related-card">
-        <img src="../images/posters/over_the_hedge.jpg" alt="Over the Hedge" loading="lazy">
-        <div class="mob-related-card-info">
-          <div class="mob-related-card-title">Over the Hedge</div>
-          <div class="mob-related-card-genre">Animation</div>
-        </div>
-      </a>
-      <div id="mobFooter">
+    <div id="mobRelatedGrid"></div>
+  <div id="mobFooter">
         <a href="../disclaimer.html">Disclaimer!</a>
       </div>
-    </div>
 
   </div>
 
@@ -852,6 +833,7 @@
        SCRIPTS
   ============================================================ -->
   <script src="../js/movies.js"></script>
+  <script src="../js/related.js"></script>
   <script src="../js/script.js"></script>
   <script src="../js/search.js"></script>
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Mufasa | Leveny</title>
+  <title>Mufasa: The Lion King | Leveny</title>
 
   <link rel="stylesheet" href="../css/style41.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -267,7 +267,26 @@
         backdrop-filter: blur(20px);
         border: 1px solid var(--mob-accent-dim-light);
         box-shadow: 0 8px 30px var(--mob-accent-dim-light);
-      }
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--mob-accent, #00A8FF) transparent;
+}
+#mobMovieSearchDrop::-webkit-scrollbar {
+    width: 8px;
+}
+#mobMovieSearchDrop::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 8px 0;
+}
+#mobMovieSearchDrop::-webkit-scrollbar-thumb {
+    background: var(--mob-accent, #00A8FF);
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+
+
 
       body.dark-mode #mobMovieSearchDrop {
         background: rgba(18,18,18,0.97);
@@ -686,7 +705,7 @@
   </style>
 </head>
 
-<body>
+<body data-current-movie="mufasa_movie.html">
   <!-- ============================================================
        DESKTOP LAYOUT — completely unchanged
   ============================================================ -->
@@ -751,7 +770,7 @@
     <!-- DETAILS -->
     <section class="details-section">
 
-      <h3 class="movie-title">MUFASA</h3>
+      <h3 class="movie-title">MUFASA: THE LION KING</h3>
 
       <div class="search-box">
         <input 
@@ -778,17 +797,7 @@
       </p>
 
       <!-- RELATED MOVIES -->
-      <div class="related-movies">
-        <div class="related-card">
-          <a href="the_littlemermaid_movie.html" class="poster" style="background-image: url('../images/backgrounds/littlemermaid.jpg');"></a>
-          <p class="related-title">The Little Mermaid</p>
-        </div>
-        
-        <div class="related-card">
-          <a href="the_meg_movie.html" class="poster" style="background-image: url('../images/backgrounds/meg.jpg');"></a>
-          <p class="related-title">The Meg</p>
-        </div>
-      </div>
+      <div class="related-movies"></div>
 
     </section>
 
@@ -833,7 +842,7 @@
     </a>
 
     <div id="mobMovieInfo">
-      <div id="mobMovieTitle">MUFASA</div>
+      <div id="mobMovieTitle">MUFASA: THE LION KING</div>
       <div id="mobMovieMeta">
         <span>2024</span>
         <span class="mob-meta-badge">Family</span>
@@ -845,25 +854,10 @@
     </div>
 
     <div id="mobRelatedLabel">You Might Also Like</div>
-    <div id="mobRelatedGrid">
-      <a href="the_littlemermaid_movie.html" class="mob-related-card">
-        <img src="../images/posters/littlemermaid.jpg" alt="The Little Mermaid" loading="lazy">
-        <div class="mob-related-card-info">
-          <div class="mob-related-card-title">The Little Mermaid</div>
-          <div class="mob-related-card-genre">Family</div>
-        </div>
-      </a>
-      <a href="the_meg_movie.html" class="mob-related-card">
-        <img src="../images/posters/meg.jpg" alt="The Meg" loading="lazy">
-        <div class="mob-related-card-info">
-          <div class="mob-related-card-title">The Meg</div>
-          <div class="mob-related-card-genre">Action</div>
-        </div>
-      </a>
-      <div id="mobFooter">
+    <div id="mobRelatedGrid"></div>
+  <div id="mobFooter">
         <a href="../disclaimer.html">Disclaimer!</a>
       </div>
-    </div>
 
   </div>
 
@@ -886,6 +880,7 @@
        SCRIPTS
   ============================================================ -->
   <script src="../js/movies.js"></script>
+  <script src="../js/related.js"></script>
   <script src="../js/script.js"></script>
   <script src="../js/search.js"></script>
 

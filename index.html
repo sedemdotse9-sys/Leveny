@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="css/design.css">
     <link rel="stylesheet" href="css/mobile.css">
     <link rel="stylesheet" href="css/genres-mobile.css">
+    <link rel="stylesheet" href="css/tutorial.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bahnschrift&display=swap">
@@ -147,9 +148,9 @@
             <!-- SLIDE 3 -->
             <section class="slide slide3">
                 <main>
-                    <div class="main_body_3"><p>BEN 10</p></div>
-                    <div class="main_3"><p>A summer road trip turns chaotic when 10-year-old Ben Tennyson discovers the Omnitrix, a mysterious alien device that snaps onto his wrist and rewrites his entire destiny. One click transforms him into aliens with wild abilities — from fire-blasting to super-speed — but it also paints a giant cosmic target on his back. As strange threats and intergalactic villains close in, Ben, his tech-savvy cousin Gwen, and their no-nonsense Grandpa Max have to figure out how to protect the planet while Ben learns what kind of hero he wants to be. The fun part? He's still a kid… just a kid who can turn into a ten-foot-tall alien powerhouse.</p></div>
-                    <button class="watch_btn"><a href="movies/ben_10_movie.html">Watch Now</a></button>
+                    <div class="main_body_3"><p>THE GRINCH</p></div>
+                    <div class="main_3"><p>High above the cheerful town of Whoville, a green, solitary creature has spent years perfecting his isolation, irritated by the endless carols, decorations, and festivities that erupt every winter below. When the holiday season arrives once again in full force, his patience finally snaps, and he hatches a scheme to sneak into town disguised as Santa and steal every last trace of Christmas before it can begin. Armed with a reluctant, oversized reindeer companion and a mountain of stolen presents, he sets his plan into motion under cover of night.</p></div>
+                    <button class="watch_btn"><a href="movies/the_grinch_movie.html">Watch Now</a></button>
                     <button class="more_btn"><a href="discover3.html">More<span class="plus-sign">+</span></a></button>
                     <div class="movie-section"><div class="movie-list-3">
                         <a href="movies/green_lantern_movie.html"><div class="movie-item" data-title="Green Lantern" data-genre="Superhero"><img src="images/posters/gl.jpg" alt="green lantern"></div></a>
@@ -191,7 +192,7 @@
                     <button class="more_btn"><a href="discover5.html">More<span class="plus-sign">+</span></a></button>
                     <div class="movie-section"><div class="movie-list-5">
                         <a href="movies/cruella_movie.html"><div class="movie-item" data-title="Cruella" data-genre="Family"><img src="images/posters/cr.jpg" alt="cruella"></div></a>
-                        <a href="movies/scream_movie.html"><div class="movie-item" data-title="Scream" data-genre="Horror"><img src="images/posters/sc.jpg" alt="scream"></div></a>
+                        <a href="movies/scream_5_movie.html"><div class="movie-item" data-title="Scream 5" data-genre="Horror"><img src="images/posters/sc.jpg" alt="scream"></div></a>
                         <a href="movies/the_nun_movie.html"><div class="movie-item" data-title="The Nun" data-genre="Horror"><img src="images/posters/tn.jpg" alt="the nun"></div></a>
                         <a href="movies/a_quiet_place_movie.html"><div class="movie-item" data-title="A Quiet Place" data-genre="Thriller"><img src="images/posters/qp.jpg" alt="quiet place"></div></a>
                         <a href="movies/twilight_movie.html"><div class="movie-item" data-title="Twilight" data-genre="Fantasy"><img src="images/posters/tw.jpg" alt="twilight"></div></a>
@@ -335,6 +336,30 @@
     </div>
 
     <script src="js/genres-mobile.js"></script>
+
+    <!-- ============================================================
+         HOMEPAGE TUTORIAL — see css/tutorial.css and js/tutorial.js
+    ============================================================ -->
+    <div id="tut-scrim">
+        <div class="tut-card">
+            <div class="tut-art" id="tut-art"></div>
+            <div class="tut-body">
+                <button class="tut-close">✕</button>
+                <div class="tut-step-label" id="tut-label"></div>
+                <h3 class="tut-title" id="tut-title"></h3>
+                <p class="tut-text" id="tut-text"></p>
+                <div class="tut-footer">
+                    <div class="tut-dots" id="tut-dots"></div>
+                    <div class="tut-btns">
+                        <button class="tut-btn ghost" data-action="back">Back</button>
+                        <button class="tut-btn primary" data-action="next">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button id="tut-help-btn" title="Replay tutorial" style="font-family: Arial, Helvetica, sans-serif;">?</button>
+    <script src="js/tutorial.js"></script>
 
     <footer class="copyright">
         <a href="disclaimer.html">Disclaimer!</a>

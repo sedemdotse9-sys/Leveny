@@ -3,7 +3,7 @@
    Neon accent system + dark/light toggle button.
 ============================================================ */
 
-if (window.innerWidth <= 768) {
+function initMobileHome() {
 
     /* ============================================================
        SLIDE CONFIG
@@ -28,9 +28,9 @@ if (window.innerWidth <= 768) {
             dim:    'rgba(255,214,0,0.12)',
         },
         {
-            title:  'BEN 10',
-            href:   'movies/ben_10_movie.html',
-            img:    'images/backgrounds/bt.jpg',
+            title:  'THE GRINCH',
+            href:   'movies/the_grinch_movie.html',
+            img:    'images/backgrounds/tg.jpg',
             accent: '#00FF7F',
             softBg: '#b6ffd8',
             glow:   'rgba(0,255,127,0.45)',
@@ -238,21 +238,20 @@ if (window.innerWidth <= 768) {
 
     /* ============================================================
        MOVIE DATA
+       ★ CHANGED — now sourced directly from LEVENY_MOVIES
+       (movies.js), instead of being scraped from the desktop
+       slide DOM. This means ANY movie added to the LEVENY_MOVIES
+       array in movies.js automatically appears in the mobile
+       "All Movies" grid — no need to also hand-add a .movie-item
+       to a desktop slide.
     ============================================================ */
-    const allMovies = [];
-
-    document.querySelectorAll('.slide .movie-item').forEach(item => {
-        const img   = item.querySelector('img');
-        const link  = item.closest('a');
-        const title = item.dataset.title || img?.alt || 'Movie';
-        const genre = getGenreFromSlide(item);
-        if (!img || !link) return;
-        allMovies.push({ title, genre, href: link.href, src: img.src, alt: img.alt });
-    });
-
-   function getGenreFromSlide(item) {
-    return (item.dataset.genre || 'all').toLowerCase().replace(/[^a-z]/g, '');
-    }
+    const allMovies = (typeof LEVENY_MOVIES !== 'undefined' ? LEVENY_MOVIES : []).map(m => ({
+        title: m.title,
+        genre: (m.genre || 'all').toLowerCase().replace(/[^a-z]/g, ''),
+        href:  m.href.replace('../movies/', 'movies/'), // homepage sits at root, movies.js hrefs are written for movie pages
+        src:   m.poster,
+        alt:   m.title
+    }));
 
     /* ============================================================
        RENDER GRID
@@ -499,3 +498,13 @@ renderGrid(allMovies, savedPage);                                              /
       tickTimer();
     }
 }
+
+let mobileHomeInitialized = false;
+function tryInitMobileHome() {
+    if (window.innerWidth <= 768 && !mobileHomeInitialized) {
+        mobileHomeInitialized = true;
+        initMobileHome();
+    }
+}
+tryInitMobileHome();
+window.addEventListener('resize', tryInitMobileHome);

@@ -346,6 +346,39 @@ body:has(.genres-container) .search-box {
     top: 116px;
     font-family: Rockwell, sans-serif;
 }
+.search-dropdown {
+    position: absolute;
+    top: 35px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.97);
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+    border-radius: 5px;
+    z-index: 5000;
+    display: none;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #ffcc00 transparent;
+
+}
+.search-dropdown::-webkit-scrollbar {
+    width: 8px;
+}
+.search-dropdown::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 6px 0;
+}
+.search-dropdown::-webkit-scrollbar-thumb {
+    background: #ffcc00;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+
+
+
 /* -------------------- ANIMATIONS -------------------- */
 @keyframes fadeIn {
     from { opacity: 0; }

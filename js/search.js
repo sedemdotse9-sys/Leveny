@@ -65,8 +65,10 @@ document.addEventListener("DOMContentLoaded", () => {
    Used on: every movie HTML page (mobile layout only)
 ============================================================ */
 // ★ CHANGED — wait for full page before looking for mobile elements
-window.addEventListener('load', () => {
-    if (window.innerWidth <= 768) {
+let mobileMovieSearchInitialized = false;
+function initMobileMovieSearch() {
+    if (window.innerWidth <= 768 && !mobileMovieSearchInitialized) {
+        mobileMovieSearchInitialized = true;
 
         /* ---------- Dark Mode ---------- */
         const stored      = localStorage.getItem('leveny-dark');
@@ -137,4 +139,6 @@ window.addEventListener('load', () => {
             });
         }
     }
-});
+}
+document.addEventListener('DOMContentLoaded', initMobileMovieSearch);
+window.addEventListener('resize', initMobileMovieSearch);

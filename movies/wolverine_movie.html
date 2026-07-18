@@ -266,7 +266,26 @@
         backdrop-filter: blur(20px);
         border: 1px solid var(--mob-accent-dim-light);
         box-shadow: 0 8px 30px var(--mob-accent-dim-light);
-      }
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--mob-accent, #00A8FF) transparent;
+}
+#mobMovieSearchDrop::-webkit-scrollbar {
+    width: 8px;
+}
+#mobMovieSearchDrop::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 8px 0;
+}
+#mobMovieSearchDrop::-webkit-scrollbar-thumb {
+    background: var(--mob-accent, #00A8FF);
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+
+
 
       body.dark-mode #mobMovieSearchDrop {
         background: rgba(18,18,18,0.97);
@@ -685,7 +704,7 @@
   </style>
 </head>
 
-<body>
+<body data-current-movie="wolverine_movie.html">
 
   <!-- ============================================================
        DESKTOP LAYOUT — completely unchanged
@@ -724,7 +743,7 @@
   <main class="movie-page">
     <section class="video-section">
       <div class="frost-wrap" id="frostWrap">
-        <iframe src="https://vidsrc.me/embed/movie/tt0376994"
+        <iframe src="https://vidsrc.me/embed/movie/tt1430132"
           width="100%" height="430"
           frameborder="0" allowfullscreen
           allow="autoplay; fullscreen">
@@ -753,12 +772,7 @@
       <p class="summary">
         After the events of X-Men: The Last Stand, Logan (Wolverine) travels to Japan, trying to leave his violent past behind and live a quieter life. But when he becomes entangled with the powerful Yashida family, including a dying industrialist who wants to bestow immortality upon Logan, he's pulled back into a world of danger, betrayal, and deadly adversaries.
       </p>
-      <div class="related-movies">
-        <div class="related-card">
-          <a href="uncharted_movie.html" class="poster" style="background-image: url('../images/backgrounds/un.jpg');"></a>
-          <p class="related-title">Uncharted</p>
-        </div>
-      </div>
+      <div class="related-movies"></div>
     </section>
   </main>
 
@@ -784,7 +798,7 @@
 
     <div id="mobVideoWrap">
       <div id="mobFrostWrap">
-        <iframe src="https://vidsrc.me/embed/movie/tt0376994"
+        <iframe src="https://vidsrc.me/embed/movie/tt1430132"
           width="100%" height="240"
           frameborder="0" allowfullscreen
           allow="autoplay; fullscreen; picture-in-picture">
@@ -813,39 +827,10 @@
     </div>
 
     <div id="mobRelatedLabel">You Might Also Like</div>
-    <div id="mobRelatedGrid">
-      <a href="uncharted_movie.html" class="mob-related-card">
-        <img src="../images/posters/uncharted.jpg" alt="Uncharted" loading="lazy">
-        <div class="mob-related-card-info">
-          <div class="mob-related-card-title">Uncharted</div>
-          <div class="mob-related-card-genre">Action</div>
-        </div>
-      </a>
-      <a href="the_meg_movie.html" class="mob-related-card">
-        <img src="../images/posters/themeg.jpg" alt="The Meg" loading="lazy">
-        <div class="mob-related-card-info">
-          <div class="mob-related-card-title">The Meg</div>
-          <div class="mob-related-card-genre">Action</div>
-        </div>
-      </a>
-      <a href="jumanji_movie.html" class="mob-related-card">
-        <img src="../images/posters/jumanji.jpg" alt="Jumanji" loading="lazy">
-        <div class="mob-related-card-info">
-          <div class="mob-related-card-title">Jumanji</div>
-          <div class="mob-related-card-genre">Action</div>
-        </div>
-      </a>
-      <a href="minions_rise_of_gru_movie.html" class="mob-related-card">
-        <img src="../images/posters/minions.jpg" alt="Minions: Rise of Gru" loading="lazy">
-        <div class="mob-related-card-info">
-          <div class="mob-related-card-title">Minions: Rise of Gru</div>
-          <div class="mob-related-card-genre">Animation</div>
-        </div>
-      </a>
-      <div id="mobFooter">
+    <div id="mobRelatedGrid"></div>
+  <div id="mobFooter">
         <a href="../disclaimer.html">Disclaimer!</a>
       </div>
-    </div>
 
   </div>
 
@@ -896,6 +881,7 @@
        SCRIPTS
   ============================================================ -->
   <script src="../js/movies.js"></script>
+  <script src="../js/related.js"></script>
   <script src="../js/script.js"></script>
   <script src="../js/search.js"></script>
 
