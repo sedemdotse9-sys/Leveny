@@ -65,4 +65,5 @@ const LEVENY_MOVIES = [
     { title: "Kpop Demon Hunters",               href: "../movies/kpop_demon_hunters_movie.html",          genre: "animation", poster: "images/posters/kpop.jpg",             discover: 7 },
     { title: "Monster High",                     href: "../movies/monster_high_movie.html",                genre: "musical",   poster: "images/posters/mh.jpg",               discover: 7 },
     { title: "Tangled",                          href: "../movies/tangled_movie.html",                     genre: "animation", poster: "images/posters/tangled.jpg",          discover: 7 },
+    { title: "Avatar Aang: The Last Airbender", href: "../movies/avatar_aang_the_last_airbender_movie.html", genre: "fantasy", poster: "images/posters/avatar_aang_the_last_airbender.jpg", discover: 7 }
 ];
