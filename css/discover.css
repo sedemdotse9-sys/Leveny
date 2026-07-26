@@ -504,7 +504,7 @@ header hr {
 .page-number.active { background: var(--page-active-bg); color: var(--page-active-color); border-color: var(--page-active-bg); }
 
 footer.copyright { text-align: center; color: var(--footer-color); padding: 20px; font-family: Rockwell, sans-serif; font-size: 14px; background: transparent; }
-footer.copyright a { color: white; text-decoration: none; }
+footer.copyright a { color: black; text-decoration: none; }
 
 /* Responsive (unchanged from originals) */
 @media (max-width: 1400px) {
