@@ -102,6 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const theme = THEMES[currentThemeIndex];
         return (LEVENY_MOVIES || [])
             .filter(m => m.discover === theme.id)
+            .reverse() // newest-added movie of this color shows first
             .map(m => ({
                 title: m.title,
                 img: m.poster.replace('images/', 'images/'), // poster path as-is
