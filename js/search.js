@@ -1,6 +1,7 @@
 /* ============================================================
    search.js — Leveny
-   Handles BOTH desktop and mobile search.
+   Handles BOTH desktop and mobile search, PLUS the dynamic
+   homepage poster rows (color-coded, pulled from movies.js).
    All movie data lives in movies.js (LEVENY_MOVIES).
    Never hardcode movies here — edit movies.js only.
 ============================================================ */
@@ -142,3 +143,85 @@ function initMobileMovieSearch() {
 }
 document.addEventListener('DOMContentLoaded', initMobileMovieSearch);
 window.addEventListener('resize', initMobileMovieSearch);
+
+
+/* ============================================================
+   HOMEPAGE DYNAMIC POSTER ROWS
+   Fills each slide's poster row (.movie-list, .movie-list-2, etc.)
+   from LEVENY_MOVIES, based on that slide's color (m.discover).
+   Newest-added movie of that color appears first; the banner
+   movie itself is left completely alone (excluded from its row,
+   never edited). Capped at 7 posters per row.
+   Runs only where these row containers exist (i.e. index.html).
+============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof LEVENY_MOVIES === 'undefined') return;
+
+    // Which movie is the hand-written banner for each color — excluded from its row, never touched
+    const BANNER_HREF = {
+        1: 'movies/avatar_way_of_water_movie.html',
+        2: 'movies/jurassic_park_dominion_movie.html',
+        3: 'movies/the_grinch_movie.html',
+        4: 'movies/deadpool_movie.html',
+        5: 'movies/batman_the_dark_knigt_movie.html',
+        6: 'movies/lion_king_movie.html',
+        7: 'movies/ballerina_movie.html',
+    };
+
+    // Which row container belongs to which color
+    const ROW_SELECTOR = {
+        1: '.slide1 .movie-list',
+        2: '.slide2 .movie-list-2',
+        3: '.slide3 .movie-list-3',
+        4: '.slide4 .movie-list-4',
+        5: '.slide5 .movie-list-5',
+        6: '.slide6 .movie-list-6',
+        7: '.slide7 .movie-list-7',
+    };
+
+    const MAX_PER_ROW = 7;
+    let anyRowFound = false;
+
+    Object.keys(ROW_SELECTOR).forEach(key => {
+        const colorId = Number(key);
+        const container = document.querySelector(ROW_SELECTOR[colorId]);
+        if (!container) return;
+        anyRowFound = true;
+
+        const bannerHref = BANNER_HREF[colorId];
+
+        const moviesForColor = LEVENY_MOVIES
+            .filter(m => m.discover === colorId && m.href.replace('../', '') !== bannerHref)
+            .slice()      // don't mutate the original array
+            .reverse()    // newest-added (last in array) shows first
+            .slice(0, MAX_PER_ROW);
+
+        container.innerHTML = '';
+
+        moviesForColor.forEach(m => {
+            const a = document.createElement('a');
+            a.href = m.href.replace('../', '');
+
+            const item = document.createElement('div');
+            item.className = 'movie-item';
+            item.dataset.title = m.title;
+            item.dataset.genre = capitalizeFirst(m.genre);
+
+            const img = document.createElement('img');
+            img.src = m.poster;
+            img.alt = m.title;
+
+            item.appendChild(img);
+            a.appendChild(item);
+            container.appendChild(a);
+        });
+    });
+
+    // No-op on pages without these rows (movie pages, genres.html, etc.)
+    if (!anyRowFound) return;
+
+    function capitalizeFirst(str) {
+        if (!str) return str;
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+});

@@ -245,7 +245,7 @@ function initMobileHome() {
        "All Movies" grid — no need to also hand-add a .movie-item
        to a desktop slide.
     ============================================================ */
-    const allMovies = (typeof LEVENY_MOVIES !== 'undefined' ? LEVENY_MOVIES : []).map(m => ({
+    const allMovies = (typeof LEVENY_MOVIES !== 'undefined' ? LEVENY_MOVIES.slice().reverse() : []).map(m => ({
         title: m.title,
         genre: (m.genre || 'all').toLowerCase().replace(/[^a-z]/g, ''),
         href:  m.href.replace('../movies/', 'movies/'), // homepage sits at root, movies.js hrefs are written for movie pages
