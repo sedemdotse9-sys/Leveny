@@ -346,7 +346,7 @@ header {
 }
 
 .nav_bar { display: flex; align-items: center; padding: 0 70px; }
-.nav_bar .logo { color: var(--nav-color); font-size: 30px; font-family: 'Bebas Neue', sans-serif; letter-spacing: 4px; font-size: 35px; font-weight: 400;}
+.nav_bar .logo { color: var(--nav-color); font-size: 35px; font-family: 'Bebas Neue', sans-serif; letter-spacing: 4px; font-weight: 400;}
 
 .nav_links { margin-left: auto; display: flex; align-items: center; gap: 35px; }
 .nav_links a { text-decoration: none; color: var(--nav-color); font-size: 21px; display: flex; align-items: center; transition: all 0.3s; }
