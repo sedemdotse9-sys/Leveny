@@ -44,7 +44,7 @@ const LEVENY_MOVIES = [
     { title: "Red One",                          href: "../movies/red_one_movie.html",                     genre: "family",    poster: "images/posters/ro.jpg",               discover: 4 },
     { title: "Batman: The Dark Knight",          href: "../movies/batman_the_dark_knigt_movie.html",       genre: "superhero", poster: "images/posters/batman_dark.jpg",      discover: 5 },
     { title: "Cruella",                          href: "../movies/cruella_movie.html",                     genre: "family",    poster: "images/posters/cr.jpg",               discover: 5 },
-    { title: "Scream 5",                           href: "../movies/scream_movie.html",                      genre: "horror",    poster: "images/posters/sc.jpg",               discover: 5 },
+    { title: "Scream",                           href: "../movies/scream_movie.html",                      genre: "horror",    poster: "images/posters/sc.jpg",               discover: 5 },
     { title: "The Nun",                          href: "../movies/the_nun_movie.html",                     genre: "horror",    poster: "images/posters/tn.jpg",               discover: 5 },
     { title: "A Quiet Place",                    href: "../movies/a_quiet_place_movie.html",               genre: "thriller",  poster: "images/posters/qp.jpg",               discover: 5 },
     { title: "Twilight",                         href: "../movies/twilight_movie.html",                    genre: "fantasy",   poster: "images/posters/tw.jpg",               discover: 5 },
