@@ -25,6 +25,10 @@
    That's it. Related movies (same genre first, random selection,
    never itself) are generated automatically, on both layouts, and
    stay in sync automatically whenever you add/edit movies.js.
+
+   NOTE: related cards use each movie's BACKGROUND image
+   (m.background), not its poster — matches the movie page's own
+   backdrop style rather than the discover/genre poster look.
 ============================================================ */
 
 (function () {
@@ -80,7 +84,7 @@
     if (desktopWrap) {
         desktopWrap.innerHTML = desktopRelated.map(m => `
             <div class="related-card">
-                <a href="${fileName(m.href)}" class="poster" style="background-image: url('../${m.poster}');"></a>
+                <a href="${fileName(m.href)}" class="poster" style="background-image: url('../${m.background}');"></a>
                 <p class="related-title">${m.title}</p>
             </div>
         `).join('');
@@ -91,7 +95,7 @@
     if (mobileWrap) {
         mobileWrap.innerHTML = related.map(m => `
             <a href="${fileName(m.href)}" class="mob-related-card">
-                <img src="../${m.poster}" alt="${m.title}" loading="lazy">
+                <img src="../${m.background}" alt="${m.title}" loading="lazy">
                 <div class="mob-related-card-info">
                     <div class="mob-related-card-title">${m.title}</div>
                     <div class="mob-related-card-genre">${cap(m.genre)}</div>
