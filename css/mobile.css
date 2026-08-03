@@ -78,6 +78,7 @@ footer a {
                 var(--accent-dim) 0%, transparent 55%);
     }
 
+
     /* All UI above bg */
     #mobileHeader,
     #mobileSearchWrapper,
@@ -91,6 +92,34 @@ footer a {
         position: relative;
         z-index: 1;
     }
+
+    /* -------- MOBILE PAGE SCROLLBAR -------- */
+    body {
+        scrollbar-width: thin;                 /* Firefox */
+        scrollbar-color: var(--accent) transparent;
+    }
+
+    body::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    body::-webkit-scrollbar-track {
+        background: transparent;
+        margin: 6px 0;
+    }
+
+    body::-webkit-scrollbar-thumb {
+        background: var(--accent);
+        border-radius: 10px;          /* rounds top + bottom edges of the thumb */
+        border: 2px solid transparent;
+        background-clip: padding-box;
+    }
+
+    body.dark-mode::-webkit-scrollbar-thumb {
+        background: var(--accent);
+        box-shadow: 0 0 6px var(--accent-glow);
+    }
+
 
     /* ============================================================
        MOBILE HEADER
@@ -525,6 +554,7 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accen
     }
 
     body.dark-mode .mob-card-genre { color: #555; }
+
 
     /* ============================================================
        BOTTOM NAV BAR
