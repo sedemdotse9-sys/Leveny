@@ -95,7 +95,7 @@
     if (mobileWrap) {
         mobileWrap.innerHTML = related.map(m => `
             <a href="${fileName(m.href)}" class="mob-related-card">
-                <img src="../${m.background}" alt="${m.title}" loading="lazy">
+                <img src="../${m.poster}" alt="${m.title}" loading="lazy">
                 <div class="mob-related-card-info">
                     <div class="mob-related-card-title">${m.title}</div>
                     <div class="mob-related-card-genre">${cap(m.genre)}</div>
