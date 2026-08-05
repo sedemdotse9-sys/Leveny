@@ -976,7 +976,7 @@ img {
 }
 
 /* Show only on phones */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     #mobileMoviesPagination {
         display: flex;
     }

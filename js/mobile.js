@@ -501,7 +501,7 @@ renderGrid(allMovies, savedPage);                                              /
 
 let mobileHomeInitialized = false;
 function tryInitMobileHome() {
-    if (window.innerWidth <= 768 && !mobileHomeInitialized) {
+    if (window.innerWidth <= 1024 && !mobileHomeInitialized) {
         mobileHomeInitialized = true;
         initMobileHome();
     }
