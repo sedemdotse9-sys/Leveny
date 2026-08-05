@@ -14,7 +14,7 @@
 /* ============================================================
    HIDE DESKTOP ON MOBILE
 ============================================================ */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
 
     header,
     .slider-wrapper,
@@ -789,7 +789,7 @@ body.dark-mode .mob-page-btn.active {
 /* ============================================================
    HIDE ALL MOBILE UI ON DESKTOP
 ============================================================ */
-@media screen and (min-width: 769px) {
+@media screen and (min-width: 1025px) {
     #mobileHeader,
     #mobileSearchWrapper,
     #mobileSearchResults,
@@ -809,7 +809,7 @@ body.dark-mode .mob-page-btn.active {
 }
 
 /* Show only on mobile */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
     #mobileMoviesPagination {
         display: flex;
     }
