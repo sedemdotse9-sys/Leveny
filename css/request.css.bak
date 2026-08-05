@@ -327,7 +327,7 @@ body {
 }
 
 /* Responsive */
-@media (max-width: 1024px) {
+@media (max-width: 768px) {
     .request-container {
         margin-top: 100px;
         padding: 0 20px;
@@ -374,7 +374,7 @@ body {
     }
 }
 
-@media screen and (min-width: 1025px) {
+@media screen and (min-width: 769px) {
     #mobileGenresPanel,
     #genresPanelBackdrop,
     #mobileFooter,
