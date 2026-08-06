@@ -1,15 +1,3 @@
-
-function __isMobileViewport() {
-  // True for phones/tablets in portrait (width <=1024) AND for tablets
-  // rotated to landscape (their short side, now the height, is <=1024
-  // and they're a touch device -- this is what keeps a rotated tablet
-  // from being mistaken for a small laptop).
-  return window.innerWidth <= 1024 ||
-    (window.matchMedia('(orientation: landscape)').matches &&
-     window.innerHeight <= 1024 &&
-     window.matchMedia('(pointer: coarse)').matches);
-}
-
 /* ============================================================
    MOBILE.JS — Leveny
    Neon accent system + dark/light toggle button.
@@ -513,7 +501,7 @@ renderGrid(allMovies, savedPage);                                              /
 
 let mobileHomeInitialized = false;
 function tryInitMobileHome() {
-    if (__isMobileViewport() && !mobileHomeInitialized) {
+    if (window.innerWidth <= 1024 && !mobileHomeInitialized) {
         mobileHomeInitialized = true;
         initMobileHome();
     }

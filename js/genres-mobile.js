@@ -1,3 +1,15 @@
+
+function __isMobileViewport() {
+  // True for phones/tablets in portrait (width <=1024) AND for tablets
+  // rotated to landscape (their short side, now the height, is <=1024
+  // and they're a touch device -- this is what keeps a rotated tablet
+  // from being mistaken for a small laptop).
+  return window.innerWidth <= 1024 ||
+    (window.matchMedia('(orientation: landscape)').matches &&
+     window.innerHeight <= 1024 &&
+     window.matchMedia('(pointer: coarse)').matches);
+}
+
 /* ============================================================
    GENRES-MOBILE.JS — Leveny
    When a genre icon is tapped in the slide-up panel:
@@ -7,7 +19,7 @@
    4. Back button restores homepage view
 ============================================================ */
 
-if (window.innerWidth <= 1024) {
+if (__isMobileViewport()) {
 
     const MOVIES_PER_PAGE = 18; // 2 columns × 9 rows
 

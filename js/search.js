@@ -1,3 +1,15 @@
+
+function __isMobileViewport() {
+  // True for phones/tablets in portrait (width <=1024) AND for tablets
+  // rotated to landscape (their short side, now the height, is <=1024
+  // and they're a touch device -- this is what keeps a rotated tablet
+  // from being mistaken for a small laptop).
+  return window.innerWidth <= 1024 ||
+    (window.matchMedia('(orientation: landscape)').matches &&
+     window.innerHeight <= 1024 &&
+     window.matchMedia('(pointer: coarse)').matches);
+}
+
 /* ============================================================
    search.js — Leveny
    Handles BOTH desktop and mobile search, PLUS the dynamic
@@ -68,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // ★ CHANGED — wait for full page before looking for mobile elements
 let mobileMovieSearchInitialized = false;
 function initMobileMovieSearch() {
-    if (window.innerWidth <= 1024 && !mobileMovieSearchInitialized) {
+    if (__isMobileViewport() && !mobileMovieSearchInitialized) {
         mobileMovieSearchInitialized = true;
 
         /* ---------- Dark Mode ---------- */

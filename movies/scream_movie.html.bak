@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Scream</title>
+  <title>Scream 5 | Leveny</title>
 
   <link rel="stylesheet" href="../css/style33.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -31,10 +31,12 @@
       #mobHeader,
       #mobMovieSearchBar,
       #mobPage,
-      #mobBottomNav { display: none !important; }
+      #mobBottomNav { display: none !important;
+        padding: 0 4px env(safe-area-inset-bottom, 8px);
+    }
     }
 
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 1024px) {
 
       /* ---- Hide ALL desktop elements ---- */
       header,
@@ -99,7 +101,8 @@
       #mobBottomNav {
         position: relative;
         z-index: 1;
-      }
+        padding: 0 4px env(safe-area-inset-bottom, 8px);
+    }
 
       /* ============================================================
          HEADER
@@ -238,7 +241,7 @@
         border: none;
         background: transparent;
         outline: none;
-        font-size: 15px;
+        font-size: 16px;
         color: #111;
         width: 100%;
         font-family: Rockwell, sans-serif;
@@ -263,7 +266,26 @@
         backdrop-filter: blur(20px);
         border: 1px solid var(--mob-accent-dim-light);
         box-shadow: 0 8px 30px var(--mob-accent-dim-light);
-      }
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--mob-accent, #00A8FF) transparent;
+}
+#mobMovieSearchDrop::-webkit-scrollbar {
+    width: 8px;
+}
+#mobMovieSearchDrop::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 8px 0;
+}
+#mobMovieSearchDrop::-webkit-scrollbar-thumb {
+    background: var(--mob-accent, #00A8FF);
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+
+
 
       body.dark-mode #mobMovieSearchDrop {
         background: rgba(18,18,18,0.97);
@@ -292,7 +314,7 @@
          MAIN PAGE CONTENT
       ============================================================ */
       #mobPage {
-        padding: 14px 12px 100px;
+        padding: 14px 12px 76px;
         display: flex;
         flex-direction: column;
         gap: 14px;
@@ -352,6 +374,40 @@
 
       #mobDownloadBtn:active { transform: scale(0.97); }
       #mobDownloadBtn i { font-size: 16px; }
+      .mob-broken-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        margin-top: -2px;
+        font-family: Rockwell, sans-serif;
+        font-size: 12px;
+        color: rgba(60,60,60,0.60);
+        text-decoration: none;
+        transition: color 0.4s ease;
+      }
+
+      .mob-broken-link i {
+        font-size: 11px;
+        color: var(--mob-accent);
+      }
+
+      body.dark-mode .mob-broken-link {
+        color: rgba(220,220,220,0.55);
+      }
+
+      .mob-broken-link:active {
+        opacity: 0.65;
+      }
+      .mob-broken-link.reported {
+        color: #2ecc71 !important;
+        pointer-events: none;
+        cursor: default;
+      }
+
+      .mob-broken-link.reported i {
+        color: #2ecc71 !important;
+      }
 
       /* MOVIE INFO */
       #mobMovieInfo {
@@ -550,7 +606,8 @@
         border-top: 1px solid var(--mob-accent-dim);
         box-shadow: 0 -4px 24px rgba(0,0,0,0.5),
                     0 -1px 0 var(--mob-accent-dim);
-      }
+        padding: 0 4px env(safe-area-inset-bottom, 8px);
+    }
 
       .mob-movie-nav-item {
         display: flex;
@@ -599,11 +656,60 @@
         text-align: center;
       }
 
+    
+      #mobFrostWrap {
+        position: relative;
+        width: 100%;
+      }
+
+      #mobFrostWrap iframe {
+        width: 100%;
+        height: 240px;
+        border: none;
+        display: block;
+        filter: blur(10px);
+        transition: filter 0.4s ease;
+      }
+
+      #mobFrostWrap.unblurred iframe {
+        filter: blur(0);
+      }
+
+      #mobFrostClick {
+        position: absolute;
+        inset: 0;
+        z-index: 10;
+        cursor: pointer;
+        border-radius: 20px;
+      }
+
+      #mobFrostWrap.unblurred #mobFrostClick {
+        display: none;
+      }
+
     } /* end @media 768px */
+
+      #mobFooter {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 8px 12px 4px;
+        font-family: Rockwell, sans-serif;
+        font-size: 12px;
+      }
+
+      #mobFooter a {
+        color: var(--mob-accent, #00A8FF);
+        text-decoration: none;
+      }
   </style>
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/favicon/site.webmanifest" />
 </head>
 
-<body>
+<body data-current-movie="scream_movie.html">
 
   <!-- ============================================================
        DESKTOP LAYOUT — completely unchanged
@@ -641,14 +747,22 @@
 
   <main class="movie-page">
     <section class="video-section">
-      <video controls>
-        <source src="../videos/scream.mp4" type="video/mp4">
-      </video>
+      <div class="frost-wrap" id="frostWrap">
+        <iframe src="https://vidsrc.me/embed/movie/tt11245972"
+          width="100%" height="430"
+          frameborder="0" allowfullscreen
+          allow="autoplay; fullscreen">
+        </iframe>
+        <div class="frost-click" id="frostClick"></div>
+      </div>
       <button class="download-btn">
-        <a href="https://transfer.it/t/scream-download" download>
+        <a href="https://transfer.it/t/IXlaz4o1GRTB" download>
           <i class="fa fa-download"></i> Download
         </a>
       </button>
+      <a class="broken-link" href="#" data-movie="Scream">
+        <i class="fas fa-triangle-exclamation"></i> Broken download link?
+      </a>
     </section>
     <section class="details-section">
       <h3 class="movie-title">SCREAM</h3>
@@ -658,21 +772,12 @@
         <div class="search-dropdown" id="searchDropdown"></div>
       </div>
       <p class="info">
-        1996 &nbsp;|&nbsp; <span>111mins 00secs</span> &nbsp;|&nbsp; Horror
+        2022 &nbsp;|&nbsp; <span>114mins 00secs</span> &nbsp;|&nbsp; Horror
       </p>
       <p class="summary">
-        High schooler Sidney Prescott faces a masked Ghostface killer in Woodsboro who taunts victims with horror movie trivia. As friends Randy, Tatum, and Stu fall one by one, Sidney uncovers Billy Loomis and Stu Macher as the killers seeking twisted revenge and movie-style fame.
+        Twenty-five years after a masked killer terrorized the town of Woodsboro, a new Ghostface emerges, targeting a group of teenagers connected to the original murders in order to resurrect the town's deadly past. As the body count rises, the survivors of the first attacks — Sidney Prescott, Gale Weathers, and Dewey Riley — are drawn back in to help the new generation confront a killer who knows the rules of the game all too well.
       </p>
-      <div class="related-movies">
-        <div class="related-card">
-          <a href="cruella_movie.html" class="poster" style="background-image: url('../images/backgrounds/cruella_backg.jpg');"></a>
-          <p class="related-title">Cruella</p>
-        </div>
-        <div class="related-card">
-          <a href="game_of_thrones_movie.html" class="poster" style="background-image: url('../images/backgrounds/game_of_thrones_backg.jpg');"></a>
-          <p class="related-title">Game of Thrones</p>
-        </div>
-      </div>
+      <div class="related-movies"></div>
     </section>
   </main>
 
@@ -697,44 +802,40 @@
   <div id="mobPage">
 
     <div id="mobVideoWrap">
-      <video controls playsinline>
-        <source src="../videos/scream.mp4" type="video/mp4">
-      </video>
+      <div id="mobFrostWrap">
+        <iframe src="https://vidsrc.me/embed/movie/tt11245972"
+          width="100%" height="240"
+          frameborder="0" allowfullscreen
+          allow="autoplay; fullscreen; picture-in-picture">
+        </iframe>
+        <div id="mobFrostClick"></div>
+      </div>
     </div>
 
-    <a href="https://transfer.it/t/scream-download" download id="mobDownloadBtn">
+    <a href="https://transfer.it/t/IXlaz4o1GRTB" download id="mobDownloadBtn">
       <i class="fas fa-download"></i> Download Movie
+    </a>
+    <a class="mob-broken-link" href="#" data-movie="Scream">
+      <i class="fas fa-triangle-exclamation"></i> Broken download link?
     </a>
 
     <div id="mobMovieInfo">
       <div id="mobMovieTitle">SCREAM</div>
       <div id="mobMovieMeta">
-        <span>1996</span>
+        <span>2022</span>
         <span class="mob-meta-badge">Horror</span>
-        <span>111 mins</span>
+        <span>114 mins</span>
       </div>
       <p id="mobMovieSummary">
-        High schooler Sidney Prescott becomes the target of a masked killer who taunts victims with horror trivia. As those around her fall one by one, she races to uncover the truth before Ghostface strikes again.
+        Twenty-five years after a masked killer terrorized the town of Woodsboro, a new Ghostface emerges, targeting a group of teenagers connected to the original murders in order to resurrect the town's deadly past. As the body count rises, the survivors of the first attacks — Sidney Prescott, Gale Weathers, and Dewey Riley — are drawn back in to help the new generation confront a killer who knows the rules of the game all too well.
       </p>
     </div>
 
     <div id="mobRelatedLabel">You Might Also Like</div>
-    <div id="mobRelatedGrid">
-      <a href="cruella_movie.html" class="mob-related-card">
-        <img src="../images/posters/cruella.jpg" alt="Cruella" loading="lazy">
-        <div class="mob-related-card-info">
-          <div class="mob-related-card-title">Cruella</div>
-          <div class="mob-related-card-genre">Family</div>
-        </div>
-      </a>
-      <a href="game_of_thrones_movie.html" class="mob-related-card">
-        <img src="../images/posters/game_of_thrones.jpg" alt="Game of Thrones" loading="lazy">
-        <div class="mob-related-card-info">
-          <div class="mob-related-card-title">Game of Thrones</div>
-          <div class="mob-related-card-genre">Fantasy</div>
-        </div>
-      </a>
-    </div>
+    <div id="mobRelatedGrid"></div>
+  <div id="mobFooter">
+        <a href="../disclaimer.html">Disclaimer!</a>
+      </div>
 
   </div>
 
@@ -757,12 +858,13 @@
        SCRIPTS
   ============================================================ -->
   <script src="../js/movies.js"></script>
+  <script src="../js/related.js"></script>
   <script src="../js/script.js"></script>
   <script src="../js/search.js"></script>
 
   <footer class="copyright">
-    <p>© LevenyClubStudios. All rights reserved.</p>
-  </footer>
+    <a href="../disclaimer.html">Disclaimer!</a>
+</footer>
 
 
   <!-- GENRES PANEL BACKDROP -->
@@ -795,7 +897,7 @@
 
   <script>
     (function () {
-      if (window.innerWidth > 768) return;
+      if (window.innerWidth > 1024) return;
 
       const btn      = document.getElementById('mobGenresBtn');
       const panel    = document.getElementById('mobGenrePanel');
@@ -818,5 +920,58 @@
     })();
   </script>
 
+  <script>
+    document.getElementById('frostClick')?.addEventListener('click', function () {
+      document.getElementById('frostWrap').classList.add('unblurred');
+    });
+  </script>
+  <script>
+    document.getElementById('mobFrostClick')?.addEventListener('click', function () {
+      document.getElementById('mobFrostWrap').classList.add('unblurred');
+    });
+  </script>
+
+
+  <!-- broken-link-report-script (Formspree version) -->
+  <script>
+    (function () {
+      const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xgoyjjgj'; // <-- replace with your real endpoint
+
+      document.querySelectorAll('.broken-link, .mob-broken-link').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          if (link.classList.contains('reported') || link.classList.contains('sending')) return;
+
+          const movie = link.dataset.movie || document.title;
+          link.classList.add('sending');
+          link.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Reporting...';
+
+          const data = new FormData();
+          data.append('subject', 'Broken Download Link');
+          data.append('message', `The download link for "${movie}" appears to be broken and needs fixing.`);
+          data.append('page', window.location.href);
+
+          fetch(FORMSPREE_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Accept': 'application/json' },
+            body: data
+          })
+          .then(function (response) {
+            link.classList.remove('sending');
+            if (response.ok) {
+              link.classList.add('reported');
+              link.innerHTML = '<i class="fas fa-circle-check"></i> Thanks, reported!';
+            } else {
+              link.innerHTML = '<i class="fas fa-triangle-exclamation"></i> Failed, try again?';
+            }
+          })
+          .catch(function () {
+            link.classList.remove('sending');
+            link.innerHTML = '<i class="fas fa-triangle-exclamation"></i> Failed, try again?';
+          });
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
