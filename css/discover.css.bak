@@ -531,7 +531,7 @@ footer.copyright a { color: black; text-decoration: none; }
     .grid-movie-item .movie-image-container { height: 180px; }
     .discover-arrow-left, .discover-arrow-right { width: 40px; height: 40px; font-size: 18px; }
 }
-@media (max-width: 1024px) {
+@media (max-width: 768px) {
     .discover-wrapper { padding: 30px 20px 80px; }
     .movies-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 100%; }
     .grid-movie-item { height: 224px; }

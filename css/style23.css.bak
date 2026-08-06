@@ -7,7 +7,7 @@
 
 body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  background: url(../images/backgrounds/b10.jpg) center/cover fixed no-repeat;
+  background: url(../images/backgrounds/the_grinch_backg.jpg) center/cover fixed no-repeat;
   color: #f5f5f5;
   position: relative;
 }
@@ -111,7 +111,6 @@ body::before {
   from { opacity: 0; }
   to { opacity: 1; }
 }
-
 /* -------------------- HEADER / NAVBAR -------------------- */
 header {
   position: fixed;
@@ -141,7 +140,6 @@ header {
   display: flex;
   gap: 35px;
   margin-left: auto;
-  align-items: center;
 }
 
 .nav_links a {
@@ -215,6 +213,37 @@ header hr {
 .download-btn i {
   margin-right: 8px;
 }
+
+.broken-link {
+  display: block;
+  text-align: center;
+  margin-top: 12px;
+  font-family: Rockwell, sans-serif;
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.broken-link i {
+  margin-right: 6px;
+  color: rgba(255,255,255,0.55);
+  transition: color 0.3s;
+}
+
+.broken-link:hover,
+.broken-link:hover i {
+  color: yellow;
+}
+
+.broken-link.reported,
+.broken-link.reported i {
+  color: #2ecc71 !important;
+  pointer-events: none;
+  cursor: default;
+}
+
+
 
 
 /* ---- Frosted Glass on Desktop Video ---- */
@@ -316,13 +345,34 @@ header hr {
   width: 100%;
   max-height: 300px;
   overflow-y: auto;
-  background: rgba(0,0,0,0.95);
+  background: rgba(0, 0, 0, 0.97);
   border-radius: 5px;
   display: none;
   z-index: 1000;
   box-shadow: 0 4px 12px rgba(0,0,0,0.5);
   transition: all 0.2s ease;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #ffcc00 transparent;
 }
+
+/* === AUTO-INJECTED: search scrollbar fix === */
+.search-dropdown::-webkit-scrollbar {
+    width: 8px;
+}
+
+.search-dropdown::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 6px 0;
+}
+
+.search-dropdown::-webkit-scrollbar-thumb {
+    background: #ffcc00;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
 
 .dropdown-item {
   padding: 10px 12px;
@@ -359,8 +409,9 @@ header hr {
 
 /* -------------------- RELATED MOVIES -------------------- */
 .related-movies {
-  display: flex;
+  display: grid;
   gap: 35px;
+    grid-template-columns: repeat(2, 1fr);
 }
 
 .related-card {
@@ -385,9 +436,9 @@ header hr {
 }
 
 .related-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 22px;
-  letter-spacing: 1px;
+  font-family: 'Rockwell', sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.5px;
   color: white;
   margin-top: 8px;
   font-weight: 400;
@@ -402,8 +453,12 @@ footer {
   font-family: Rockwell, sans-serif;
 }
 
-/* -------------------- RESPONSIVE DESIGN -------------------- */
+footer a {
+  color: white;
+  text-decoration: none;
+}
 
+/* -------------------- RESPONSIVE DESIGN -------------------- */
 /* Large Tablets (1024px and below) */
 @media screen and (max-width: 1024px) {
   .nav_bar {
@@ -606,11 +661,11 @@ footer {
   }
 
   .logo {
-    font-size: 30px;
-    font-family: 'Bebas Neue', sans-serif;
-    letter-spacing: 4px;
-    font-weight: 100;
-  }
+  font-size: 30px;
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 4px;
+  font-weight: 100;
+}
 
   .nav_links {
     gap: 10px;
@@ -759,10 +814,11 @@ img {
 
 /* ---- Hide ALL mobile elements on desktop ---- */
 @media screen and (min-width: 769px) {
-  #mobHeader,
-  #mobMovieSearchBar,
-  #mobPage,
-  #mobBottomNav,
-  #mobGenrePanel,
-  #mobGenreBackdrop { display: none !important; }
+    #mobHeader,
+    #mobMovieSearchBar,
+    #mobPage,
+    #mobBottomNav,
+    #mobGenrePanel,
+    #mobGenreBackdrop,
+    #mobFooter { display: none !important; }
 }

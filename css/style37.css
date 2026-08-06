@@ -825,7 +825,7 @@ img {
 
 
 /* ---- Hide ALL mobile elements on desktop ---- */
-@media screen and (min-width: 769px) {
+@media screen and (min-width: 1025px) {
     #mobHeader,
     #mobMovieSearchBar,
     #mobPage,

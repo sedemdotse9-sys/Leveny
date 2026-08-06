@@ -235,7 +235,7 @@
     }
 }
 
-@media screen and (min-width: 1025px) {
+@media screen and (min-width: 769px) {
     #mobileFooter,
     #mobileGenreView { display: none !important; }
 }

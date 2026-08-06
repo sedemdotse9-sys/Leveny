@@ -224,6 +224,37 @@ header hr {
   margin-right: 8px;
 }
 
+.broken-link {
+  display: block;
+  text-align: center;
+  margin-top: 12px;
+  font-family: Rockwell, sans-serif;
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.broken-link i {
+  margin-right: 6px;
+  color: rgba(255,255,255,0.55);
+  transition: color 0.3s;
+}
+
+.broken-link:hover,
+.broken-link:hover i {
+  color: yellow;
+}
+
+.broken-link.reported,
+.broken-link.reported i {
+  color: #2ecc71 !important;
+  pointer-events: none;
+  cursor: default;
+}
+
+
+
 
 /* ---- Frosted Glass on Desktop Video ---- */
 .frost-wrap {
@@ -324,13 +355,34 @@ header hr {
   width: 100%;
   max-height: 300px;
   overflow-y: auto;
-  background: rgba(0,0,0,0.95);
+  background: rgba(0, 0, 0, 0.97);
   border-radius: 5px;
   display: none;
   z-index: 1000;
   box-shadow: 0 4px 12px rgba(0,0,0,0.5);
   transition: all 0.2s ease;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #ffcc00 transparent;
 }
+
+/* === AUTO-INJECTED: search scrollbar fix === */
+.search-dropdown::-webkit-scrollbar {
+    width: 8px;
+}
+
+.search-dropdown::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 6px 0;
+}
+
+.search-dropdown::-webkit-scrollbar-thumb {
+    background: #ffcc00;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
 
 .dropdown-item {
   padding: 10px 12px;
@@ -367,8 +419,9 @@ header hr {
 
 /* -------------------- RELATED MOVIES -------------------- */
 .related-movies {
-  display: flex;
+  display: grid;
   gap: 35px;
+    grid-template-columns: repeat(2, 1fr);
 }
 
 .related-card {
@@ -393,9 +446,9 @@ header hr {
 }
 
 .related-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 22px;
-  letter-spacing: 1px;
+  font-family: 'Rockwell', sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.5px;
   color: white;
   margin-top: 8px;
   font-weight: 400;
@@ -408,6 +461,11 @@ footer {
   margin: 40px 0;
   font-size: 14px;
   font-family: Rockwell, sans-serif;
+}
+
+footer a {
+  color: white;
+  text-decoration: none;
 }
 
 /* -------------------- RESPONSIVE DESIGN -------------------- */
@@ -909,10 +967,11 @@ img {
 
 /* ---- Hide ALL mobile elements on desktop ---- */
 @media screen and (min-width: 769px) {
-  #mobHeader,
-  #mobMovieSearchBar,
-  #mobPage,
-  #mobBottomNav,
-  #mobGenrePanel,
-  #mobGenreBackdrop { display: none !important; }
+    #mobHeader,
+    #mobMovieSearchBar,
+    #mobPage,
+    #mobBottomNav,
+    #mobGenrePanel,
+    #mobGenreBackdrop,
+    #mobFooter { display: none !important; }
 }
