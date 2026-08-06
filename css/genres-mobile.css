@@ -235,7 +235,7 @@
     }
 }
 
-@media screen and (min-width: 1025px) {
+@media screen and (min-width: 1025px) and (not ((orientation: landscape) and (max-height: 1024px) and (pointer: coarse))) {
     #mobileFooter,
     #mobileGenreView { display: none !important; }
 }

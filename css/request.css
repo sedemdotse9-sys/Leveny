@@ -327,7 +327,8 @@ body {
 }
 
 /* Responsive */
-@media (max-width: 1024px) {
+@media (max-width: 1024px),
+       screen and (orientation: landscape) and (max-height: 1024px) and (pointer: coarse) {
     .request-container {
         margin-top: 100px;
         padding: 0 20px;
@@ -374,7 +375,7 @@ body {
     }
 }
 
-@media screen and (min-width: 1025px) {
+@media screen and (min-width: 1025px) and (not ((orientation: landscape) and (max-height: 1024px) and (pointer: coarse))) {
     #mobileGenresPanel,
     #genresPanelBackdrop,
     #mobileFooter,

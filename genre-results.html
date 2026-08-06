@@ -17,7 +17,7 @@
     ============================================================ */
 
     /* ---- Hide on desktop ---- */
-    @media screen and (min-width: 1025px) {
+    @media screen and (min-width: 1025px) and (not ((orientation: landscape) and (max-height: 1024px) and (pointer: coarse))) {
       #grPage, #grHeader, #grBottomNav { display: none !important; }
       body::after { display: none !important; }
     }

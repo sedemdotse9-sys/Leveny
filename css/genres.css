@@ -397,7 +397,8 @@ body:has(.genres-container) .search-box {
     }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1024px),
+       screen and (orientation: landscape) and (max-height: 1024px) and (pointer: coarse) {
     .genre-slide-header h2 {
         font-size: 32px;
     }
