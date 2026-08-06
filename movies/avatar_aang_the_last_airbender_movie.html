@@ -27,7 +27,7 @@
     }
 
     /* ---- Hide ALL mobile elements on desktop ---- */
-    @media screen and (min-width: 769px) {
+    @media screen and (min-width: 1025px) {
       #mobHeader,
       #mobMovieSearchBar,
       #mobPage,
@@ -36,7 +36,7 @@
     }
     }
 
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 1024px) {
 
       /* ---- Hide ALL desktop elements ---- */
       header,
@@ -755,7 +755,7 @@
         <div class="frost-click" id="frostClick"></div>
       </div>
       <button class="download-btn">
-        <a href="#" download>
+        <a href="https://transfer.it/t/Us66n94HlZiB" download>
           <i class="fa fa-download"></i> Download
         </a>
       </button>
@@ -813,7 +813,7 @@
       </div>
     </div>
 
-    <a href="#" download id="mobDownloadBtn">
+    <a href="https://transfer.it/t/Us66n94HlZiB" download id="mobDownloadBtn">
       <i class="fas fa-download"></i> Download Movie
     </a>
     <a class="mob-broken-link" href="#" data-movie="Avatar Aang: The Last Airbender">
@@ -892,8 +892,19 @@
   <script src="../js/search.js"></script>
 
   <script>
+function __isMobileViewport() {
+  // True for phones/tablets in portrait (width <=1024) AND for tablets
+  // rotated to landscape (their short side, now the height, is <=1024
+  // and they're a touch device -- this is what keeps a rotated tablet
+  // from being mistaken for a small laptop).
+  return window.innerWidth <= 1024 ||
+    (window.matchMedia('(orientation: landscape)').matches &&
+     window.innerHeight <= 1024 &&
+     window.matchMedia('(pointer: coarse)').matches);
+}
+
     (function () {
-      if (window.innerWidth > 768) return;
+      if (!__isMobileViewport()) return;
 
       const btn      = document.getElementById('mobGenresBtn');
       const panel    = document.getElementById('mobGenrePanel');

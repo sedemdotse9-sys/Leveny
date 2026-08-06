@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // ★ CHANGED — wait for full page before looking for mobile elements
 let mobileMovieSearchInitialized = false;
 function initMobileMovieSearch() {
-    if (window.innerWidth <= 768 && !mobileMovieSearchInitialized) {
+    if (window.innerWidth <= 1024 && !mobileMovieSearchInitialized) {
         mobileMovieSearchInitialized = true;
 
         /* ---------- Dark Mode ---------- */

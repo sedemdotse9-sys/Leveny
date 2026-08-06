@@ -36,7 +36,7 @@
     }
     }
 
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 1024px) {
 
       /* ---- Hide ALL desktop elements ---- */
       header,
@@ -266,7 +266,26 @@
         backdrop-filter: blur(20px);
         border: 1px solid var(--mob-accent-dim-light);
         box-shadow: 0 8px 30px var(--mob-accent-dim-light);
-      }
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--mob-accent, #00A8FF) transparent;
+}
+#mobMovieSearchDrop::-webkit-scrollbar {
+    width: 8px;
+}
+#mobMovieSearchDrop::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 8px 0;
+}
+#mobMovieSearchDrop::-webkit-scrollbar-thumb {
+    background: var(--mob-accent, #00A8FF);
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+
+
 
       body.dark-mode #mobMovieSearchDrop {
         background: rgba(18,18,18,0.97);
@@ -295,7 +314,7 @@
          MAIN PAGE CONTENT
       ============================================================ */
       #mobPage {
-        padding: 14px 12px 100px;
+        padding: 14px 12px 76px;
         display: flex;
         flex-direction: column;
         gap: 14px;
@@ -355,6 +374,40 @@
 
       #mobDownloadBtn:active { transform: scale(0.97); }
       #mobDownloadBtn i { font-size: 16px; }
+      .mob-broken-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        margin-top: -2px;
+        font-family: Rockwell, sans-serif;
+        font-size: 12px;
+        color: rgba(60,60,60,0.60);
+        text-decoration: none;
+        transition: color 0.4s ease;
+      }
+
+      .mob-broken-link i {
+        font-size: 11px;
+        color: var(--mob-accent);
+      }
+
+      body.dark-mode .mob-broken-link {
+        color: rgba(220,220,220,0.55);
+      }
+
+      .mob-broken-link:active {
+        opacity: 0.65;
+      }
+      .mob-broken-link.reported {
+        color: #2ecc71 !important;
+        pointer-events: none;
+        cursor: default;
+      }
+
+      .mob-broken-link.reported i {
+        color: #2ecc71 !important;
+      }
 
       /* MOVIE INFO */
       #mobMovieInfo {
@@ -633,10 +686,28 @@
       }
 
     } /* end @media 768px */
+
+      #mobFooter {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 8px 12px 4px;
+        font-family: Rockwell, sans-serif;
+        font-size: 12px;
+      }
+
+      #mobFooter a {
+        color: var(--mob-accent, #00A8FF);
+        text-decoration: none;
+      }
   </style>
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/favicon/site.webmanifest" />
 </head>
 
-<body>
+<body data-current-movie="the_nun_movie.html">
 
   <!-- ============================================================
        DESKTOP LAYOUT — completely unchanged
@@ -687,6 +758,9 @@
           <i class="fa fa-download"></i> Download
         </a>
       </button>
+      <a class="broken-link" href="#" data-movie="The Nun">
+        <i class="fas fa-triangle-exclamation"></i> Broken download link?
+      </a>
     </section>
     <section class="details-section">
       <h3 class="movie-title">THE NUN</h3>
@@ -701,16 +775,7 @@
       <p class="summary">
         A priest with a haunted past and a novice on the verge of her final vows are sent by the Vatican to investigate the suicide of a young nun at a cloistered abbey in Romania. Together they uncover the abbey's dark secrets and come face to face with a demonic force that has taken the shape of a sinister nun.
       </p>
-      <div class="related-movies">
-        <div class="related-card">
-          <a href="twilight_movie.html" class="poster" style="background-image: url('../images/backgrounds/twilight_backg.jpg');"></a>
-          <p class="related-title">Twilight</p>
-        </div>
-        <div class="related-card">
-          <a href="a_quiet_place_movie.html" class="poster" style="background-image: url('../images/backgrounds/a_quiet_place_backg.jpg');"></a>
-          <p class="related-title">A Quiet Place</p>
-        </div>
-      </div>
+      <div class="related-movies"></div>
     </section>
   </main>
 
@@ -748,6 +813,9 @@
     <a href="https://transfer.it/t/the-nun-download" download id="mobDownloadBtn">
       <i class="fas fa-download"></i> Download Movie
     </a>
+    <a class="mob-broken-link" href="#" data-movie="The Nun">
+      <i class="fas fa-triangle-exclamation"></i> Broken download link?
+    </a>
 
     <div id="mobMovieInfo">
       <div id="mobMovieTitle">THE NUN</div>
@@ -762,36 +830,10 @@
     </div>
 
     <div id="mobRelatedLabel">You Might Also Like</div>
-    <div id="mobRelatedGrid">
-      <a href="the_conjuring_movie.html" class="mob-related-card">
-        <img src="../images/posters/conjuring.jpg" alt="The Conjuring" loading="lazy">
-        <div class="mob-related-card-info">
-          <div class="mob-related-card-title">The Conjuring</div>
-          <div class="mob-related-card-genre">Horror</div>
-        </div>
-      </a>
-      <a href="annabelle_movie.html" class="mob-related-card">
-        <img src="../images/posters/annabelle.jpg" alt="Annabelle" loading="lazy">
-        <div class="mob-related-card-info">
-          <div class="mob-related-card-title">Annabelle</div>
-          <div class="mob-related-card-genre">Horror</div>
-        </div>
-      </a>
-      <a href="the_conjuring2_movie.html" class="mob-related-card">
-        <img src="../images/posters/conjuring2.jpg" alt="The Conjuring 2" loading="lazy">
-        <div class="mob-related-card-info">
-          <div class="mob-related-card-title">The Conjuring 2</div>
-          <div class="mob-related-card-genre">Horror</div>
-        </div>
-      </a>
-      <a href="the_curse_of_la_llorona_movie.html" class="mob-related-card">
-        <img src="../images/posters/lallorona.jpg" alt="The Curse of La Llorona" loading="lazy">
-        <div class="mob-related-card-info">
-          <div class="mob-related-card-title">The Curse of La Llorona</div>
-          <div class="mob-related-card-genre">Horror</div>
-        </div>
-      </a>
-    </div>
+    <div id="mobRelatedGrid"></div>
+  <div id="mobFooter">
+        <a href="../disclaimer.html">Disclaimer!</a>
+      </div>
 
   </div>
 
@@ -814,12 +856,13 @@
        SCRIPTS
   ============================================================ -->
   <script src="../js/movies.js"></script>
+  <script src="../js/related.js"></script>
   <script src="../js/script.js"></script>
   <script src="../js/search.js"></script>
 
   <footer class="copyright">
-    <p>© LevenyClubStudios. All rights reserved.</p>
-  </footer>
+    <a href="../disclaimer.html">Disclaimer!</a>
+</footer>
 
 
   <!-- GENRES PANEL BACKDROP -->
@@ -852,7 +895,7 @@
 
   <script>
     (function () {
-      if (window.innerWidth > 768) return;
+      if (window.innerWidth > 1024) return;
 
       const btn      = document.getElementById('mobGenresBtn');
       const panel    = document.getElementById('mobGenrePanel');
@@ -886,5 +929,47 @@
     });
   </script>
 
+
+  <!-- broken-link-report-script (Formspree version) -->
+  <script>
+    (function () {
+      const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xgoyjjgj'; // <-- replace with your real endpoint
+
+      document.querySelectorAll('.broken-link, .mob-broken-link').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          if (link.classList.contains('reported') || link.classList.contains('sending')) return;
+
+          const movie = link.dataset.movie || document.title;
+          link.classList.add('sending');
+          link.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Reporting...';
+
+          const data = new FormData();
+          data.append('subject', 'Broken Download Link');
+          data.append('message', `The download link for "${movie}" appears to be broken and needs fixing.`);
+          data.append('page', window.location.href);
+
+          fetch(FORMSPREE_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Accept': 'application/json' },
+            body: data
+          })
+          .then(function (response) {
+            link.classList.remove('sending');
+            if (response.ok) {
+              link.classList.add('reported');
+              link.innerHTML = '<i class="fas fa-circle-check"></i> Thanks, reported!';
+            } else {
+              link.innerHTML = '<i class="fas fa-triangle-exclamation"></i> Failed, try again?';
+            }
+          })
+          .catch(function () {
+            link.classList.remove('sending');
+            link.innerHTML = '<i class="fas fa-triangle-exclamation"></i> Failed, try again?';
+          });
+        });
+      });
+    })();
+  </script>
 </body>
 </html>

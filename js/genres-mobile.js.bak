@@ -7,7 +7,7 @@
    4. Back button restores homepage view
 ============================================================ */
 
-if (window.innerWidth <= 768) {
+if (window.innerWidth <= 1024) {
 
     const MOVIES_PER_PAGE = 18; // 2 columns × 9 rows
 
