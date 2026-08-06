@@ -485,7 +485,8 @@ header hr {
 /* -------------------- RESPONSIVE DESIGN -------------------- */
 
 /* Large Tablets (1024px and below) */
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1024px),
+       screen and (orientation: landscape) and (max-height: 1024px) and (pointer: coarse) {
   .nav_bar {
     padding: 0 40px;
   }
@@ -976,7 +977,8 @@ img {
 }
 
 /* Show only on phones */
-@media (max-width: 1024px) {
+@media (max-width: 1024px),
+       screen and (orientation: landscape) and (max-height: 1024px) and (pointer: coarse) {
     #mobileMoviesPagination {
         display: flex;
     }

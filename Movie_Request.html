@@ -14,18 +14,20 @@
     /* ============================================================
        MOBILE STYLES — Movie Request Page
        Batman Dark Knight glassmorphism + Pinterest masonry feel
-       Only active on screens 768px and below.
+       Active on narrow screens and touch tablets in landscape.
        Desktop layout (request.css) is completely untouched.
     ============================================================ */
 
     /* ---- Hide ALL mobile elements on desktop ---- */
-    @media screen and (min-width: 1025px) {
+    @media screen and (min-width: 1025px) and (pointer: fine) {
       #mobReqHeader,
       #mobReqPage,
       #mobReqBottomNav { display: none !important; }
     }
 
-    @media screen and (max-width: 1024px) {
+    /* Keep the mobile form on a touch tablet after it rotates to landscape. */
+    @media screen and (max-width: 1024px),
+           screen and (orientation: landscape) and (max-height: 1024px) and (pointer: coarse) {
 
       /* ---- Hide ALL desktop elements ---- */
       header,
@@ -861,7 +863,8 @@
      GENRES PANEL + GENRE RESULTS VIEW
      Mirrors index.html behaviour on the Request page.
   ============================================================ */
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px),
+         screen and (orientation: landscape) and (max-height: 1024px) and (pointer: coarse) {
     /* Backdrop */
     #genresPanelBackdrop {
       display: none;

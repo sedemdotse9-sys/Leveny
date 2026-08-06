@@ -459,7 +459,8 @@ footer a {
 }
 
 /* -------------------- RESPONSIVE DESIGN -------------------- */
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1024px),
+       screen and (orientation: landscape) and (max-height: 1024px) and (pointer: coarse) {
   .nav_bar { padding: 0 40px; }
   .nav_links { gap: 25px; }
   .nav_links a { font-size: 18px; }
@@ -565,7 +566,7 @@ img { max-width: 100%; height: auto; }
 }
 
 /* ---- Hide ALL mobile elements on desktop ---- */
-@media screen and (min-width: 1025px) {
+@media screen and (min-width: 1025px) and (not ((orientation: landscape) and (max-height: 1024px) and (pointer: coarse))) {
     #mobHeader,
     #mobMovieSearchBar,
     #mobPage,
