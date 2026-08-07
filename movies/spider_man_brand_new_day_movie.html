@@ -3,28 +3,28 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>The Meg | Leveny</title>
+    <title>Spider-Man: Brand New Day | Leveny</title>
 
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/styel58.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 
     <style>
       /* ============================================================
-        MOBILE STYLES — The Meg Movie Page
+        MOBILE STYLES — Spider-Man: Brand New Day Movie Page
         Only active on screens 768px and below.
-        Desktop layout (style.css) is completely untouched.
+        Desktop layout (styel58.css) is completely untouched.
       ============================================================ */
 
-      /* ---- Accent CSS variables — updated live by the color-cycle JS ---- */
+      /* ---- Accent CSS variables — genre: Superhero ---- */
 
       :root {
-    --mob-accent: #00A8FF;
-    --mob-accent-glow: rgba(0,168,255,0.38);
-    --mob-accent-glow-light: rgba(0,168,255,0.22);
-    --mob-accent-dim: rgba(0,168,255,0.13);
-    --mob-accent-dim-light: rgba(0,168,255,0.20);
-    --mob-accent-soft: #c8e8ff;
+    --mob-accent: #e74c3c;
+    --mob-accent-glow: rgba(231,76,60,0.38);
+    --mob-accent-glow-light: rgba(231,76,60,0.22);
+    --mob-accent-dim: rgba(231,76,60,0.13);
+    --mob-accent-dim-light: rgba(231,76,60,0.20);
+    --mob-accent-soft: #fadbd8;
   }
 
       /* ---- Hide ALL mobile elements on desktop ---- */
@@ -37,8 +37,8 @@
       }
       }
 
-      
-      
+
+
       @media screen and (max-width: 1024px),
        screen and (orientation: landscape) and (max-height: 1024px) and (pointer: coarse) {
 
@@ -52,9 +52,8 @@
           Identical structure to homepage mobile.css.
         ============================================================ */
         body {
-          background-color: #c8e8ff !important;
+          background-color: #fadbd8 !important;
           color: #111;
-          /* overflow-x: hidden; */
           overflow-y: auto;
           padding: 0;
           margin: 0;
@@ -72,14 +71,14 @@
         pointer-events: none;
         background:
           radial-gradient(ellipse 110% 60% at 50% -8%,
-            rgba(0,168,255,0.55) 0%, transparent 65%),
+            rgba(231,76,60,0.55) 0%, transparent 65%),
           radial-gradient(ellipse 70% 40% at 80% 90%,
-            rgba(0,168,255,0.35) 0%, transparent 60%),
+            rgba(231,76,60,0.35) 0%, transparent 60%),
           radial-gradient(ellipse 70% 40% at 20% 90%,
-            rgba(0,168,255,0.35) 0%, transparent 60%),
+            rgba(231,76,60,0.35) 0%, transparent 60%),
           linear-gradient(175deg,
-            rgba(0,168,255,0.28) 0%,
-            rgba(0,168,255,0.18) 40%,
+            rgba(231,76,60,0.28) 0%,
+            rgba(231,76,60,0.18) 40%,
             transparent 75%);
       }
 
@@ -136,7 +135,7 @@
           position: absolute;
           inset: -20px 0;
           z-index: -1;
-          background: radial-gradient(ellipse 100% 120% at 50% 0%, rgba(0,168,255,0.35) 0%, transparent 70%);
+          background: radial-gradient(ellipse 100% 120% at 50% 0%, rgba(231,76,60,0.35) 0%, transparent 70%);
           pointer-events: none;
         }
 
@@ -275,7 +274,7 @@
           box-shadow: 0 8px 30px var(--mob-accent-dim-light);
     overscroll-behavior: contain;
     scrollbar-width: thin;
-    scrollbar-color: var(--mob-accent, #00A8FF) transparent;
+    scrollbar-color: var(--mob-accent, #e74c3c) transparent;
 }
 #mobMovieSearchDrop::-webkit-scrollbar {
     width: 8px;
@@ -285,7 +284,7 @@
     margin: 8px 0;
 }
 #mobMovieSearchDrop::-webkit-scrollbar-thumb {
-    background: var(--mob-accent, #00A8FF);
+    background: var(--mob-accent, #e74c3c);
     border-radius: 8px;
     border: 2px solid transparent;
     background-clip: padding-box;
@@ -441,7 +440,7 @@
           position: absolute;
           inset: -20px 0;
           z-index: -1;
-          background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0,168,255,0.35) 0%, transparent 70%);
+          background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(231,76,60,0.35) 0%, transparent 70%);
           pointer-events: none;}
 
         body.dark-mode #mobMovieInfo {
@@ -585,13 +584,13 @@
           color: var(--mob-accent);
           text-shadow: 0 0 8px var(--mob-accent-glow-light);
           transition: color 1s ease, text-shadow 1s ease;
-          color: #00A8FF;
+          color: #e74c3c;
         }
 
         body.dark-mode .mob-related-card-genre {
           text-shadow: 0 0 8px var(--mob-accent-glow);
         }
-      
+
 
         /* ============================================================
           BOTTOM NAV
@@ -710,7 +709,7 @@
       }
 
       #mobFooter a {
-        color: var(--mob-accent, #00A8FF);
+        color: var(--mob-accent, #e74c3c);
         text-decoration: none;
       }
 
@@ -722,7 +721,7 @@
     <link rel="manifest" href="/favicon/site.webmanifest" />
 </head>
 
-  <body data-current-movie="the_meg_movie.html">
+  <body data-current-movie="spider_man_brand_new_day_movie.html">
 
     <!-- ============================================================
         DESKTOP LAYOUT — completely unchanged
@@ -761,34 +760,33 @@
     <main class="movie-page">
       <section class="video-section">
         <div class="frost-wrap" id="frostWrap">
-          <iframe src="https://vidsrc.me/embed/movie/tt4779682"
-            width="100%" height="450"
+          <iframe src="https://vidsrc.me/embed/movie/tt22084616" width="100%" height="450"
             frameborder="0" allowfullscreen
             allow="autoplay; fullscreen">
           </iframe>
           <div class="frost-click" id="frostClick"></div>
         </div>
         <button class="download-btn">
-          <a href="https://transfer.it/t/wLyWa05xFRaQ" download>
+          <a href="" download>
             <i class="fa fa-download"></i> Download
           </a>
         </button>
-      <a class="broken-link" href="#" data-movie="The Meg">
+      <a class="broken-link" href="#" data-movie="Spider-Man: Brand New Day">
         <i class="fas fa-triangle-exclamation"></i> Broken download link?
       </a>
       </section>
       <section class="details-section">
-        <h3 class="movie-title">THE MEG</h3>
+        <h3 class="movie-title">SPIDER-MAN: BRAND NEW DAY</h3>
         <div class="search-box">
           <input type="text" id="searchInput" placeholder="Search movies...">
           <button><i class="fas fa-search"></i></button>
           <div class="search-dropdown" id="searchDropdown"></div>
         </div>
         <p class="info">
-          2018 &nbsp;|&nbsp; <span>113mins 00secs</span> &nbsp;|&nbsp; Action
+          2026 &nbsp;|&nbsp; <span>-- mins 00secs</span> &nbsp;|&nbsp; Superhero
         </p>
         <p class="summary">
-          The Meg follows a deep-sea rescue diver who is called back into action after a research mission accidentally releases a massive prehistoric shark. As the creature threatens the surface world, a small team races against time to stop it before the ocean's darkest secret reaches humanity.
+          Peter Parker returns for a new chapter, balancing life outside the mask with the pull of a new threat rising in the city. As old alliances shift and new dangers emerge, he has to figure out what kind of hero he wants to be in this next stage of his story.
         </p>
         <div class="related-movies"></div>
       </div>
@@ -817,8 +815,7 @@
 
       <div id="mobVideoWrap">
         <div id="mobFrostWrap">
-          <iframe src="https://vidsrc.me/embed/movie/tt4779682"
-            width="100%" height="240"
+          <iframe src="" width="100%" height="240"
             frameborder="0" allowfullscreen
             allow="autoplay; fullscreen; picture-in-picture">
           </iframe>
@@ -826,22 +823,22 @@
         </div>
       </div>
 
-      <a href="https://transfer.it/t/wLyWa05xFRaQ" download id="mobDownloadBtn">
+      <a href="" download id="mobDownloadBtn">
         <i class="fas fa-download"></i> Download Movie
       </a>
-      <a class="mob-broken-link" href="#" data-movie="The Meg">
+      <a class="mob-broken-link" href="#" data-movie="Spider-Man: Brand New Day">
         <i class="fas fa-triangle-exclamation"></i> Broken download link?
       </a>
 
       <div id="mobMovieInfo">
-        <div id="mobMovieTitle">THE MEG</div>
+        <div id="mobMovieTitle">SPIDER-MAN: BRAND NEW DAY</div>
         <div id="mobMovieMeta">
-          <span>2018</span>
-          <span class="mob-meta-badge">Action</span>
-          <span>113 mins</span>
+          <span>2026</span>
+          <span class="mob-meta-badge">Superhero</span>
+          <span>-- mins</span>
         </div>
         <p id="mobMovieSummary">
-          A deep-sea rescue diver is pulled back into action when a research mission unleashes a massive prehistoric shark. Racing against time, a small team risks everything to stop the ancient predator before it reaches the surface world.
+          Peter Parker returns for a new chapter, balancing life outside the mask with the pull of a new threat rising in the city. As old alliances shift and new dangers emerge, he has to figure out what kind of hero he wants to be next.
         </p>
       </div>
 
@@ -906,10 +903,6 @@
 
     <script>
 function __isMobileViewport() {
-  // True for phones/tablets in portrait (width <=1024) AND for tablets
-  // rotated to landscape (their short side, now the height, is <=1024
-  // and they're a touch device -- this is what keeps a rotated tablet
-  // from being mistaken for a small laptop).
   return window.innerWidth <= 1024 ||
     (window.matchMedia('(orientation: landscape)').matches &&
      window.innerHeight <= 1024 &&
@@ -938,7 +931,7 @@ function __isMobileViewport() {
         btn?.addEventListener('click', openPanel);
         backdrop?.addEventListener('click', closePanel);
       })();
-    </script> 
+    </script>
 
     <script>
       const iframe = document.querySelector('.video-section iframe');
@@ -963,11 +956,11 @@ function __isMobileViewport() {
       });
     </script>
 
-  
+
   <!-- broken-link-report-script (Formspree version) -->
   <script>
     (function () {
-      const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xgoyjjgj'; 
+      const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xgoyjjgj';
 
       document.querySelectorAll('.broken-link, .mob-broken-link').forEach(function (link) {
         link.addEventListener('click', function (e) {
@@ -993,9 +986,6 @@ function __isMobileViewport() {
           );
           data.append('reportType', 'broken-download-link');
           data.append('movieTitle', movie);
-          // data.append('movieTitle', movie);
-          // data.append('pageUrl', window.location.href);
-          // data.append('reportedAt', new Date().toISOString());
 
           fetch(FORMSPREE_ENDPOINT, {
             method: 'POST',
