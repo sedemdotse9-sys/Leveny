@@ -4,6 +4,12 @@
    Dark/light toggle button in header.
    ============================================================ */
 
+/* Google Fonts fallback for Rockwell (not available on iOS/Android by
+   default). Roboto Slab is loaded and used first everywhere Rockwell was
+   requested, with Rockwell kept as a fallback for devices/desktops that
+   happen to have it installed locally. */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&display=swap');
+
 :root {
     --accent:      #00A8FF;
     --accent-soft: #EBF5FF;
@@ -32,6 +38,7 @@
 footer a {
   color: white;
   text-decoration: none;
+  font-family: "Roboto Slab", "Rockwell", sans-serif;
 }
 
     /* -------- BASE BODY -------- */
@@ -254,7 +261,7 @@ footer a {
         font-size: 16px;
         color: #111;
         width: 100%;
-        font-family: Rockwell, sans-serif;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
     }
 
     body.dark-mode #mobileSearchInput { color: #f0f0f0; }
@@ -320,7 +327,7 @@ body.dark-mode #mobileSearchResults {
     padding: 12px 16px;
     color: #111;
     font-size: 14px;
-    font-family: Rockwell, sans-serif;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
     border-bottom: 1px solid rgba(0,0,0,0.06);
     cursor: pointer;
     display: flex;
@@ -416,7 +423,7 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accen
     .featured-slide-btn {
         display: inline-block;
         color: #fff;
-        font-family: Rockwell, sans-serif;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
         font-size: 12px;
         font-weight: 700;
         padding: 7px 28px;
@@ -477,7 +484,7 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accen
        SECTION LABEL
     ============================================================ */
     .mob-section-label {
-        font-family: Rockwell, sans-serif;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
         font-size: 17px;
         font-weight: 700;
         padding: 2px 12px 10px;
@@ -536,7 +543,7 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accen
 
     .mob-card-title {
         font-size: 12px;
-        font-family: Rockwell, sans-serif;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
         font-weight: 700;
         white-space: nowrap;
         overflow: hidden;
@@ -550,7 +557,7 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accen
 
     .mob-card-genre {
         font-size: 11px;
-        font-family: Rockwell, sans-serif;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
         color: #666;
     }
 
@@ -582,7 +589,7 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accen
     #mobileFooter {
         text-align: center;
         padding: 8px 12px 80px;
-        font-family: Rockwell, sans-serif;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
         font-size: 12px;
     }
 
@@ -623,7 +630,7 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accen
 
     .mob-nav-item span {
         font-size: 10px;
-        font-family: Rockwell, sans-serif;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
         font-weight: 600;
     }
 
@@ -679,7 +686,7 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accen
     }
 
     #mobileGenresPanel h3 {
-        font-family: Rockwell, sans-serif;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
         font-size: 16px;
         font-weight: 700;
         text-align: center;
@@ -728,7 +735,7 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accen
 
     .mob-genre-item span {
         font-size: 11px;
-        font-family: Rockwell, sans-serif;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
         color: #333;
         text-align: center;
         line-height: 1.2;
@@ -756,7 +763,7 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accen
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     color: #333;
-    font-family: Rockwell, sans-serif;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
     font-size: 13px;
     font-weight: 700;
     cursor: pointer;
