@@ -462,7 +462,7 @@ footer {
     color: black;
     font-size: 14px;
     font-family: "Rockwell", sans-serif;
-    padding: 20px 0 16px;
+    /* padding: 20px 0 16px; */
     background: transparent;
     margin-top: 0;
 }
