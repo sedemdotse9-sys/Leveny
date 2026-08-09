@@ -428,25 +428,6 @@ const savedPage = parseInt(sessionStorage.getItem(HOME_PAGE_KEY), 10) || 1;   //
 
 renderGrid(allMovies, savedPage);                                              // ★ CHANGED — was renderGrid(allMovies, 1);
 
-    // /* ============================================================
-    //    CATEGORY PILLS
-    // ============================================================ */
-    // document.querySelectorAll('.mob-pill').forEach(pill => {
-    //     pill.addEventListener('click', () => {
-    //         document.querySelectorAll('.mob-pill').forEach(p => p.classList.remove('active'));
-    //         pill.classList.add('active');
-    //         const filter = pill.dataset.filter;
-    //         const label  = document.querySelector('.mob-section-label');
-    //         if (filter === 'all') {
-    //             renderGrid(allMovies);
-    //             if (label) label.textContent = 'All Movies';
-    //         } else {
-    //             const filtered = allMovies.filter(m => m.genre === filter);
-    //             renderGrid(filtered.length ? filtered : allMovies, 1);
-    //             if (label) label.textContent = cap(filter);
-    //         }
-    //     });
-    // });
 
     /* ============================================================
        SEARCH
