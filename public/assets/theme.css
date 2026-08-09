@@ -1,0 +1,264 @@
+/* ============================================================
+   LEVENY SHARED THEME
+============================================================ */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+:root {
+  /* dark mode is the default */
+  --bg-grad:
+    radial-gradient(120% 90% at 8% 12%, rgba(56, 189, 248, 0.28) 0%, rgba(56, 189, 248, 0) 55%),
+    radial-gradient(100% 85% at 90% 90%, rgba(99, 102, 241, 0.22) 0%, rgba(99, 102, 241, 0) 55%),
+    linear-gradient(160deg, #05070f 0%, #0b1120 45%, #0e1a2b 100%);
+
+  --card-bg: rgba(255, 255, 255, 0.06);
+  --card-border-grad: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.35),
+    rgba(255, 255, 255, 0.06) 45%,
+    rgba(56, 189, 248, 0.35) 100%);
+  --avatar-bg: rgba(255, 255, 255, 0.08);
+  --avatar-border: rgba(255, 255, 255, 0.25);
+  --avatar-icon: rgba(210, 230, 240, 0.85);
+
+  --text-primary: #eaf6fb;
+  --text-secondary: rgba(210, 230, 240, 0.62);
+
+  --input-bg: rgba(255, 255, 255, 0.07);
+  --input-border: rgba(255, 255, 255, 0.16);
+  --input-text: #eaf6fb;
+  --input-placeholder: rgba(210, 230, 240, 0.4);
+  --input-focus-border: rgba(56, 189, 248, 0.85);
+  --input-focus-ring: rgba(56, 189, 248, 0.22);
+
+  --accent-a: #38bdf8;
+  --accent-b: #0284c7;
+  --link-color: #38bdf8;
+
+  --error: #f87171;
+  --success: #4ade80;
+
+  --card-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  --toggle-bg: rgba(255, 255, 255, 0.08);
+  --toggle-border: rgba(255, 255, 255, 0.18);
+  --hover-bg: rgba(255, 255, 255, 0.06);
+  --danger: #f87171;
+}
+
+html[data-theme="light"] {
+  --bg-grad:
+    radial-gradient(120% 90% at 8% 15%, rgba(56, 189, 248, 0.55) 0%, rgba(56, 189, 248, 0) 60%),
+    radial-gradient(100% 85% at 12% 100%, rgba(13, 110, 172, 0.35) 0%, rgba(13, 110, 172, 0) 55%),
+    linear-gradient(105deg, #4f48cc 0%, #e6faff 45%, #87d0dd 100%);
+
+  --card-bg: rgba(255, 255, 255, 0.18);
+  --card-border-grad: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.9),
+    rgba(255, 255, 255, 0.25) 45%,
+    rgba(148, 216, 240, 0.6) 100%);
+  --avatar-bg: rgba(255, 255, 255, 0.4);
+  --avatar-border: rgba(255, 255, 255, 0.75);
+  --avatar-icon: rgba(70, 110, 130, 0.75);
+
+  --text-primary: #123b4d;
+  --text-secondary: rgba(20, 60, 80, 0.65);
+
+  --input-bg: rgba(255, 255, 255, 0.35);
+  --input-border: rgba(255, 255, 255, 0.6);
+  --input-text: #0f2e3d;
+  --input-placeholder: rgba(30, 70, 90, 0.45);
+  --input-focus-border: rgba(56, 189, 248, 0.8);
+  --input-focus-ring: rgba(56, 189, 248, 0.18);
+
+  --accent-a: #0ea5e9;
+  --accent-b: #0284c7;
+  --link-color: #0284c7;
+
+  --error: #dc2626;
+  --success: #16a34a;
+
+  --card-shadow: 0 20px 60px rgba(20, 90, 130, 0.18);
+  --toggle-bg: rgba(255, 255, 255, 0.5);
+  --toggle-border: rgba(255, 255, 255, 0.8);
+  --hover-bg: rgba(255, 255, 255, 0.35);
+  --danger: #dc2626;
+}
+
+body {
+  background: var(--bg-grad);
+  color: var(--text-primary);
+}
+
+/* Every themed surface transitions smoothly on toggle */
+body, .glass, .field input, .theme-toggle, .avatar-circle, .sidebar, .content-pane,
+.nav-item, h1, p, label, .strength-track {
+  transition: background 0.35s ease, background-color 0.35s ease, border-color 0.35s ease,
+              color 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* ---------- theme toggle button ---------- */
+.theme-toggle {
+  position: fixed;
+  top: 22px;
+  right: 22px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--toggle-bg);
+  border: 1px solid var(--toggle-border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  z-index: 50;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.06);
+}
+
+/* Native View Transitions crossfade for the "time lapse" theme swap.
+   Falls back gracefully to the property transitions above if the
+   browser doesn't support it. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.5s;
+}
+
+/* ---------- glass surfaces ---------- */
+.glass {
+  background: var(--card-bg);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+}
+
+/* ---------- form basics reused by both pages ---------- */
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.field label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.field input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  font-size: 14px;
+  color: var(--input-text);
+  outline: none;
+}
+
+.field input.with-icon {
+  padding-right: 40px;
+}
+
+.field input::placeholder {
+  color: var(--input-placeholder);
+}
+
+.field input:focus {
+  border-color: var(--input-focus-border);
+  box-shadow: 0 0 0 3px var(--input-focus-ring);
+}
+
+.status-icon {
+  position: absolute;
+  right: 12px;
+  width: 16px;
+  height: 16px;
+  display: none;
+}
+
+.status-icon.show { display: block; }
+.status-icon.valid { fill: var(--success); }
+.status-icon.invalid { fill: var(--error); }
+
+.eye-btn {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.eye-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: var(--text-secondary);
+}
+
+.hint {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 6px;
+}
+
+.error {
+  min-height: 16px;
+  color: var(--error);
+  font-size: 12.5px;
+  margin: 12px 0 0;
+  text-align: center;
+}
+
+.error.success {
+  color: var(--success);
+}
+
+button.primary-btn {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--accent-a), var(--accent-b));
+  color: #ffffff;
+  font-size: 14.5px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35);
+}
+
+button.primary-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button.primary-btn:not(:disabled):hover {
+  filter: brightness(1.06);
+}
+
+button.primary-btn:not(:disabled):active {
+  transform: translateY(1px);
+}

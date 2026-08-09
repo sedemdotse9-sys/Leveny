@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard | Leveny</title>
+<link rel="stylesheet" href="assets/theme.css">
+<style>
+  body {
+    display: flex;
+  }
+
+  .layout {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    padding: 28px;
+    gap: 24px;
+  }
+
+  /* ---------- sidebar ---------- */
+  .sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    border-radius: 22px;
+    padding: 26px 18px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--card-shadow);
+    height: fit-content;
+    min-height: calc(100vh - 56px);
+  }
+
+  .profile-block {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 8px 20px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--input-border);
+    position: relative;
+  }
+
+  .avatar-btn {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--avatar-bg);
+    border: 2px solid var(--avatar-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .avatar-btn svg {
+    width: 26px;
+    height: 26px;
+    fill: var(--avatar-icon);
+  }
+
+  .avatar-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .username-display {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .email-display {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* avatar popover menu */
+  .avatar-menu {
+    display: none;
+    position: absolute;
+    top: 56px;
+    left: 8px;
+    z-index: 30;
+    border-radius: 12px;
+    padding: 6px;
+    min-width: 180px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--input-border);
+  }
+
+  .avatar-menu.show { display: block; }
+
+  .avatar-menu button {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--text-primary);
+    cursor: pointer;
+  }
+
+  .avatar-menu button:hover {
+    background: var(--hover-bg);
+  }
+
+  .avatar-menu button.danger {
+    color: var(--danger);
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 12px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    margin-bottom: 4px;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+  }
+
+  .nav-item:hover {
+    background: var(--hover-bg);
+  }
+
+  .nav-item.active {
+    background: var(--hover-bg);
+    color: var(--text-primary);
+  }
+
+  .nav-item .icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    fill: currentColor;
+  }
+
+  .nav-spacer {
+    flex: 1;
+  }
+
+  .nav-item.logout {
+    color: var(--danger);
+    border-top: 1px solid var(--input-border);
+    margin-top: 12px;
+    padding-top: 16px;
+    border-radius: 0;
+  }
+
+  /* ---------- content pane ---------- */
+  .content-pane {
+    flex: 1;
+    border-radius: 22px;
+    padding: 36px 40px;
+    box-shadow: var(--card-shadow);
+    min-height: calc(100vh - 56px);
+  }
+
+  .content-pane h2 {
+    margin: 0 0 6px;
+    font-size: 22px;
+    color: var(--text-primary);
+  }
+
+  .content-pane .desc {
+    color: var(--text-secondary);
+    font-size: 13.5px;
+    margin: 0 0 32px;
+  }
+
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-secondary);
+  }
+
+  .empty-state svg {
+    width: 48px;
+    height: 48px;
+    fill: var(--text-secondary);
+    opacity: 0.5;
+    margin-bottom: 14px;
+  }
+
+  .panel {
+    display: none;
+  }
+
+  .panel.active {
+    display: block;
+  }
+
+  .security-form {
+    max-width: 360px;
+  }
+
+  #hiddenFileInput {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+  <button class="theme-toggle" type="button">
+    <span data-theme-icon></span>
+  </button>
+
+  <div class="layout">
+    <aside class="sidebar glass">
+      <div class="profile-block">
+        <button class="avatar-btn" id="avatarBtn" type="button" aria-label="Change profile picture">
+          <svg viewBox="0 0 24 24" id="avatarDefaultIcon">
+            <path d="M12 12c2.7 0 4.9-2.2 4.9-4.9S14.7 2.2 12 2.2 7.1 4.4 7.1 7.1 9.3 12 12 12zm0 2.5c-3.3 0-9.8 1.6-9.8 4.9v2.4h19.6v-2.4c0-3.3-6.5-4.9-9.8-4.9z"/>
+          </svg>
+          <img id="avatarImg" style="display:none;" alt="Profile picture">
+        </button>
+        <div style="min-width:0;">
+          <div class="username-display" id="usernameDisplay">&nbsp;</div>
+          <div class="email-display" id="emailDisplay">&nbsp;</div>
+        </div>
+
+        <div class="avatar-menu glass" id="avatarMenu">
+          <button type="button" id="uploadPhotoBtn">Upload photo</button>
+          <button type="button" id="removePhotoBtn" class="danger">Remove photo</button>
+        </div>
+      </div>
+
+      <input type="file" id="hiddenFileInput" accept="image/*">
+
+      <nav>
+        <button class="nav-item active" data-panel="downloads">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"/></svg>
+          Downloads
+        </button>
+        <button class="nav-item" data-panel="history">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M13 3a9 9 0 1 0 9 9h-2a7 7 0 1 1-7-7v4l5-5-5-5v4z"/></svg>
+          Watch History
+        </button>
+        <button class="nav-item" data-panel="security">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V5l-9-4zm0 10.9h7c-.5 4.1-3.3 7.9-7 9v-9H5V6.3l7-3.1v8.7z"/></svg>
+          Password &amp; Security
+        </button>
+        <div class="nav-spacer"></div>
+        <button class="nav-item logout" id="logoutBtn">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L17.17 10H9v2h8.17l-1.58 1.59L17 15l4-4zM5 5h7V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h7v-2H5V5z"/></svg>
+          Log out
+        </button>
+      </nav>
+    </aside>
+
+    <main class="content-pane glass">
+      <div class="panel active" id="panel-downloads">
+        <h2>Downloads</h2>
+        <p class="desc">Titles you've downloaded for offline viewing.</p>
+        <div class="empty-state">
+          <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          <p>Nothing downloaded yet.</p>
+        </div>
+      </div>
+
+      <div class="panel" id="panel-history">
+        <h2>Watch History</h2>
+        <p class="desc">What you've watched recently.</p>
+        <div class="empty-state">
+          <svg viewBox="0 0 24 24"><path d="M13 3a9 9 0 1 0 9 9h-2a7 7 0 1 1-7-7v4l5-5-5-5v4z"/></svg>
+          <p>Your watch history is empty.</p>
+        </div>
+      </div>
+
+      <div class="panel" id="panel-security">
+        <h2>Password &amp; Security</h2>
+        <p class="desc">Update the password for your account.</p>
+        <form class="security-form" id="passwordForm" novalidate>
+          <div class="field">
+            <label for="currentPassword">Current password</label>
+            <input type="password" id="currentPassword" autocomplete="current-password">
+          </div>
+          <div class="field">
+            <label for="newPassword">New password</label>
+            <input type="password" id="newPassword" autocomplete="new-password">
+          </div>
+          <div class="field">
+            <label for="confirmNewPassword">Confirm new password</label>
+            <input type="password" id="confirmNewPassword" autocomplete="new-password">
+          </div>
+          <button type="submit" class="primary-btn" style="width:auto; padding:11px 22px;">Update password</button>
+          <p id="securityMsg" class="error"></p>
+        </form>
+      </div>
+    </main>
+  </div>
+
+<script src="assets/theme.js"></script>
+<script>
+  const username = sessionStorage.getItem('leveny-user');
+  if (!username) {
+    window.location.href = 'profile.html';
+  }
+
+  const usernameDisplay = document.getElementById('usernameDisplay');
+  const emailDisplay = document.getElementById('emailDisplay');
+  const avatarImg = document.getElementById('avatarImg');
+  const avatarDefaultIcon = document.getElementById('avatarDefaultIcon');
+  const avatarBtn = document.getElementById('avatarBtn');
+  const avatarMenu = document.getElementById('avatarMenu');
+  const uploadPhotoBtn = document.getElementById('uploadPhotoBtn');
+  const removePhotoBtn = document.getElementById('removePhotoBtn');
+  const hiddenFileInput = document.getElementById('hiddenFileInput');
+
+  function setAvatar(avatarPath) {
+    if (avatarPath) {
+      avatarImg.src = avatarPath + '?t=' + Date.now();
+      avatarImg.style.display = 'block';
+      avatarDefaultIcon.style.display = 'none';
+      removePhotoBtn.style.display = 'block';
+    } else {
+      avatarImg.style.display = 'none';
+      avatarDefaultIcon.style.display = 'block';
+      removePhotoBtn.style.display = 'none';
+    }
+  }
+
+  async function loadUser() {
+    try {
+      const res = await fetch('/api/user/' + encodeURIComponent(username));
+      const data = await res.json();
+      if (!res.ok) {
+        sessionStorage.removeItem('leveny-user');
+        window.location.href = 'profile.html';
+        return;
+      }
+      usernameDisplay.textContent = data.user.username;
+      emailDisplay.textContent = data.user.email;
+      setAvatar(data.user.avatar);
+    } catch (err) {
+      usernameDisplay.textContent = username;
+      emailDisplay.textContent = '';
+    }
+  }
+  loadUser();
+
+  // avatar menu open/close
+  avatarBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    avatarMenu.classList.toggle('show');
+  });
+  document.addEventListener('click', function () {
+    avatarMenu.classList.remove('show');
+  });
+  avatarMenu.addEventListener('click', function (e) {
+    e.stopPropagation();
+  });
+
+  uploadPhotoBtn.addEventListener('click', function () {
+    avatarMenu.classList.remove('show');
+    hiddenFileInput.click();
+  });
+
+  hiddenFileInput.addEventListener('change', async function () {
+    const file = hiddenFileInput.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('avatar', file);
+
+    try {
+      const res = await fetch('/api/profile-picture', { method: 'POST', body: formData });
+      const data = await res.json();
+      if (res.ok) {
+        setAvatar(data.avatar);
+      } else {
+        alert(data.error || 'Could not upload photo.');
+      }
+    } catch (err) {
+      alert('Could not reach the server.');
+    }
+    hiddenFileInput.value = '';
+  });
+
+  removePhotoBtn.addEventListener('click', async function () {
+    avatarMenu.classList.remove('show');
+    try {
+      const res = await fetch('/api/profile-picture/' + encodeURIComponent(username), { method: 'DELETE' });
+      if (res.ok) setAvatar(null);
+    } catch (err) {
+      alert('Could not reach the server.');
+    }
+  });
+
+  // sidebar nav switching
+  document.querySelectorAll('.nav-item[data-panel]').forEach((btn) => {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.nav-item[data-panel]').forEach((b) => b.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach((p) => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-' + btn.dataset.panel).classList.add('active');
+    });
+  });
+
+  // logout
+  document.getElementById('logoutBtn').addEventListener('click', function () {
+    sessionStorage.removeItem('leveny-user');
+    window.location.href = 'profile.html';
+  });
+
+  // change password
+  document.getElementById('passwordForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const currentPassword = document.getElementById('currentPassword').value;
+    const newPassword = document.getElementById('newPassword').value;
+    const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+    const securityMsg = document.getElementById('securityMsg');
+    securityMsg.textContent = '';
+    securityMsg.classList.remove('success');
+
+    if (!currentPassword || !newPassword || !confirmNewPassword) {
+      securityMsg.textContent = 'Please fill in all fields.';
+      return;
+    }
+    if (newPassword.length < 6) {
+      securityMsg.textContent = 'New password must be at least 6 characters.';
+      return;
+    }
+    if (newPassword !== confirmNewPassword) {
+      securityMsg.textContent = 'New passwords do not match.';
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/change-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, currentPassword, newPassword })
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        securityMsg.textContent = data.error || 'Something went wrong.';
+        return;
+      }
+      securityMsg.textContent = 'Password updated successfully.';
+      securityMsg.classList.add('success');
+      document.getElementById('passwordForm').reset();
+    } catch (err) {
+      securityMsg.textContent = 'Could not reach the server.';
+    }
+  });
+</script>
+
+</body>
+</html>
