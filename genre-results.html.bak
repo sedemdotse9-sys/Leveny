@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Leveny — Genre</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       GENRE-RESULTS.HTML — Leveny
+       Standalone mobile genre page. Desktop shows nothing;
+       mobile shows a full glassmorphism genre view.
+    ============================================================ */
+
+    /* ---- Hide on desktop ---- */
+    @media screen and (min-width: 1025px) and (not ((orientation: landscape) and (max-height: 1024px) and (pointer: coarse))) {
+      #grPage, #grHeader, #grBottomNav { display: none !important; }
+      body::after { display: none !important; }
+    }
+
+    /* ============================================================
+       CSS VARIABLES — set by JS from genre map
+    ============================================================ */
+    :root {
+      --gr-accent:          #00A8FF;
+      --gr-accent-glow:     rgba(0,168,255,0.45);
+      --gr-accent-glow-lt:  rgba(0,168,255,0.22);
+      --gr-accent-dim:      rgba(0,168,255,0.13);
+      --gr-accent-dim-lt:   rgba(0,168,255,0.20);
+      --gr-soft-bg:         #c8e8ff;
+    }
+
+    /* ============================================================
+       MOBILE ONLY
+    ============================================================ */
+    @media screen and (max-width: 768px) {
+
+      /* BODY */
+      body {
+        margin: 0; padding: 0;
+        background-color: var(--gr-soft-bg) !important;
+        color: #111;
+        overflow-y: auto;
+        transition: background-color 1s ease, color 0.4s ease;
+        background: none !important;
+      }
+
+      body::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 110% 60% at 50% -8%,
+            var(--gr-accent-glow) 0%, transparent 65%),
+          radial-gradient(ellipse 70% 40% at 80% 90%,
+            var(--gr-accent-glow-lt) 0%, transparent 60%),
+          radial-gradient(ellipse 70% 40% at 20% 90%,
+            var(--gr-accent-glow-lt) 0%, transparent 60%),
+          linear-gradient(175deg,
+            var(--gr-accent-dim-lt) 0%,
+            var(--gr-accent-dim) 40%,
+            transparent 75%);
+        transition: background 1s ease;
+      }
+
+      body.dark-mode {
+        background-color: #0D0D0D !important;
+        color: #f0f0f0;
+      }
+
+      body.dark-mode::after {
+        background:
+          radial-gradient(ellipse 110% 60% at 50% -8%,
+            var(--gr-accent-glow) 0%, transparent 65%),
+          radial-gradient(ellipse 70% 40% at 80% 90%,
+            var(--gr-accent-glow-lt) 0%, transparent 60%),
+          linear-gradient(175deg,
+            var(--gr-accent-dim-lt) 0%,
+            var(--gr-accent-dim) 40%,
+            transparent 75%);
+      }
+
+      #grHeader, #grPage, #grBottomNav {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* ============================================================
+         HEADER
+      ============================================================ */
+      #grHeader {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 16px 10px;
+        position: sticky;
+        top: 0;
+        z-index: 999;
+        gap: 10px;
+        background: rgba(255,255,255,0.30);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--gr-accent-dim-lt);
+        box-shadow: 0 2px 20px var(--gr-accent-dim-lt);
+        transition: background 0.4s, border-color 1s, box-shadow 1s;
+      }
+
+      body.dark-mode #grHeader {
+        background: rgba(13,13,13,0.70);
+        border-bottom: 1px solid var(--gr-accent-dim);
+        box-shadow: 0 1px 0 0 var(--gr-accent-dim),
+                    0 4px 24px rgba(0,0,0,0.6);
+      }
+
+      /* Back button */
+      #grBackBtn {
+        width: 36px; height: 36px;
+        border-radius: 50%;
+        border: 1px solid var(--gr-accent);
+        background: rgba(255,255,255,0.35);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        display: flex; align-items: center; justify-content: center;
+        color: var(--gr-accent);
+        font-size: 15px;
+        cursor: pointer;
+        flex-shrink: 0;
+        box-shadow: 0 0 10px var(--gr-accent-glow-lt);
+        transition: background 1s, box-shadow 1s, transform 0.2s;
+      }
+
+      body.dark-mode #grBackBtn {
+        background: var(--gr-accent-dim);
+        box-shadow: 0 0 14px var(--gr-accent-glow);
+      }
+
+      #grBackBtn:active { transform: scale(0.88); }
+
+      /* Genre title in header */
+      #grHeaderTitle {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 22px;
+        letter-spacing: 3px;
+        color: #111;
+        flex: 1;
+        text-align: center;
+        text-shadow: 0 0 14px var(--gr-accent-glow-lt);
+        transition: color 0.4s, text-shadow 1s;
+      }
+
+      body.dark-mode #grHeaderTitle { color: #fff; text-shadow: 0 0 18px var(--gr-accent-glow); }
+
+      /* Theme toggle */
+      #grThemeToggle {
+        width: 36px; height: 36px;
+        border-radius: 50%;
+        border: 1px solid var(--gr-accent);
+        background: rgba(255,255,255,0.35);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 16px;
+        cursor: pointer;
+        flex-shrink: 0;
+        box-shadow: 0 0 10px var(--gr-accent-glow-lt),
+                    inset 0 0 6px var(--gr-accent-dim);
+        transition: background 1s, box-shadow 1s, transform 0.25s;
+        color: #333;
+      }
+
+      body.dark-mode #grThemeToggle {
+        background: var(--gr-accent-dim);
+        box-shadow: 0 0 14px var(--gr-accent-glow);
+        color: var(--gr-accent);
+      }
+
+      #grThemeToggle:active { transform: scale(0.88) rotate(20deg); }
+
+      /* ============================================================
+         MAIN PAGE
+      ============================================================ */
+      #grPage {
+        padding: 14px 12px 100px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      /* Genre banner pill */
+      #grBanner {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 16px;
+        border-radius: 20px;
+        background: rgba(255,255,255,0.28);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border: 1px solid var(--gr-accent-dim-lt);
+        box-shadow: 0 0 10px var(--gr-accent-dim);
+        transition: background 0.4s, border-color 1s, box-shadow 1s;
+      }
+
+      body.dark-mode #grBanner {
+        background: rgba(255,255,255,0.04);
+        border-color: var(--gr-accent-dim);
+      }
+
+      #grBannerIcon {
+        font-size: 28px;
+        width: 48px; height: 48px;
+        border-radius: 14px;
+        display: flex; align-items: center; justify-content: center;
+        background: var(--gr-accent-dim-lt);
+        border: 1px solid var(--gr-accent);
+        box-shadow: 0 0 12px var(--gr-accent-glow-lt);
+        flex-shrink: 0;
+        transition: background 1s, box-shadow 1s, border-color 1s;
+      }
+
+      body.dark-mode #grBannerIcon {
+        background: var(--gr-accent-dim);
+        box-shadow: 0 0 16px var(--gr-accent-glow);
+      }
+
+      #grBannerText {}
+
+      #grBannerName {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 26px;
+        letter-spacing: 2px;
+        color: #111;
+        line-height: 1;
+        text-shadow: 0 0 14px var(--gr-accent-glow-lt);
+        transition: color 0.4s, text-shadow 1s;
+      }
+
+      body.dark-mode #grBannerName { color: #fff; text-shadow: 0 0 18px var(--gr-accent-glow); }
+
+      #grBannerCount {
+        font-family: Rockwell, sans-serif;
+        font-size: 12px;
+        color: #555;
+        margin-top: 2px;
+        transition: color 0.4s;
+      }
+
+      body.dark-mode #grBannerCount { color: #888; }
+
+      /* ============================================================
+         MOVIE GRID — 2-col, matches homepage mob-card style
+      ============================================================ */
+      #grGrid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .gr-card {
+        border-radius: 16px;
+        overflow: hidden;
+        text-decoration: none;
+        display: block;
+        background: rgba(255,255,255,0.30);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border: 1px solid var(--gr-accent-dim-lt);
+        box-shadow: 0 0 10px var(--gr-accent-dim),
+                    0 2px 12px rgba(0,0,0,0.08);
+        transition: transform 0.15s ease, box-shadow 1s ease, border-color 1s ease;
+      }
+
+      body.dark-mode .gr-card {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.07);
+        box-shadow: none;
+      }
+
+      .gr-card:active {
+        transform: scale(0.97);
+        border-color: var(--gr-accent);
+        box-shadow: 0 0 16px var(--gr-accent-glow-lt);
+      }
+
+      body.dark-mode .gr-card:active {
+        box-shadow: 0 0 16px var(--gr-accent-glow);
+      }
+
+      .gr-card img {
+        width: 100%;
+        aspect-ratio: 2 / 3;
+        object-fit: cover;
+        display: block;
+      }
+
+      .gr-card-info {
+        padding: 8px 10px 10px;
+      }
+
+      .gr-card-title {
+        font-family: Rockwell, sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: #111;
+        margin-bottom: 2px;
+        transition: color 0.4s;
+      }
+
+      body.dark-mode .gr-card-title { color: #f0f0f0; }
+
+      .gr-card-genre {
+        font-family: Rockwell, sans-serif;
+        font-size: 11px;
+        color: var(--gr-accent);
+        text-shadow: 0 0 8px var(--gr-accent-glow-lt);
+        transition: color 1s, text-shadow 1s;
+      }
+
+      body.dark-mode .gr-card-genre {
+        text-shadow: 0 0 8px var(--gr-accent-glow);
+      }
+
+      /* Empty state */
+      #grEmpty {
+        display: none;
+        text-align: center;
+        padding: 48px 20px;
+        font-family: Rockwell, sans-serif;
+        color: #888;
+        font-size: 15px;
+      }
+
+      /* ============================================================
+         PAGINATION
+      ============================================================ */
+      #grPagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 4px 0;
+      }
+
+      .gr-page-btn {
+        width: 36px; height: 36px;
+        border-radius: 50%;
+        border: 1px solid var(--gr-accent-dim-lt);
+        background: rgba(255,255,255,0.28);
+        backdrop-filter: blur(8px);
+        color: #555;
+        font-family: Rockwell, sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        transition: all 0.2s ease;
+      }
+
+      body.dark-mode .gr-page-btn {
+        background: rgba(255,255,255,0.06);
+        border-color: rgba(255,255,255,0.12);
+        color: #aaa;
+      }
+
+      .gr-page-btn.active {
+        background: var(--gr-accent);
+        border-color: var(--gr-accent);
+        color: #fff;
+        box-shadow: 0 0 12px var(--gr-accent-glow);
+      }
+
+      .gr-page-btn:disabled { opacity: 0.35; cursor: default; }
+      .gr-page-btn:not(:disabled):active { transform: scale(0.9); }
+
+      .gr-page-arrow {
+        background: rgba(255,255,255,0.20);
+        border-color: var(--gr-accent-dim-lt);
+        color: var(--gr-accent);
+      }
+
+      body.dark-mode .gr-page-arrow {
+        background: var(--gr-accent-dim);
+        border-color: var(--gr-accent-dim);
+      }
+
+      /* ============================================================
+         BOTTOM NAV
+      ============================================================ */
+      #grBottomNav {
+        display: flex;
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        min-height: 62px;
+        z-index: 1000;
+        align-items: center;
+        justify-content: space-around;
+        padding: 8px 4px env(safe-area-inset-bottom, 8px);
+        background: rgba(255,255,255,0.40);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-top: 1px solid var(--gr-accent-dim-lt);
+        box-shadow: 0 -4px 20px var(--gr-accent-dim-lt),
+                    0 -1px 0 var(--gr-accent-dim-lt);
+        transition: background 0.4s, border-color 1s, box-shadow 1s;
+      }
+
+      body.dark-mode #grBottomNav {
+        background: rgba(13,13,13,0.85);
+        border-top: 1px solid var(--gr-accent-dim);
+        box-shadow: 0 -4px 24px rgba(0,0,0,0.5),
+                    0 -1px 0 var(--gr-accent-dim);
+      }
+
+      .gr-nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        text-decoration: none;
+        color: #888;
+        flex: 1;
+        padding: 8px 0;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        transition: color 0.3s;
+      }
+
+      .gr-nav-item i { font-size: 20px; transition: transform 0.2s; }
+
+      .gr-nav-item span {
+        font-size: 10px;
+        font-family: Rockwell, sans-serif;
+        font-weight: 600;
+      }
+
+      .gr-nav-item.active {
+        color: var(--gr-accent);
+        text-shadow: 0 0 8px var(--gr-accent-glow-lt);
+      }
+
+      body.dark-mode .gr-nav-item.active {
+        text-shadow: 0 0 10px var(--gr-accent-glow);
+      }
+
+      /* ★ ADDED — genre pill style for the slide-up panel */
+      .mob-genre-pill {
+        display: flex;
+       flex-direction: column;
+       align-items: center;
+       gap: 6px;
+       padding: 14px 8px;
+       border-radius: 14px;
+       text-decoration: none;
+       font-family: Rockwell, sans-serif;
+       font-size: 12px;
+       color: #ccc;
+       background: rgba(255,255,255,0.06);
+       border: 1px solid rgba(255,255,255,0.08);
+       transition: background 0.2s;
+      }
+      .mob-genre-pill:active { background: var(--gr-accent-dim); }
+      .mob-genre-pill i { font-size: 20px; }
+
+/* ★ ADDED — remove tap highlight */
+      * {
+        -webkit-tap-highlight-color: transparent;
+      } 
+
+    } /* end @media 768px */
+  </style>
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/favicon/site.webmanifest" />
+</head>
+
+<body>
+
+  <!-- ============================================================
+       MOBILE LAYOUT
+  ============================================================ -->
+
+  <!-- HEADER -->
+  <div id="grHeader">
+    <button id="grBackBtn" aria-label="Go back">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+    <div id="grHeaderTitle">Genre</div>
+    <button id="grThemeToggle" aria-label="Toggle dark mode">🌙</button>
+  </div>
+
+  <!-- PAGE CONTENT -->
+  <div id="grPage">
+
+    <!-- GENRE BANNER -->
+    <div id="grBanner">
+      <div id="grBannerIcon"></div>
+      <div id="grBannerText">
+        <div id="grBannerName">Genre</div>
+        <div id="grBannerCount">0 movies</div>
+      </div>
+    </div>
+
+    <!-- MOVIE GRID -->
+    <div id="grGrid"></div>
+    <div id="grEmpty">No movies found for this genre.</div>
+
+    <!-- PAGINATION -->
+    <div id="grPagination"></div>
+
+  </div>
+
+  <!-- ★ ADDED — genres panel backdrop -->
+  <div id="grGenreBackdrop" style="
+    display:none; position:fixed; inset:0; z-index:998;
+    background:rgba(0,0,0,0.5); backdrop-filter:blur(4px);
+  "></div>
+
+  <!-- ★ ADDED — genres slide-up panel -->
+  <div id="grGenrePanel" style="
+    position:fixed; bottom:62px; left:0; right:0; z-index:999;
+    background:rgba(18,18,18,0.97); border-radius:20px 20px 0 0;
+    padding:24px 16px 32px;
+    transform:translateY(100%);
+    visibility:hidden;
+    transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    border-top:1px solid var(--gr-accent-dim);
+  ">
+    <h3 style="font-family:Rockwell,sans-serif;color:#fff;margin:0 0 18px;font-size:17px;">Browse Genres</h3>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+      <a href="genre-results.html?genre=action"    class="mob-genre-pill"><i class="fas fa-explosion"  style="color:#3498db;"></i><span>Action</span></a>
+      <a href="genre-results.html?genre=superhero" class="mob-genre-pill"><i class="fas fa-mask"       style="color:#e74c3c;"></i><span>Superhero</span></a>
+      <a href="genre-results.html?genre=animation" class="mob-genre-pill"><i class="fas fa-dragon"     style="color:#f39c12;"></i><span>Animation</span></a>
+      <a href="genre-results.html?genre=fantasy"   class="mob-genre-pill"><i class="fas fa-hat-wizard" style="color:#9b59b6;"></i><span>Fantasy</span></a>
+      <a href="genre-results.html?genre=scifi"     class="mob-genre-pill"><i class="fas fa-robot"      style="color:#1abc9c;"></i><span>Sci-Fi</span></a>
+      <a href="genre-results.html?genre=family"    class="mob-genre-pill"><i class="fas fa-child"      style="color:#2ecc71;"></i><span>Family</span></a>
+      <a href="genre-results.html?genre=thriller"  class="mob-genre-pill"><i class="fas fa-search"     style="color:#95a5a6;"></i><span>Thriller</span></a>
+      <a href="genre-results.html?genre=horror"    class="mob-genre-pill"><i class="fas fa-ghost"      style="color:#e74c3c;"></i><span>Horror</span></a>
+      <a href="genre-results.html?genre=musical"   class="mob-genre-pill"><i class="fas fa-music"      style="color:#e84393;"></i><span>Musical</span></a>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <nav id="grBottomNav">
+    <a href="index.html" class="gr-nav-item">
+      <i class="fas fa-home"></i><span>Home</span>
+    </a>
+    <!-- ★ CHANGED: was <a href="genre-results.html"> -->
+    <button class="gr-nav-item active" id="grGenresBtn">
+      <i class="fa-solid fa-compact-disc"></i><span>Genres</span>
+    </button>
+    <a href="Movie_Request.html" class="gr-nav-item">
+      <i class="fas fa-envelope"></i><span>Request</span>
+    </a>
+    <a href="Profile.html" class="gr-nav-item">
+      <i class="fa-regular fa-user"></i><span>Profile</span>
+    </a>
+  </nav>
+
+  <!-- ============================================================
+       SCRIPTS
+  ============================================================ -->
+  <script src="js/movies.js"></script>
+
+  <script>
+function __isMobileViewport() {
+  // True for phones/tablets in portrait (width <=1024) AND for tablets
+  // rotated to landscape (their short side, now the height, is <=1024
+  // and they're a touch device -- this is what keeps a rotated tablet
+  // from being mistaken for a small laptop).
+  return window.innerWidth <= 1024 ||
+    (window.matchMedia('(orientation: landscape)').matches &&
+     window.innerHeight <= 1024 &&
+     window.matchMedia('(pointer: coarse)').matches);
+}
+
+  (function () {
+    if (!__isMobileViewport()) return;
+
+    /* ============================================================
+       GENRE CONFIG — accent colors + icons + labels
+    ============================================================ */
+    const GENRE_MAP = {
+      action:    { label: 'Action',     icon: '<i class="fas fa-explosion"   style="color:#3498db;"></i>', accent: '#3498db', glow: 'rgba(52,152,219,0.45)',  glowLt: 'rgba(52,152,219,0.22)',  dim: 'rgba(52,152,219,0.13)',  dimLt: 'rgba(52,152,219,0.20)',  soft: '#dbeeff' },
+      superhero: { label: 'Superhero',  icon: '<i class="fas fa-mask"        style="color:#e74c3c;"></i>', accent: '#e74c3c', glow: 'rgba(231,76,60,0.45)',   glowLt: 'rgba(231,76,60,0.22)',   dim: 'rgba(231,76,60,0.13)',   dimLt: 'rgba(231,76,60,0.20)',   soft: '#ffdcdc' },
+      animation: { label: 'Animation',  icon: '<i class="fas fa-dragon"      style="color:#f39c12;"></i>', accent: '#f39c12', glow: 'rgba(243,156,18,0.45)',  glowLt: 'rgba(243,156,18,0.22)',  dim: 'rgba(243,156,18,0.13)',  dimLt: 'rgba(243,156,18,0.20)',  soft: '#fff3cc' },
+      fantasy:   { label: 'Fantasy',    icon: '<i class="fas fa-hat-wizard"  style="color:#9b59b6;"></i>', accent: '#9b59b6', glow: 'rgba(155,89,182,0.45)',  glowLt: 'rgba(155,89,182,0.22)',  dim: 'rgba(155,89,182,0.13)',  dimLt: 'rgba(155,89,182,0.20)',  soft: '#f0e0ff' },
+      scifi:     { label: 'Sci-Fi',     icon: '<i class="fas fa-robot"       style="color:#1abc9c;"></i>', accent: '#1abc9c', glow: 'rgba(26,188,156,0.45)',  glowLt: 'rgba(26,188,156,0.22)',  dim: 'rgba(26,188,156,0.13)',  dimLt: 'rgba(26,188,156,0.20)',  soft: '#d0fff4' },
+      family:    { label: 'Family',     icon: '<i class="fas fa-child"       style="color:#2ecc71;"></i>', accent: '#2ecc71', glow: 'rgba(46,204,113,0.45)',  glowLt: 'rgba(46,204,113,0.22)',  dim: 'rgba(46,204,113,0.13)',  dimLt: 'rgba(46,204,113,0.20)',  soft: '#d4f7e4' },
+      thriller:  { label: 'Thriller',   icon: '<i class="fas fa-search"      style="color:#95a5a6;"></i>', accent: '#95a5a6', glow: 'rgba(149,165,166,0.45)', glowLt: 'rgba(149,165,166,0.22)', dim: 'rgba(149,165,166,0.13)', dimLt: 'rgba(149,165,166,0.20)', soft: '#e8eced' },
+      horror:    { label: 'Horror',     icon: '<i class="fas fa-ghost"       style="color:#e74c3c;"></i>', accent: '#e74c3c', glow: 'rgba(231,76,60,0.45)',   glowLt: 'rgba(231,76,60,0.22)',   dim: 'rgba(231,76,60,0.13)',   dimLt: 'rgba(231,76,60,0.20)',   soft: '#ffdcdc' },
+      musical:   { label: 'Musical',    icon: '<i class="fas fa-music"       style="color:#e84393;"></i>', accent: '#e84393', glow: 'rgba(232,67,147,0.45)',  glowLt: 'rgba(232,67,147,0.22)',  dim: 'rgba(232,67,147,0.13)',  dimLt: 'rgba(232,67,147,0.20)',  soft: '#ffe0f2' },
+    };
+
+    const PAGE_SIZE = 18; // 2 cols × 9 rows
+
+    /* ============================================================
+       READ GENRE FROM URL
+    ============================================================ */
+    const params     = new URLSearchParams(window.location.search);
+    const genreKey   = (params.get('genre') || '').toLowerCase().replace(/[^a-z]/g, '');
+    const genreConf  = GENRE_MAP[genreKey] || GENRE_MAP['action'];
+
+    /* ============================================================
+       APPLY ACCENT COLORS
+    ============================================================ */
+    function applyAccent(conf) {
+      const r = document.documentElement;
+      r.style.setProperty('--gr-accent',         conf.accent);
+      r.style.setProperty('--gr-accent-glow',    conf.glow);
+      r.style.setProperty('--gr-accent-glow-lt', conf.glowLt);
+      r.style.setProperty('--gr-accent-dim',      conf.dim);
+      r.style.setProperty('--gr-accent-dim-lt',   conf.dimLt);
+      r.style.setProperty('--gr-soft-bg',         conf.soft);
+
+      const isDark = document.body.classList.contains('dark-mode');
+      document.body.style.backgroundColor = isDark ? '#0D0D0D' : conf.soft;
+    }
+
+    applyAccent(genreConf);
+
+    /* ============================================================
+       POPULATE HEADER + BANNER
+    ============================================================ */
+    const headerTitle = document.getElementById('grHeaderTitle');
+    const bannerIcon  = document.getElementById('grBannerIcon');
+    const bannerName  = document.getElementById('grBannerName');
+    const bannerCount = document.getElementById('grBannerCount');
+
+    if (headerTitle) headerTitle.textContent = genreConf.label;
+    if (bannerIcon)  bannerIcon.innerHTML    = genreConf.icon;
+    if (bannerName)  bannerName.textContent  = genreConf.label;
+    document.title = `Leveny — ${genreConf.label}`;
+
+    /* ============================================================
+       FILTER MOVIES FROM LEVENY_MOVIES
+    ============================================================ */
+    let movies = [];
+
+    if (typeof LEVENY_MOVIES !== 'undefined') {
+      movies = LEVENY_MOVIES.filter(m => {
+        const g = (m.genre || '').toLowerCase().replace(/[^a-z]/g, '');
+        return g === genreKey;
+      });
+    }
+
+    if (bannerCount) bannerCount.textContent = movies.length + ' movie' + (movies.length !== 1 ? 's' : '');
+
+    /* ============================================================
+       RENDER
+    ============================================================ */
+    const grid       = document.getElementById('grGrid');
+    const empty      = document.getElementById('grEmpty');
+    const pagination = document.getElementById('grPagination');
+    let currentPage  = 1;
+
+    function renderPage(page) {
+      currentPage = page;
+      if (!grid) return;
+
+      const start = (page - 1) * PAGE_SIZE;
+      const slice = movies.slice(start, start + PAGE_SIZE);
+
+      grid.innerHTML = '';
+
+      if (slice.length === 0) {
+        if (empty) empty.style.display = 'block';
+        return;
+      }
+
+      if (empty) empty.style.display = 'none';
+
+      slice.forEach(movie => {
+        const a       = document.createElement('a');
+        a.className   = 'gr-card';
+        a.href        = movie.href || '#';
+        a.innerHTML   = `
+          <img src="${movie.poster || movie.img || ''}" alt="${movie.title}" loading="lazy">
+          <div class="gr-card-info">
+            <div class="gr-card-title">${movie.title}</div>
+            <div class="gr-card-genre">${genreConf.label}</div>
+          </div>`;
+        grid.appendChild(a);
+      });
+
+      renderPagination();
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    function renderPagination() {
+      if (!pagination) return;
+      pagination.innerHTML = '';
+
+      const totalPages = Math.ceil(movies.length / PAGE_SIZE);
+      if (totalPages <= 1) return;
+
+      const makeBtn = (label, page, extraClass = '') => {
+        const btn = document.createElement('button');
+        btn.className = 'gr-page-btn' + extraClass;
+        btn.innerHTML = label;
+        btn.addEventListener('click', () => renderPage(page));
+        return btn;
+      };
+
+      const prev = makeBtn('<i class="fas fa-chevron-left"></i>', currentPage - 1, ' gr-page-arrow');
+      if (currentPage === 1) prev.disabled = true;
+      pagination.appendChild(prev);
+
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = makeBtn(i, i, i === currentPage ? ' active' : '');
+        pagination.appendChild(btn);
+      }
+
+      const next = makeBtn('<i class="fas fa-chevron-right"></i>', currentPage + 1, ' gr-page-arrow');
+      if (currentPage === totalPages) next.disabled = true;
+      pagination.appendChild(next);
+    }
+
+    renderPage(1);
+
+    /* ============================================================
+       BACK BUTTON — goes to previous page (the movie page you came from)
+    ============================================================ */
+    document.getElementById('grBackBtn')?.addEventListener('click', () => {
+      if (document.referrer) {
+        history.back();
+      } else {
+        window.location.href = 'index.html';
+      }
+    });
+
+    /* ============================================================
+       DARK MODE
+    ============================================================ */
+    const themeBtn = document.getElementById('grThemeToggle');
+    let isDark = false;
+
+    function initDark() {
+      const stored      = localStorage.getItem('leveny-dark');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      isDark = stored !== null ? stored === 'true' : prefersDark;
+      applyDark();
+    }
+
+    function applyDark() {
+      document.body.classList.toggle('dark-mode', isDark);
+      document.documentElement.classList.toggle('dark', isDark);
+      if (themeBtn) themeBtn.textContent = isDark ? '☀️' : '🌙';
+      document.body.style.backgroundColor = isDark ? '#0D0D0D' : genreConf.soft;
+    }
+
+    themeBtn?.addEventListener('click', () => {
+      isDark = !isDark;
+      localStorage.setItem('leveny-dark', isDark);
+      applyDark();
+    });
+
+    initDark();
+
+    // ★ ADDED — genres panel open/close
+    const grGenresBtn      = document.getElementById('grGenresBtn');
+    const grGenrePanel     = document.getElementById('grGenrePanel');
+    const grGenreBackdrop  = document.getElementById('grGenreBackdrop');
+
+    function openGrPanel() {
+      grGenrePanel.style.visibility = 'visible';
+      grGenrePanel.style.transform  = 'translateY(0)';
+      grGenreBackdrop.style.display = 'block';
+      document.body.style.overflow  = 'hidden';
+    }
+
+    function closeGrPanel() {
+      grGenrePanel.style.transform  = 'translateY(100%)';
+      grGenreBackdrop.style.display = 'none';
+      document.body.style.overflow  = '';
+      setTimeout(() => { grGenrePanel.style.visibility = 'hidden'; }, 350);
+    }
+
+    grGenresBtn?.addEventListener('click', openGrPanel);
+    grGenreBackdrop?.addEventListener('click', closeGrPanel);
+
+  })();
+  </script>
+
+  <footer class="copyright">
+    <a href="../disclaimer.html">Disclaimer!</a>
+  </footer>
+
+</body>
+</html>
