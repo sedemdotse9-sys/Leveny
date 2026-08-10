@@ -70,5 +70,6 @@ const LEVENY_MOVIES = [
     { title: "Avengers: Endgame", href: "../movies/avengers_endgame_movie.html", genre: "superhero", poster: "images/posters/avengers_endgame.jpg", discover: 7 , background: "images/backgrounds/avengers_endgame_backg.jpg"},
     { title: "Avengers: Infinity War", href: "../movies/avengers_infinity_war_movie.html", genre: "superhero", poster: "images/posters/avengers_infinity_war.jpg", discover: 2 , background: "images/backgrounds/avengers_infinity_war_backg.jpg"},
     { title: "The Devil's Mouth", href: "../movies/the_devil's_mouth_movie.html", genre: "horror", poster: "images/posters/the_devil's_mouth.jpg", discover: 5 , background: "images/backgrounds/the_devils_mouth_backg.jpg"},
-    { title: "Ghost Rider", href: "../movies/ghost_rider_movie.html", genre: "action", poster: "images/posters/ghost_rider.jpg", discover: 5 , background: "images/backgrounds/ghost_rider_backg.jpg"}
+    { title: "Ghost Rider", href: "../movies/ghost_rider_movie.html", genre: "action", poster: "images/posters/ghost_rider.jpg", discover: 5 , background: "images/backgrounds/ghost_rider_backg.jpg"},
+    { title: "Descendants: Wicked Wonderland", href: "../movies/descendants_wicked_wonderland_movie.html", genre: "musical", poster: "images/posters/descendants_wicked_wonderland.jpg", discover: 4 , background: "images/backgrounds/descendants_wicked_wonderland_backg.jpg"}
 ];

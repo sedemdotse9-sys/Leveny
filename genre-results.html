@@ -1,15 +1,14 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Leveny — Genre</title>
-
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Leveny — Genre</title>
+<link href="css/style.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;display=swap" rel="stylesheet"/>
+<style>
     /* ============================================================
        GENRE-RESULTS.HTML — Leveny
        Standalone mobile genre page. Desktop shows nothing;
@@ -244,7 +243,7 @@
       body.dark-mode #grBannerName { color: #fff; text-shadow: 0 0 18px var(--gr-accent-glow); }
 
       #grBannerCount {
-        font-family: Rockwell, sans-serif;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
         font-size: 12px;
         color: #555;
         margin-top: 2px;
@@ -304,7 +303,7 @@
       }
 
       .gr-card-title {
-        font-family: Rockwell, sans-serif;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
         font-size: 12px;
         font-weight: 700;
         white-space: nowrap;
@@ -318,7 +317,7 @@
       body.dark-mode .gr-card-title { color: #f0f0f0; }
 
       .gr-card-genre {
-        font-family: Rockwell, sans-serif;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
         font-size: 11px;
         color: var(--gr-accent);
         text-shadow: 0 0 8px var(--gr-accent-glow-lt);
@@ -334,7 +333,7 @@
         display: none;
         text-align: center;
         padding: 48px 20px;
-        font-family: Rockwell, sans-serif;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
         color: #888;
         font-size: 15px;
       }
@@ -358,7 +357,7 @@
         background: rgba(255,255,255,0.28);
         backdrop-filter: blur(8px);
         color: #555;
-        font-family: Rockwell, sans-serif;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
         font-size: 13px;
         font-weight: 700;
         cursor: pointer;
@@ -441,7 +440,7 @@
 
       .gr-nav-item span {
         font-size: 10px;
-        font-family: Rockwell, sans-serif;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
         font-weight: 600;
       }
 
@@ -463,7 +462,7 @@
        padding: 14px 8px;
        border-radius: 14px;
        text-decoration: none;
-       font-family: Rockwell, sans-serif;
+       font-family: "Roboto Slab", Rockwell, sans-serif;
        font-size: 12px;
        color: #ccc;
        background: rgba(255,255,255,0.06);
@@ -480,57 +479,47 @@
 
     } /* end @media 768px */
   </style>
-    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
-    <link rel="shortcut icon" href="/favicon/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
-    <link rel="manifest" href="/favicon/site.webmanifest" />
-</head>
-
+<link href="/favicon/favicon-96x96.png" rel="icon" sizes="96x96" type="image/png"/>
+<link href="/favicon/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="/favicon/favicon.ico" rel="shortcut icon"/>
+<link href="/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/favicon/site.webmanifest" rel="manifest"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&amp;display=swap" rel="stylesheet"/></head>
 <body>
-
-  <!-- ============================================================
+<!-- ============================================================
        MOBILE LAYOUT
   ============================================================ -->
-
-  <!-- HEADER -->
-  <div id="grHeader">
-    <button id="grBackBtn" aria-label="Go back">
-      <i class="fas fa-arrow-left"></i>
-    </button>
-    <div id="grHeaderTitle">Genre</div>
-    <button id="grThemeToggle" aria-label="Toggle dark mode">🌙</button>
-  </div>
-
-  <!-- PAGE CONTENT -->
-  <div id="grPage">
-
-    <!-- GENRE BANNER -->
-    <div id="grBanner">
-      <div id="grBannerIcon"></div>
-      <div id="grBannerText">
-        <div id="grBannerName">Genre</div>
-        <div id="grBannerCount">0 movies</div>
-      </div>
-    </div>
-
-    <!-- MOVIE GRID -->
-    <div id="grGrid"></div>
-    <div id="grEmpty">No movies found for this genre.</div>
-
-    <!-- PAGINATION -->
-    <div id="grPagination"></div>
-
-  </div>
-
-  <!-- ★ ADDED — genres panel backdrop -->
-  <div id="grGenreBackdrop" style="
+<!-- HEADER -->
+<div id="grHeader">
+<button aria-label="Go back" id="grBackBtn">
+<i class="fas fa-arrow-left"></i>
+</button>
+<div id="grHeaderTitle">Genre</div>
+<button aria-label="Toggle dark mode" id="grThemeToggle">🌙</button>
+</div>
+<!-- PAGE CONTENT -->
+<div id="grPage">
+<!-- GENRE BANNER -->
+<div id="grBanner">
+<div id="grBannerIcon"></div>
+<div id="grBannerText">
+<div id="grBannerName">Genre</div>
+<div id="grBannerCount">0 movies</div>
+</div>
+</div>
+<!-- MOVIE GRID -->
+<div id="grGrid"></div>
+<div id="grEmpty">No movies found for this genre.</div>
+<!-- PAGINATION -->
+<div id="grPagination"></div>
+</div>
+<!-- ★ ADDED — genres panel backdrop -->
+<div id="grGenreBackdrop" style="
     display:none; position:fixed; inset:0; z-index:998;
     background:rgba(0,0,0,0.5); backdrop-filter:blur(4px);
   "></div>
-
-  <!-- ★ ADDED — genres slide-up panel -->
-  <div id="grGenrePanel" style="
+<!-- ★ ADDED — genres slide-up panel -->
+<div id="grGenrePanel" style="
     position:fixed; bottom:62px; left:0; right:0; z-index:999;
     background:rgba(18,18,18,0.97); border-radius:20px 20px 0 0;
     padding:24px 16px 32px;
@@ -539,43 +528,40 @@
     transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);
     border-top:1px solid var(--gr-accent-dim);
   ">
-    <h3 style="font-family:Rockwell,sans-serif;color:#fff;margin:0 0 18px;font-size:17px;">Browse Genres</h3>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
-      <a href="genre-results.html?genre=action"    class="mob-genre-pill"><i class="fas fa-explosion"  style="color:#3498db;"></i><span>Action</span></a>
-      <a href="genre-results.html?genre=superhero" class="mob-genre-pill"><i class="fas fa-mask"       style="color:#e74c3c;"></i><span>Superhero</span></a>
-      <a href="genre-results.html?genre=animation" class="mob-genre-pill"><i class="fas fa-dragon"     style="color:#f39c12;"></i><span>Animation</span></a>
-      <a href="genre-results.html?genre=fantasy"   class="mob-genre-pill"><i class="fas fa-hat-wizard" style="color:#9b59b6;"></i><span>Fantasy</span></a>
-      <a href="genre-results.html?genre=scifi"     class="mob-genre-pill"><i class="fas fa-robot"      style="color:#1abc9c;"></i><span>Sci-Fi</span></a>
-      <a href="genre-results.html?genre=family"    class="mob-genre-pill"><i class="fas fa-child"      style="color:#2ecc71;"></i><span>Family</span></a>
-      <a href="genre-results.html?genre=thriller"  class="mob-genre-pill"><i class="fas fa-search"     style="color:#95a5a6;"></i><span>Thriller</span></a>
-      <a href="genre-results.html?genre=horror"    class="mob-genre-pill"><i class="fas fa-ghost"      style="color:#e74c3c;"></i><span>Horror</span></a>
-      <a href="genre-results.html?genre=musical"   class="mob-genre-pill"><i class="fas fa-music"      style="color:#e84393;"></i><span>Musical</span></a>
-    </div>
-  </div>
-
-  <!-- BOTTOM NAV -->
-  <nav id="grBottomNav">
-    <a href="index.html" class="gr-nav-item">
-      <i class="fas fa-home"></i><span>Home</span>
-    </a>
-    <!-- ★ CHANGED: was <a href="genre-results.html"> -->
-    <button class="gr-nav-item active" id="grGenresBtn">
-      <i class="fa-solid fa-compact-disc"></i><span>Genres</span>
-    </button>
-    <a href="Movie_Request.html" class="gr-nav-item">
-      <i class="fas fa-envelope"></i><span>Request</span>
-    </a>
-    <a href="Profile.html" class="gr-nav-item">
-      <i class="fa-regular fa-user"></i><span>Profile</span>
-    </a>
-  </nav>
-
-  <!-- ============================================================
+<h3 style='font-family: "Roboto Slab", Rockwell, sans-serif;color:#fff;margin:0 0 18px;font-size:17px;'>Browse Genres</h3>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+<a class="mob-genre-pill" href="genre-results.html?genre=action"><i class="fas fa-explosion" style="color:#3498db;"></i><span>Action</span></a>
+<a class="mob-genre-pill" href="genre-results.html?genre=superhero"><i class="fas fa-mask" style="color:#e74c3c;"></i><span>Superhero</span></a>
+<a class="mob-genre-pill" href="genre-results.html?genre=animation"><i class="fas fa-dragon" style="color:#f39c12;"></i><span>Animation</span></a>
+<a class="mob-genre-pill" href="genre-results.html?genre=fantasy"><i class="fas fa-hat-wizard" style="color:#9b59b6;"></i><span>Fantasy</span></a>
+<a class="mob-genre-pill" href="genre-results.html?genre=scifi"><i class="fas fa-robot" style="color:#1abc9c;"></i><span>Sci-Fi</span></a>
+<a class="mob-genre-pill" href="genre-results.html?genre=family"><i class="fas fa-child" style="color:#2ecc71;"></i><span>Family</span></a>
+<a class="mob-genre-pill" href="genre-results.html?genre=thriller"><i class="fas fa-search" style="color:#95a5a6;"></i><span>Thriller</span></a>
+<a class="mob-genre-pill" href="genre-results.html?genre=horror"><i class="fas fa-ghost" style="color:#e74c3c;"></i><span>Horror</span></a>
+<a class="mob-genre-pill" href="genre-results.html?genre=musical"><i class="fas fa-music" style="color:#e84393;"></i><span>Musical</span></a>
+</div>
+</div>
+<!-- BOTTOM NAV -->
+<nav id="grBottomNav">
+<a class="gr-nav-item" href="index.html">
+<i class="fas fa-home"></i><span>Home</span>
+</a>
+<!-- ★ CHANGED: was <a href="genre-results.html"> -->
+<button class="gr-nav-item active" id="grGenresBtn">
+<i class="fa-solid fa-compact-disc"></i><span>Genres</span>
+</button>
+<a class="gr-nav-item" href="Movie_Request.html">
+<i class="fas fa-envelope"></i><span>Request</span>
+</a>
+<a class="gr-nav-item" href="Profile.html">
+<i class="fa-regular fa-user"></i><span>Profile</span>
+</a>
+</nav>
+<!-- ============================================================
        SCRIPTS
   ============================================================ -->
-  <script src="js/movies.js"></script>
-
-  <script>
+<script src="js/movies.js"></script>
+<script>
 function __isMobileViewport() {
   // True for phones/tablets in portrait (width <=1024) AND for tablets
   // rotated to landscape (their short side, now the height, is <=1024
@@ -794,10 +780,8 @@ function __isMobileViewport() {
 
   })();
   </script>
-
-  <footer class="copyright">
-    <a href="../disclaimer.html">Disclaimer!</a>
-  </footer>
-
+<footer class="copyright">
+<a href="../disclaimer.html">Disclaimer!</a>
+</footer>
 </body>
 </html>
