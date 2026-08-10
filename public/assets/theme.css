@@ -52,6 +52,11 @@ body {
   --toggle-border: rgba(255, 255, 255, 0.18);
   --hover-bg: rgba(255, 255, 255, 0.06);
   --danger: #f87171;
+
+  /* solid-ish background for small floating menus/popovers, so text
+     stays legible regardless of what's behind them */
+  --popover-bg: rgba(15, 23, 35, 0.96);
+  --progress-track: rgba(255, 255, 255, 0.18);
 }
 
 html[data-theme="light"] {
@@ -91,6 +96,9 @@ html[data-theme="light"] {
   --toggle-border: rgba(255, 255, 255, 0.8);
   --hover-bg: rgba(255, 255, 255, 0.35);
   --danger: #dc2626;
+
+  --popover-bg: rgba(255, 255, 255, 0.97);
+  --progress-track: rgba(20, 60, 80, 0.15);
 }
 
 body {
