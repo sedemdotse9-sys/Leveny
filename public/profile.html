@@ -158,7 +158,7 @@
   </button>
 
   <div class="card-wrapper">
-    <form class="login-card glass" id="authForm" novalidate>
+    <form class="login-card glass" id="authForm" novalidate autocomplete="off">
       <div class="avatar-circle">
         <svg viewBox="0 0 24 24">
           <path d="M12 12c2.7 0 4.9-2.2 4.9-4.9S14.7 2.2 12 2.2 7.1 4.4 7.1 7.1 9.3 12 12 12zm0 2.5c-3.3 0-9.8 1.6-9.8 4.9v2.4h19.6v-2.4c0-3.3-6.5-4.9-9.8-4.9z"/>
@@ -361,9 +361,19 @@
     strengthWrap.classList.remove('show');
   }
 
+  function clearFormFields() {
+    usernameInput.value = '';
+    identifierInput.value = '';
+    passwordInput.value = '';
+    confirmInput.value = '';
+    passwordInput.setAttribute('type', 'password');
+    setEyeIcon(false);
+  }
+
   switchBtn.addEventListener('click', function () {
     mode = mode === 'login' ? 'signup' : 'login';
     resetFieldStates();
+    clearFormFields();
 
     if (mode === 'signup') {
       formTitle.textContent = 'Create your account';
@@ -484,6 +494,13 @@
   if (sessionStorage.getItem('leveny-user')) {
     window.location.href = 'dashboard.html';
   }
+
+  // Always start blank — clears anything the browser tried to restore
+  // (autofill, or a cached form state from hitting the back button).
+  window.addEventListener('pageshow', function () {
+    clearFormFields();
+    resetFieldStates();
+  });
 </script>
 
 </body>

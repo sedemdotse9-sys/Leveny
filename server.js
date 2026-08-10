@@ -46,7 +46,13 @@ function findUser(users, identifier) {
 
 function publicUser(u) {
   if (!u) return null;
-  return { username: u.username, email: u.email, avatar: u.avatar || null };
+  return {
+    username: u.username,
+    email: u.email,
+    avatar: u.avatar || null,
+    watchHistory: u.watchHistory || [],
+    downloads: u.downloads || []
+  };
 }
 
 const usernameRegex = /^[a-zA-Z0-9_.]{3,20}$/;
@@ -106,7 +112,7 @@ app.post('/api/signup', (req, res) => {
   }
 
   const passwordHash = bcrypt.hashSync(password, 10);
-  const newUser = { username, email, passwordHash, avatar: null };
+  const newUser = { username, email, passwordHash, avatar: null, watchHistory: [], downloads: [] };
   users.push(newUser);
   saveUsers(users);
 
@@ -206,6 +212,110 @@ app.post('/api/change-password', (req, res) => {
   saveUsers(users);
 
   res.json({ success: true });
+});
+
+// --- Log or update watch progress for a movie ---
+// Called from a movie page whenever playback starts/progresses.
+// Upserts by movieId: if the movie is already in history, updates its
+// position and moves it to the top; otherwise adds a new entry.
+app.post('/api/watch-history', (req, res) => {
+  const { username, movieId, title, background, runtimeMinutes, positionMinutes } = req.body || {};
+
+  if (!username || !movieId || !title) {
+    return res.status(400).json({ error: 'username, movieId, and title are required.' });
+  }
+
+  const users = loadUsers();
+  const user = findUser(users, username);
+  if (!user) return res.status(404).json({ error: 'User not found.' });
+
+  if (!user.watchHistory) user.watchHistory = [];
+
+  const entry = {
+    movieId,
+    title,
+    background: background || null,
+    runtimeMinutes: Number(runtimeMinutes) || 0,
+    positionMinutes: Number(positionMinutes) || 0,
+    lastWatched: new Date().toISOString()
+  };
+
+  user.watchHistory = user.watchHistory.filter((h) => h.movieId !== movieId);
+  user.watchHistory.unshift(entry);
+  user.watchHistory = user.watchHistory.slice(0, 100); // cap history length
+
+  saveUsers(users);
+  res.json({ watchHistory: user.watchHistory });
+});
+
+// --- Get watch history ---
+app.get('/api/watch-history/:username', (req, res) => {
+  const users = loadUsers();
+  const user = findUser(users, req.params.username);
+  if (!user) return res.status(404).json({ error: 'User not found.' });
+  res.json({ watchHistory: user.watchHistory || [] });
+});
+
+// --- Remove a single watch history entry ---
+app.delete('/api/watch-history/:username/:movieId', (req, res) => {
+  const users = loadUsers();
+  const user = findUser(users, req.params.username);
+  if (!user) return res.status(404).json({ error: 'User not found.' });
+
+  user.watchHistory = (user.watchHistory || []).filter((h) => h.movieId !== req.params.movieId);
+  saveUsers(users);
+  res.json({ watchHistory: user.watchHistory });
+});
+
+// --- Log a download ---
+// Called from a movie page's Download button after it triggers the
+// actual browser file download. This just records that it happened,
+// so the dashboard can show/re-trigger/remove it later.
+app.post('/api/downloads', (req, res) => {
+  const { username, movieId, title, poster, videoUrl } = req.body || {};
+
+  if (!username || !movieId || !title || !videoUrl) {
+    return res.status(400).json({ error: 'username, movieId, title, and videoUrl are required.' });
+  }
+
+  const users = loadUsers();
+  const user = findUser(users, username);
+  if (!user) return res.status(404).json({ error: 'User not found.' });
+
+  if (!user.downloads) user.downloads = [];
+
+  const entry = {
+    movieId,
+    title,
+    poster: poster || null,
+    videoUrl,
+    downloadedAt: new Date().toISOString()
+  };
+
+  user.downloads = user.downloads.filter((d) => d.movieId !== movieId);
+  user.downloads.unshift(entry);
+
+  saveUsers(users);
+  res.json({ downloads: user.downloads });
+});
+
+// --- Get downloads list ---
+app.get('/api/downloads/:username', (req, res) => {
+  const users = loadUsers();
+  const user = findUser(users, req.params.username);
+  if (!user) return res.status(404).json({ error: 'User not found.' });
+  res.json({ downloads: user.downloads || [] });
+});
+
+// --- Remove a download entry ---
+app.delete('/api/downloads/:username/:movieId', (req, res) => {
+  const users = loadUsers();
+  const user = findUser(users, req.params.username);
+  if (!user) return res.status(404).json({ error: 'User not found.' });
+
+  user.downloads = (user.downloads || []).filter((d) => d.movieId !== req.params.movieId);
+  saveUsers(users);
+  res.json({ downloads: user.downloads });
 });
 
 /* ---------- start server ---------- */

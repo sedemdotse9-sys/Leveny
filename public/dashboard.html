@@ -18,6 +18,43 @@
     gap: 24px;
   }
 
+  /* ---------- mobile menu button (hidden on desktop) ---------- */
+  .menu-toggle {
+    display: none;
+    position: fixed;
+    top: 22px;
+    left: 22px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--toggle-bg);
+    border: 1px solid var(--toggle-border);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 60;
+  }
+
+  .menu-toggle svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--text-primary);
+  }
+
+  .sidebar-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 45;
+  }
+
+  .sidebar-backdrop.show {
+    display: block;
+  }
+
   /* ---------- sidebar ---------- */
   .sidebar {
     width: 260px;
@@ -29,6 +66,15 @@
     box-shadow: var(--card-shadow);
     height: fit-content;
     min-height: calc(100vh - 56px);
+  }
+
+  .sidebar-logo {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--text-primary);
+    padding: 0 8px 18px;
+    display: none; /* only shown in the mobile drawer, desktop keeps its own site header elsewhere */
   }
 
   .profile-block {
@@ -86,7 +132,7 @@
     white-space: nowrap;
   }
 
-  /* avatar popover menu */
+  /* avatar popover menu — solid-ish background so it reads clearly, not the translucent glass */
   .avatar-menu {
     display: none;
     position: absolute;
@@ -98,6 +144,9 @@
     min-width: 180px;
     box-shadow: var(--card-shadow);
     border: 1px solid var(--input-border);
+    background: var(--popover-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
   }
 
   .avatar-menu.show { display: block; }
@@ -170,6 +219,7 @@
   /* ---------- content pane ---------- */
   .content-pane {
     flex: 1;
+    min-width: 0;
     border-radius: 22px;
     padding: 36px 40px;
     box-shadow: var(--card-shadow);
@@ -221,6 +271,222 @@
   #hiddenFileInput {
     display: none;
   }
+
+  /* ---------- watch history (YouTube-style rows) ---------- */
+  .history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .history-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .history-thumb-wrap {
+    width: 160px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .history-thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 10px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--input-bg);
+  }
+
+  .history-progress-track {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: rgba(0, 0, 0, 0.45);
+  }
+
+  .history-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
+  }
+
+  .history-below {
+    font-size: 11px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+
+  .history-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 2px;
+  }
+
+  .history-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-primary);
+    margin: 0 0 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .history-remove {
+    align-self: flex-start;
+    margin-top: 6px;
+    background: none;
+    border: none;
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .history-remove:hover {
+    color: var(--danger);
+  }
+
+  /* ---------- downloads ---------- */
+  .downloads-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .download-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px;
+    border-radius: 12px;
+    border: 1px solid var(--input-border);
+  }
+
+  .download-poster {
+    width: 56px;
+    height: 78px;
+    border-radius: 8px;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--input-bg);
+    flex-shrink: 0;
+  }
+
+  .download-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .download-title {
+    font-weight: 600;
+    font-size: 13.5px;
+    color: var(--text-primary);
+    margin: 0 0 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .download-date {
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+
+  .download-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .download-actions button {
+    background: none;
+    border: 1px solid var(--input-border);
+    color: var(--text-primary);
+    padding: 7px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .download-actions button:hover {
+    border-color: var(--input-focus-border);
+  }
+
+  .download-actions button.danger {
+    color: var(--danger);
+  }
+
+  /* ============================================================
+     MOBILE: sidebar becomes a slide-out drawer, content takes
+     the full width, and a hamburger button opens/closes it.
+  ============================================================ */
+  @media (max-width: 860px) {
+    .layout {
+      padding: 16px;
+      padding-top: 76px;
+      gap: 0;
+    }
+
+    .menu-toggle {
+      display: flex;
+    }
+
+    .theme-toggle {
+      top: 22px;
+      right: 16px;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      min-height: 100vh;
+      width: 78vw;
+      max-width: 300px;
+      border-radius: 0 22px 22px 0;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      z-index: 50;
+      overflow-y: auto;
+    }
+
+    .sidebar.open {
+      transform: translateX(0);
+    }
+
+    .sidebar-logo {
+      display: block;
+    }
+
+    .content-pane {
+      padding: 26px 20px;
+      min-height: auto;
+    }
+
+    .history-thumb-wrap {
+      width: 120px;
+    }
+
+    .history-title {
+      font-size: 13px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -229,8 +495,16 @@
     <span data-theme-icon></span>
   </button>
 
+  <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu">
+    <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
+  </button>
+
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
   <div class="layout">
-    <aside class="sidebar glass">
+    <aside class="sidebar glass" id="sidebar">
+      <div class="sidebar-logo">Leve<span style="opacity:.6">ny</span></div>
+
       <div class="profile-block">
         <button class="avatar-btn" id="avatarBtn" type="button" aria-label="Change profile picture">
           <svg viewBox="0 0 24 24" id="avatarDefaultIcon">
@@ -243,7 +517,7 @@
           <div class="email-display" id="emailDisplay">&nbsp;</div>
         </div>
 
-        <div class="avatar-menu glass" id="avatarMenu">
+        <div class="avatar-menu" id="avatarMenu">
           <button type="button" id="uploadPhotoBtn">Upload photo</button>
           <button type="button" id="removePhotoBtn" class="danger">Remove photo</button>
         </div>
@@ -276,7 +550,8 @@
       <div class="panel active" id="panel-downloads">
         <h2>Downloads</h2>
         <p class="desc">Titles you've downloaded for offline viewing.</p>
-        <div class="empty-state">
+        <div class="downloads-list" id="downloadsList"></div>
+        <div class="empty-state" id="downloadsEmpty">
           <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
           <p>Nothing downloaded yet.</p>
         </div>
@@ -285,7 +560,8 @@
       <div class="panel" id="panel-history">
         <h2>Watch History</h2>
         <p class="desc">What you've watched recently.</p>
-        <div class="empty-state">
+        <div class="history-list" id="historyList"></div>
+        <div class="empty-state" id="historyEmpty">
           <svg viewBox="0 0 24 24"><path d="M13 3a9 9 0 1 0 9 9h-2a7 7 0 1 1-7-7v4l5-5-5-5v4z"/></svg>
           <p>Your watch history is empty.</p>
         </div>
@@ -321,6 +597,25 @@
     window.location.href = 'profile.html';
   }
 
+  /* ---------- mobile sidebar drawer ---------- */
+  const sidebar = document.getElementById('sidebar');
+  const menuToggle = document.getElementById('menuToggle');
+  const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+  function openSidebar() {
+    sidebar.classList.add('open');
+    sidebarBackdrop.classList.add('show');
+    menuToggle.style.display = 'none';
+  }
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    sidebarBackdrop.classList.remove('show');
+    menuToggle.style.display = '';
+  }
+  menuToggle.addEventListener('click', openSidebar);
+  sidebarBackdrop.addEventListener('click', closeSidebar);
+
+  /* ---------- profile info + avatar ---------- */
   const usernameDisplay = document.getElementById('usernameDisplay');
   const emailDisplay = document.getElementById('emailDisplay');
   const avatarImg = document.getElementById('avatarImg');
@@ -356,6 +651,8 @@
       usernameDisplay.textContent = data.user.username;
       emailDisplay.textContent = data.user.email;
       setAvatar(data.user.avatar);
+      renderHistory(data.user.watchHistory || []);
+      renderDownloads(data.user.downloads || []);
     } catch (err) {
       usernameDisplay.textContent = username;
       emailDisplay.textContent = '';
@@ -363,7 +660,6 @@
   }
   loadUser();
 
-  // avatar menu open/close
   avatarBtn.addEventListener('click', function (e) {
     e.stopPropagation();
     avatarMenu.classList.toggle('show');
@@ -412,23 +708,24 @@
     }
   });
 
-  // sidebar nav switching
+  /* ---------- sidebar nav switching ---------- */
   document.querySelectorAll('.nav-item[data-panel]').forEach((btn) => {
     btn.addEventListener('click', function () {
       document.querySelectorAll('.nav-item[data-panel]').forEach((b) => b.classList.remove('active'));
       document.querySelectorAll('.panel').forEach((p) => p.classList.remove('active'));
       btn.classList.add('active');
       document.getElementById('panel-' + btn.dataset.panel).classList.add('active');
+      closeSidebar();
     });
   });
 
-  // logout
+  /* ---------- logout ---------- */
   document.getElementById('logoutBtn').addEventListener('click', function () {
     sessionStorage.removeItem('leveny-user');
     window.location.href = 'profile.html';
   });
 
-  // change password
+  /* ---------- change password ---------- */
   document.getElementById('passwordForm').addEventListener('submit', async function (e) {
     e.preventDefault();
     const currentPassword = document.getElementById('currentPassword').value;
@@ -469,6 +766,150 @@
       securityMsg.textContent = 'Could not reach the server.';
     }
   });
+
+  /* ============================================================
+     WATCH HISTORY — YouTube-style rows: thumbnail (movie
+     background) on the left with a progress bar and runtime/
+     stopped-at info below it, title to the right.
+  ============================================================ */
+  function formatMinutes(mins) {
+    mins = Math.max(0, Math.round(mins));
+    const h = Math.floor(mins / 60);
+    const m = mins % 60;
+    return h > 0 ? `${h}h ${m}m` : `${m}m`;
+  }
+
+  function renderHistory(entries) {
+    const list = document.getElementById('historyList');
+    const empty = document.getElementById('historyEmpty');
+    list.innerHTML = '';
+
+    if (!entries.length) {
+      empty.style.display = 'flex';
+      return;
+    }
+    empty.style.display = 'none';
+
+    entries.forEach((entry) => {
+      const pct = entry.runtimeMinutes > 0
+        ? Math.min(100, Math.round((entry.positionMinutes / entry.runtimeMinutes) * 100))
+        : 0;
+
+      const item = document.createElement('div');
+      item.className = 'history-item';
+      item.innerHTML = `
+        <div class="history-thumb-wrap">
+          <div class="history-thumb" style="background-image:url('${entry.background || ''}')">
+            <div class="history-progress-track">
+              <div class="history-progress-fill" style="width:${pct}%"></div>
+            </div>
+          </div>
+          <div class="history-below">
+            ${formatMinutes(entry.runtimeMinutes)} runtime &middot; stopped at ${formatMinutes(entry.positionMinutes)} (${pct}%)
+          </div>
+        </div>
+        <div class="history-info">
+          <p class="history-title">${entry.title}</p>
+          <button class="history-remove" data-id="${entry.movieId}">Remove from history</button>
+        </div>
+      `;
+      list.appendChild(item);
+    });
+
+    list.querySelectorAll('.history-remove').forEach((btn) => {
+      btn.addEventListener('click', async function () {
+        try {
+          const res = await fetch('/api/watch-history/' + encodeURIComponent(username) + '/' + encodeURIComponent(btn.dataset.id), { method: 'DELETE' });
+          const data = await res.json();
+          if (res.ok) renderHistory(data.watchHistory);
+        } catch (err) {
+          alert('Could not reach the server.');
+        }
+      });
+    });
+  }
+
+  /* ============================================================
+     DOWNLOADS — each entry can be re-downloaded (re-triggers the
+     browser's native download using the stored video URL) or
+     removed from the list.
+  ============================================================ */
+  function renderDownloads(entries) {
+    const list = document.getElementById('downloadsList');
+    const empty = document.getElementById('downloadsEmpty');
+    list.innerHTML = '';
+
+    if (!entries.length) {
+      empty.style.display = 'flex';
+      return;
+    }
+    empty.style.display = 'none';
+
+    entries.forEach((entry) => {
+      const date = new Date(entry.downloadedAt);
+      const item = document.createElement('div');
+      item.className = 'download-item';
+      item.innerHTML = `
+        <div class="download-poster" style="background-image:url('${entry.poster || ''}')"></div>
+        <div class="download-info">
+          <p class="download-title">${entry.title}</p>
+          <p class="download-date">Downloaded ${date.toLocaleDateString()}</p>
+        </div>
+        <div class="download-actions">
+          <button class="redownload-btn" data-url="${entry.videoUrl}" data-title="${entry.title}">Download again</button>
+          <button class="danger remove-download-btn" data-id="${entry.movieId}">Remove</button>
+        </div>
+      `;
+      list.appendChild(item);
+    });
+
+    list.querySelectorAll('.redownload-btn').forEach((btn) => {
+      btn.addEventListener('click', function () {
+        triggerFileDownload(btn.dataset.url, btn.dataset.title);
+      });
+    });
+
+    list.querySelectorAll('.remove-download-btn').forEach((btn) => {
+      btn.addEventListener('click', async function () {
+        try {
+          const res = await fetch('/api/downloads/' + encodeURIComponent(username) + '/' + encodeURIComponent(btn.dataset.id), { method: 'DELETE' });
+          const data = await res.json();
+          if (res.ok) renderDownloads(data.downloads);
+        } catch (err) {
+          alert('Could not reach the server.');
+        }
+      });
+    });
+  }
+
+  // Triggers an actual browser file download. Works cleanly for
+  // same-origin files or ones served with proper download headers;
+  // some third-party/cross-origin video hosts may just open in a
+  // new tab instead, depending on their server configuration.
+  function triggerFileDownload(url, filename) {
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename || '';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }
+
+  // Exposed globally so movie pages can call this once they're wired up:
+  // Leveny.logDownload({ movieId, title, poster, videoUrl })
+  window.Leveny = window.Leveny || {};
+  window.Leveny.logDownload = async function (movie) {
+    triggerFileDownload(movie.videoUrl, movie.title);
+    try {
+      await fetch('/api/downloads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, ...movie })
+      });
+    } catch (err) {
+      // download still happened locally even if logging failed
+    }
+  };
 </script>
 
 </body>
