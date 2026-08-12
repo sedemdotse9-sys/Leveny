@@ -540,8 +540,21 @@ footer.copyright a { color: black; text-decoration: none; }
     .page-title { font-size: 2.8rem; margin-bottom: 30px; }
     .nav_bar { padding: 0 20px; }
     header hr { width: calc(100% - 40px); margin-left: 20px; }
-    .search-box { right: 20px; }
-    .search-box input { width: 200px; }
+
+    /* Bring the search box into normal flex flow instead of a fixed
+       absolute offset, matching the homepage fix — this is what
+       stops it from ever overlapping the nav links regardless of
+       exact screen width. */
+    .search-box {
+        position: static;
+        top: auto;
+        right: auto;
+        transform: none;
+        margin-left: 16px;
+        flex-shrink: 0;
+    }
+    .search-box input { width: clamp(140px, 22vw, 220px); }
+
     .discover-arrow-left { left: 10px; }
     .discover-arrow-right { right: 10px; }
 }
