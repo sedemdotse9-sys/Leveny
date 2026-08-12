@@ -499,6 +499,11 @@ header hr {
     font-size: clamp(15px, 1.4vw, 21px);
   }
 
+  .arrow_left,
+  .arrow_right {
+    z-index: 1000;
+  }
+  
   /* Pull the search box out of fixed absolute positioning and
      back into the nav bar's own flex row, so it can never overlap
      the nav links regardless of how much horizontal space there is. */
@@ -514,7 +519,9 @@ header hr {
   }
 
   .search-dropdown {
-    width: 100%;
+    margin-top: 30px;
+    width: 30%;
+    /* z-index: 9000; */
   }
 
   header hr {
