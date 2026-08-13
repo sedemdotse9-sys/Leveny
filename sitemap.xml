@@ -265,6 +265,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://leveny.online/movies/the_grinch_movie.html</loc>
+    <lastmod>2026-08-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://leveny.online/movies/descendants_rise_of_red_movie.html</loc>
     <lastmod>2026-08-03</lastmod>
     <changefreq>weekly</changefreq>
