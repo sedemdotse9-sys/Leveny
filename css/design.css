@@ -536,7 +536,7 @@ header hr {
   .main_body_5 p,
   .main_body_6 p,
   .main_body_7 p {
-    margin-top: clamp(60px, 8vw, 90px);
+    margin-top: clamp(50px, 7vw, 80px);
     padding-left: clamp(40px, 5vw, 80px);
     font-size: clamp(30px, 3vw, 40px);
   }
