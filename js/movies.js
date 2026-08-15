@@ -10,7 +10,7 @@
 
 const LEVENY_MOVIES = [
     { title: "Avatar: The Way of Water",        href: "../movies/avatar_way_of_water_movie.html",         genre: "scifi",     poster: "images/posters/avatar_water.jpg",    discover: 1,    background: "images/backgrounds/awow.jpg"},
-    { title: "The Meg",                          href: "../movies/the_meg_movie.html",                     genre: "action",    poster: "images/posters/themeg.jpg",           discover: 1,    background: "images/backgrounds/themeg.jpg"},
+    { title: "The Meg",                          href: "../movies/the_meg_movie.html",                     genre: "action",    poster: "images/posters/themeg.jpg",           discover: 1,    background: "images/backgrounds/meg.jpg"},
     { title: "The Little Mermaid",               href: "../movies/the_littlemermaid_movie.html",           genre: "family",    poster: "images/posters/littlemermaid.jpg",    discover: 1,    background: "images/backgrounds/littlemermaid.jpg"},
     { title: "Finding Dory",                     href: "../movies/finding_dory_movie.html",                genre: "animation", poster: "images/posters/findingdory.jpg",      discover: 1,    background: "images/backgrounds/fd.jpg"},
     { title: "Percy Jackson: The Lightening Thief",  href: "../movies/percy_jackson_movie.html",               genre: "fantasy",   poster: "images/posters/percyjackson.jpg",     discover: 1,    background: "images/backgrounds/pj.jpg"},
@@ -18,7 +18,7 @@ const LEVENY_MOVIES = [
     { title: "Lilo and Stitch",                  href: "../movies/lilo_stitch_movie.html",                 genre: "animation", poster: "images/posters/lilo.jpg",             discover: 1,    background: "images/backgrounds/llss.jpg"},
     { title: "Tron: Legacy",                     href: "../movies/tron_movie.html",                        genre: "scifi",     poster: "images/posters/tron.jpg",             discover: 1,    background: "images/backgrounds/tr.jpg"},
     { title: "Jurassic World: Dominion",         href: "../movies/jurassic_park_dominion_movie.html",      genre: "action",    poster: "images/posters/jurassic_dominion.jpg", discover: 2,    background: "images/backgrounds/jwd.jpg"},
-    { title: "The Beekeeper",                    href: "../movies/the_beekeeper_movie.html",               genre: "action",    poster: "images/posters/bee.jpg",              discover: 2,    background: "images/backgrounds/bee.jpg"},
+    { title: "The Beekeeper",                    href: "../movies/the_beekeeper_movie.html",               genre: "action",    poster: "images/posters/bee.jpg",              discover: 2,    background: "images/backgrounds/bk.jpg"},
     { title: "Transformers: Bumblebee",          href: "../movies/bumblebee_movie.html",                   genre: "scifi",     poster: "images/posters/bumble.jpg",           discover: 2,    background: "images/backgrounds/bb.jpg"},
     { title: "Jumanji: Welcome to the Jungle",   href: "../movies/jumanji_movie.html",                     genre: "action",    poster: "images/posters/jumanji.jpg",          discover: 2,    background: "images/backgrounds/jm.jpg"},
     { title: "Knives Out",                       href: "../movies/knives_out_movie.html",                  genre: "thriller",  poster: "images/posters/knives.jpg",           discover: 2,    background: "images/backgrounds/ko.jpg"},
@@ -72,5 +72,7 @@ const LEVENY_MOVIES = [
     { title: "Avengers: Infinity War", href: "../movies/avengers_infinity_war_movie.html", genre: "superhero", poster: "images/posters/avengers_infinity_war.jpg", discover: 2 , background: "images/backgrounds/avengers_infinity_war_backg.jpg"},
     { title: "The Devil's Mouth", href: "../movies/the_devil's_mouth_movie.html", genre: "horror", poster: "images/posters/the_devil's_mouth.jpg", discover: 5 , background: "images/backgrounds/the_devils_mouth_backg.jpg"},
     { title: "Ghost Rider", href: "../movies/ghost_rider_movie.html", genre: "action", poster: "images/posters/ghost_rider.jpg", discover: 5 , background: "images/backgrounds/ghost_rider_backg.jpg"},
-    { title: "Descendants: Wicked Wonderland", href: "../movies/descendants_wicked_wonderland_movie.html", genre: "musical", poster: "images/posters/descendants_wicked_wonderland.jpg", discover: 4 , background: "images/backgrounds/descendants_wicked_wonderland_backg.jpg"}
+    { title: "Descendants: Wicked Wonderland", href: "../movies/descendants_wicked_wonderland_movie.html", genre: "musical", poster: "images/posters/descendants_wicked_wonderland.jpg", discover: 4 , background: "images/backgrounds/descendants_wicked_wonderland_backg.jpg"},
+    { title: "Cotton Mouth", href: "../movies/cotton_mouth_movie.html", genre: "action", poster: "images/posters/cotton_mouth.jpg", discover: 6 , background: "images/backgrounds/cotton_mouth_backg.jpg"},
+    { title: "Ashes", href: "../movies/ashes_movie.html", genre: "thriller", poster: "images/posters/ashes.jpg", discover: 5 , background: "images/backgrounds/ashes_backg.jpg"},
 ];
