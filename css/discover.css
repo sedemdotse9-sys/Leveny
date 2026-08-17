@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&display=swap');
 /* ============================================================
    discover.css — Leveny
    ONE stylesheet for all 7 discover color themes.
@@ -321,7 +322,7 @@
 .discover-body {
     background: var(--bg-gradient);
     min-height: 100vh;
-    font-family: Rockwell, sans-serif;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
     overflow-y: scroll;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -503,7 +504,7 @@ header hr {
 .page-number:hover { background: var(--pnum-hover-bg); }
 .page-number.active { background: var(--page-active-bg); color: var(--page-active-color); border-color: var(--page-active-bg); }
 
-footer.copyright { text-align: center; color: var(--footer-color); padding: 20px; font-family: Rockwell, sans-serif; font-size: 14px; background: transparent; }
+footer.copyright { text-align: center; color: var(--footer-color); padding: 20px; font-family: "Roboto Slab", Rockwell, sans-serif; font-size: 14px; background: transparent; }
 footer.copyright a { color: black; text-decoration: none; }
 
 /* Responsive (unchanged from originals) */

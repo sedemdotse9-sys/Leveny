@@ -477,7 +477,8 @@ footer a {
 }
 
 /* -------------------- RESPONSIVE DESIGN -------------------- */
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1024px),
+       screen and (orientation: landscape) and (max-height: 1024px) and (pointer: coarse) {
   .nav_bar {
     padding: 0 40px;
   }
@@ -715,7 +716,7 @@ footer a {
 }
 
 /* ---- Hide ALL mobile elements on desktop ---- */
-@media screen and (min-width: 769px) {
+@media screen and (min-width: 1025px) and (not ((orientation: landscape) and (max-height: 1024px) and (pointer: coarse))) {
     #mobHeader,
     #mobMovieSearchBar,
     #mobPage,

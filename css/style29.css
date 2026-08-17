@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&display=swap');
 
 /* -------------------- RESET -------------------- */
 *, *::before, *::after {
@@ -86,7 +87,7 @@ body::before {
 }
 
 .shared-dropdown .dropdown-content a {
-  font-family: "Rockwell", sans-serif;
+  font-family: "Roboto Slab", Rockwell, sans-serif;
   font-size: 17px;
   color: white;
   padding: 12px 20px;
@@ -123,7 +124,7 @@ header {
 }
 
 .nav_bar {
-  font-family: "Rockwell", sans-serif;
+  font-family: "Roboto Slab", Rockwell, sans-serif;
   display: flex;
   align-items: center;
   height: 100%;
@@ -209,7 +210,7 @@ header hr {
   text-decoration: none;
   color: black;
   font-size: 18px;
-  font-family: Rockwell, sans-serif;
+  font-family: "Roboto Slab", Rockwell, sans-serif;
   display: block;
 }
 
@@ -221,7 +222,7 @@ header hr {
   display: block;
   text-align: center;
   margin-top: 12px;
-  font-family: Rockwell, sans-serif;
+  font-family: "Roboto Slab", Rockwell, sans-serif;
   font-size: 13px;
   color: rgba(255,255,255,0.55);
   text-decoration: none;
@@ -313,7 +314,7 @@ header hr {
   border-bottom: 2px solid white;
   padding: 10px;
   color: white;
-  font-family: Rockwell, sans-serif;
+  font-family: "Roboto Slab", Rockwell, sans-serif;
   font-size: 16px;
 }
 
@@ -324,7 +325,7 @@ header hr {
 
 .search-box input::placeholder {
   color: #f5f5f5;
-  font-family: Rockwell, sans-serif;
+  font-family: "Roboto Slab", Rockwell, sans-serif;
 }
 
 .search-box button {
@@ -381,7 +382,7 @@ header hr {
   padding: 10px 12px;
   cursor: pointer;
   color: white;
-  font-family: 'Rockwell', sans-serif;
+  font-family: "Roboto Slab", Rockwell, sans-serif;
   font-size: 16px;
 }
 
@@ -404,7 +405,7 @@ header hr {
 }
 
 .summary {
-  font-family: Rockwell, sans-serif;
+  font-family: "Roboto Slab", Rockwell, sans-serif;
   line-height: 1.4;
   word-spacing: 4px;
   margin-bottom: 40px;
@@ -440,7 +441,7 @@ header hr {
 }
 
 .related-title {
-  font-family: 'Rockwell', sans-serif;
+  font-family: "Roboto Slab", Rockwell, sans-serif;
   font-size: 18px;
   letter-spacing: 0.5px;
   color: white;
@@ -454,7 +455,7 @@ footer {
   text-align: center;
   margin: 40px 0;
   font-size: 14px;
-  font-family: Rockwell, sans-serif;
+  font-family: "Roboto Slab", Rockwell, sans-serif;
 }
 
 footer a {
