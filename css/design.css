@@ -286,25 +286,44 @@ header {
 }
 
 /* -------------------- SLIDER -------------------- */
+/*
+   HEIGHT FIX: these three boxes used to be hard-locked to exactly
+   100vh with overflow:hidden. That works fine as long as the title +
+   description + buttons + movie posters all fit inside one viewport
+   — which they do on a tall laptop screen. On a laptop with a shorter
+   screen height, that same content no longer fits, and overflow:hidden
+   silently clipped the bottom of the box — which is exactly where the
+   movie posters live. The posters weren't "blocked by the footer";
+   they were being cut off entirely, and the footer (which sits right
+   after this block in the page) simply appeared where the posters
+   should have continued.
+
+   Switching height -> min-height lets each slide grow taller than one
+   viewport ONLY when its content actually needs the room, so the page
+   becomes scrollable and the posters render in full. On screens where
+   everything already fits in 100vh (like before), this looks and
+   behaves identically — min-height only kicks in when needed.
+*/
 .slider-wrapper {
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     position: relative;
 }
 
 .slider-container {
     display: flex;
     width: 700vw; /* 7 slides */
-    height: 100vh;
+    min-height: 100vh;
+    align-items: stretch; /* keeps every slide the same height, matched to whichever slide's content is tallest, so switching slides never causes a visible height jump */
     transition: transform 0.6s ease-in-out;
 }
 
 .slide {
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     flex-shrink: 0;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     color: white;
 }
 
@@ -359,7 +378,7 @@ header {
 .main_body_5 p,
 .main_body_6 p,
 .main_body_7 p {
-    margin-top: 90px;
+    /* margin-top: 90px; */
     padding-left: 80px;
     font-size: 40px;
     font-family: 'Bebas Neue', sans-serif;
@@ -429,7 +448,7 @@ header {
     gap: 27px;           /* increased from 25px */
     margin-left: 105px;
     margin-right: 20px;
-    margin-top: 40px;
+    margin-top: 80px ;
 }
 
 /* -------------------- MOVIE ITEMS -------------------- */
@@ -475,6 +494,81 @@ header hr {
 
 
 /* -------------------- RESPONSIVE DESIGN -------------------- */
+
+/* ============================================================
+   Short-height laptop/desktop screens (any width above 1024px).
+   The min-height fix above already stops the posters from being
+   clipped, but on a screen with less vertical room it still means
+   more scrolling than on a tall screen. This trims the vertical
+   spacing in the hero area so less scrolling is needed to reach
+   the posters. This is keyed off HEIGHT, not width, so it also
+   catches wide laptops that just happen to have a shorter screen
+   — something the width-only media queries below never catch.
+============================================================ */
+@media screen and (max-height: 800px) and (min-width: 1025px) {
+  .main_body p,
+  .main_body_2 p,
+  .main_body_3 p,
+  .main_body_4 p,
+  .main_body_5 p,
+  .main_body_6 p,
+  .main_body_7 p {
+    margin-top: 88px;
+  }
+
+  .main_2 p, .main_3 p, .main_4 p, .main_5 p, .main_6 p, .main_7 p {
+    margin-top: -5px;
+  }
+
+  .movie-section {
+    margin-top: 25px;
+  }
+
+  .movie-list,
+  .movie-list-2,
+  .movie-list-3,
+  .movie-list-4,
+  .movie-list-5,
+  .movie-list-6,
+  .movie-list-7 {
+    margin-top: 80px;
+  }
+
+  .watch_btn {
+    margin-top: 10px;
+  }
+}
+
+@media screen and (max-height: 650px) and (min-width: 1025px) {
+  .main_body p,
+  .main_body_2 p,
+  .main_body_3 p,
+  .main_body_4 p,
+  .main_body_5 p,
+  .main_body_6 p,
+  .main_body_7 p {
+    margin-top: 40px;
+    font-size: 32px;
+  }
+
+  .main_2 p, .main_3 p, .main_4 p, .main_5 p, .main_6 p, .main_7 p {
+    font-size: 16px;
+    line-height: 1.2;
+  }
+
+  .watch_btn {
+    margin-top: 8px;
+  }
+
+  .movie-section {
+    margin-top: 15px;
+  }
+
+  .movie-item img {
+    width: 130px;
+    height: 185px;
+  }
+}
 
 /* ============================================================
    Small Laptops / Narrow Desktops (1025px – 1440px)
@@ -537,7 +631,7 @@ header hr {
   .main_body_5 p,
   .main_body_6 p,
   .main_body_7 p {
-    margin-top: clamp(50px, 7vw, 80px);
+    margin-top: clamp(46px, 6.6vw, 76px);
     padding-left: clamp(40px, 5vw, 80px);
     font-size: clamp(30px, 3vw, 40px);
   }
@@ -546,6 +640,8 @@ header hr {
     margin-left: clamp(40px, 5vw, 80px);
     font-size: clamp(16px, 1.4vw, 19px);
     max-width: clamp(440px, 60vw, 810px);
+    margin-top: clamp(-9.5px, -9.5vw, -9.5px);
+    line-height: 1.25;
   }
 
   .main_3 p {
@@ -553,6 +649,7 @@ header hr {
   }
 
   .watch_btn {
+    margin-top: clamp(10px, 10vw, 10px);
     margin-left: clamp(40px, 5vw, 80px);
     padding: clamp(4px, 0vw, 7px) clamp(14px, 0vw, 19px);
     /* font-family: 'Bebas Neue', sans-serif; */
@@ -572,12 +669,17 @@ header hr {
   .movie-list-7 {
     margin-left: clamp(40px, 6vw, 105px);
     gap: clamp(16px, 1.8vw, 27px);
+    margin-top: clamp(30px, 50vw, 30px);
   }
 
   .movie-item img {
     width: clamp(120px, 11vw, 160px);
     height: clamp(175px, 16vw, 230px);
   }
+
+  /* .movie-section {
+    margin-top: 1000px;
+  } */
 
   .movie-page {
     padding: 130px clamp(30px, 4vw, 70px) 50px;
