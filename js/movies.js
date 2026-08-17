@@ -75,4 +75,8 @@ const LEVENY_MOVIES = [
     { title: "Descendants: Wicked Wonderland", href: "../movies/descendants_wicked_wonderland_movie.html", genre: "musical", poster: "images/posters/descendants_wicked_wonderland.jpg", discover: 4 , background: "images/backgrounds/descendants_wicked_wonderland_backg.jpg"},
     { title: "Cotton Mouth", href: "../movies/cotton_mouth_movie.html", genre: "action", poster: "images/posters/cotton_mouth.jpg", discover: 6 , background: "images/backgrounds/cotton_mouth_backg.jpg"},
     { title: "Ashes", href: "../movies/ashes_movie.html", genre: "thriller", poster: "images/posters/ashes.jpg", discover: 5 , background: "images/backgrounds/ashes_backg.jpg"},
+    { title: "Supergirl", href: "../movies/supergirl_movie.html", genre: "superhero", poster: "images/posters/supergirl.jpg", discover: 4 , background: "images/backgrounds/supergirl_backg.jpg"},
+    { title: "The Birthday Party", href: "../movies/the_birthday_party_movie.html", genre: "thriller", poster: "images/posters/the_birthday_party.jpg", discover: 5 , background: "images/backgrounds/the_birthday_party_backg.jpg"},
+    { title: "Minions And Monsters", href: "../movies/minions_and_monsters_movie.html", genre: "animation", poster: "images/posters/minions_and_monsters.jpg", discover: 6 , background: "images/backgrounds/minions_and_monsters_backg.jpg"},
+    { title: "The Death Of Robin Hood", href: "../movies/the_death_of_robin_hood_movie.html", genre: "action", poster: "images/posters/the_death_of_robin_hood.jpg" , discover: 1 , background: "images/backgrounds/the_death_of_robin_hood_backg.jpg"}
 ];
