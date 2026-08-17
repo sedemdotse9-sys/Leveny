@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&display=swap');
 /* genres.css - Genre Page with Slider Navigation */
 
 /* -------------------- DROPDOWN NAVBAR -------------------- */
@@ -296,7 +297,7 @@ body:has(.genres-container) header hr {
 
 body:has(.genres-container) .search-box { 
     top: 116px;
-    font-family: Rockwell, sans-serif;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
 }
 .search-dropdown {
     position: absolute;

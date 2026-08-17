@@ -1,0 +1,1124 @@
+/* -------------------- RESET -------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    overflow-x: hidden;
+}
+
+/* -------------------- SHARED GENRES DROPDOWN -------------------- */
+.shared-dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.shared-dropdown .genre-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  font-size: 21px;
+}
+
+.shared-dropdown .genre-link i {
+  font-size: 15px;
+  margin-right: 10px;
+}
+
+.shared-dropdown .genre-link:hover {
+  color: yellow;
+  transition: 0.3s;
+}
+
+.shared-dropdown .dropdown-arrow {
+  cursor: pointer;
+  color: white;
+  font-size: 12px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.shared-dropdown .dropdown-arrow:hover {
+  color: yellow;
+}
+
+.shared-dropdown .dropdown-arrow.active .fa-chevron-down {
+  transform: rotate(180deg);
+}
+
+.shared-dropdown .dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: rgba(0, 0, 0, 0.95);
+  min-width: 220px;
+  border-radius: 8px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: fadeIn 0.3s;
+  margin-top: 5px;
+}
+
+.shared-dropdown .dropdown-content.show {
+  display: block;
+}
+
+.shared-dropdown .dropdown-content a {
+  font-family: "Rockwell", "sans-serif";
+  font-size: 16px;
+  color: white;
+  padding: 12px 20px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s;
+}
+
+.shared-dropdown .dropdown-content a:last-child {
+  border-bottom: none;
+}
+
+.shared-dropdown .dropdown-content a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  padding-left: 25px;
+  color: yellow;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+
+/* -------------------- HEADER & NAVBAR -------------------- */
+header {
+    width: 100%;
+    height: 80px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: transparent;
+}
+
+.nav_bar {
+    display: flex;
+    align-items: center;
+    padding: 0 70px;
+}
+
+.nav_bar .logo {
+    color: white;
+    font-size: 35px;
+    font-weight: 400;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 4px;
+    position: relative;
+    top: 5px;
+}
+
+.nav_links {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 35px;
+}
+
+.nav_links a {
+    text-decoration: none;
+    color: white;
+    font-size: 21px;
+    display: flex;
+    align-items: center;
+}
+
+.nav_links a i {
+    font-size: 15px;
+    margin-right: 10px;
+}
+
+.nav_links a:hover {
+    color: yellow;
+    transition: 0.3s;
+}
+
+/* -------------------- GENRES DROPDOWN -------------------- */
+.genre-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    font-size: 21px;
+}
+
+.genre-link i {
+    font-size: 15px;
+    margin-right: 10px;
+}
+
+.genre-link:hover {
+    color: yellow;
+    transition: 0.3s;
+}
+
+/* -------------------- SEARCH BAR -------------------- */
+.search-box {
+    position: absolute;
+    right: 70px;
+    top: 110px;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    z-index: 4000;
+}
+
+.search-box input {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid white;
+    color: white;
+    outline: none;
+    padding: 5px 8px;
+    width: 350px;
+    font-size: 16px;
+    font-family: inherit;
+}
+
+.search-box input::placeholder {
+    color: #f5f5f5;
+}
+
+.search-box button {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.search-box button:hover {
+    color: yellow;
+}
+
+.search-dropdown {
+    position: absolute;
+    top: 35px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.97);
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+    border-radius: 5px;
+    z-index: 5000;
+    display: none;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: #ffcc00 transparent;
+}
+
+/* === AUTO-INJECTED: search scrollbar fix === */
+.search-dropdown::-webkit-scrollbar {
+    width: 8px;
+}
+
+.search-dropdown::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 6px 0;
+}
+
+.search-dropdown::-webkit-scrollbar-thumb {
+    background: #ffcc00;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+
+.search-dropdown {
+    scrollbar-width: thin;
+    scrollbar-color: #ffcc00 transparent;
+}
+
+.search-dropdown::-webkit-scrollbar {
+    width: 8px;
+}
+
+.search-dropdown::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 6px 0;
+}
+
+.search-dropdown::-webkit-scrollbar-thumb {
+    background: #ffcc00;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+.dropdown-item {
+    padding: 8px 12px;
+    color: white;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background: yellow;
+    color: black;
+}
+
+/* -------------------- SLIDER -------------------- */
+.slider-wrapper {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+.slider-container {
+    display: flex;
+    width: 700vw; /* 7 slides */
+    height: 100vh;
+    transition: transform 0.6s ease-in-out;
+}
+
+.slide {
+    width: 100vw;
+    height: 100vh;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+    color: white;
+}
+
+.slide1 { background: url(../images/backgrounds/way.jpg) center/cover no-repeat; filter: brightness(70%); }
+.slide2 { background: url(../images/backgrounds/jw.jpg) center/cover no-repeat; filter: brightness(70%); }
+.slide3 { background: url(../images/backgrounds/tg.jpg) center/cover no-repeat; filter: brightness(70%); }
+.slide4 { background: url(../images/backgrounds/dp.jpg) center/cover no-repeat; filter: brightness(70%); }
+.slide5 { background: url(../images/backgrounds/batman.jpg) center/cover no-repeat; filter: brightness(70%); }
+.slide6 { background: url(../images/backgrounds/liki.jpg) center/cover no-repeat; filter: brightness(70%); }
+.slide7 { background: url(../images/backgrounds/bal.jpg) center/cover no-repeat; filter: brightness(70%); }
+
+/* -------------------- ARROWS -------------------- */
+.arrow_left,
+.arrow_right {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    user-select: none;
+    z-index: 3000;
+    color: white;
+    background: transparent;
+    border: 1px solid white;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+.arrow_left { left: 15px; }
+.arrow_right { right: 15px; }
+
+.arrow_left:hover,
+.arrow_right:hover {
+    background: white;
+    color: #333;
+}
+
+/* -------------------- SLIDE CONTENT -------------------- */
+.slide main {
+    position: relative;
+}
+
+/* Titles */
+.main_body p,
+.main_body_2 p,
+.main_body_3 p,
+.main_body_4 p,
+.main_body_5 p,
+.main_body_6 p,
+.main_body_7 p {
+    margin-top: 90px;
+    padding-left: 80px;
+    font-size: 40px;
+    font-family: 'Bebas Neue', sans-serif;
+}
+
+.main_body_3 p { color: black; }
+
+/* Paragraphs */
+.main_2 p, .main_3 p, .main_4 p, .main_5 p, .main_6 p, .main_7 p {
+    margin-left: 80px;
+    font-size: 19px;
+    max-width: 790px;
+    word-spacing: 2px;
+    line-height: 1.3;
+    /* margin-top: px; */
+}
+
+.main_3 p { max-width: 680px; color: black; }
+
+/* -------------------- BUTTONS -------------------- */
+.watch_btn,
+.more_btn {
+    background-color: rgba(255, 255, 255, 0.6);
+    border: none;
+    border-radius: 11px;
+    cursor: pointer
+}
+
+.watch_btn {
+    padding: 9px 11px;
+    margin-left: 80px;
+    margin-top: 12px;
+}
+
+.watch_btn a,
+.more_btn a, 
+.plus-sign {
+    text-decoration: none;
+    color: black;
+    font-family: "Roboto Slab", "Rockwell", sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.more_btn {
+    padding: 9px 11px;
+    margin-left: 5px;
+    margin-top: 9px;
+}
+
+
+/* -------------------- MOVIE LISTS -------------------- */
+.movie-section {
+    margin-top: 50px;
+}
+
+.movie-list,
+.movie-list-2,
+.movie-list-3,
+.movie-list-4,
+.movie-list-5,
+.movie-list-6,
+.movie-list-7 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 27px;           /* increased from 25px */
+    margin-left: 105px;
+    margin-right: 20px;
+    margin-top: 40px;
+}
+
+/* -------------------- MOVIE ITEMS -------------------- */
+.movie-item img {
+    width: 160px;
+    height: 230px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.55);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.movie-item:hover img {
+    transform: scale(1.12) translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.75);
+    cursor: pointer;
+}
+
+/* -------------------- FOOTER -------------------- */
+footer {
+    text-align: center;
+    color: black;
+    font-size: 14px;
+    font-family: "Rockwell", sans-serif;
+    /* padding: 20px 0 16px; */
+    background: transparent;
+    margin-top: 0;
+}
+
+footer a {
+  color: black;
+  text-decoration: none;
+}
+
+/* -------------------- HEADER LINE -------------------- */
+header hr {
+    width: calc(100% - 140px);
+    margin: 10px 0 0 70px;
+    border: none;
+    border-top: 2px solid;
+    border-image: linear-gradient(to right, white 50%, transparent 100%) 1;
+}
+
+
+/* -------------------- RESPONSIVE DESIGN -------------------- */
+
+/* ============================================================
+   Small Laptops / Narrow Desktops (1025px – 1440px)
+   Only spacing/sizing adjustments here — no structural changes.
+   Has no effect at all above 1440px, so the big-screen design
+   is fully preserved above that point.
+============================================================ */
+@media screen and (min-width: 1025px) and (max-width: 1440px) {
+  .nav_bar {
+    padding: 0 clamp(24px, 4vw, 70px);
+  }
+
+  .nav_bar .logo {
+    font-size: clamp(26px, 2.2vw, 35px);
+  }
+
+  .nav_links {
+    gap: clamp(16px, 2vw, 35px);
+  }
+
+  .nav_links a,
+  .shared-dropdown .genre-link {
+    font-size: clamp(15px, 1.4vw, 21px);
+  }
+
+  .arrow_left,
+  .arrow_right {
+    z-index: 1000;
+  }
+  
+  /* Pull the search box out of fixed absolute positioning and
+     back into the nav bar's own flex row, so it can never overlap
+     the nav links regardless of how much horizontal space there is. */
+  .search-box {
+    position: static;
+    transform: none;
+    margin-left: 24px;
+    flex-shrink: 0;
+  }
+
+  .search-box input {
+    width: clamp(140px, 16vw, 260px);
+  }
+
+  .search-dropdown {
+    margin-top: 30px;
+    width: 30%;
+    /* z-index: 9000; */
+  }
+
+  header hr {
+    width: calc(100% - clamp(48px, 8vw, 140px));
+    margin-left: clamp(24px, 4vw, 70px);
+  }
+
+  .main_body p,
+  .main_body_2 p,
+  .main_body_3 p,
+  .main_body_4 p,
+  .main_body_5 p,
+  .main_body_6 p,
+  .main_body_7 p {
+    margin-top: clamp(50px, 7vw, 80px);
+    padding-left: clamp(40px, 5vw, 80px);
+    font-size: clamp(30px, 3vw, 40px);
+  }
+
+  .main_2 p, .main_3 p, .main_4 p, .main_5 p, .main_6 p, .main_7 p {
+    margin-left: clamp(40px, 5vw, 80px);
+    font-size: clamp(16px, 1.4vw, 19px);
+    max-width: clamp(440px, 60vw, 810px);
+  }
+
+  .main_3 p {
+    max-width: clamp(440px, 60vw, 810px);
+  }
+
+  .watch_btn {
+    margin-left: clamp(40px, 5vw, 80px);
+    padding: clamp(4px, 0vw, 7px) clamp(14px, 0vw, 19px);
+    /* font-family: 'Bebas Neue', sans-serif; */
+  }
+
+  .more_btn {
+    margin-left: clamp(4px, 0.5vw, 5px);
+    padding: clamp(4px, 0vw, 7px) clamp(14px, 0vw, 19px);
+  }
+
+  .movie-list,
+  .movie-list-2,
+  .movie-list-3,
+  .movie-list-4,
+  .movie-list-5,
+  .movie-list-6,
+  .movie-list-7 {
+    margin-left: clamp(40px, 6vw, 105px);
+    gap: clamp(16px, 1.8vw, 27px);
+  }
+
+  .movie-item img {
+    width: clamp(120px, 11vw, 160px);
+    height: clamp(175px, 16vw, 230px);
+  }
+
+  .movie-page {
+    padding: 130px clamp(30px, 4vw, 70px) 50px;
+  }
+}
+
+/* Large Tablets (1024px and below) */
+@media screen and (max-width: 1024px),
+       screen and (orientation: landscape) and (max-height: 1024px) and (pointer: coarse) {
+  .nav_bar {
+    padding: 0 40px;
+  }
+
+  .nav_links {
+    gap: 25px;
+  }
+
+  .nav_links a {
+    font-size: 18px;
+  }
+
+  .search-box {
+    position: static;
+    top: auto;
+    right: auto;
+    transform: none;
+    margin-left: 16px;
+    flex-shrink: 0;
+  }
+
+  .search-box input {
+    width: clamp(140px, 22vw, 240px);
+  }
+
+  /* ------------------------------------------------------------
+     SCROLL FIX (smaller screens only): the hero slide used to be
+     hard-capped at exactly one screen tall with overflow hidden,
+     which physically clipped the movie posters below the title/
+     description — that's why scrolling felt "stuck" and the
+     footer showed up almost immediately. Letting the box grow to
+     fit its content (instead of clipping at 100vh) means the
+     posters render fully and the page becomes properly scrollable,
+     landing on the footer only after you've scrolled past them.
+     This block only applies at 1024px and below — nothing here
+     touches the laptop/desktop view above that width.
+  ------------------------------------------------------------ */
+  .slider-wrapper {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .slider-container {
+    height: auto;
+    min-height: 100vh;
+    align-items: flex-start;
+  }
+
+  .slide {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+  
+  .movie-page {
+    gap: 40px;
+    padding: 140px 40px 60px;
+  }
+
+  .video-section video,
+  .download-btn {
+    width: 550px;
+  }
+
+  .video-section video {
+    height: 340px;
+  }
+
+  .details-section {
+    max-width: 400px;
+  }
+
+  .related-movies {
+    gap: 25px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+  .related-card {
+    width: 180px;
+  }
+
+  .poster {
+    width: 180px;
+    height: 110px;
+  }
+
+  .related-title {
+    font-size: 18px;
+  }
+
+}
+
+/* Small Tablets / Large Phones (768px and below) */
+@media screen and (max-width: 768px) {
+  .main_body p,
+  .main_body_2 p,
+  .main_body_3 p,
+  .main_body_4 p,
+  .main_body_5 p,
+  .main_body_6 p,
+  .main_body_7 p {
+    padding-left: 40px;
+    font-size: 32px;
+    margin-top: -10px;
+  }
+
+  .main_2 p,
+  .main_3 p,
+  .main_4 p,
+  .main_5 p,
+  .main_6 p,
+  .main_7 p {
+    margin-left: 40px;
+    font-size: 16px;
+    max-width: 82vw;
+  }
+
+  .watch_btn {
+    margin-left: 40px;
+    padding: 9px 20px;
+  }
+
+  .movie-list,
+  .movie-list-2,
+  .movie-list-3,
+  .movie-list-4,
+  .movie-list-5,
+  .movie-list-6,
+  .movie-list-7 {
+    margin-left: 20px;
+    margin-right: 20px;
+    gap: 28px;           /* increased proportionally */
+  }
+
+  .movie-item img {
+    width: 130px;
+    height: 180px;
+  }
+
+  .movie-page {
+    flex-direction: column;
+    gap: 30px;
+    padding: 120px 30px 40px;
+  }
+
+  .video-section {
+    max-width: 100%;
+  }
+
+  .video-section video,
+  .download-btn {
+    width: 100%;
+  }
+
+  .video-section video {
+    height: auto;
+    min-height: 300px;
+  }
+
+  .details-section {
+    max-width: 100%;
+  }
+
+  .search-box {
+    position: relative;
+    right: auto;
+    top: auto;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .search-box input {
+    width: 100%;
+  }
+
+  .search-dropdown {
+    width: 100%;
+  }
+
+  .related-movies {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .related-card {
+    width: calc(50% - 10px);
+  }
+
+  .poster {
+    width: 100%;
+    height: 130px;
+  }
+
+  .movie-title {
+    font-size: 28px;
+  }
+
+  .nav_bar {
+    flex-wrap: wrap;
+    padding: 10px 30px;
+    height: auto;
+    background: rgba(0, 0, 0, 0.9);
+  }
+
+  .nav_links {
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-left: 0;
+    width: 100%;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .nav_links a {
+    font-size: 16px;
+  }
+
+  .dropdown-content {
+    position: fixed;
+    top: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 300px;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  header hr {
+    width: calc(100% - 60px);
+    margin: 5px 0 0 30px;
+  }
+}
+
+/* Mobile Phones (480px and below) */
+@media screen and (max-width: 480px) {
+  .main_body p,
+  .main_body_2 p,
+  .main_body_3 p,
+  .main_body_4 p,
+  .main_body_5 p,
+  .main_body_6 p,
+  .main_body_7 p {
+    padding-left: 20px;
+    font-size: 26px;
+    margin-top: 120px;
+  }
+
+  .main_2 p,
+  .main_3 p,
+  .main_4 p,
+  .main_5 p,
+  .main_6 p,
+  .main_7 p {
+    margin-left: 20px;
+    font-size: 14px;
+    max-width: 100%;
+    padding-right: 20px;
+  }
+
+  .watch_btn {
+    margin-left: 20px;
+    padding: 8px 16px;
+  }
+
+  .watch_btn a {
+    font-size: 16px;
+  }
+
+  .more_btn {
+    padding: 8px 16px;
+  }
+
+  .movie-list,
+  .movie-list-2,
+  .movie-list-3,
+  .movie-list-4,
+  .movie-list-5,
+  .movie-list-6,
+  .movie-list-7 {
+    margin-left: 15px;
+    margin-right: 15px;
+    gap: 20px;           /* increased from 12px */
+  }
+
+  .movie-item img {
+    width: 100px;
+    height: 145px;
+  }
+
+  .movie-page {
+    padding: 100px 20px 30px;
+  }
+
+  .video-section video {
+    min-height: 220px;
+  }
+
+  .download-btn {
+    padding: 10px;
+  }
+
+  .download-btn a {
+    font-size: 16px;
+  }
+
+  .movie-title {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+
+  .info {
+    font-size: 14px;
+  }
+
+  .summary {
+    font-size: 14px;
+    line-height: 1.3;
+    margin-bottom: 25px;
+  }
+
+  .related-movies {
+    gap: 15px;
+  }
+
+  .related-card {
+    width: 100%;
+  }
+
+  .poster {
+    height: 150px;
+  }
+
+  .related-title {
+    font-size: 16px;
+    margin-top: 5px;
+  }
+
+  .nav_bar {
+    padding: 8px 15px;
+  }
+
+  .logo {
+    font-size: 24px;
+  }
+
+  .nav_links {
+    gap: 10px;
+  }
+
+  .nav_links a {
+    font-size: 14px;
+  }
+
+  .nav_links a i {
+    font-size: 12px;
+    margin-right: 5px;
+  }
+
+  .shared-dropdown .genre-link {
+    font-size: 14px;
+  }
+
+  .dropdown-arrow {
+    font-size: 10px;
+  }
+
+  .dropdown-content a {
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+
+  header hr {
+    width: calc(100% - 30px);
+    margin: 5px 0 0 15px;
+  }
+
+  .arrow_left,
+  .arrow_right {
+    width: 24px;
+    height: 24px;
+    line-height: 22px;
+    font-size: 14px;
+  }
+}
+
+/* Small Mobile Phones (360px and below) */
+@media screen and (max-width: 360px) {
+  .nav_links {
+    gap: 8px;
+  }
+
+  .nav_links a {
+    font-size: 12px;
+  }
+
+  .shared-dropdown .genre-link {
+    font-size: 12px;
+  }
+
+  .movie-item img {
+    width: 85px;
+    height: 120px;
+  }
+
+  .main_body p,
+  .main_body_2 p,
+  .main_body_3 p,
+  .main_body_4 p,
+  .main_body_5 p,
+  .main_body_6 p,
+  .main_body_7 p {
+    font-size: 22px;
+  }
+}
+
+/* Landscape Mode */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+  .movie-page {
+    padding: 100px 30px 30px;
+  }
+
+  .video-section video {
+    min-height: 180px;
+  }
+
+  .related-movies {
+    flex-wrap: nowrap;
+  }
+
+  .related-card {
+    width: 150px;
+  }
+
+  .poster {
+    height: 90px;
+  }
+
+  .nav_links {
+    flex-wrap: nowrap;
+  }
+}
+
+/* Tablet Landscape / Small Laptops */
+@media screen and (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
+  .movie-page {
+    gap: 40px;
+  }
+
+  .video-section video,
+  .download-btn {
+    width: 500px;
+  }
+
+  .video-section video {
+    height: 300px;
+  }
+
+  .details-section {
+    max-width: 350px;
+  }
+}
+
+/* Ensure images don't overflow */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Touch-friendly adjustments */
+@media (hover: none) and (pointer: coarse) {
+  .movie-item:hover img {
+    transform: none;
+  }
+
+  .poster:hover {
+    transform: none;
+  }
+
+  .nav_links a:hover {
+    color: white;
+  }
+
+  .nav_links a:active {
+    color: yellow;
+  }
+
+  .dropdown-arrow {
+    padding: 8px;
+  }
+
+  .dropdown-content a {
+    padding: 15px 20px;
+  }
+}
+
+/* Fix for notch phones */
+@supports (padding: max(0px)) {
+  .nav_bar {
+    padding-left: max(70px, env(safe-area-inset-left));
+    padding-right: max(70px, env(safe-area-inset-right));
+  }
+
+  @media screen and (max-width: 768px) {
+    .nav_bar {
+      padding-left: max(30px, env(safe-area-inset-left));
+      padding-right: max(30px, env(safe-area-inset-right));
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .nav_bar {
+      padding-left: max(15px, env(safe-area-inset-left));
+      padding-right: max(15px, env(safe-area-inset-right));
+    }
+  }
+}
+
+/* Hide mobile pagination on desktop */
+#mobileMoviesPagination {
+    display: none;
+}
+
+/* Show only on phones */
+@media (max-width: 1024px),
+       screen and (orientation: landscape) and (max-height: 1024px) and (pointer: coarse) {
+    #mobileMoviesPagination {
+        display: flex;
+    }
+}
+
+footer {
+    background: white;
+    font-family: "Rockwell", sans-serif;
+}

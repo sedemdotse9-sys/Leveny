@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&display=swap');
 /* -------------------- RESET -------------------- */
 * {
     margin: 0;
@@ -75,7 +76,7 @@ body {
 }
 
 .shared-dropdown .dropdown-content a {
-  font-family: "Rockwell", "sans-serif";
+  font-family: "Roboto Slab", Rockwell, sans-serif;
   font-size: 16px;
   color: white;
   padding: 12px 20px;
@@ -452,7 +453,7 @@ footer {
     text-align: center;
     color: black;
     font-size: 14px;
-    font-family: "Rockwell", sans-serif;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
     /* padding: 20px 0 16px; */
     background: transparent;
     margin-top: 0;
@@ -1120,5 +1121,5 @@ img {
 
 footer {
     background: white;
-    font-family: "Rockwell", sans-serif;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
 }

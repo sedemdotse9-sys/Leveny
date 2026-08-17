@@ -531,7 +531,8 @@ footer.copyright a { color: black; text-decoration: none; }
     .grid-movie-item .movie-image-container { height: 180px; }
     .discover-arrow-left, .discover-arrow-right { width: 40px; height: 40px; font-size: 18px; }
 }
-@media (max-width: 768px) {
+@media (max-width: 1024px),
+       screen and (orientation: landscape) and (max-height: 1024px) and (pointer: coarse) {
     .discover-wrapper { padding: 30px 20px 80px; }
     .movies-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 100%; }
     .grid-movie-item { height: 224px; }
@@ -539,8 +540,21 @@ footer.copyright a { color: black; text-decoration: none; }
     .page-title { font-size: 2.8rem; margin-bottom: 30px; }
     .nav_bar { padding: 0 20px; }
     header hr { width: calc(100% - 40px); margin-left: 20px; }
-    .search-box { right: 20px; }
-    .search-box input { width: 200px; }
+
+    /* Bring the search box into normal flex flow instead of a fixed
+       absolute offset, matching the homepage fix — this is what
+       stops it from ever overlapping the nav links regardless of
+       exact screen width. */
+    .search-box {
+        position: static;
+        top: auto;
+        right: auto;
+        transform: none;
+        margin-left: 16px;
+        flex-shrink: 0;
+    }
+    .search-box input { width: clamp(140px, 22vw, 220px); }
+
     .discover-arrow-left { left: 10px; }
     .discover-arrow-right { right: 10px; }
 }
