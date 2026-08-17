@@ -639,7 +639,7 @@ header hr {
     min-height: 100vh;
     overflow: visible;
   }
-
+  
   .movie-page {
     gap: 40px;
     padding: 140px 40px 60px;
@@ -676,6 +676,7 @@ header hr {
   .related-title {
     font-size: 18px;
   }
+
 }
 
 /* Small Tablets / Large Phones (768px and below) */
