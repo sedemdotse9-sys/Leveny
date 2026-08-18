@@ -1,13 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&display=swap');
 /* ============================================================
-   style76.css — Meg 2: The Trench | Leveny
+   style78.css — Now You See Me | Leveny
    Page-specific stylesheet, same structure used across the
    Leveny movie pages. Genre: Action | Accent: #3498db
 ============================================================ */
 
 
     /* ============================================================
-      MOBILE STYLES — Meg 2: The Trench Movie Page
+      MOBILE STYLES — Now You See Me Movie Page
       Only active on screens 1024px and below.
       Desktop layout (style.css) is completely untouched except
       for the background-image override just below (no artwork yet).
@@ -25,11 +24,11 @@
 
     /* ---- DESKTOP background image — intentionally left blank ----
        Fill in the url() below once movie artwork is available, e.g.:
-       background: url(../images/backgrounds/meg_2_the_trench.jpg) center/cover fixed no-repeat;
+       background: url(../images/backgrounds/now_you_see_me.jpg) center/cover fixed no-repeat;
     ------------------------------------------------------------- */
     body {
       font-family: Verdana, Geneva, Tahoma, sans-serif;
-      background: url(../images/backgrounds/meg_2_the_trench_backg.jpg) center/cover fixed no-repeat;
+      background: url(../images/backgrounds/now_you_see_me_backg.jpg) center/cover fixed no-repeat;
       color: #f5f5f5;
       position: relative;
     }
@@ -255,7 +254,7 @@
         font-size: 16px;
         color: #111;
         width: 100%;
-        font-family: "Roboto Slab", Rockwell, sans-serif;
+        font-family: Rockwell, sans-serif;
       }
 
       body.dark-mode #mobMovieSearchInput { color: #f0f0f0; }
@@ -305,7 +304,7 @@
         padding: 12px 16px;
         color: #111;
         font-size: 14px;
-        font-family: "Roboto Slab", Rockwell, sans-serif;
+        font-family: Rockwell, sans-serif;
         border-bottom: 1px solid var(--mob-accent-dim);
         cursor: pointer;
         display: flex;
@@ -369,7 +368,7 @@
         padding: 13px;
         border-radius: 20px;
         text-decoration: none;
-        font-family: "Roboto Slab", Rockwell, sans-serif;
+        font-family: Rockwell, sans-serif;
         font-size: 15px;
         font-weight: 700;
         transition: transform 0.15s, box-shadow 1s ease, border-color 1s, color 1s;
@@ -395,7 +394,7 @@
         justify-content: center;
         gap: 6px;
         margin-top: -2px;
-        font-family: "Roboto Slab", Rockwell, sans-serif;
+        font-family: Rockwell, sans-serif;
         font-size: 12px;
         color: rgba(60,60,60,0.60);
         text-decoration: none;
@@ -473,7 +472,7 @@
         gap: 8px;
         flex-wrap: wrap;
         margin-bottom: 12px;
-        font-family: "Roboto Slab", Rockwell, sans-serif;
+        font-family: Rockwell, sans-serif;
         font-size: 12px;
         color: #555;
       }
@@ -499,7 +498,7 @@
       }
 
       #mobMovieSummary {
-        font-family: "Roboto Slab", Rockwell, sans-serif;
+        font-family: Rockwell, sans-serif;
         font-size: 13px;
         line-height: 1.6;
         color: #333;
@@ -510,7 +509,7 @@
 
       /* RELATED MOVIES */
       #mobRelatedLabel {
-        font-family: "Roboto Slab", Rockwell, sans-serif;
+        font-family: Rockwell, sans-serif;
         font-size: 17px;
         font-weight: 700;
         color: #111;
@@ -569,7 +568,7 @@
 
       .mob-related-card-title {
         font-size: 12px;
-        font-family: "Roboto Slab", Rockwell, sans-serif;
+        font-family: Rockwell, sans-serif;
         font-weight: 700;
         white-space: nowrap;
         overflow: hidden;
@@ -583,7 +582,7 @@
 
       .mob-related-card-genre {
         font-size: 11px;
-        font-family: "Roboto Slab", Rockwell, sans-serif;
+        font-family: Rockwell, sans-serif;
         color: var(--mob-accent);
         text-shadow: 0 0 8px var(--mob-accent-glow-light);
         transition: color 1s ease, text-shadow 1s ease;
@@ -645,7 +644,7 @@
 
       .mob-movie-nav-item span {
         font-size: 10px;
-        font-family: "Roboto Slab", Rockwell, sans-serif;
+        font-family: Rockwell, sans-serif;
         font-weight: 600;
       }
 
@@ -657,7 +656,7 @@
         padding: 14px 8px;
         border-radius: 14px;
         text-decoration: none;
-        font-family: "Roboto Slab", Rockwell, sans-serif;
+        font-family: Rockwell, sans-serif;
         font-size: 12px;
         color: #ccc;
         background: rgba(255,255,255,0.06);
@@ -706,7 +705,7 @@
       grid-column: 1 / -1;
       text-align: center;
       padding: 8px 12px 4px;
-      font-family: "Roboto Slab", Rockwell, sans-serif;
+      font-family: Rockwell, sans-serif;
       font-size: 15px;
     }
 
