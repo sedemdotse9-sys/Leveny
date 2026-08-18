@@ -81,5 +81,9 @@ const LEVENY_MOVIES = [
     { title: "The Death Of Robin Hood", href: "../movies/the_death_of_robin_hood_movie.html", genre: "action", poster: "images/posters/the_death_of_robin_hood.jpg" , discover: 1 , background: "images/backgrounds/the_death_of_robin_hood_backg.jpg"},
     { title: "Toy Story 5", href: "../movies/toy_story_5_movie.html", genre: "animation", poster: "images/posters/toy_story_5.jpg" , discover: 2 , background: "images/backgrounds/toy_story_5_backg.jpg"},
     { title: "The Super Mario Galaxy Movie", href: "../movies/the_super_mario_galaxy_movie.html", genre: "animation", poster: "images/posters/the_super_mario_galaxy_movie.jpg" , discover: 7 , background: "images/backgrounds/the_super_mario_galaxy_movie_backg.jpg"},
-    { title: "Toy Story 4", href: "../movies/toy_story_4_movie.html", genre: "animation", poster: "images/posters/toy_story_4.jpg" , discover: 1 , background: "images/backgrounds/toy_story_4_backg.jpg"}
+    { title: "Toy Story 4", href: "../movies/toy_story_4_movie.html", genre: "animation", poster: "images/posters/toy_story_4.jpg" , discover: 4 , background: "images/backgrounds/toy_story_4_backg.jpg"},
+    { title: "The Suicide Squad", href: "../movies/the_suicide_squad_movie.html", genre: "superhero", poster: "images/posters/the_suicide_squad.jpg", discover: 4 , background: "images/backgrounds/the_suicide_squad_backg.jpg"},
+    { title: "Meg 2: The Trench", href: "../movies/meg_2_the_trench_movie.html", genre: "action", poster: "images/posters/meg_2_the_trench.jpg", discover: 1 , background: "images/backgrounds/meg_2_the_trench_backg.jpg"},
+    { title: "2 Guns", href: "../movies/two_guns_movie.html", genre: "action", poster: "images/posters/2_guns.jpg", discover: 5 , background: "images/backgrounds/2_guns_backg.jpg"},
+    { title: "Now You See Me", href: "../movies/now_you_see_me_movie.html", genre: "thriller", poster: "images/posters/now_you_see_me.jpg", discover: 5 , background: "images/backgrounds/now_you_see_me_backg.jpg"}
 ];
