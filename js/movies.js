@@ -78,5 +78,8 @@ const LEVENY_MOVIES = [
     { title: "Supergirl", href: "../movies/supergirl_movie.html", genre: "superhero", poster: "images/posters/supergirl.jpg", discover: 4 , background: "images/backgrounds/supergirl_backg.jpg"},
     { title: "The Birthday Party", href: "../movies/the_birthday_party_movie.html", genre: "thriller", poster: "images/posters/the_birthday_party.jpg", discover: 5 , background: "images/backgrounds/the_birthday_party_backg.jpg"},
     { title: "Minions And Monsters", href: "../movies/minions_and_monsters_movie.html", genre: "animation", poster: "images/posters/minions_and_monsters.jpg", discover: 6 , background: "images/backgrounds/minions_and_monsters_backg.jpg"},
-    { title: "The Death Of Robin Hood", href: "../movies/the_death_of_robin_hood_movie.html", genre: "action", poster: "images/posters/the_death_of_robin_hood.jpg" , discover: 1 , background: "images/backgrounds/the_death_of_robin_hood_backg.jpg"}
+    { title: "The Death Of Robin Hood", href: "../movies/the_death_of_robin_hood_movie.html", genre: "action", poster: "images/posters/the_death_of_robin_hood.jpg" , discover: 1 , background: "images/backgrounds/the_death_of_robin_hood_backg.jpg"},
+    { title: "Toy Story 5", href: "../movies/toy_story_5_movie.html", genre: "animation", poster: "images/posters/toy_story_5.jpg" , discover: 2 , background: "images/backgrounds/toy_story_5_backg.jpg"},
+    { title: "The Super Mario Galaxy Movie", href: "../movies/the_super_mario_galaxy_movie.html", genre: "animation", poster: "images/posters/the_super_mario_galaxy_movie.jpg" , discover: 7 , background: "images/backgrounds/the_super_mario_galaxy_movie_backg.jpg"},
+    { title: "Toy Story 4", href: "../movies/toy_story_4_movie.html", genre: "animation", poster: "images/posters/toy_story_4.jpg" , discover: 1 , background: "images/backgrounds/toy_story_4_backg.jpg"}
 ];
