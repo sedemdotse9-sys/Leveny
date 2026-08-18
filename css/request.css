@@ -8,7 +8,12 @@ body {
     color: white;
     min-height: 100vh;
     overflow-y: auto;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
 }
+
+/* .nav_links a {
+    font-family: "Roboto Slab", Rockwell, sans-serif;    
+} */
 
 .request-container {
     max-width: 1100px;
