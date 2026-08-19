@@ -86,5 +86,6 @@ const LEVENY_MOVIES = [
     { title: "Meg 2: The Trench", href: "../movies/meg_2_the_trench_movie.html", genre: "action", poster: "images/posters/meg_2_the_trench.jpg", discover: 1 , background: "images/backgrounds/meg_2_the_trench_backg.jpg"},
     { title: "2 Guns", href: "../movies/two_guns_movie.html", genre: "action", poster: "images/posters/2_guns.jpg", discover: 5 , background: "images/backgrounds/2_guns_backg.jpg"},
     { title: "Now You See Me", href: "../movies/now_you_see_me_movie.html", genre: "thriller", poster: "images/posters/now_you_see_me.jpg", discover: 5 , background: "images/backgrounds/now_you_see_me_backg.jpg"},
-    { title: "The Lost World: Jurassic Park", href: "../movies/the_lost_world_jurassic_park_movie.html", genre: "adventure", poster: "images/posters/the_lost_world_jurassic_park.jpg", discover: 3 , background: "images/backgrounds/the_lost_world_jurassic_park_backg.jpg"}
+    { title: "The Lost World: Jurassic Park", href: "../movies/the_lost_world_jurassic_park_movie.html", genre: "adventure", poster: "images/posters/the_lost_world_jurassic_park.jpg", discover: 3 , background: "images/backgrounds/the_lost_world_jurassic_park_backg.jpg"},
+    { title: "Michael", href: "../movies/michael_movie.html", genre: "musical", poster: "images/posters/michael.jpg", discover: 4 , background: "images/backgrounds/michael_backg.jpg"}
 ];
