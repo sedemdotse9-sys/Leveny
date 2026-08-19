@@ -751,6 +751,7 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accen
     flex-wrap: wrap;
     gap: 6px;
     padding: 16px 12px 16px;
+
 }
 
 .mob-page-btn {
