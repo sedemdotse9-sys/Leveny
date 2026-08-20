@@ -93,5 +93,7 @@ const LEVENY_MOVIES = [
     { title: "Camp Rock 3", href: "../movies/camp_rock_3_movie.html", genre: "musical", poster: "images/posters/camp_rock_3.jpg", discover: 2 , background: "images/backgrounds/camp_rock_3_backg.jpg"},
     { title: "Mutiny", href: "../movies/mutiny_movie.html", genre: "action", poster: "images/posters/mutiny.jpg", discover: 1 , background: "images/backgrounds/mutiny_backg.jpg"},
     { title: "Peppermint", href: "../movies/peppermint_movie.html", genre: "thriller", poster: "images/posters/peppermint.jpg", discover: 5 , background: "images/backgrounds/peppermint_backg.jpg"},
-    { title: "Cruel Hands", href: "../movies/cruel_hands_movie.html", genre: "thriller", poster: "images/posters/cruel_hands.jpg", discover: 5 , background: "images/backgrounds/cruel_hands_backg.jpg"}
+    { title: "Cruel Hands", href: "../movies/cruel_hands_movie.html", genre: "thriller", poster: "images/posters/cruel_hands.jpg", discover: 5 , background: "images/backgrounds/cruel_hands_backg.jpg"},
+    { title: "Breach", href: "../movies/breach_movie.html", genre: "action", poster: "images/posters/breach.jpg", discover: 1 , background: "images/backgrounds/breach_backg.jpg"},
+    { title: "Ghost in the Cell", href: "../movies/ghost_in_the_cell_movie.html", genre: "horror", poster: "images/posters/ghost_in_the_cell.jpg", discover: 2 , background: "images/backgrounds/ghost_in_the_cell_backg.jpg"}
 ];
