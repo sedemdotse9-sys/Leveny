@@ -184,7 +184,7 @@ body.dark-mode .auth-heading {
 ============================================================ */
 .auth-field {
     text-align: left;
-    margin-bottom: 10px;
+    margin-bottom: 18px;
 }
 
 .auth-field label {
@@ -426,7 +426,7 @@ body.dark-mode .auth-switch {
     margin-bottom: 6px;
   }
   .auth-field {
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
   .auth-field label {
     font-size: 13px;
@@ -460,7 +460,7 @@ body.dark-mode .auth-switch {
     height: clamp(46px, 4.5vw, 56px);
   }
   .auth-field {
-    margin-bottom: clamp(8px, 1vw, 10px);
+    margin-bottom: clamp(10px, 3vw, 13px);
   }
   .auth-social-btn {
     width: clamp(44px, 4vw, 52px);
