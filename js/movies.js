@@ -95,5 +95,6 @@ const LEVENY_MOVIES = [
     { title: "Peppermint", href: "../movies/peppermint_movie.html", genre: "thriller", poster: "images/posters/peppermint.jpg", discover: 5 , background: "images/backgrounds/peppermint_backg.jpg"},
     { title: "Cruel Hands", href: "../movies/cruel_hands_movie.html", genre: "thriller", poster: "images/posters/cruel_hands.jpg", discover: 5 , background: "images/backgrounds/cruel_hands_backg.jpg"},
     { title: "Breach", href: "../movies/breach_movie.html", genre: "action", poster: "images/posters/breach.jpg", discover: 1 , background: "images/backgrounds/breach_backg.jpg"},
-    { title: "Ghost in the Cell", href: "../movies/ghost_in_the_cell_movie.html", genre: "horror", poster: "images/posters/ghost_in_the_cell.jpg", discover: 2 , background: "images/backgrounds/ghost_in_the_cell_backg.jpg"}
+    { title: "Ghost in the Cell", href: "../movies/ghost_in_the_cell_movie.html", genre: "horror", poster: "images/posters/ghost_in_the_cell.jpg", discover: 2 , background: "images/backgrounds/ghost_in_the_cell_backg.jpg"},
+    { title: "Spider-Man: Across the Spider-Verse", href: "../movies/spider_man_across_the_spider_verse_movie.html", genre: "superhero", poster: "images/posters/spider_man_across_the_spider_verse.jpg", discover: 4 , background: "images/backgrounds/spider_man_across_the_spider_verse_backg.jpg"}
 ];

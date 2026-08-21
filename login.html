@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Leveny</title>
+
+    <link rel="stylesheet" href="css/design.css">
+    <link rel="stylesheet" href="css/mobile.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap">
+
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/favicon/site.webmanifest" />
+</head>
+<body>
+
+<!-- ============================================================
+    DESKTOP HEADER
+============================================================ -->
+<header>
+    <nav class="nav_bar">
+        <h2 class="logo">Leveny</h2>
+        <ul class="nav_links">
+            <a href="index.html"><i class="fas fa-home"></i>Home</a>
+            <li class="shared-dropdown">
+                <a class="genre-link" href="genres.html">
+                    <i class="fa-solid fa-compact-disc"></i>Genres
+                </a>
+                <span class="dropdown-arrow" id="genreDropdownArrow">
+                    <i class="fas fa-chevron-down"></i>
+                </span>
+                <div class="dropdown-content" id="genreDropdown">
+                    <a href="genres.html#action"><i class="fas fa-explosion" style="color:#3498db;"></i> Action &amp; Adventure</a>
+                    <a href="genres.html#superhero"><i class="fas fa-mask" style="color:#e74c3c;"></i> Superhero</a>
+                    <a href="genres.html#animation"><i class="fas fa-dragon" style="color:#f39c12;"></i> Animation</a>
+                    <a href="genres.html#fantasy"><i class="fas fa-hat-wizard" style="color:#9b59b6;"></i> Fantasy</a>
+                    <a href="genres.html#scifi"><i class="fas fa-robot" style="color:#1abc9c;"></i> Sci-Fi</a>
+                    <a href="genres.html#family"><i class="fas fa-child" style="color:#2ecc71;"></i> Family</a>
+                    <a href="genres.html#thriller"><i class="fas fa-search" style="color:#95a5a6;"></i> Thriller</a>
+                    <a href="genres.html#horror"><i class="fas fa-ghost" style="color:#e74c3c;"></i> Horror</a>
+                    <a href="genres.html#musical"><i class="fas fa-music" style="color:#e84393;"></i> Musical</a>
+                </div>
+            </li>
+            <a href="Movie_Request.html"><i class="fas fa-envelope"></i>Request</a>
+            <a href="login.html"><i class="fa-regular fa-user"></i>Profile</a>
+        </ul>
+    </nav>
+    <hr>
+</header>
+
+<!-- ============================================================
+    MOBILE HEADER
+============================================================ -->
+<div id="mobileHeader">
+    <span class="mobile-logo">Leve<span class="mobile-logo-ny">ny</span></span>
+    <a class="mobile-profile-btn" href="login.html">
+        <i class="fa-regular fa-user"></i>
+    </a>
+</div>
+
+<!-- ============================================================
+    LOGIN FORM
+============================================================ -->
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <img class="auth-logo" src="/favicon/apple-touch-icon.png" alt="Leveny">
+        <h1 class="auth-heading">Login</h1>
+
+        <form onsubmit="return false;">
+            <div class="auth-field">
+                <label for="loginUsername">Username</label>
+                <input type="text" id="loginUsername" name="username" placeholder="Enter your username" autocomplete="username">
+            </div>
+            <div class="auth-field">
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" name="password" placeholder="Enter your password" autocomplete="current-password">
+            </div>
+
+            <div class="auth-forgot">
+                <a href="#">Forgot Your Password?</a>
+            </div>
+
+            <button type="submit" class="auth-submit">LOGIN</button>
+        </form>
+
+        <div class="auth-social-label">Or Login With Social Account</div>
+        <div class="auth-social-row">
+            <a href="#" class="auth-social-btn google" aria-label="Continue with Google"><i class="fa-brands fa-google"></i></a>
+            <a href="#" class="auth-social-btn facebook" aria-label="Continue with Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="auth-social-btn twitter" aria-label="Continue with Twitter"><i class="fa-brands fa-twitter"></i></a>
+        </div>
+
+        <div class="auth-switch">
+            Don't have an account? <a href="signup.html">Sign Up</a>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================
+    GENRES PANEL (mobile)
+============================================================ -->
+<div id="genresPanelBackdrop"></div>
+<div id="mobileGenresPanel">
+    <h3>Browse Genres</h3>
+    <div class="mob-genre-grid">
+        <a class="mob-genre-item" href="genre-results.html?genre=action"><i class="fas fa-explosion" style="color:#3498db;"></i><span>Action</span></a>
+        <a class="mob-genre-item" href="genre-results.html?genre=superhero"><i class="fas fa-mask" style="color:#e74c3c;"></i><span>Superhero</span></a>
+        <a class="mob-genre-item" href="genre-results.html?genre=animation"><i class="fas fa-dragon" style="color:#f39c12;"></i><span>Animation</span></a>
+        <a class="mob-genre-item" href="genre-results.html?genre=fantasy"><i class="fas fa-hat-wizard" style="color:#9b59b6;"></i><span>Fantasy</span></a>
+        <a class="mob-genre-item" href="genre-results.html?genre=scifi"><i class="fas fa-robot" style="color:#1abc9c;"></i><span>Sci-Fi</span></a>
+        <a class="mob-genre-item" href="genre-results.html?genre=family"><i class="fas fa-child" style="color:#2ecc71;"></i><span>Family</span></a>
+        <a class="mob-genre-item" href="genre-results.html?genre=thriller"><i class="fas fa-search" style="color:#95a5a6;"></i><span>Thriller</span></a>
+        <a class="mob-genre-item" href="genre-results.html?genre=horror"><i class="fas fa-ghost" style="color:#e74c3c;"></i><span>Horror</span></a>
+        <a class="mob-genre-item" href="genre-results.html?genre=musical"><i class="fas fa-music" style="color:#e84393;"></i><span>Musical</span></a>
+    </div>
+</div>
+
+<!-- ============================================================
+    BOTTOM NAV (mobile)
+============================================================ -->
+<nav id="mobileBottomNav">
+    <a class="mob-nav-item" href="index.html"><i class="fas fa-home"></i><span>Home</span></a>
+    <button class="mob-nav-item" id="mobGenresBtn"><i class="fa-solid fa-compact-disc"></i><span>Genres</span></button>
+    <a class="mob-nav-item" href="Movie_Request.html"><i class="fas fa-envelope"></i><span>Request</span></a>
+    <a class="mob-nav-item active" href="login.html"><i class="fa-regular fa-user"></i><span>Profile</span></a>
+</nav>
+
+<script src="js/script.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>

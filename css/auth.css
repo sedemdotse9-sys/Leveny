@@ -1,0 +1,447 @@
+/* ============================================================
+   AUTH.CSS — Leveny
+   Login / Sign Up pages.
+   Reuses the same neon accent variables as mobile.css, but
+   unlike mobile.css this file is NOT gated behind a max-width
+   media query — the color-cycling background and the liquid
+   glass button are active on desktop AND mobile here, driven by
+   js/auth.js (which stays in sync with the homepage's slide
+   timer via sessionStorage).
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&display=swap');
+
+:root {
+    --accent:      #00A8FF;
+    --accent-soft: #EBF5FF;
+    --accent-glow: rgba(0,168,255,0.45);
+    --accent-dim:  rgba(0,168,255,0.12);
+}
+
+/* ============================================================
+   PAGE BACKGROUND — color-cycling wash, active at all sizes
+============================================================ */
+body.auth-page {
+    margin: 0;
+    min-height: 100vh;
+    background-color: #ddeeff;
+    color: #111;
+    transition: background-color 1s ease, color 0.4s ease;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body.auth-page.dark-mode {
+    background-color: #0D0D0D;
+    color: #f0f0f0;
+}
+
+body.auth-page::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 100% 55% at 50% -5%, var(--accent-glow) 0%, transparent 70%),
+        linear-gradient(160deg, var(--accent-dim) 0%, transparent 60%);
+    transition: background 1s ease;
+}
+
+body.auth-page.dark-mode::after {
+    background:
+        radial-gradient(ellipse 90% 55% at 50% -5%, var(--accent-glow) 0%, transparent 65%),
+        linear-gradient(160deg, var(--accent-dim) 0%, transparent 55%);
+}
+
+/* ============================================================
+   AUTH WRAPPER — centers the card, sits above the bg wash
+============================================================ */
+.auth-wrapper {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 24px 20px 16px;
+    box-sizing: border-box;
+}
+
+/* ============================================================
+   LIQUID GLASS CARD
+============================================================ */
+.auth-card {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    padding: 16px 28px 14px;
+    border-radius: 32px;
+    overflow: hidden;
+    box-sizing: border-box;
+    text-align: center;
+    margin-top: 25px;
+
+    background: rgba(255,255,255,0.35);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,255,255,0.5);
+    box-shadow:
+        0 8px 40px rgba(0,0,0,0.10),
+        0 0 50px var(--accent-dim);
+    transition: background 0.4s ease, border-color 1s ease, box-shadow 1s ease;
+}
+
+body.dark-mode .auth-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.10);
+    box-shadow:
+        0 8px 50px rgba(0,0,0,0.6),
+        0 0 60px var(--accent-glow);
+}
+
+/* Whitish liquid-glass highlight, top-left */
+.auth-card::before {
+    content: '';
+    position: absolute;
+    top: -30%;
+    left: -30%;
+    width: 65%;
+    height: 65%;
+    background: radial-gradient(circle, rgba(255,255,255,0.85) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    transition: opacity 1s ease;
+    display: none;
+}
+
+body.dark-mode .auth-card::before {
+    background: radial-gradient(circle, rgba(255,255,255,0.14) 0%, transparent 70%);
+}
+
+/* Whitish liquid-glass highlight, bottom-right */
+.auth-card::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    right: -30%;
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(circle, rgba(255,255,255,0.55) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    transition: opacity 1s ease;
+}
+
+body.dark-mode .auth-card::after {
+    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+}
+
+/* Everything inside the card sits above the glass highlights */
+.auth-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* ============================================================
+   LOGO + HEADING
+============================================================ */
+.auth-logo {
+    width: 56px;
+    height: 56px;
+    border-radius: 20px;
+    object-fit: cover;
+    margin: 0 auto 12px;
+    display: block;
+    box-shadow: 0 6px 20px var(--accent-dim);
+    transition: box-shadow 1s ease;
+}
+
+body.dark-mode .auth-logo {
+    box-shadow: 0 0 22px var(--accent-glow);
+}
+
+.auth-heading {
+    font-family: 'Bebas Neue', sans-serif;
+    font-weight: 100;
+    letter-spacing: 4px;
+    font-size: 28px;
+    color: #111;
+    margin: 0 0 16px;
+    transition: color 0.4s ease, text-shadow 1s ease;
+}
+
+body.dark-mode .auth-heading {
+    color: #fff;
+    text-shadow: 0 0 18px var(--accent-glow);
+}
+
+/* ============================================================
+   FORM FIELDS — underline style, matching the reference layout
+============================================================ */
+.auth-field {
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.auth-field label {
+    display: block;
+    font-family: Rockwell, "Roboto Slab", sans-serif;
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 10px;
+    transition: color 0.4s ease;
+}
+
+body.dark-mode .auth-field label {
+    color: #bbb;
+}
+
+.auth-field input {
+    width: 100%;
+    border: none;
+    border-bottom: 1.5px solid rgba(0,0,0,0.25);
+    background: transparent;
+    padding: 4px 2px 8px;
+    font-family: Rockwell, "Roboto Slab", sans-serif;
+    font-size: 15px;
+    color: #111;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.3s ease, color 0.4s ease;
+}
+
+body.dark-mode .auth-field input {
+    border-bottom-color: rgba(255,255,255,0.25);
+    color: #f0f0f0;
+}
+
+.auth-field input::placeholder {
+    color: #999;
+}
+
+body.dark-mode .auth-field input::placeholder {
+    color: #666;
+}
+
+.auth-field input:focus {
+    border-bottom-color: var(--accent);
+}
+
+/* ============================================================
+   FORGOT PASSWORD
+============================================================ */
+.auth-forgot {
+    text-align: right;
+    margin: -6px 0 16px;
+}
+
+.auth-forgot a {
+    font-family: Rockwell, "Roboto Slab", sans-serif;
+    font-size: 13px;
+    color: #666;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.auth-forgot a:hover {
+    color: var(--accent);
+}
+
+body.dark-mode .auth-forgot a {
+    color: #999;
+}
+
+/* ============================================================
+   LIQUID GLASS BUTTON
+============================================================ */
+.auth-submit {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-family: Rockwell, "Roboto Slab", sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #fff;
+    margin-bottom: 10px;
+
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent) 100%);
+    background-color: var(--accent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow:
+        0 8px 24px var(--accent-dim),
+        inset 0 1px 0 rgba(255,255,255,0.5),
+        inset 0 -2px 6px rgba(0,0,0,0.12);
+    transition: background 1s ease, box-shadow 1s ease, transform 0.15s ease;
+}
+
+.auth-submit:active {
+    transform: scale(0.98);
+}
+
+body.dark-mode .auth-submit {
+    box-shadow:
+        0 0 24px var(--accent-glow),
+        inset 0 1px 0 rgba(255,255,255,0.25),
+        inset 0 -2px 6px rgba(0,0,0,0.3);
+}
+
+/* ============================================================
+   SOCIAL SIGN-IN
+============================================================ */
+.auth-social-label {
+    font-family: Rockwell, "Roboto Slab", sans-serif;
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 10px;
+    transition: color 0.4s ease;
+}
+
+body.dark-mode .auth-social-label {
+    color: #999;
+}
+
+.auth-social-row {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+}
+
+.auth-social-btn {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 19px;
+
+    background: rgba(255,255,255,0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.6);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    transition: transform 0.15s ease, background 0.4s ease, border-color 1s ease, box-shadow 1s ease;
+}
+
+.auth-social-btn:active {
+    transform: scale(0.92);
+}
+
+body.dark-mode .auth-social-btn {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: none;
+}
+
+.auth-social-btn.google i { color: #EA4335; }
+.auth-social-btn.facebook i { color: #1877F2; }
+.auth-social-btn.twitter i { color: #1DA1F2; }
+
+/* ============================================================
+   SWITCH LINK (Login <-> Sign Up)
+============================================================ */
+.auth-switch {
+    margin-top: 16px;
+    font-family: Rockwell, "Roboto Slab", sans-serif;
+    font-size: 13px;
+    color: #555;
+    transition: color 0.4s ease;
+}
+
+body.dark-mode .auth-switch {
+    color: #999;
+}
+
+.auth-switch a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 1s ease;
+}
+
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+
+/* ============================================================
+   RESPONSIVE — mobile spacing tweaks
+============================================================ */
+@media screen and (max-width: 1024px),
+       screen and (orientation: landscape) and (max-height: 1024px) and (pointer: coarse) {
+    .auth-wrapper {
+    padding: 8px 16px 80px;
+    min-height: calc(100vh - 70px);
+    }
+    .auth-card {
+        padding: 20px 24px 16px;
+        border-radius: 28px;
+    }
+    .auth-heading {
+        font-size: 24px;
+    }
+    .auth-logo {
+        width: 44px;
+        height: 44px;
+        margin: 0 auto 6px;
+    }
+    .auth-field {
+        margin-bottom: 10px;
+    }
+    .auth-field label {
+        font-size: 13px;
+        margin-bottom: 6px;
+    }
+    .auth-forgot {
+        margin: -2px 0 10px;
+    }
+    .auth-submit {
+        padding: 11px;
+        margin-bottom: 10px;
+    }
+    .auth-social-label {
+        font-size: 12px;
+        margin-bottom: 6px;
+    }
+    .auth-social-btn {
+        width: 44px;
+        height: 44px;
+    }
+    .auth-switch {
+        margin-top: 10px;
+        font-size: 12px;
+    }
+    .auth-heading {
+        font-size: 26px;
+    }
+}
+
+/* ============================================================
+   ACCESSIBILITY — visible focus, reduced motion respected
+============================================================ */
+.auth-field input:focus-visible,
+.auth-submit:focus-visible,
+.auth-social-btn:focus-visible,
+.auth-forgot a:focus-visible,
+.auth-switch a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.auth-page,
+    body.auth-page::after,
+    .auth-card,
+    .auth-card::before,
+    .auth-card::after,
+    .auth-heading,
+    .auth-submit,
+    .auth-social-btn {
+        transition: none !important;
+    }
+}
