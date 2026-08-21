@@ -7,6 +7,12 @@
    glass button are active on desktop AND mobile here, driven by
    js/auth.js (which stays in sync with the homepage's slide
    timer via sessionStorage).
+
+   Responsive structure mirrors design.css: height-based tiers
+   for short desktop screens, a clamp()-based fluid tier for
+   narrow laptops, then a width-based cascade down through
+   tablets and phones, plus a dedicated landscape-phone tier and
+   notch-safe padding.
    ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&display=swap');
@@ -56,6 +62,7 @@ body.auth-page.dark-mode::after {
 
 /* ============================================================
    AUTH WRAPPER — centers the card, sits above the bg wash
+   (Base/tall-desktop defaults — tiers below override per size)
 ============================================================ */
 .auth-wrapper {
     position: relative;
@@ -89,7 +96,7 @@ body.auth-page.dark-mode::after {
     box-shadow:
         0 8px 40px rgba(0,0,0,0.10),
         0 0 50px var(--accent-dim);
-    transition: background 0.4s ease, border-color 1s ease, box-shadow 1s ease;
+    transition: background 0.4s ease, border-color 1s ease, box-shadow 1s ease, padding 0.3s ease;
 }
 
 body.dark-mode .auth-card {
@@ -100,7 +107,7 @@ body.dark-mode .auth-card {
         0 0 60px var(--accent-glow);
 }
 
-/* Whitish liquid-glass highlight, top-left */
+/* Top-left highlight intentionally disabled — left side stays dark/plain */
 .auth-card::before {
     content: '';
     position: absolute;
@@ -115,11 +122,7 @@ body.dark-mode .auth-card {
     display: none;
 }
 
-body.dark-mode .auth-card::before {
-    background: radial-gradient(circle, rgba(255,255,255,0.14) 0%, transparent 70%);
-}
-
-/* Whitish liquid-glass highlight, bottom-right */
+/* Whitish liquid-glass highlight, bottom-right (kept) */
 .auth-card::after {
     content: '';
     position: absolute;
@@ -137,7 +140,7 @@ body.dark-mode .auth-card::after {
     background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
 }
 
-/* Everything inside the card sits above the glass highlights */
+/* Everything inside the card sits above the glass highlight */
 .auth-card > * {
     position: relative;
     z-index: 1;
@@ -154,7 +157,7 @@ body.dark-mode .auth-card::after {
     margin: 0 auto 12px;
     display: block;
     box-shadow: 0 6px 20px var(--accent-dim);
-    transition: box-shadow 1s ease;
+    transition: box-shadow 1s ease, width 0.3s ease, height 0.3s ease;
 }
 
 body.dark-mode .auth-logo {
@@ -276,7 +279,7 @@ body.dark-mode .auth-forgot a {
         0 8px 24px var(--accent-dim),
         inset 0 1px 0 rgba(255,255,255,0.5),
         inset 0 -2px 6px rgba(0,0,0,0.12);
-    transition: background 1s ease, box-shadow 1s ease, transform 0.15s ease;
+    transition: background 1s ease, box-shadow 1s ease, transform 0.15s ease, padding 0.3s ease;
 }
 
 .auth-submit:active {
@@ -326,7 +329,7 @@ body.dark-mode .auth-social-label {
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,0.6);
     box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-    transition: transform 0.15s ease, background 0.4s ease, border-color 1s ease, box-shadow 1s ease;
+    transition: transform 0.15s ease, background 0.4s ease, border-color 1s ease, box-shadow 1s ease, width 0.3s ease, height 0.3s ease;
 }
 
 .auth-social-btn:active {
@@ -370,55 +373,323 @@ body.dark-mode .auth-switch {
 }
 
 /* ============================================================
-   RESPONSIVE — mobile spacing tweaks
+   RESPONSIVE DESIGN
 ============================================================ */
+
+/* ------------------------------------------------------------
+   TIER 1 — Short-height desktop screens (any width ≥1025px).
+   Same idea as design.css's short-laptop fix: trims vertical
+   spacing so the whole card clears the viewport without
+   scrolling, keyed off HEIGHT so it also catches wide monitors
+   that just happen to be short.
+------------------------------------------------------------ */
+@media screen and (max-height: 800px) and (min-width: 1025px) {
+  .auth-wrapper {
+    padding: 16px 20px 12px;
+  }
+  .auth-card {
+    padding: 14px 26px 12px;
+    margin-top: 12px;
+  }
+  .auth-heading {
+    font-size: 26px;
+    margin-bottom: 12px;
+  }
+  .auth-logo {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 8px;
+  }
+  .auth-field {
+    margin-bottom: 8px;
+  }
+}
+
+/* ------------------------------------------------------------
+   TIER 2 — Very short desktop screens (≥1025px wide)
+------------------------------------------------------------ */
+@media screen and (max-height: 650px) and (min-width: 1025px) {
+  .auth-wrapper {
+    padding: 10px 20px 8px;
+  }
+  .auth-card {
+    padding: 10px 24px 10px;
+    margin-top: 0;
+  }
+  .auth-heading {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  .auth-logo {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 6px;
+  }
+  .auth-field {
+    margin-bottom: 6px;
+  }
+  .auth-field label {
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+  .auth-submit {
+    padding: 10px;
+    margin-bottom: 8px;
+  }
+  .auth-social-btn {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* ------------------------------------------------------------
+   TIER 3 — Small laptops / narrow desktops (1025px–1440px).
+   Fluid clamp() scaling, same approach as design.css's matching
+   block — has no effect above 1440px.
+------------------------------------------------------------ */
+@media screen and (min-width: 1025px) and (max-width: 1440px) {
+  .auth-card {
+    max-width: clamp(320px, 34vw, 400px);
+    padding: clamp(14px, 1.6vw, 16px) clamp(22px, 2.8vw, 28px) clamp(12px, 1.4vw, 14px);
+  }
+  .auth-heading {
+    font-size: clamp(24px, 2.4vw, 28px);
+  }
+  .auth-logo {
+    width: clamp(46px, 4.5vw, 56px);
+    height: clamp(46px, 4.5vw, 56px);
+  }
+  .auth-field {
+    margin-bottom: clamp(8px, 1vw, 10px);
+  }
+  .auth-social-btn {
+    width: clamp(44px, 4vw, 52px);
+    height: clamp(44px, 4vw, 52px);
+  }
+}
+
+/* ------------------------------------------------------------
+   TIER 4 — Large tablets / mobile layout switch (1024px and
+   below). This is where #mobileHeader (position: sticky) enters
+   the flow above .auth-wrapper, so min-height must subtract its
+   height instead of assuming the desktop fixed-header pattern.
+------------------------------------------------------------ */
 @media screen and (max-width: 1024px),
        screen and (orientation: landscape) and (max-height: 1024px) and (pointer: coarse) {
-    .auth-wrapper {
+  .auth-wrapper {
     padding: 8px 16px 80px;
     min-height: calc(100vh - 70px);
+  }
+  .auth-card {
+    padding: 20px 24px 16px;
+    border-radius: 28px;
+    margin-top: 0;
+  }
+  .auth-heading {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+  .auth-logo {
+    width: 44px;
+    height: 44px;
+    margin-bottom: 6px;
+  }
+  .auth-field {
+    margin-bottom: 10px;
+  }
+  .auth-field label {
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+  .auth-forgot {
+    margin: -2px 0 10px;
+  }
+  .auth-submit {
+    padding: 11px;
+    margin-bottom: 10px;
+  }
+  .auth-social-label {
+    font-size: 12px;
+    margin-bottom: 6px;
+  }
+  .auth-social-btn {
+    width: 44px;
+    height: 44px;
+  }
+  .auth-switch {
+    margin-top: 10px;
+    font-size: 12px;
+  }
+}
+
+/* ------------------------------------------------------------
+   TIER 5 — Small tablets / large phones (768px and below)
+------------------------------------------------------------ */
+@media screen and (max-width: 768px) {
+  .auth-card {
+    padding: 18px 22px 14px;
+  }
+  .auth-heading {
+    font-size: 23px;
+  }
+  .auth-logo {
+    width: 42px;
+    height: 42px;
+  }
+}
+
+/* ------------------------------------------------------------
+   TIER 6 — Mobile phones (480px and below)
+------------------------------------------------------------ */
+@media screen and (max-width: 480px) {
+  .auth-wrapper {
+    padding: 6px 14px 76px;
+  }
+  .auth-card {
+    padding: 16px 18px 12px;
+    border-radius: 24px;
+  }
+  .auth-heading {
+    font-size: 21px;
+    margin-bottom: 10px;
+  }
+  .auth-logo {
+    width: 38px;
+    height: 38px;
+    margin-bottom: 5px;
+  }
+  .auth-field {
+    margin-bottom: 8px;
+  }
+  .auth-field label {
+    font-size: 12px;
+    margin-bottom: 5px;
+  }
+  .auth-field input {
+    font-size: 14px;
+  }
+  .auth-forgot {
+    margin: -2px 0 8px;
+  }
+  .auth-forgot a {
+    font-size: 12px;
+  }
+  .auth-submit {
+    padding: 10px;
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+  .auth-social-label {
+    font-size: 11px;
+    margin-bottom: 5px;
+  }
+  .auth-social-row {
+    gap: 10px;
+  }
+  .auth-social-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    border-radius: 13px;
+  }
+  .auth-switch {
+    margin-top: 8px;
+    font-size: 11px;
+  }
+}
+
+/* ------------------------------------------------------------
+   TIER 7 — Small mobile phones (360px and below)
+------------------------------------------------------------ */
+@media screen and (max-width: 360px) {
+  .auth-card {
+    padding: 14px 16px 10px;
+  }
+  .auth-heading {
+    font-size: 19px;
+  }
+  .auth-logo {
+    width: 34px;
+    height: 34px;
+  }
+  .auth-field label {
+    font-size: 11px;
+  }
+  .auth-field input {
+    font-size: 13px;
+  }
+  .auth-social-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+}
+
+/* ------------------------------------------------------------
+   TIER 8 — Landscape phones (short height, e.g. rotated phone).
+   The tightest tier — needs to fit a 4-field Sign Up form in a
+   very short viewport without scrolling.
+------------------------------------------------------------ */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+  .auth-wrapper {
+    padding: 4px 16px 64px;
+    min-height: calc(100vh - 56px);
+  }
+  .auth-card {
+    padding: 10px 20px 8px;
+  }
+  .auth-heading {
+    font-size: 18px;
+    margin-bottom: 6px;
+  }
+  .auth-logo {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 4px;
+  }
+  .auth-field {
+    margin-bottom: 5px;
+  }
+  .auth-field label {
+    font-size: 11px;
+    margin-bottom: 3px;
+  }
+  .auth-forgot {
+    margin: -1px 0 6px;
+  }
+  .auth-submit {
+    padding: 8px;
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+  .auth-social-label {
+    font-size: 10px;
+    margin-bottom: 4px;
+  }
+  .auth-social-btn {
+    width: 34px;
+    height: 34px;
+    font-size: 13px;
+    border-radius: 10px;
+  }
+  .auth-switch {
+    margin-top: 6px;
+    font-size: 10px;
+  }
+}
+
+/* ------------------------------------------------------------
+   Notch-safe padding — same @supports pattern as design.css
+------------------------------------------------------------ */
+@supports (padding: max(0px)) {
+  @media screen and (max-width: 1024px),
+         screen and (orientation: landscape) and (max-height: 1024px) and (pointer: coarse) {
+    .auth-wrapper {
+      padding-left: max(16px, env(safe-area-inset-left));
+      padding-right: max(16px, env(safe-area-inset-right));
+      padding-bottom: max(80px, calc(env(safe-area-inset-bottom) + 70px));
     }
-    .auth-card {
-        padding: 20px 24px 16px;
-        border-radius: 28px;
-    }
-    .auth-heading {
-        font-size: 24px;
-    }
-    .auth-logo {
-        width: 44px;
-        height: 44px;
-        margin: 0 auto 6px;
-    }
-    .auth-field {
-        margin-bottom: 10px;
-    }
-    .auth-field label {
-        font-size: 13px;
-        margin-bottom: 6px;
-    }
-    .auth-forgot {
-        margin: -2px 0 10px;
-    }
-    .auth-submit {
-        padding: 11px;
-        margin-bottom: 10px;
-    }
-    .auth-social-label {
-        font-size: 12px;
-        margin-bottom: 6px;
-    }
-    .auth-social-btn {
-        width: 44px;
-        height: 44px;
-    }
-    .auth-switch {
-        margin-top: 10px;
-        font-size: 12px;
-    }
-    .auth-heading {
-        font-size: 26px;
-    }
+  }
 }
 
 /* ============================================================
