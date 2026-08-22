@@ -657,7 +657,9 @@
         border-color: var(--mob-accent);
       }
 
-      #mobFooter { text-align: center; padding: 16px 0 10px; }
+      #mobFooter { text-align: center; padding: 16px 0 10px;
+    font-size: 15px;
+}
       #mobFooter a, .copyright a {
         color: #777;
         font-size: 12px;

@@ -1,0 +1,826 @@
+/* ============================================================
+   MOBILE.CSS — Leveny
+   Neon dark mode (#0D0D0D) + Deeply tinted frosted glass light mode.
+   Dark/light toggle button in header.
+   ============================================================ */
+
+/* Google Fonts fallback for Rockwell (not available on iOS/Android by
+   default). Roboto Slab is loaded and used first everywhere Rockwell was
+   requested, with Rockwell kept as a fallback for devices/desktops that
+   happen to have it installed locally. */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&display=swap');
+
+:root {
+    --accent:      #00A8FF;
+    --accent-soft: #EBF5FF;
+    --accent-glow: rgba(0,168,255,0.45);
+    --accent-dim:  rgba(0,168,255,0.12);
+}
+
+/* ============================================================
+   HIDE DESKTOP ON MOBILE
+============================================================ */
+@media screen and (max-width: 1024px),
+       screen and (orientation: landscape) and (max-height: 1024px) and (pointer: coarse) {
+
+    header,
+    .slider-wrapper,
+    .arrow_left,
+    .arrow_right,
+    #sidebarOverlay,
+    #mobileSidebar,
+    .hamburger,
+    .theme-toggle,
+    footer {
+        display: none !important;
+    }
+
+footer a {
+  color: white;
+  text-decoration: none;
+  font-family: "Roboto Slab", "Rockwell", sans-serif;
+}
+
+    /* -------- BASE BODY -------- */
+    body {
+        background-color: #ddeeff;
+        color: #111;
+        overflow-x: hidden;
+        overflow-y: auto;
+        padding: 0;
+        margin: 0;
+        transition: background-color 1s ease, color 0.4s ease;
+    }
+
+    /*
+      LIGHT MODE: strong tinted wash — a big radial gradient
+      in the accent color bleeds across the whole page,
+      sitting on top of the already-tinted body background.
+    */
+    body::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        /* Two-layer wash: top bloom + subtle full-page tint */
+        background:
+            radial-gradient(ellipse 100% 55% at 50% -5%,
+                var(--accent-glow) 0%, transparent 70%),
+            linear-gradient(160deg,
+                var(--accent-dim) 0%, transparent 60%);
+        transition: background 1s ease;
+    }
+
+    /* DARK MODE body */
+    body.dark-mode {
+        background-color: #0D0D0D;
+        color: #f0f0f0;
+    }
+
+    body.dark-mode::after {
+        background:
+            radial-gradient(ellipse 90% 55% at 50% -5%,
+                var(--accent-glow) 0%, transparent 65%),
+            linear-gradient(160deg,
+                var(--accent-dim) 0%, transparent 55%);
+    }
+
+
+    /* All UI above bg */
+    #mobileHeader,
+    #mobileSearchWrapper,
+    #mobileCategoryBar,
+    #mobileFeatured,
+    .mob-section-label,
+    #mobileMoviesSection,
+    #mobileBottomNav,
+    #mobileGenresPanel,
+    #genresPanelBackdrop {
+        position: relative;
+        z-index: 1;
+    }
+
+    /* -------- MOBILE PAGE SCROLLBAR -------- */
+    body {
+        scrollbar-width: thin;                 /* Firefox */
+        scrollbar-color: var(--accent) transparent;
+    }
+
+    body::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    body::-webkit-scrollbar-track {
+        background: transparent;
+        margin: 6px 0;
+    }
+
+    body::-webkit-scrollbar-thumb {
+        background: var(--accent);
+        border-radius: 10px;          /* rounds top + bottom edges of the thumb */
+        border: 2px solid transparent;
+        background-clip: padding-box;
+    }
+
+    body.dark-mode::-webkit-scrollbar-thumb {
+        background: var(--accent);
+        box-shadow: 0 0 6px var(--accent-glow);
+    }
+
+
+    /* ============================================================
+       MOBILE HEADER
+    ============================================================ */
+    #mobileHeader {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 16px 10px;
+        position: sticky;
+        top: 0;
+        z-index: 999;
+        gap: 10px;
+
+        background: rgba(255,255,255,0.45);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255,255,255,0.5);
+        transition: background 0.4s, border-color 1s;
+    }
+
+    body.dark-mode #mobileHeader {
+        background: rgba(13,13,13,0.75);
+        border-bottom: 1px solid var(--accent-dim);
+        box-shadow: 0 1px 0 0 var(--accent-dim),
+                    0 4px 24px rgba(0,0,0,0.6);
+    }
+
+    #mobileHeader .mobile-logo {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 26px;
+        font-weight: 400;
+        letter-spacing: 4px;
+        color: #111;
+        flex: 1;
+        transition: color 0.4s;
+    }
+
+    body.dark-mode #mobileHeader .mobile-logo {
+        color: #ffffff;
+        text-shadow: 0 0 18px var(--accent-glow);
+    }
+
+    /* ---- DARK/LIGHT TOGGLE BUTTON ---- */
+    #mobileThemeToggle {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 17px;
+        flex-shrink: 0;
+        transition: background 1s ease, box-shadow 1s ease, transform 0.25s ease;
+
+        /* Light mode: tinted glass button */
+        background: rgba(255,255,255,0.55);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        color: #444;
+    }
+
+    body.dark-mode #mobileThemeToggle {
+        background: var(--accent-dim);
+        box-shadow: 0 0 12px var(--accent-glow);
+        color: var(--accent);
+        border: 1px solid var(--accent);
+    }
+
+    #mobileThemeToggle:active {
+        transform: scale(0.88) rotate(20deg);
+    }
+
+    /* Profile button */
+    #mobileHeader .mobile-profile-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        font-size: 15px;
+        flex-shrink: 0;
+        transition: background 1s ease, box-shadow 1s ease, color 0.4s;
+        background: #111;
+        color: #fff;
+    }
+
+    body.dark-mode #mobileHeader .mobile-profile-btn {
+        background: var(--accent-dim);
+        color: var(--accent);
+        border: 1px solid var(--accent);
+        box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    /* ============================================================
+       SEARCH BAR
+    ============================================================ */
+    #mobileSearchWrapper {
+        display: flex;
+        align-items: center;
+        border-radius: 24px;
+        padding: 10px 16px;
+        margin: 10px 12px 12px;
+        gap: 10px;
+        position: relative;
+        z-index: 950;          /* ← lifts wrapper above other page elements */
+        transition: background 0.4s, border-color 1s, box-shadow 1s;
+
+        background: rgba(255,255,255,0.45);
+        border: 1px solid rgba(255,255,255,0.55);
+    }
+
+    body.dark-mode #mobileSearchWrapper {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid var(--accent-dim);
+        box-shadow: 0 0 0 1px var(--accent-dim) inset;
+    }
+
+    #mobileSearchWrapper i { color: #555; font-size: 14px; flex-shrink: 0; }
+    body.dark-mode #mobileSearchWrapper i { color: var(--accent); }
+
+    #mobileSearchInput {
+        border: none;
+        background: transparent;
+        outline: none;
+        font-size: 16px;
+        color: #111;
+        width: 100%;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
+    }
+
+    body.dark-mode #mobileSearchInput { color: #f0f0f0; }
+    #mobileSearchInput::placeholder { color: #777; }
+    body.dark-mode #mobileSearchInput::placeholder { color: #555; }
+
+    #mobileSearchResults {
+    display: none;
+    position: relative;
+    margin: -6px 12px 0;
+    border-radius: 16px;
+    z-index: 9999;
+    max-height: 280px;
+    overflow: auto;
+    background: #ffffff;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent, #00A8FF) transparent;
+    overscroll-behavior: contain;
+}
+
+/* === AUTO-INJECTED: search scrollbar fix === */
+#mobileSearchResults::-webkit-scrollbar {
+    width: 8px;
+}
+
+#mobileSearchResults::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 8px 0;
+}
+
+#mobileSearchResults::-webkit-scrollbar-thumb {
+    background: var(--accent, #00A8FF);
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+
+body.dark-mode #mobileSearchResults {
+    background: rgba(18,18,18,0.97);
+    border: 1px solid var(--accent-dim);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.7), 0 0 0 1px var(--accent-dim);
+}
+
+#mobileSearchResults::-webkit-scrollbar {
+    width: 8px;
+}
+
+#mobileSearchResults::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 8px 0;
+}
+
+#mobileSearchResults::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+#mobileSearchResults .mob-search-drop-item {
+    padding: 12px 16px;
+    color: #111;
+    font-size: 14px;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+body.dark-mode #mobileSearchResults .mob-search-drop-item {
+    color: #ddd;
+    border-bottom-color: rgba(255,255,255,0.06);
+}
+
+#mobileSearchResults .mob-search-drop-item:last-child { border-bottom: none; }
+#mobileSearchResults .mob-search-drop-item:active { background: rgba(0,0,0,0.05); }
+body.dark-mode #mobileSearchResults .mob-search-drop-item:active { background: var(--accent-dim); }
+#mobileSearchResults .mob-search-drop-item i { color: #bbb; font-size: 12px; }
+body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accent); }
+
+
+    /* ============================================================
+       FEATURED BANNER
+    ============================================================ */
+    #mobileFeatured {
+        margin: 0 12px 16px;
+        border-radius: 22px;
+        overflow: hidden;
+        position: relative;
+        height: 220px;
+        cursor: pointer;
+        text-decoration: none;
+        display: block;
+        z-index: 1;
+        transition: box-shadow 1s ease;
+        box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+    }
+
+    body.dark-mode #mobileFeatured {
+        box-shadow: 0 0 0 1px var(--accent-dim),
+                    0 8px 40px var(--accent-glow);
+    }
+
+    #featuredSlidesContainer {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .featured-slide {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 1s ease;
+        pointer-events: none;
+    }
+
+    .featured-slide.active { opacity: 1; pointer-events: auto; }
+
+    .featured-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        filter: brightness(52%);
+    }
+
+    .featured-slide-info {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 20px 16px 16px;
+        background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, transparent 100%);
+        text-decoration: none;
+        display: block;
+    }
+
+    .featured-slide-title {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 30px;
+        color: white;
+        line-height: 1;
+        margin-bottom: 10px;
+        letter-spacing: 0.5px;
+    }
+
+    body.dark-mode .featured-slide-title {
+        text-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .featured-slide-btn {
+        display: inline-block;
+        color: #fff;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 7px 28px;
+        border-radius: 10px;
+        letter-spacing: 0.3px;
+        margin-left: -5px;
+        transition: background 1s ease, box-shadow 1s ease;
+        background: var(--accent);
+    }
+
+    body.dark-mode .featured-slide-btn {
+        box-shadow: 0 0 12px var(--accent-glow);
+    }
+
+    #featuredColorBar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 3px;
+        background: var(--accent);
+        z-index: 5;
+        transition: background 1s ease;
+    }
+
+    body.dark-mode #featuredColorBar {
+        box-shadow: 0 0 8px var(--accent-glow);
+    }
+
+    #featuredDots {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        display: flex;
+        gap: 5px;
+        z-index: 5;
+    }
+
+    .featured-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.3);
+        transition: background 0.3s, width 0.3s, border-radius 0.3s;
+    }
+
+    .featured-dot.active {
+        background: white;
+        width: 18px;
+        border-radius: 3px;
+    }
+
+    body.dark-mode .featured-dot.active {
+        background: var(--accent);
+        box-shadow: 0 0 6px var(--accent-glow);
+    }
+
+    /* ============================================================
+       SECTION LABEL
+    ============================================================ */
+    .mob-section-label {
+        font-family: "Roboto Slab", Rockwell, sans-serif;
+        font-size: 17px;
+        font-weight: 700;
+        padding: 2px 12px 10px;
+        color: #111;
+        transition: color 0.4s;
+    }
+
+    body.dark-mode .mob-section-label { color: #ffffff; }
+
+    /* ============================================================
+       MOVIES GRID
+    ============================================================ */
+    #mobileMoviesSection {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 0 12px 80px;
+    }
+
+    .mob-card {
+        border-radius: 16px;
+        overflow: hidden;
+        cursor: pointer;
+        text-decoration: none;
+        display: block;
+        transition: transform 0.15s ease, box-shadow 1s ease;
+
+        background: rgba(255,255,255,0.50);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border: 1px solid rgba(255,255,255,0.65);
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+
+    body.dark-mode .mob-card {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.07);
+        box-shadow: none;
+    }
+
+    body.dark-mode .mob-card:active {
+        border-color: var(--accent);
+        box-shadow: 0 0 14px var(--accent-glow);
+    }
+
+    .mob-card:active { transform: scale(0.97); }
+
+    .mob-card-img {
+        width: 100%;
+        aspect-ratio: 2 / 3;
+        object-fit: cover;
+        display: block;
+    }
+
+    .mob-card-info { padding: 8px 10px 10px; }
+
+    .mob-card-title {
+        font-size: 12px;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
+        font-weight: 700;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 2px;
+        color: #111;
+        transition: color 0.4s;
+    }
+
+    body.dark-mode .mob-card-title { color: #f0f0f0; }
+
+    .mob-card-genre {
+        font-size: 11px;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
+        color: #666;
+    }
+
+    body.dark-mode .mob-card-genre { color: #555; }
+
+
+    /* ============================================================
+       BOTTOM NAV BAR
+    ============================================================ */
+    #mobileBottomNav {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 62px;
+        z-index: 1000;
+        align-items: center;
+        justify-content: space-around;
+        padding: 0 4px;
+        transition: background 0.4s, border-color 1s, box-shadow 1s;
+
+        background: rgba(255,255,255,0.60);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-top: 1px solid rgba(255,255,255,0.6);
+    }
+
+    #mobileFooter {
+        text-align: center;
+        padding: 8px 12px 80px;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
+        font-size: 12px;
+    }
+
+    #mobileFooter a {
+        color: #111;
+        text-decoration: none;
+        transition: color 0.4s;
+    }
+
+    body.dark-mode #mobileFooter a {
+        color: #f0f0f0;
+    }
+
+    body.dark-mode #mobileBottomNav {
+        background: rgba(13,13,13,0.88);
+        border-top: 1px solid var(--accent-dim);
+        box-shadow: 0 -4px 24px rgba(0,0,0,0.5),
+                    0 -1px 0 var(--accent-dim);
+    }
+
+    .mob-nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        text-decoration: none;
+        color: #888;
+        flex: 1;
+        padding: 8px 0;
+        transition: color 0.3s;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+    }
+
+    .mob-nav-item i { font-size: 20px; transition: transform 0.2s, filter 0.3s; }
+
+    .mob-nav-item span {
+        font-size: 10px;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
+        font-weight: 600;
+    }
+
+    .mob-nav-item.active { color: var(--accent); }
+    .mob-nav-item.active i { transform: scale(1.1); }
+
+    body.dark-mode .mob-nav-item.active i {
+        filter: drop-shadow(0 0 6px var(--accent-glow));
+    }
+
+    /* ============================================================
+       GENRES PANEL
+    ============================================================ */
+    #genresPanelBackdrop {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.35);
+        z-index: 998;
+    }
+
+    #genresPanelBackdrop.open { display: block; }
+
+    #mobileGenresPanel {
+        display: none;
+        position: fixed;
+        bottom: 62px;
+        left: 0;
+        right: 0;
+        border-radius: 24px 24px 0 0;
+        padding: 20px 16px 20px;
+        z-index: 999;
+        animation: slideUp 0.3s ease;
+
+        background: rgba(255,255,255,0.80);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        box-shadow: 0 -4px 32px rgba(0,0,0,0.12);
+    }
+
+    body.dark-mode #mobileGenresPanel {
+        background: rgba(16,16,16,0.96);
+        border-top: 1px solid var(--accent-dim);
+        box-shadow: 0 -4px 32px rgba(0,0,0,0.8),
+                    0 0 40px var(--accent-glow);
+    }
+
+    #mobileGenresPanel.open { display: block; }
+
+    @keyframes slideUp {
+        from { transform: translateY(100%); opacity: 0; }
+        to   { transform: translateY(0);    opacity: 1; }
+    }
+
+    #mobileGenresPanel h3 {
+        font-family: "Roboto Slab", Rockwell, sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 16px;
+        color: #111;
+        transition: color 0.4s;
+    }
+
+    body.dark-mode #mobileGenresPanel h3 {
+        color: #fff;
+        text-shadow: 0 0 14px var(--accent-glow);
+    }
+
+    .mob-genre-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .mob-genre-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 14px 8px;
+        border-radius: 14px;
+        text-decoration: none;
+        transition: background 0.2s, border-color 0.2s;
+        background: rgba(255,255,255,0.50);
+        border: 1px solid rgba(255,255,255,0.55);
+    }
+
+    body.dark-mode .mob-genre-item {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .mob-genre-item:active { background: rgba(0,0,0,0.06); }
+    body.dark-mode .mob-genre-item:active {
+        background: var(--accent-dim);
+        border-color: var(--accent);
+    }
+
+    .mob-genre-item i { font-size: 22px; }
+
+    .mob-genre-item span {
+        font-size: 11px;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
+        color: #333;
+        text-align: center;
+        line-height: 1.2;
+    }
+
+    body.dark-mode .mob-genre-item span { color: #888; }
+}
+
+#mobileMoviesPagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 16px 12px 16px;
+
+}
+
+.mob-page-btn {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 10px;
+    border-radius: 12px;
+    border: 1px solid var(--accent-dim, rgba(0,0,0,0.1));
+    background: rgba(255,255,255,0.30);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #333;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+
+.mob-page-btn.active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.mob-page-btn:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+
+body.dark-mode .mob-page-btn {
+    background: rgba(255,255,255,0.05);
+    color: #ddd;
+    border-color: var(--accent-dim);
+}
+
+body.dark-mode .mob-page-btn.active {
+    background: var(--accent-dim);
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+/* ============================================================
+   HIDE ALL MOBILE UI ON DESKTOP
+============================================================ */
+@media screen and (min-width: 1025px) and (not ((orientation: landscape) and (max-height: 1024px) and (pointer: coarse))) {
+    #mobileHeader,
+    #mobileSearchWrapper,
+    #mobileSearchResults,
+    #mobileCategoryBar,
+    #mobileFeatured,
+    .mob-section-label,
+    #mobileMoviesSection,
+    #mobileBottomNav,
+    #mobileGenresPanel,
+    #genresPanelBackdrop,
+    #mobileFooter { display: none !important; }
+}
+
+/* Hide mobile-only elements on desktop */
+#mobileMoviesPagination {
+    display: none;
+}
+
+/* Show only on mobile */
+@media screen and (max-width: 1024px),
+       screen and (orientation: landscape) and (max-height: 1024px) and (pointer: coarse) {
+    #mobileMoviesPagination {
+        display: flex;
+    }
+}

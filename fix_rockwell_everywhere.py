@@ -78,6 +78,99 @@ FONT_FAMILY_RE = re.compile(
 )
 
 
+# ----------------------------------------------------------------------
+# Footer style normalization (color / font-size / centering)
+# ----------------------------------------------------------------------
+# Pulled from #mobFooter in your movie-page stylesheets:
+#     text-align: center;               (the "position" — centers the text)
+#     font-size: 15px;
+#     color: var(--mob-accent, ...);    (footer link color)
+#
+# The color is applied as a CSS *variable reference*, not a literal color,
+# since every page defines its own --mob-accent (a different accent color
+# per genre). Using var(--mob-accent, <fallback>) means each file keeps
+# its own theme color automatically — only the fallback kicks in if a
+# file has no accent variable at all (e.g. your homepage mobile.css,
+# which uses --accent instead of --mob-accent).
+FOOTER_SELECTORS = ["#mobFooter", "#mobileFooter"]
+FOOTER_LINK_SELECTORS = ["#mobFooter a", "#mobileFooter a"]
+FOOTER_FONT_SIZE = "15px"
+FOOTER_ACCENT_FALLBACK = "#f39c12"
+
+
+def _footer_color_value(css_text: str) -> str:
+    """Prefer var(--mob-accent, ...) if that variable is defined in this
+    file; fall back to var(--accent, ...) if that's what the file uses
+    instead (e.g. the homepage's mobile.css); otherwise use a plain
+    fallback color."""
+    if re.search(r"--mob-accent\s*:", css_text, re.IGNORECASE):
+        return f"var(--mob-accent, {FOOTER_ACCENT_FALLBACK})"
+    if re.search(r"--accent\s*:", css_text, re.IGNORECASE):
+        return f"var(--accent, {FOOTER_ACCENT_FALLBACK})"
+    return FOOTER_ACCENT_FALLBACK
+
+
+def normalize_footer_style(css_text: str) -> tuple[str, int]:
+    """Only touches footer blocks that ALREADY exist in the file
+    (#mobFooter / #mobileFooter). Never invents new footer styling in
+    files that don't have one."""
+    count = 0
+    color_value = _footer_color_value(css_text)
+
+    for sel in FOOTER_SELECTORS:
+        pattern = re.compile(re.escape(sel) + r"(\s*\{)([^}]*)(\})")
+
+        def _fix_block(match: re.Match) -> str:
+            nonlocal count
+            opener, body, closer = match.group(1), match.group(2), match.group(3)
+            new_body = body
+
+            if re.search(r"font-size\s*:\s*[^;]+;", new_body, re.IGNORECASE):
+                replaced = re.sub(
+                    r"font-size\s*:\s*[^;]+;",
+                    f"font-size: {FOOTER_FONT_SIZE};",
+                    new_body,
+                    flags=re.IGNORECASE,
+                )
+                if replaced != new_body:
+                    count += 1
+                new_body = replaced
+            else:
+                new_body = new_body.rstrip() + f"\n    font-size: {FOOTER_FONT_SIZE};"
+                count += 1
+
+            if not re.search(r"text-align\s*:\s*center\s*;", new_body, re.IGNORECASE):
+                new_body = new_body.rstrip() + "\n    text-align: center;"
+                count += 1
+
+            return f"{sel}{opener}{new_body}\n{closer}"
+
+        css_text = pattern.sub(_fix_block, css_text)
+
+    for sel in FOOTER_LINK_SELECTORS:
+        pattern = re.compile(re.escape(sel) + r"(\s*\{)([^}]*)(\})")
+
+        def _fix_link_block(match: re.Match) -> str:
+            nonlocal count
+            opener, body, closer = match.group(1), match.group(2), match.group(3)
+            if re.search(r"color\s*:\s*[^;]+;", body, re.IGNORECASE):
+                new_body = re.sub(
+                    r"color\s*:\s*[^;]+;",
+                    f"color: {color_value};",
+                    body,
+                    flags=re.IGNORECASE,
+                )
+            else:
+                new_body = body.rstrip() + f"\n    color: {color_value};"
+            if new_body != body:
+                count += 1
+            return f"{sel}{opener}{new_body}\n{closer}"
+
+        css_text = pattern.sub(_fix_link_block, css_text)
+
+    return css_text, count
+
+
 def already_fixed(value: str) -> bool:
     return "roboto slab" in value.lower()
 
@@ -123,19 +216,29 @@ def has_roboto_slab_import(css_text: str) -> bool:
 
 def process_css_file(path: Path, dry_run: bool, make_backup: bool) -> dict:
     original = path.read_text(encoding="utf-8", errors="ignore")
-    changes = {"font_family_fixes": 0, "import_added": False}
+    changes = {"font_family_fixes": 0, "import_added": False, "footer_fixes": 0}
+    new_css = original
 
-    if "rockwell" not in original.lower():
-        return changes
+    if "rockwell" in original.lower():
+        new_css, n = fix_font_family_in_css_text(new_css)
+        changes["font_family_fixes"] = n
 
-    new_css, n = fix_font_family_in_css_text(original)
-    changes["font_family_fixes"] = n
+        if not has_roboto_slab_import(original):
+            new_css = GOOGLE_FONT_IMPORT_LINE + new_css
+            changes["import_added"] = True
 
-    if not has_roboto_slab_import(original):
-        new_css = GOOGLE_FONT_IMPORT_LINE + new_css
-        changes["import_added"] = True
+    # Footer normalization runs independently of the Rockwell check —
+    # it only fires if the file already has a #mobFooter/#mobileFooter
+    # block to normalize.
+    if any(sel in original for sel in FOOTER_SELECTORS):
+        new_css, footer_n = normalize_footer_style(new_css)
+        changes["footer_fixes"] = footer_n
 
-    total = changes["font_family_fixes"] + (1 if changes["import_added"] else 0)
+    total = (
+        changes["font_family_fixes"]
+        + (1 if changes["import_added"] else 0)
+        + changes["footer_fixes"]
+    )
     if total == 0:
         return changes
 
@@ -166,34 +269,63 @@ def ensure_google_font_link(soup) -> bool:
 
 def process_html_file(path: Path, dry_run: bool, make_backup: bool) -> dict:
     original_html = path.read_text(encoding="utf-8", errors="ignore")
-    changes = {"inline_style_fixes": 0, "style_block_fixes": 0, "font_link_added": False}
+    changes = {
+        "inline_style_fixes": 0,
+        "style_block_fixes": 0,
+        "font_link_added": False,
+        "footer_fixes": 0,
+    }
 
-    if "rockwell" not in original_html.lower():
+    has_rockwell = "rockwell" in original_html.lower()
+    has_footer = any(sel in original_html for sel in FOOTER_SELECTORS)
+
+    if not has_rockwell and not has_footer:
         return changes
 
     soup = BeautifulSoup(original_html, "html.parser")
 
-    for tag in soup.find_all(style=True):
-        original_style = tag["style"]
-        if "rockwell" in original_style.lower():
-            new_style, n = fix_font_family_in_css_text(original_style)
-            if n:
-                tag["style"] = new_style
-                changes["inline_style_fixes"] += n
+    if has_rockwell:
+        for tag in soup.find_all(style=True):
+            original_style = tag["style"]
+            if "rockwell" in original_style.lower():
+                new_style, n = fix_font_family_in_css_text(original_style)
+                if n:
+                    tag["style"] = new_style
+                    changes["inline_style_fixes"] += n
 
+    # <style> blocks get BOTH the Rockwell fix and footer normalization,
+    # since a page's mobile styles sometimes live directly in the HTML
+    # instead of a separate .css file.
     for style_tag in soup.find_all("style"):
-        if style_tag.string and "rockwell" in style_tag.string.lower():
-            new_css, n = fix_font_family_in_css_text(style_tag.string)
-            if n:
-                style_tag.string.replace_with(new_css)
-                changes["style_block_fixes"] += n
+        block_text = style_tag.string
+        if not block_text:
+            continue
 
-    if ensure_google_font_link(soup):
+        new_css = block_text
+        block_changed = False
+
+        if "rockwell" in block_text.lower():
+            new_css, n = fix_font_family_in_css_text(new_css)
+            if n:
+                changes["style_block_fixes"] += n
+                block_changed = True
+
+        if any(sel in block_text for sel in FOOTER_SELECTORS):
+            new_css, footer_n = normalize_footer_style(new_css)
+            if footer_n:
+                changes["footer_fixes"] += footer_n
+                block_changed = True
+
+        if block_changed:
+            style_tag.string.replace_with(new_css)
+
+    if has_rockwell and ensure_google_font_link(soup):
         changes["font_link_added"] = True
 
     total = (
         changes["inline_style_fixes"]
         + changes["style_block_fixes"]
+        + changes["footer_fixes"]
         + (1 if changes["font_link_added"] else 0)
     )
     if total == 0:
@@ -247,7 +379,11 @@ def main():
 
     for path in css_files:
         result = process_css_file(path, dry_run=args.dry_run, make_backup=not args.no_backup)
-        file_fixes = result["font_family_fixes"] + (1 if result["import_added"] else 0)
+        file_fixes = (
+            result["font_family_fixes"]
+            + (1 if result["import_added"] else 0)
+            + result["footer_fixes"]
+        )
         if file_fixes:
             total_files_changed += 1
             total_fixes += file_fixes
@@ -257,6 +393,8 @@ def main():
                 details.append(f"{result['font_family_fixes']} font-family fix(es)")
             if result["import_added"]:
                 details.append("added Roboto Slab @import")
+            if result["footer_fixes"]:
+                details.append(f"{result['footer_fixes']} footer style fix(es)")
             print(f"{tag}{path}: " + ", ".join(details))
 
     for path in html_files:
@@ -264,6 +402,7 @@ def main():
         file_fixes = (
             result["inline_style_fixes"]
             + result["style_block_fixes"]
+            + result["footer_fixes"]
             + (1 if result["font_link_added"] else 0)
         )
         if file_fixes:
@@ -275,6 +414,8 @@ def main():
                 details.append(f"{result['inline_style_fixes']} inline style fix(es)")
             if result["style_block_fixes"]:
                 details.append(f"{result['style_block_fixes']} <style> block fix(es)")
+            if result["footer_fixes"]:
+                details.append(f"{result['footer_fixes']} footer style fix(es)")
             if result["font_link_added"]:
                 details.append("added Roboto Slab <link>")
             print(f"{tag}{path}: " + ", ".join(details))

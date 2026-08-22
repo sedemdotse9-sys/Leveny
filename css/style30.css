@@ -693,5 +693,8 @@ footer a {
     #mobBottomNav,
     #mobGenrePanel,
     #mobGenreBackdrop,
-    #mobFooter { display: none !important; }
+    #mobFooter { display: none !important;
+    font-size: 15px;
+    text-align: center;
+}
 }
