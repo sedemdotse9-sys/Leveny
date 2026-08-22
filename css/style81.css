@@ -708,9 +708,11 @@
       padding: 8px 12px 4px;
       font-family: "Roboto Slab", Rockwell, sans-serif;
       font-size: 15px;
-    }
+    
+}
 
     #mobFooter a {
-      color: var(--mob-accent, #e74c3c);
+      color: var(--mob-accent, #f39c12);
       text-decoration: none;
-    }
+    
+}

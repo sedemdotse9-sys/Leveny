@@ -9,7 +9,7 @@
 ============================================================ */
 
 const LEVENY_MOVIES = [
-    { title: "Avatar: The Way of Water",        href: "../movies/avatar_way_of_water_movie.html",         genre: "scifi",     poster: "images/posters/avatar_water.jpg",    discover: 1,    background: "images/backgrounds/awow.jpg"},
+    { title: "Avatar: The Way of Water",        href: "../movies/avatar_way_of_water_movie.html",         genre: "action",     poster: "images/posters/avatar_water.jpg",    discover: 1,    background: "images/backgrounds/awow.jpg"},
     { title: "The Meg",                          href: "../movies/the_meg_movie.html",                     genre: "action",    poster: "images/posters/themeg.jpg",           discover: 1,    background: "images/backgrounds/meg.jpg"},
     { title: "The Little Mermaid",               href: "../movies/the_littlemermaid_movie.html",           genre: "family",    poster: "images/posters/littlemermaid.jpg",    discover: 1,    background: "images/backgrounds/littlemermaid.jpg"},
     { title: "Finding Dory",                     href: "../movies/finding_dory_movie.html",                genre: "animation", poster: "images/posters/findingdory.jpg",      discover: 1,    background: "images/backgrounds/fd.jpg"},
@@ -98,5 +98,8 @@ const LEVENY_MOVIES = [
     { title: "Ghost in the Cell", href: "../movies/ghost_in_the_cell_movie.html", genre: "horror", poster: "images/posters/ghost_in_the_cell.jpg", discover: 2 , background: "images/backgrounds/ghost_in_the_cell_backg.jpg"},
     { title: "Spider-Man: Across the Spider-Verse", href: "../movies/spider_man_across_the_spider_verse_movie.html", genre: "superhero", poster: "images/posters/spider_man_across_the_spider_verse.jpg", discover: 4 , background: "images/backgrounds/spider_man_across_the_spider_verse_backg.jpg"},
     { title: "Spider-Man: Into the Spider-Verse", href: "../movies/spider_man_into_the_spider_verse_movie.html", genre: "superhero", poster: "images/posters/spider_man_into_the_spider_verse.jpg", discover: 1 , background: "images/backgrounds/spider_man_into_the_spider_verse_backg.jpg"},
-    { title: "Miraculous: Ladybug & Cat Noir The Movie", href: "../movies/miraculous_ladybug_and_catnoir_the_movie_movie.html", genre: "animation", poster: "images/posters/miraculous_ladybug_and_catnoir_the_movie.jpg", discover: 4 , background: "images/backgrounds/miraculous_ladybug_and_catnoir_the_movie_backg.jpg"}
+    { title: "Miraculous: Ladybug & Cat Noir The Movie", href: "../movies/miraculous_ladybug_and_catnoir_the_movie_movie.html", genre: "animation", poster: "images/posters/miraculous_ladybug_and_catnoir_the_movie.jpg", discover: 4 , background: "images/backgrounds/miraculous_ladybug_and_catnoir_the_movie_backg.jpg"},
+    { title: "Reprisal", href: "../movies/reprisal_movie.html", genre: "action", poster: "images/posters/reprisal.jpg", discover: 6 , background: "images/backgrounds/reprisal_backg.jpg"},
+    { title: "The Channel", href: "../movies/the_channel_movie.html", genre: "action", poster: "images/posters/the_channel.jpg", discover: 4 , background: "images/backgrounds/the_channel_backg.jpg"},
+    { title: "One Battle After Another", href: "../movies/one_battle_after_another_movie.html", genre: "thriller", poster: "images/posters/one_battle_after_another.jpg", discover: 6 , background: "images/backgrounds/one_battle_after_another_backg.jpg"}
 ];

@@ -616,7 +616,10 @@ footer a {
     #mobBottomNav,
     #mobGenrePanel,
     #mobGenreBackdrop,
-    #mobFooter { display: none !important; }
+    #mobFooter { display: none !important;
+    font-size: 15px;
+    text-align: center;
+}
 }
 /* [Continue with all remaining media queries exactly as in The Meg's CSS...] */
 /* All responsive breakpoints, hover effects, and animations preserved exactly */

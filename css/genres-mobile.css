@@ -244,3 +244,25 @@
 body.genre-active #mobileMoviesPagination {
     display: none !important;
 }
+
+@media screen and (max-width: 1024px),
+       screen and (orientation: landscape) and (max-height: 1024px) and (pointer: coarse) {
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    #mobileFooter {
+        display: block;
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        padding: 10px 12px 24px;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
+        font-size: 15px;
+    }
+    
+    #mobileFooter a {
+        color: #f5c518;
+        text-decoration: none;
+    }
+}

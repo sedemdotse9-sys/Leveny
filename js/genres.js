@@ -20,8 +20,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // ── 2. CONSTANTS ────────────────────────────────────────────────
     const MOVIES_PER_ROW  = 6;
-    const ROWS_PER_PAGE   = 5;
-    const MOVIES_PER_PAGE = MOVIES_PER_ROW * ROWS_PER_PAGE; // 30
+    const ROWS_PER_PAGE   = 4;
+    const MOVIES_PER_PAGE = MOVIES_PER_ROW * ROWS_PER_PAGE; // 24
 
     let currentGenre = 'action';
     let currentPage  = 1;

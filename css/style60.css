@@ -706,16 +706,21 @@ body {
   padding: 8px 12px 4px;
   font-family: "Roboto Slab", Rockwell, sans-serif;
   font-size: 15px;
+
 }
 
 #mobFooter a {
-  color: var(--mob-accent, #e74c3c);
+  color: var(--mob-accent, #f39c12);
   text-decoration: none;
+
 }
 
 /* ---- Hide ALL mobile elements on desktop (footer/genre panel too) ---- */
 @media screen and (min-width: 1025px) and (not ((orientation: landscape) and (max-height: 1024px) and (pointer: coarse))) {
   #mobGenrePanel,
   #mobGenreBackdrop,
-  #mobFooter { display: none !important; }
+  #mobFooter { display: none !important;
+    font-size: 15px;
+    text-align: center;
+}
 }
