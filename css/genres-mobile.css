@@ -259,10 +259,12 @@ body.genre-active #mobileMoviesPagination {
         padding: 10px 12px 24px;
         font-family: "Roboto Slab", Rockwell, sans-serif;
         font-size: 15px;
-    }
+    
+}
     
     #mobileFooter a {
-        color: #f5c518;
+        color: #f39c12;
         text-decoration: none;
-    }
+    
+}
 }
