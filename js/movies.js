@@ -101,5 +101,8 @@ const LEVENY_MOVIES = [
     { title: "Miraculous: Ladybug & Cat Noir The Movie", href: "../movies/miraculous_ladybug_and_catnoir_the_movie_movie.html", genre: "animation", poster: "images/posters/miraculous_ladybug_and_catnoir_the_movie.jpg", discover: 4 , background: "images/backgrounds/miraculous_ladybug_and_catnoir_the_movie_backg.jpg"},
     { title: "Reprisal", href: "../movies/reprisal_movie.html", genre: "action", poster: "images/posters/reprisal.jpg", discover: 6 , background: "images/backgrounds/reprisal_backg.jpg"},
     { title: "The Channel", href: "../movies/the_channel_movie.html", genre: "action", poster: "images/posters/the_channel.jpg", discover: 4 , background: "images/backgrounds/the_channel_backg.jpg"},
-    { title: "One Battle After Another", href: "../movies/one_battle_after_another_movie.html", genre: "thriller", poster: "images/posters/one_battle_after_another.jpg", discover: 6 , background: "images/backgrounds/one_battle_after_another_backg.jpg"}
+    { title: "One Battle After Another", href: "../movies/one_battle_after_another_movie.html", genre: "thriller", poster: "images/posters/one_battle_after_another.jpg", discover: 6 , background: "images/backgrounds/one_battle_after_another_backg.jpg"},
+    { title: "Atlas King", href: "../movies/atlas_king_movie.html", genre: "action", poster: "images/posters/atlas_king.jpg", discover: 4 , background: "images/backgrounds/atlas_king_backg.jpg"  },
+    { title: "Bury the Devil", href: "../movies/bury_the_devil_movie.html", genre: "horror", poster: "images/posters/bury_the_devil.jpg", discover: 5 , background: "images/backgrounds/bury_the_devil_backg.jpg"  },
+    { title: "Zombies", href: "../movies/zombies_movie.html", genre: "horror", poster: "images/posters/zombies.jpg", discover: 7 , background: "images/backgrounds/zombies_backg.jpg"  }
 ];
