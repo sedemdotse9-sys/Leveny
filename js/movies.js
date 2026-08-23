@@ -104,5 +104,8 @@ const LEVENY_MOVIES = [
     { title: "One Battle After Another", href: "../movies/one_battle_after_another_movie.html", genre: "thriller", poster: "images/posters/one_battle_after_another.jpg", discover: 6 , background: "images/backgrounds/one_battle_after_another_backg.jpg"},
     { title: "Atlas King", href: "../movies/atlas_king_movie.html", genre: "action", poster: "images/posters/atlas_king.jpg", discover: 4 , background: "images/backgrounds/atlas_king_backg.jpg"  },
     { title: "Bury the Devil", href: "../movies/bury_the_devil_movie.html", genre: "horror", poster: "images/posters/bury_the_devil.jpg", discover: 5 , background: "images/backgrounds/bury_the_devil_backg.jpg"  },
-    { title: "Zombies", href: "../movies/zombies_movie.html", genre: "musical", poster: "images/posters/zombies.jpg", discover: 7 , background: "images/backgrounds/zombies_backg.jpg"  }
+    { title: "Zombies", href: "../movies/zombies_movie.html", genre: "musical", poster: "images/posters/zombies.jpg", discover: 7 , background: "images/backgrounds/zombies_backg.jpg"  },
+    { title: "Toy Story 3", href: "../movies/toy_story_3_movie.html", genre: "animation", poster: "images/posters/toy_story_3.jpg", discover: 2 , background: "images/backgrounds/toy_story_3_backg.jpg"},
+    { title: "Toy Story 2", href: "../movies/toy_story_2_movie.html", genre: "animation", poster: "images/posters/toy_story_2.jpg", discover: 3 , background: "images/backgrounds/toy_story_2_backg.jpg"},
+    { title: "Toy Story", href: "../movies/toy_story_movie.html", genre: "animation", poster: "images/posters/toy_story.jpg", discover: 1 , background: "images/backgrounds/toy_story_backg.jpg"}
 ];
