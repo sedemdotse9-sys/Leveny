@@ -52,18 +52,12 @@ footer a {
         transition: background-color 1s ease, color 0.4s ease;
     }
 
-    /*
-      LIGHT MODE: strong tinted wash — a big radial gradient
-      in the accent color bleeds across the whole page,
-      sitting on top of the already-tinted body background.
-    */
     body::after {
         content: '';
         position: fixed;
         inset: 0;
         z-index: 0;
         pointer-events: none;
-        /* Two-layer wash: top bloom + subtle full-page tint */
         background:
             radial-gradient(ellipse 100% 55% at 50% -5%,
                 var(--accent-glow) 0%, transparent 70%),
@@ -72,7 +66,6 @@ footer a {
         transition: background 1s ease;
     }
 
-    /* DARK MODE body */
     body.dark-mode {
         background-color: #0D0D0D;
         color: #f0f0f0;
@@ -86,8 +79,6 @@ footer a {
                 var(--accent-dim) 0%, transparent 55%);
     }
 
-
-    /* All UI above bg */
     #mobileHeader,
     #mobileSearchWrapper,
     #mobileCategoryBar,
@@ -101,9 +92,8 @@ footer a {
         z-index: 1;
     }
 
-    /* -------- MOBILE PAGE SCROLLBAR -------- */
     body {
-        scrollbar-width: thin;                 /* Firefox */
+        scrollbar-width: thin;
         scrollbar-color: var(--accent) transparent;
     }
 
@@ -118,7 +108,7 @@ footer a {
 
     body::-webkit-scrollbar-thumb {
         background: var(--accent);
-        border-radius: 10px;          /* rounds top + bottom edges of the thumb */
+        border-radius: 10px;
         border: 2px solid transparent;
         background-clip: padding-box;
     }
@@ -128,10 +118,6 @@ footer a {
         box-shadow: 0 0 6px var(--accent-glow);
     }
 
-
-    /* ============================================================
-       MOBILE HEADER
-    ============================================================ */
     #mobileHeader {
         display: flex;
         align-items: center;
@@ -171,7 +157,6 @@ footer a {
         text-shadow: 0 0 18px var(--accent-glow);
     }
 
-    /* ---- DARK/LIGHT TOGGLE BUTTON ---- */
     #mobileThemeToggle {
         width: 38px;
         height: 38px;
@@ -185,7 +170,6 @@ footer a {
         flex-shrink: 0;
         transition: background 1s ease, box-shadow 1s ease, transform 0.25s ease;
 
-        /* Light mode: tinted glass button */
         background: rgba(255,255,255,0.55);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
@@ -204,7 +188,6 @@ footer a {
         transform: scale(0.88) rotate(20deg);
     }
 
-    /* Profile button */
     #mobileHeader .mobile-profile-btn {
         width: 36px;
         height: 36px;
@@ -227,9 +210,6 @@ footer a {
         box-shadow: 0 0 10px var(--accent-glow);
     }
 
-    /* ============================================================
-       SEARCH BAR
-    ============================================================ */
     #mobileSearchWrapper {
         display: flex;
         align-items: center;
@@ -238,7 +218,7 @@ footer a {
         margin: 10px 12px 12px;
         gap: 10px;
         position: relative;
-        z-index: 950;          /* ← lifts wrapper above other page elements */
+        z-index: 950;
         transition: background 0.4s, border-color 1s, box-shadow 1s;
 
         background: rgba(255,255,255,0.45);
@@ -283,7 +263,6 @@ footer a {
     overscroll-behavior: contain;
 }
 
-/* === AUTO-INJECTED: search scrollbar fix === */
 #mobileSearchResults::-webkit-scrollbar {
     width: 8px;
 }
@@ -300,27 +279,10 @@ footer a {
     background-clip: padding-box;
 }
 
-
 body.dark-mode #mobileSearchResults {
     background: rgba(18,18,18,0.97);
     border: 1px solid var(--accent-dim);
     box-shadow: 0 8px 30px rgba(0,0,0,0.7), 0 0 0 1px var(--accent-dim);
-}
-
-#mobileSearchResults::-webkit-scrollbar {
-    width: 8px;
-}
-
-#mobileSearchResults::-webkit-scrollbar-track {
-    background: transparent;
-    margin: 8px 0;
-}
-
-#mobileSearchResults::-webkit-scrollbar-thumb {
-    background: var(--accent);
-    border-radius: 8px;
-    border: 2px solid transparent;
-    background-clip: padding-box;
 }
 
 #mobileSearchResults .mob-search-drop-item {
@@ -346,10 +308,6 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item:active { background: v
 #mobileSearchResults .mob-search-drop-item i { color: #bbb; font-size: 12px; }
 body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accent); }
 
-
-    /* ============================================================
-       FEATURED BANNER
-    ============================================================ */
     #mobileFeatured {
         margin: 0 12px 16px;
         border-radius: 22px;
@@ -480,9 +438,6 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accen
         box-shadow: 0 0 6px var(--accent-glow);
     }
 
-    /* ============================================================
-       SECTION LABEL
-    ============================================================ */
     .mob-section-label {
         font-family: "Roboto Slab", Rockwell, sans-serif;
         font-size: 17px;
@@ -494,9 +449,6 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accen
 
     body.dark-mode .mob-section-label { color: #ffffff; }
 
-    /* ============================================================
-       MOVIES GRID
-    ============================================================ */
     #mobileMoviesSection {
         display: grid !important;
         grid-template-columns: repeat(2, 1fr);
@@ -563,10 +515,6 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accen
 
     body.dark-mode .mob-card-genre { color: #555; }
 
-
-    /* ============================================================
-       BOTTOM NAV BAR
-    ============================================================ */
     #mobileBottomNav {
         display: flex;
         position: fixed;
@@ -598,12 +546,12 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accen
         color: var(--accent, #f39c12);
         text-decoration: none;
         transition: color 0.4s;
-    
+
     }
 
     body.dark-mode #mobileFooter a {
         color: var(--accent, #f39c12);
-    
+
     }
 
     body.dark-mode #mobileBottomNav {
@@ -644,9 +592,6 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accen
         filter: drop-shadow(0 0 6px var(--accent-glow));
     }
 
-    /* ============================================================
-       GENRES PANEL
-    ============================================================ */
     #genresPanelBackdrop {
         display: none;
         position: fixed;
@@ -748,6 +693,8 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accen
 }
 
 #mobileMoviesPagination {
+    position: relative;   /* ← add this */
+    z-index: 2;
     margin-top: -40px;
     display: flex;
     align-items: center;
@@ -796,6 +743,24 @@ body.dark-mode .mob-page-btn.active {
     background: var(--accent-dim);
     color: var(--accent);
     border-color: var(--accent);
+}
+
+/* ---- ellipsis between page numbers (not a button, not clickable) ---- */
+.mob-page-ellipsis {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 36px;
+    color: black;
+    font-weight: 700;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
+    font-size: 13px;
+    user-select: none;
+}
+
+body.dark-mode .mob-page-ellipsis {
+    color: #ddd;
 }
 
 /* ============================================================

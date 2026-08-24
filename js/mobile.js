@@ -278,12 +278,6 @@ function cap(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-/* ============================================================
-   RENDER GRID
-============================================================ */
-// const grid = document.getElementById('mobileMoviesSection');
-// const pagWrap = document.getElementById('mobileMoviesPagination');
-
 const PAGE_SIZE = 24;
 const HOME_PAGE_KEY = 'leveny-home-page';   // ★ CHANGED — new constant for storage key
 let currentMovieList = allMovies;
@@ -346,6 +340,38 @@ function renderGrid(movies, page = 1) {
     renderPagination(totalPages);
 }
 
+/* ============================================================
+   PAGE LIST BUILDER — page 1 and the last page are ALWAYS
+   visible (matching each other), plus the current page and the
+   next one. An ellipsis is inserted only where there's an actual
+   gap between two shown numbers, so small page counts never show
+   a redundant "...".
+   Examples (10 total pages):
+     page 1  -> 1, 2, ..., 10
+     page 5  -> 1, ..., 5, 6, ..., 10
+     page 9  -> 1, ..., 9, 10
+     page 10 -> 1, ..., 10
+============================================================ */
+function buildPageList(currentPage, totalPages) {
+    const pages = new Set();
+    pages.add(1);
+    pages.add(totalPages);
+    pages.add(currentPage);
+    if (currentPage + 1 <= totalPages) pages.add(currentPage + 1);
+
+    const sorted = Array.from(pages).sort((a, b) => a - b);
+    const result = [];
+
+    for (let i = 0; i < sorted.length; i++) {
+        if (i > 0 && sorted[i] - sorted[i - 1] > 1) {
+            result.push('...');
+        }
+        result.push(sorted[i]);
+    }
+
+    return result;
+}
+
 function renderPagination(totalPages) {
 
     if (!pagWrap) return;
@@ -396,19 +422,23 @@ function renderPagination(totalPages) {
 
     pagWrap.appendChild(prev);
 
-    /* Page Numbers */
-    for (let i = 1; i <= totalPages; i++) {
+    /* Page Numbers — first page and last page are always shown,
+       alongside the current page and the next one. Ellipsis fills
+       any real gap between them. */
+    const pageList = buildPageList(currentPage, totalPages);
 
-        const btn = makeBtn(
-            i,
-            i,
-            i === currentPage
-                ? ' active'
-                : ''
-        );
-
-        pagWrap.appendChild(btn);
-    }
+    pageList.forEach(item => {
+        if (item === '...') {
+            const ellipsis = document.createElement('span');
+            ellipsis.className = 'mob-page-ellipsis';
+            ellipsis.textContent = '...';
+            pagWrap.appendChild(ellipsis);
+        } else {
+            pagWrap.appendChild(
+                makeBtn(item, item, item === currentPage ? ' active' : '')
+            );
+        }
+    });
 
     /* Next */
     const next = makeBtn(
