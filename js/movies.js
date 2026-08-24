@@ -107,5 +107,8 @@ const LEVENY_MOVIES = [
     { title: "Zombies", href: "../movies/zombies_movie.html", genre: "musical", poster: "images/posters/zombies.jpg", discover: 7 , background: "images/backgrounds/zombies_backg.jpg"  },
     { title: "Toy Story 3", href: "../movies/toy_story_3_movie.html", genre: "animation", poster: "images/posters/toy_story_3.jpg", discover: 2 , background: "images/backgrounds/toy_story_3_backg.jpg"},
     { title: "Toy Story 2", href: "../movies/toy_story_2_movie.html", genre: "animation", poster: "images/posters/toy_story_2.jpg", discover: 3 , background: "images/backgrounds/toy_story_2_backg.jpg"},
-    { title: "Toy Story", href: "../movies/toy_story_movie.html", genre: "animation", poster: "images/posters/toy_story.jpg", discover: 1 , background: "images/backgrounds/toy_story_backg.jpg"}
+    { title: "Toy Story", href: "../movies/toy_story_movie.html", genre: "animation", poster: "images/posters/toy_story.jpg", discover: 1 , background: "images/backgrounds/toy_story_backg.jpg"},
+    { title: "No Escape", href: "../movies/no_escape_movie.html", genre: "thriller", poster: "images/posters/no_escape.jpg", discover: 1 , background: "images/backgrounds/no_escape_backg.jpg"  },
+    { title: "Pacific Rim", href: "../movies/pacific_rim_movie.html", genre: "scifi", poster: "images/posters/pacific_rim.jpg", discover: 1 , background: "images/backgrounds/pacific_rim_backg.jpg"  },
+    { title: "Pacific Rim: Uprising", href: "../movies/pacific_rim_uprising_movie.html", genre: "scifi", poster: "images/posters/pacific_rim_uprising.jpg", discover: 1 , background: "images/backgrounds/pacific_rim_uprising_backg.jpg"  },
 ];

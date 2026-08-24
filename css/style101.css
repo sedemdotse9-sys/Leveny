@@ -1,30 +1,38 @@
-<!DOCTYPE html>
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&display=swap');
+/* ============================================================
+   style67.css — Ashes | Leveny
+   Page-specific stylesheet, same structure used across the
+   Leveny movie pages. Genre: Thriller | Accent: #95a5a6
+============================================================ */
 
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
-<title>Dune | Leveny</title>
-<link href="../css/style42.css" rel="stylesheet"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;display=swap" rel="stylesheet"/>
-<style>
+
     /* ============================================================
-       MOBILE STYLES — Dune Movie Page
-       Only active on screens 768px and below.
-       Desktop layout (style42.css) is completely untouched.
+      MOBILE STYLES — Ashes Movie Page
+      Only active on screens 1024px and below.
+      Desktop layout (style.css) is completely untouched except
+      for the background-image override just below (no artwork yet).
+      Genre: Horror | Accent: #95a5a6
     ============================================================ */
 
-    /* ---- Accent CSS variables (Sci-Fi genre — #1abc9c) ---- */
-
     :root {
-  --mob-accent: #1abc9c;
-  --mob-accent-glow: rgba(26,188,156,0.38);
-  --mob-accent-glow-light: rgba(26,188,156,0.22);
-  --mob-accent-dim: rgba(26,188,156,0.13);
-  --mob-accent-dim-light: rgba(26,188,156,0.20);
-  --mob-accent-soft: #c5f0e6;
-}
+      --mob-accent: #95a5a6;
+      --mob-accent-glow: rgba(149,165,166,0.38);
+      --mob-accent-glow-light: rgba(149,165,166,0.22);
+      --mob-accent-dim: rgba(149,165,166,0.13);
+      --mob-accent-dim-light: rgba(149,165,166,0.20);
+      --mob-accent-soft: #e5e8e8;
+    }
+
+    /* ---- DESKTOP background image — intentionally left blank ----
+       Fill in the url() below once movie artwork is available, e.g.:
+       background: url(../images/backgrounds/ashes.jpg) center/cover fixed no-repeat;
+    ------------------------------------------------------------- */
+    body {
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      background: url(../images/backgrounds/no_escape_backg.jpg) center/cover fixed no-repeat;
+      color: #f5f5f5;
+      position: relative;
+    }
 
     /* ---- Hide ALL mobile elements on desktop ---- */
     @media screen and (min-width: 1025px) and (not ((orientation: landscape) and (max-height: 1024px) and (pointer: coarse))) {
@@ -37,7 +45,7 @@
     }
 
     @media screen and (max-width: 1024px),
-       screen and (orientation: landscape) and (max-height: 1024px) and (pointer: coarse) {
+     screen and (orientation: landscape) and (max-height: 1024px) and (pointer: coarse) {
 
       /* ---- Hide ALL desktop elements ---- */
       header,
@@ -45,10 +53,11 @@
       footer { display: none !important; }
 
       /* ============================================================
-         BODY — pure color, NO background image.
+        BODY — pure color, NO background image.
+        Identical structure to homepage mobile.css.
       ============================================================ */
       body {
-        background-color: #c5f0e6 !important;
+        background-color: #e5e8e8 !important;
         color: #111;
         overflow-y: auto;
         padding: 0;
@@ -57,7 +66,8 @@
         background: none !important;
       }
 
-      /* Neon bloom overlay — pure CSS gradients, zero images. */
+      /* Neon bloom overlay — pure CSS gradients, zero images.
+        Same structure as homepage body::after, dimmed for movie pages. */
       body::after {
       content: '';
       position: fixed;
@@ -66,14 +76,14 @@
       pointer-events: none;
       background:
         radial-gradient(ellipse 110% 60% at 50% -8%,
-          rgba(26,188,156,0.55) 0%, transparent 65%),
+          rgba(149,165,166,0.55) 0%, transparent 65%),
         radial-gradient(ellipse 70% 40% at 80% 90%,
-          rgba(26,188,156,0.35) 0%, transparent 60%),
+          rgba(149,165,166,0.35) 0%, transparent 60%),
         radial-gradient(ellipse 70% 40% at 20% 90%,
-          rgba(26,188,156,0.35) 0%, transparent 60%),
+          rgba(149,165,166,0.35) 0%, transparent 60%),
         linear-gradient(175deg,
-          rgba(26,188,156,0.28) 0%,
-          rgba(26,188,156,0.18) 40%,
+          rgba(149,165,166,0.28) 0%,
+          rgba(149,165,166,0.18) 40%,
           transparent 75%);
     }
 
@@ -106,7 +116,7 @@
     }
 
       /* ============================================================
-         HEADER
+        HEADER — exact clone of homepage mobile header
       ============================================================ */
       #mobHeader {
         display: flex;
@@ -130,7 +140,7 @@
         position: absolute;
         inset: -20px 0;
         z-index: -1;
-        background: radial-gradient(ellipse 100% 120% at 50% 0%, rgba(26,188,156,0.35) 0%, transparent 70%);
+        background: radial-gradient(ellipse 100% 120% at 50% 0%, rgba(149,165,166,0.35) 0%, transparent 70%);
         pointer-events: none;
       }
 
@@ -142,7 +152,7 @@
       }
 
       #mobHeader .mob-logo {
-        font-family: 'Bebas Neue', sans-serif;
+        font-family:  'Bebas Neue', sans-serif;
         font-size: 26px;
         font-weight: 700;
         letter-spacing: 4px;
@@ -209,7 +219,7 @@
       }
 
       /* ============================================================
-         SEARCH BAR
+        SEARCH BAR
       ============================================================ */
       #mobMovieSearchBar {
         display: flex;
@@ -267,26 +277,23 @@
         backdrop-filter: blur(20px);
         border: 1px solid var(--mob-accent-dim-light);
         box-shadow: 0 8px 30px var(--mob-accent-dim-light);
-    overscroll-behavior: contain;
-    scrollbar-width: thin;
-    scrollbar-color: var(--mob-accent, #00A8FF) transparent;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--mob-accent, #95a5a6) transparent;
 }
 #mobMovieSearchDrop::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
 #mobMovieSearchDrop::-webkit-scrollbar-track {
-    background: transparent;
-    margin: 8px 0;
+  background: transparent;
+  margin: 8px 0;
 }
 #mobMovieSearchDrop::-webkit-scrollbar-thumb {
-    background: var(--mob-accent, #00A8FF);
-    border-radius: 8px;
-    border: 2px solid transparent;
-    background-clip: padding-box;
+  background: var(--mob-accent, #95a5a6);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
 }
-
-
-
 
       body.dark-mode #mobMovieSearchDrop {
         background: rgba(18,18,18,0.97);
@@ -312,7 +319,7 @@
       .mob-search-drop-item i { color: var(--mob-accent); font-size: 12px; }
 
       /* ============================================================
-         MAIN PAGE CONTENT
+        MAIN PAGE CONTENT
       ============================================================ */
       #mobPage {
         padding: 14px 12px 76px;
@@ -322,7 +329,7 @@
       }
 
       /* VIDEO */
-      #mobVideoWrap {
+      #mobVideoWrap{
         border-radius: 20px;
         overflow: hidden;
         background: #000;
@@ -330,6 +337,13 @@
                     0 0 20px var(--mob-accent-glow-light),
                     0 8px 32px rgba(0,0,0,0.18);
         transition: box-shadow 1s ease;
+      }
+
+      #mobVideoWrap iframe {
+        width: 100%;
+        display: block;
+        height: 240px;
+        border: none;
       }
 
       body.dark-mode #mobVideoWrap {
@@ -428,7 +442,7 @@
         position: absolute;
         inset: -20px 0;
         z-index: -1;
-        background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(26,188,156,0.35) 0%, transparent 70%);
+        background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(149,165,166,0.35) 0%, transparent 70%);
         pointer-events: none;}
 
       body.dark-mode #mobMovieInfo {
@@ -548,6 +562,7 @@
         aspect-ratio: 2 / 3;
         object-fit: cover;
         display: block;
+        background: rgba(0,0,0,0.06);
       }
 
       .mob-related-card-info { padding: 8px 10px 10px; }
@@ -578,8 +593,9 @@
         text-shadow: 0 0 8px var(--mob-accent-glow);
       }
 
+
       /* ============================================================
-         BOTTOM NAV
+        BOTTOM NAV
       ============================================================ */
       #mobBottomNav {
         display: flex;
@@ -595,7 +611,7 @@
         background: rgba(255,255,255,0.80);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
-        border-top: 1px solid var(--mob-accent-dim-light);
+        border-top: 1px solid rgba(255,255,255,0.6);
         box-shadow: 0 -4px 20px var(--mob-accent-dim-light),
                     0 -1px 0 var(--mob-accent-dim-light);
         transition: background 0.4s, border-color 1s, box-shadow 1s;
@@ -633,7 +649,6 @@
         font-weight: 600;
       }
 
-    
       .mob-genre-pill {
         display: flex;
         flex-direction: column;
@@ -649,14 +664,13 @@
         border: 1px solid rgba(255,255,255,0.08);
         transition: background 0.2s;
       }
-      .mob-genre-pill:active { background: rgba(0,200,100,0.13); }
+      .mob-genre-pill:active { background: var(--mob-accent-dim); }
       .mob-genre-pill i { font-size: 20px; }
 
       #mobGenrePanel h3 {
-        text-align: center;
+      text-align: center;
       }
 
-    
       #mobFrostWrap {
         position: relative;
         width: 100%;
@@ -686,288 +700,20 @@
       #mobFrostWrap.unblurred #mobFrostClick {
         display: none;
       }
+    } /* end @media 1024px */
 
-    } /* end @media 768px */
-
-      #mobFooter {
-        grid-column: 1 / -1;
-        text-align: center;
-        padding: 8px 12px 4px;
-        font-family: "Roboto Slab", Rockwell, sans-serif;
-        font-size: 15px;
-      
+    #mobFooter {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 8px 12px 4px;
+      font-family: "Roboto Slab", Rockwell, sans-serif;
+      font-size: 15px;
+    
 }
 
-      #mobFooter a {
-        color: var(--mob-accent, #f39c12);
-        text-decoration: none;
-      
+    #mobFooter a {
+      color: var(--mob-accent, #f39c12);
+      text-decoration: none;
+    
 }
-
-  </style>
-<link href="/favicon/favicon-96x96.png" rel="icon" sizes="96x96" type="image/png"/>
-<link href="/favicon/favicon.svg" rel="icon" type="image/svg+xml"/>
-<link href="/favicon/favicon.ico" rel="shortcut icon"/>
-<link href="/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
-<link href="/favicon/site.webmanifest" rel="manifest"/>
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&amp;display=swap" rel="stylesheet"/></head>
-<body data-current-movie="dune_movie.html">
-<!-- ============================================================
-       DESKTOP LAYOUT — completely unchanged
-  ============================================================ -->
-<header>
-<nav class="nav_bar">
-<h2 class="logo">Leveny</h2>
-<ul class="nav_links">
-<a href="../index.html"><i class="fas fa-home"></i>Home</a>
-<!-- GENRES DROPDOWN -->
-<li class="shared-dropdown">
-<a class="genre-link" href="../Genres.html">
-<i class="fa-solid fa-compact-disc"></i>Genres
-                </a>
-<span class="dropdown-arrow" id="genreDropdownArrow">
-<i class="fas fa-chevron-down"></i>
-</span>
-<div class="dropdown-content" id="genreDropdown">
-<a href="../Genres.html#action"><i class="fas fa-explosion" style="color: #3498db;"></i> Action &amp; Adventure</a>
-<a href="../Genres.html#superhero"><i class="fas fa-mask" style="color: #e74c3c;"></i> Superhero</a>
-<a href="../Genres.html#animation"><i class="fas fa-dragon" style="color: #f39c12;"></i> Animation</a>
-<a href="../Genres.html#fantasy"><i class="fas fa-hat-wizard" style="color: #9b59b6;"></i> Fantasy</a>
-<a href="../Genres.html#scifi"><i class="fas fa-robot" style="color: #1abc9c;"></i> Sci-Fi</a>
-<a href="../Genres.html#family"><i class="fas fa-child" style="color: #2ecc71;"></i> Family</a>
-<a href="../Genres.html#thriller"><i class="fas fa-search" style="color: #95a5a6;"></i> Thriller</a>
-<a href="../Genres.html#horror"><i class="fas fa-ghost" style="color: #e74c3c;"></i> Horror</a>
-<a href="../Genres.html#musical"><i class="fas fa-music" style="color: #e84393;"></i> Musical</a>
-</div>
-</li>
-<a href="Profile.html"><i class="fa-regular fa-user"></i>Profile</a>
-<a href="../Movie_Request.html"><i class="fas fa-envelope"></i>Request</a>
-</ul>
-<!-- NO SEARCH BOX HERE - Keep dune's original search in details section -->
-</nav>
-<hr/>
-</header>
-<!-- MAIN CONTENT -->
-<main class="movie-page">
-<!-- VIDEO -->
-<section class="video-section">
-<div class="frost-wrap" id="frostWrap">
-<iframe allow="autoplay; fullscreen" allowfullscreen="" frameborder="0" height="430" src="https://vidsrc.me/embed/movie/tt1160419" width="100%">
-</iframe>
-<div class="frost-click" id="frostClick"></div>
-</div>
-<button class="download-btn">
-<a download="" href="https://transfer.it/t/MIVoLsg3lBQY">
-<i class="fa fa-download"></i> Download
-        </a>
-</button>
-<a class="broken-link" data-movie="Dune" href="#">
-<i class="fas fa-triangle-exclamation"></i> Broken download link?
-      </a>
-</section>
-<!-- DETAILS -->
-<section class="details-section">
-<h3 class="movie-title">DUNE</h3>
-<div class="search-box">
-<input id="searchInput" placeholder="Search movies..." type="text"/>
-<button><i class="fas fa-search"></i></button>
-<div class="search-dropdown" id="searchDropdown">
-</div>
-</div>
-<p class="info">
-        2021   |  
-        <span>155mins 00secs</span>
-          |   Sci-Fi
-      </p>
-<p class="summary">
-        A mythic and emotionally charged hero's journey, "Dune" tells the story of Paul Atreides, a brilliant and gifted young man born into a great destiny beyond his understanding. He must travel to the most dangerous planet in the universe to ensure the future of his family and his people. As malevolent forces explode into conflict over the planet's exclusive supply of the most precious resource in existence, only those who can conquer their own fear will survive.
-      </p>
-<!-- RELATED MOVIES -->
-<div class="related-movies"></div>
-</section>
-</main>
-<!-- ============================================================
-       MOBILE LAYOUT
-  ============================================================ -->
-<div id="mobHeader">
-<span class="mob-logo">Leveny</span>
-<button aria-label="Toggle dark mode" id="mobThemeToggle">🌙</button>
-<a aria-label="Profile" href="../Profile.html" id="mobProfileBtn">
-<i class="fa-regular fa-user"></i>
-</a>
-</div>
-<div id="mobMovieSearchBar">
-<i class="fas fa-search"></i>
-<input id="mobMovieSearchInput" placeholder="Search movies..." type="text"/>
-<div id="mobMovieSearchDrop"></div>
-</div>
-<div id="mobPage">
-<div id="mobVideoWrap">
-<div id="mobFrostWrap">
-<iframe allow="autoplay; fullscreen; picture-in-picture" allowfullscreen="" frameborder="0" height="240" src="https://vidsrc.me/embed/movie/tt1160419" width="100%">
-</iframe>
-<div id="mobFrostClick"></div>
-</div>
-</div>
-<a download="" href="https://transfer.it/t/MIVoLsg3lBQY" id="mobDownloadBtn">
-<i class="fas fa-download"></i> Download Movie
-    </a>
-<a class="mob-broken-link" data-movie="Dune" href="#">
-<i class="fas fa-triangle-exclamation"></i> Broken download link?
-    </a>
-<div id="mobMovieInfo">
-<div id="mobMovieTitle">DUNE</div>
-<div id="mobMovieMeta">
-<span>2021</span>
-<span class="mob-meta-badge">Sci-Fi</span>
-<span>155 mins</span>
-</div>
-<p id="mobMovieSummary">
-        Paul Atreides, a gifted young man born into a great destiny, must travel to the most dangerous planet in the universe to secure his family's future. As warring forces clash over its most precious resource, only those who conquer their fear will survive.
-      </p>
-</div>
-<div id="mobRelatedLabel">You Might Also Like</div>
-<div id="mobRelatedGrid"></div>
-<div id="mobFooter">
-<a href="../disclaimer.html">Disclaimer!</a>
-</div>
-</div>
-<nav id="mobBottomNav">
-<a class="mob-movie-nav-item" href="../index.html">
-<i class="fas fa-home"></i><span>Home</span>
-</a>
-<button class="mob-movie-nav-item" id="mobGenresBtn">
-<i class="fa-solid fa-compact-disc"></i><span>Genres</span>
-</button>
-<a class="mob-movie-nav-item" href="../Movie_Request.html">
-<i class="fas fa-envelope"></i><span>Request</span>
-</a>
-<a class="mob-movie-nav-item" href="../Profile.html">
-<i class="fa-regular fa-user"></i><span>Profile</span>
-</a>
-</nav>
-<!-- ============================================================
-       SCRIPTS
-  ============================================================ -->
-<script src="../js/movies.js"></script>
-<script src="../js/related.js"></script>
-<script src="../js/script.js"></script>
-<script src="../js/search.js"></script>
-<!-- FOOTER -->
-<footer class="copyright">
-<a href="../disclaimer.html">Disclaimer!</a>
-</footer>
-<!-- GENRES PANEL BACKDROP -->
-<div id="mobGenreBackdrop" style="
-    display:none; position:fixed; inset:0; z-index:998;
-    background:rgba(0,0,0,0.5); backdrop-filter:blur(4px);
-  "></div>
-<!-- GENRES SLIDE-UP PANEL -->
-<div id="mobGenrePanel" style="
-    position:fixed; bottom:0; left:0; right:0; z-index:999;
-    background:rgba(18,18,18,0.97); border-radius:20px 20px 0 0;
-    padding:24px 16px 48px; transform:translateY(100%); bottom:35px;
-    transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);
-    border-top:1px solid rgba(0,200,100,0.13);
-    ">
-<h3 style='font-family: "Roboto Slab", Rockwell, sans-serif;color:#fff;margin:0 0 18px;font-size:17px;'>Browse Genres</h3>
-<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
-<a class="mob-genre-pill" href="../genre-results.html?genre=action"><i class="fas fa-explosion" style="color:#3498db;"></i><span>Action</span></a>
-<a class="mob-genre-pill" href="../genre-results.html?genre=superhero"><i class="fas fa-mask" style="color:#e74c3c;"></i><span>Superhero</span></a>
-<a class="mob-genre-pill" href="../genre-results.html?genre=animation"><i class="fas fa-dragon" style="color:#f39c12;"></i><span>Animation</span></a>
-<a class="mob-genre-pill" href="../genre-results.html?genre=fantasy"><i class="fas fa-hat-wizard" style="color:#9b59b6;"></i><span>Fantasy</span></a>
-<a class="mob-genre-pill" href="../genre-results.html?genre=scifi"><i class="fas fa-robot" style="color:#1abc9c;"></i><span>Sci-Fi</span></a>
-<a class="mob-genre-pill" href="../genre-results.html?genre=family"><i class="fas fa-child" style="color:#2ecc71;"></i><span>Family</span></a>
-<a class="mob-genre-pill" href="../genre-results.html?genre=thriller"><i class="fas fa-search" style="color:#95a5a6;"></i><span>Thriller</span></a>
-<a class="mob-genre-pill" href="../genre-results.html?genre=horror"><i class="fas fa-ghost" style="color:#e74c3c;"></i><span>Horror</span></a>
-<a class="mob-genre-pill" href="../genre-results.html?genre=musical"><i class="fas fa-music" style="color:#e84393;"></i><span>Musical</span></a>
-</div>
-</div>
-<script>
-function __isMobileViewport() {
-  // True for phones/tablets in portrait (width <=1024) AND for tablets
-  // rotated to landscape (their short side, now the height, is <=1024
-  // and they're a touch device -- this is what keeps a rotated tablet
-  // from being mistaken for a small laptop).
-  return window.innerWidth <= 1024 ||
-    (window.matchMedia('(orientation: landscape)').matches &&
-     window.innerHeight <= 1024 &&
-     window.matchMedia('(pointer: coarse)').matches);
-}
-
-    (function () {
-      if (!__isMobileViewport()) return;
-
-      const btn      = document.getElementById('mobGenresBtn');
-      const panel    = document.getElementById('mobGenrePanel');
-      const backdrop = document.getElementById('mobGenreBackdrop');
-
-      function openPanel() {
-        panel.style.transform        = 'translateY(0)';
-        backdrop.style.display       = 'block';
-        document.body.style.overflow = 'hidden';
-      }
-
-      function closePanel() {
-        panel.style.transform        = 'translateY(100%)';
-        backdrop.style.display       = 'none';
-        document.body.style.overflow = '';
-      }
-
-      btn?.addEventListener('click', openPanel);
-      backdrop?.addEventListener('click', closePanel);
-    })();
-  </script>
-<script>
-    document.getElementById('frostClick')?.addEventListener('click', function () {
-      document.getElementById('frostWrap').classList.add('unblurred');
-    });
-  </script>
-<script>
-    document.getElementById('mobFrostClick')?.addEventListener('click', function () {
-      document.getElementById('mobFrostWrap').classList.add('unblurred');
-    });
-  </script>
-<!-- broken-link-report-script (Formspree version) -->
-<script>
-    (function () {
-      const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xgoyjjgj'; // <-- replace with your real endpoint
-
-      document.querySelectorAll('.broken-link, .mob-broken-link').forEach(function (link) {
-        link.addEventListener('click', function (e) {
-          e.preventDefault();
-          if (link.classList.contains('reported') || link.classList.contains('sending')) return;
-
-          const movie = link.dataset.movie || document.title;
-          link.classList.add('sending');
-          link.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Reporting...';
-
-          const data = new FormData();
-          data.append('subject', 'Broken Download Link');
-          data.append('message', `The download link for "${movie}" appears to be broken and needs fixing.`);
-          data.append('page', window.location.href);
-
-          fetch(FORMSPREE_ENDPOINT, {
-            method: 'POST',
-            headers: { 'Accept': 'application/json' },
-            body: data
-          })
-          .then(function (response) {
-            link.classList.remove('sending');
-            if (response.ok) {
-              link.classList.add('reported');
-              link.innerHTML = '<i class="fas fa-circle-check"></i> Thanks, reported!';
-            } else {
-              link.innerHTML = '<i class="fas fa-triangle-exclamation"></i> Failed, try again?';
-            }
-          })
-          .catch(function () {
-            link.classList.remove('sending');
-            link.innerHTML = '<i class="fas fa-triangle-exclamation"></i> Failed, try again?';
-          });
-        });
-      });
-    })();
-  </script>
-</body>
-</html>
+  
