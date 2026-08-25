@@ -102,6 +102,85 @@
 </div>
 
 <!-- ============================================================
+    DESKTOP SPLIT LOGIN/SIGNUP LAYOUT (≥1025px)
+    Hidden by CSS below 1025px — mobile/tablet uses the
+    .auth-wrapper card above instead.
+============================================================ -->
+<div class="auth-bg-blur" id="authBgBlur"></div>
+
+<div class="auth-split" id="authSplit" data-mode="login">
+    <div class="auth-slideshow" id="authSlideshow">
+        <div class="auth-slide-overlay">
+            <div class="auth-slide-brand">
+                <img class="auth-slide-logo" src="/favicon/apple-touch-icon.png" alt="Leveny">
+                <span class="auth-slide-name">Leve<span class="auth-slide-name-ny">ny</span></span>
+            </div>
+            <div class="auth-slide-tagline">Movie Download &amp; Streaming Site</div>
+        </div>
+    </div>
+
+    <div class="auth-split-formwrap">
+        <div class="auth-split-form" data-form="login">
+            <h1 class="auth-split-heading">Login</h1>
+
+            <form onsubmit="return false;">
+                <div class="auth-split-field">
+                    <i class="fa-regular fa-user"></i>
+                    <input type="text" placeholder="Username" autocomplete="username">
+                </div>
+                <div class="auth-split-field">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" placeholder="Password" autocomplete="current-password">
+                </div>
+
+                <div class="auth-split-forgot">
+                    <a href="#">Forgot Your Password?</a>
+                </div>
+
+                <button type="submit" class="auth-split-btn">LOGIN</button>
+            </form>
+
+            <button type="button" class="auth-split-google">
+                <i class="fa-brands fa-google"></i> Continue with Google
+            </button>
+
+            <div class="auth-split-switch">
+                Don't have an account? <a href="signup.html" class="auth-split-switch-link" data-target="signup">Sign Up</a>
+            </div>
+        </div>
+
+        <div class="auth-split-form" data-form="signup" hidden>
+            <h1 class="auth-split-heading">Sign Up</h1>
+
+            <form onsubmit="return false;">
+                <div class="auth-split-field">
+                    <i class="fa-regular fa-user"></i>
+                    <input type="text" placeholder="Username" autocomplete="username">
+                </div>
+                <div class="auth-split-field">
+                    <i class="fa-regular fa-envelope"></i>
+                    <input type="email" placeholder="Email address" autocomplete="email">
+                </div>
+                <div class="auth-split-field">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" placeholder="Password" autocomplete="new-password">
+                </div>
+                <div class="auth-split-field">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" placeholder="Confirm Password" autocomplete="new-password">
+                </div>
+
+                <button type="submit" class="auth-split-btn">SIGN UP</button>
+            </form>
+
+            <div class="auth-split-switch">
+                Already have an account? <a href="login.html" class="auth-split-switch-link" data-target="login">Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================
     GENRES PANEL (mobile)
 ============================================================ -->
 <div id="genresPanelBackdrop"></div>

@@ -273,7 +273,7 @@ header hr {
 }
 
 .frost-wrap.unblurred iframe {
-  filter: blur(0);
+  filter: none;
 }
 
 .frost-click {
