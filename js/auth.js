@@ -68,6 +68,10 @@
         root.style.setProperty('--accent-soft', s.softBg);
 
         sessionStorage.setItem(SLIDE_STATE_KEY, JSON.stringify({ idx, start: timerStart }));
+
+        // Function declared later in this same scope (hoisted) —
+        // no-ops safely if the desktop split markup isn't on this page.
+        applySplitImage(idx);
     }
 
     /* ---- Advance in lockstep with the homepage's 15s interval ---- */
@@ -135,6 +139,78 @@
         initBottomNavActiveState();
         applyAccent(currentIdx);
         tick();
+        initDesktopSplit();
     });
+
+    /* ============================================================
+       DESKTOP SPLIT LOGIN/SIGNUP LAYOUT (≥1025px)
+       Drives the portrait slideshow + blurred background using
+       the SAME index/timer as the accent cycle above, so the
+       image, the accent color, and the homepage stay in lockstep.
+       Cancels the "neon" treatment entirely for this panel — no
+       color bar, no dots, just crossfading photos.
+    ============================================================ */
+    const SLIDE_IMAGES = [
+        { file: '../images/backgrounds/way.jpg',    pos: '78% 35%' }, // Avatar
+        { file: '../images/backgrounds/jw.jpg',      pos: '46% 45%' }, // Jurassic World Dominion
+        { file: '../images/backgrounds/tg.jpg',      pos: '50% 25%' }, // The Grinch
+        { file: '../images/backgrounds/dp.jpg',      pos: '78% 28%' }, // Deadpool
+        { file: '../images/backgrounds/batman.jpg',  pos: '50% 42%' }, // Batman: Dark Knight
+        { file: '../images/backgrounds/liki.jpg',    pos: '52% 62%' }, // The Lion King
+        { file: '../images/backgrounds/bal.jpg',     pos: '28% 45%' }, // Ballerina
+    ];
+
+    let splitImgEls = [];
+    let splitBgEls = [];
+
+    function buildDesktopSplitImages() {
+        const slideshow = document.getElementById('authSlideshow');
+        const bgBlur = document.getElementById('authBgBlur');
+        if (!slideshow || !bgBlur) return;
+
+        SLIDE_IMAGES.forEach((s, i) => {
+            const img = document.createElement('img');
+            img.className = 'auth-slide-img' + (i === currentIdx ? ' active' : '');
+            img.src = s.file;
+            img.style.objectPosition = s.pos;
+            img.alt = '';
+            slideshow.insertBefore(img, slideshow.firstChild);
+            splitImgEls.push(img);
+
+            const bg = document.createElement('img');
+            bg.className = 'auth-bg-blur-img' + (i === currentIdx ? ' active' : '');
+            bg.src = s.file;
+            bg.alt = '';
+            bgBlur.appendChild(bg);
+            splitBgEls.push(bg);
+        });
+    }
+
+    function applySplitImage(idx) {
+        splitImgEls.forEach((el, i) => el.classList.toggle('active', i === idx));
+        splitBgEls.forEach((el, i) => el.classList.toggle('active', i === idx));
+    }
+
+    function initDesktopSplit() {
+        const split = document.getElementById('authSplit');
+        if (!split) return; // page doesn't have the split markup
+
+        buildDesktopSplitImages();
+
+        /* Mode toggle: Login <-> Sign Up, no page reload */
+        document.querySelectorAll('.auth-split-switch-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = link.dataset.target; // 'login' or 'signup'
+                split.dataset.mode = target;
+
+                document.querySelectorAll('.auth-split-form').forEach(form => {
+                    form.hidden = form.dataset.form !== target;
+                });
+
+                document.title = (target === 'signup' ? 'Sign Up' : 'Login') + ' | Leveny';
+            });
+        });
+    }
 
 })();

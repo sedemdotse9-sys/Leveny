@@ -165,3 +165,156 @@ document.addEventListener("DOMContentLoaded", () => {
 const noTapHighlight = document.createElement('style');
 noTapHighlight.textContent = `* { -webkit-tap-highlight-color: transparent; tap-highlight-color: transparent; }`;
 document.head.appendChild(noTapHighlight);
+
+/* ============================================================
+   CUSTOM FULLSCREEN FIX — append this to the END of js/script.js
+   ============================================================
+
+   WHY THIS EXISTS:
+   The embedded player (vidsrc.me, etc.) loads its actual video
+   player several iframe layers deep. The browser's Permissions
+   Policy for the "fullscreen" feature does not automatically
+   propagate through nested cross-origin iframes — every layer's
+   own HTML has to explicitly re-grant it. We correctly grant
+   fullscreen on OUR <iframe> tag, but if the embed provider's own
+   nested iframe doesn't do the same, their player's fullscreen
+   button gets rejected with "Disallowed by permissions policy" —
+   and that's on their end, not something we can patch from here.
+
+   THE FIX:
+   Add our own fullscreen button that fullscreens the WRAPPING DIV
+   (.frost-wrap on desktop, #mobVideoWrap on mobile) instead of
+   anything inside the third-party iframe. Since that wrapper is
+   part of our own document, no cross-frame permission is needed
+   at all — this sidesteps the broken policy entirely. The video
+   keeps playing inside the iframe exactly as before; it just
+   visually scales to fill the fullscreened container.
+
+   This runs on every movie page automatically once appended to
+   script.js (already loaded everywhere) — no HTML or per-page CSS
+   file edits needed.
+============================================================ */
+
+(function () {
+
+    function requestFs(el) {
+        const fn = el.requestFullscreen || el.webkitRequestFullscreen ||
+                   el.mozRequestFullScreen || el.msRequestFullscreen;
+        if (fn) fn.call(el);
+    }
+
+    function exitFs() {
+        const fn = document.exitFullscreen || document.webkitExitFullscreen ||
+                   document.mozCancelFullScreen || document.msExitFullscreen;
+        if (fn) fn.call(document);
+    }
+
+    function isFs() {
+        return !!(document.fullscreenElement || document.webkitFullscreenElement ||
+                  document.mozFullScreenElement || document.msFullscreenElement);
+    }
+
+    function injectStyles() {
+        if (document.getElementById('leveny-fs-styles')) return;
+        const style = document.createElement('style');
+        style.id = 'leveny-fs-styles';
+        style.textContent = `
+            .leveny-fs-btn {
+                position: absolute;
+                bottom: 10px;
+                right: 12px;
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                border: none;
+                background: rgba(0,0,0,0.6);
+                color: #fff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                z-index: 20;
+                font-size: 14px;
+                transition: transform 0.15s ease, background 0.2s ease;
+            }
+            .leveny-fs-btn:hover { background: rgba(0,0,0,0.8); }
+            .leveny-fs-btn:active { transform: scale(0.9); }
+
+            .frost-wrap:fullscreen,
+            #mobVideoWrap:fullscreen {
+                width: 100vw !important;
+                height: 100vh !important;
+                border-radius: 0 !important;
+                background: #000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .frost-wrap:-webkit-full-screen,
+            #mobVideoWrap:-webkit-full-screen {
+                width: 100vw !important;
+                height: 100vh !important;
+                border-radius: 0 !important;
+                background: #000;
+            }
+
+            .frost-wrap:fullscreen iframe,
+            #mobVideoWrap:fullscreen iframe,
+            .frost-wrap:-webkit-full-screen iframe,
+            #mobVideoWrap:-webkit-full-screen iframe {
+                width: 100% !important;
+                height: 100% !important;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    function addButton(container) {
+        if (!container || container.querySelector('.leveny-fs-btn')) return;
+
+        const btn = document.createElement('button');
+        btn.className = 'leveny-fs-btn';
+        btn.type = 'button';
+        btn.setAttribute('aria-label', 'Toggle fullscreen');
+        btn.innerHTML = '<i class="fas fa-expand"></i>';
+
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (isFs()) {
+                exitFs();
+            } else {
+                requestFs(container);
+            }
+        });
+
+        const computedPos = window.getComputedStyle(container).position;
+        if (computedPos === 'static') container.style.position = 'relative';
+
+        container.appendChild(btn);
+    }
+
+    function syncButtonIcons() {
+        const fs = isFs();
+        document.querySelectorAll('.leveny-fs-btn').forEach(function (btn) {
+            btn.innerHTML = fs ? '<i class="fas fa-compress"></i>' : '<i class="fas fa-expand"></i>';
+        });
+    }
+
+    function init() {
+        injectStyles();
+        document.querySelectorAll('.frost-wrap, #mobVideoWrap').forEach(addButton);
+
+        document.addEventListener('fullscreenchange', syncButtonIcons);
+        document.addEventListener('webkitfullscreenchange', syncButtonIcons);
+        document.addEventListener('mozfullscreenchange', syncButtonIcons);
+        document.addEventListener('MSFullscreenChange', syncButtonIcons);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+})();
