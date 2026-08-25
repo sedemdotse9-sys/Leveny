@@ -49,7 +49,7 @@ const LEVENY_MOVIES = [
     { title: "Twilight",                         href: "../movies/twilight_movie.html",                    genre: "fantasy",   poster: "images/posters/tw.jpg",              discover:5,    background:"images/backgrounds/twilight_backg.jpg"},
     { title: "Maleficent: Mistress of Evil",     href: "../movies/maleficent_movie.html",                  genre: "fantasy",   poster: "images/posters/ml.jpg",               discover: 5   ,    background: "images/backgrounds/maleficent_backg.jpg"},
     { title: "Knives Out: Wake Up Dead Man",     href: "../movies/knives_out_wake_up_dead_man_movie.html", genre: "thriller",  poster: "images/posters/kowu.jpg",             discover: 5   ,    background: "images/backgrounds/knives_out_wake_up_dead_man_backg.jpg"},
-    { title: "The Lion King",                    href: "../movies/lion_king_movie.html",                   genre: "family",    poster: "images/posters/lion_king.jpg",        discover: 6   ,    background: "images/backgrounds/lion_king_main_backg.jpg"},
+    { title: "The Lion King",                    href: "../movies/lion_king_movie.html",                   genre: "family",    poster: "images/posters/lion_king.jpg",        discover: 6   ,    background: "images/backgrounds/liki.jpg"},
     { title: "The Lorax",                        href: "../movies/the_lorax_movie.html",                   genre: "animation", poster: "images/posters/lr.jpg",               discover: 6 ,    background: "images/backgrounds/the_lorax_backg.jpg"},
     { title: "Despicable Me",                    href: "../movies/despicable_me_movie.html",               genre: "animation", poster: "images/posters/dm.jpg",               discover: 6 ,    background: "images/backgrounds/despicable_me_backg.jpg"},
     { title: "Mufasa: The Lion King",            href: "../movies/mufasa_movie.html",                      genre: "family",    poster: "images/posters/mf.jpg",               discover: 6 ,    background: "images/backgrounds/mufasa_backg.jpg"},
@@ -112,4 +112,6 @@ const LEVENY_MOVIES = [
     { title: "Pacific Rim", href: "../movies/pacific_rim_movie.html", genre: "scifi", poster: "images/posters/pacific_rim.jpg", discover: 1 , background: "images/backgrounds/pacific_rim_backg.jpg"  },
     { title: "Pacific Rim: Uprising", href: "../movies/pacific_rim_uprising_movie.html", genre: "scifi", poster: "images/posters/pacific_rim_uprising.jpg", discover: 1 , background: "images/backgrounds/pacific_rim_uprising_backg.jpg"  },
     { title: "Almajiri", href: "../movies/almajiri_movie.html", genre: "family", poster: "images/posters/almajiri.jpg", discover: 2 , background: "images/backgrounds/almajiri_backg.jpg"  },
+    { title: "Motor City", href: "../movies/motor_city_movie.html", genre: "action", poster: "images/posters/motor_city.jpg", discover: 2 , background: "images/backgrounds/motor_city_backg.jpg"  },   
+    { title: "Land of Wolves", href: "../movies/land_of_wolves_movie.html", genre: "action", poster: "images/posters/land_of_wolves.jpg", discover: 4 , background: "images/backgrounds/land_of_wolves_backg.jpg"  },
 ];
