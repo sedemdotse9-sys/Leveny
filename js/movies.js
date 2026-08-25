@@ -111,4 +111,5 @@ const LEVENY_MOVIES = [
     { title: "No Escape", href: "../movies/no_escape_movie.html", genre: "thriller", poster: "images/posters/no_escape.jpg", discover: 1 , background: "images/backgrounds/no_escape_backg.jpg"  },
     { title: "Pacific Rim", href: "../movies/pacific_rim_movie.html", genre: "scifi", poster: "images/posters/pacific_rim.jpg", discover: 1 , background: "images/backgrounds/pacific_rim_backg.jpg"  },
     { title: "Pacific Rim: Uprising", href: "../movies/pacific_rim_uprising_movie.html", genre: "scifi", poster: "images/posters/pacific_rim_uprising.jpg", discover: 1 , background: "images/backgrounds/pacific_rim_uprising_backg.jpg"  },
+    { title: "Almajiri", href: "../movies/almajiri_movie.html", genre: "family", poster: "images/posters/almajiri.jpg", discover: 2 , background: "images/backgrounds/almajiri_backg.jpg"  },
 ];
