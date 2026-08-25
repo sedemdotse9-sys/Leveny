@@ -35,6 +35,7 @@ body.auth-page {
     transition: background-color 1s ease, color 0.4s ease;
     position: relative;
     overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 body.auth-page.dark-mode {
@@ -769,8 +770,8 @@ body.dark-mode .auth-switch {
     display: none; /* JS/media query below turns this on */
     position: relative;
     z-index: 1;
-    width: min(1100px, 92vw);
-    height: min(640px, 84vh);
+    width: min(1400px, 230vw);
+    height: min(700px, 93vh);
     margin: 6vh auto;
     overflow: hidden;
   }
@@ -779,8 +780,8 @@ body.dark-mode .auth-switch {
   .auth-slideshow {
     position: absolute;
     top: 60px;
-    width: 450px;
-    height: calc(100% - 40px);
+    width: 780px;
+    height: calc(100% - 80px);
     border-radius: 32px;
     overflow: hidden;
     left: 0;
@@ -789,7 +790,7 @@ body.dark-mode .auth-switch {
   } 
 
   .auth-split[data-mode="signup"] .auth-slideshow {
-    left: calc(100% - 450px);
+    left: calc(100% - 780px);
   }
 
   .auth-slide-img {
@@ -848,17 +849,21 @@ body.dark-mode .auth-switch {
   .auth-split-formwrap {
     position: absolute;
     top: 0;
-    width: calc(100% - 450px - 70px);
+    width: calc(100% - 780px - 70px);
     height: 100%;
-    left: calc(450px + 70px);
+    left: calc(780px + 70px);
     display: flex;
     align-items: center;
     justify-content: center;
     transition: left 0.7s cubic-bezier(0.65, 0, 0.35, 1);
   }
 
+  .auth-split[data-mode="login"] .auth-split-formwrap {
+    left: 880px;
+  }
+
   .auth-split[data-mode="signup"] .auth-split-formwrap {
-    left: calc(100% - 450px);
+    left: calc(100% - 1450px);
   }
 
   .auth-split-form {
