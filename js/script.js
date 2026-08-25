@@ -193,20 +193,54 @@ document.head.appendChild(noTapHighlight);
    This runs on every movie page automatically once appended to
    script.js (already loaded everywhere) — no HTML or per-page CSS
    file edits needed.
+
+   MOBILE FIX (added):
+   On mobile, the fullscreened element (#mobVideoWrap) is not the
+   iframe's direct parent — there's an extra wrapper in between
+   (#mobFrostWrap, used for the blur-to-reveal effect). That inner
+   wrapper never got an explicit size, so the iframe's
+   height:100% !important had nothing valid to resolve against and
+   fell back to its default 240px height — making the video look
+   tiny even while fullscreen. The new rule below gives
+   #mobFrostWrap an explicit position:absolute; inset:0 so it fills
+   #mobVideoWrap exactly, which lets the iframe's 100%/100% resolve
+   correctly against it.
 ============================================================ */
 
 (function () {
 
     function requestFs(el) {
+        console.log('[Leveny FS] requestFs called on', el);
         const fn = el.requestFullscreen || el.webkitRequestFullscreen ||
                    el.mozRequestFullScreen || el.msRequestFullscreen;
-        if (fn) fn.call(el);
+        if (!fn) {
+            console.warn('[Leveny FS] No requestFullscreen method available on this element/browser.');
+            return;
+        }
+        const result = fn.call(el);
+        if (result && typeof result.then === 'function') {
+            result.then(function () {
+                // Android Chrome/Firefox: actually rotate the device.
+                // Silently does nothing on iOS Safari (unsupported) or
+                // desktop (irrelevant there anyway).
+                if (screen.orientation && screen.orientation.lock) {
+                    screen.orientation.lock('landscape').catch(function (err) {
+                        console.warn('[Leveny FS] Orientation lock not available/denied:', err);
+                    });
+                }
+            }).catch(function (err) {
+                console.error('[Leveny FS] requestFullscreen was rejected:', err);
+            });
+        }
     }
 
     function exitFs() {
         const fn = document.exitFullscreen || document.webkitExitFullscreen ||
                    document.mozCancelFullScreen || document.msExitFullscreen;
         if (fn) fn.call(document);
+        if (screen.orientation && screen.orientation.unlock) {
+            try { screen.orientation.unlock(); } catch (e) { /* no-op */ }
+        }
     }
 
     function isFs() {
@@ -222,7 +256,7 @@ document.head.appendChild(noTapHighlight);
             .leveny-fs-btn {
                 position: absolute;
                 bottom: 10px;
-                right: 12px;
+                right: 10px;
                 width: 36px;
                 height: 36px;
                 border-radius: 50%;
@@ -265,6 +299,52 @@ document.head.appendChild(noTapHighlight);
                 width: 100% !important;
                 height: 100% !important;
             }
+
+            /* MOBILE FIX: give the intermediate #mobFrostWrap an explicit
+               size while #mobVideoWrap is fullscreen, so the iframe's
+               height:100% has something real to resolve against instead
+               of falling back to the default 240px. */
+            #mobVideoWrap:fullscreen #mobFrostWrap,
+            #mobVideoWrap:-webkit-full-screen #mobFrostWrap {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+            }
+
+            /* ---- iOS fallback: no Screen Orientation Lock support there,
+               so if we're still in portrait once fullscreen is active,
+               visually rotate the whole container 90° and swap its
+               width/height. This makes the video fill the screen in an
+               apparent landscape shape even though the OS orientation
+               itself never actually changes. On Android, the real
+               orientation.lock() call above already switches the
+               device to landscape, so this media query simply won't
+               match there — no conflict between the two approaches. ---- */
+            @media screen and (orientation: portrait) {
+                .frost-wrap:fullscreen,
+                #mobVideoWrap:fullscreen,
+                .frost-wrap:-webkit-full-screen,
+                #mobVideoWrap:-webkit-full-screen {
+                    position: fixed !important;
+                    top: 0 !important;
+                    left: 100% !important;
+                    width: 100vh !important;
+                    height: 100vw !important;
+                    transform: rotate(90deg);
+                    transform-origin: top left;
+                }
+
+                .frost-wrap:fullscreen .leveny-fs-btn,
+                #mobVideoWrap:fullscreen .leveny-fs-btn,
+                .frost-wrap:-webkit-full-screen .leveny-fs-btn,
+                #mobVideoWrap:-webkit-full-screen .leveny-fs-btn {
+                    transform: rotate(-90deg);
+                    bottom: 12px;
+                    right: auto;
+                    left: 10px;
+                }
+            }
         `;
         document.head.appendChild(style);
     }
@@ -302,8 +382,11 @@ document.head.appendChild(noTapHighlight);
     }
 
     function init() {
+        console.log('[Leveny FS] fullscreen fix script initializing...');
         injectStyles();
-        document.querySelectorAll('.frost-wrap, #mobVideoWrap').forEach(addButton);
+        const containers = document.querySelectorAll('.frost-wrap, #mobVideoWrap');
+        console.log('[Leveny FS] found', containers.length, 'video container(s):', containers);
+        containers.forEach(addButton);
 
         document.addEventListener('fullscreenchange', syncButtonIcons);
         document.addEventListener('webkitfullscreenchange', syncButtonIcons);
