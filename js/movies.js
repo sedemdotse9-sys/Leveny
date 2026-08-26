@@ -114,4 +114,6 @@ const LEVENY_MOVIES = [
     { title: "Almajiri", href: "../movies/almajiri_movie.html", genre: "family", poster: "images/posters/almajiri.jpg", discover: 2 , background: "images/backgrounds/almajiri_backg.jpg"  },
     { title: "Motor City", href: "../movies/motor_city_movie.html", genre: "action", poster: "images/posters/motor_city.jpg", discover: 2 , background: "images/backgrounds/motor_city_backg.jpg"  },   
     { title: "Land of Wolves", href: "../movies/land_of_wolves_movie.html", genre: "action", poster: "images/posters/land_of_wolves.jpg", discover: 4 , background: "images/backgrounds/land_of_wolves_backg.jpg"  },
+    { title: "Above & Below", href: "../movies/above_and_below_movie.html", genre: "thriller", poster: "images/posters/above_and_below.jpg", discover: 1 , background: "images/backgrounds/above_and_below_backg.jpg"  },
+    { title: "Turning Point", href: "../movies/turning_point_movie.html", genre: "thriller", poster: "images/posters/turning_point.jpg", discover: 4 , background: "images/backgrounds/turning_point_backg.jpg"  },
 ];
