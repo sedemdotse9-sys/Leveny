@@ -64,7 +64,7 @@ body {
   min-width: 220px;
   border-radius: 8px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-  z-index: 9999;
+  z-index: 5000;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.1);
   animation: fadeIn 0.3s;
@@ -467,20 +467,23 @@ header {
     cursor: pointer;
 }
 
-/* -------------------- FOOTER -------------------- */
-footer {
+/* -------------------- FOOTER (now inside the slide) -------------------- */
+.slider-wrapper footer.copyright {
+    position: fixed;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3000;           /* same layer as your arrows, above slide content */
     text-align: center;
-    color: black;
+    color: white;             /* was black — flip this since it now sits on the dark slide image, not a white page background */
+    background: transparent;  /* drop the "background: white" duplicate rule you had */
     font-size: 14px;
     font-family: "Roboto Slab", Rockwell, sans-serif;
-    /* padding: 20px 0 16px; */
-    background: transparent;
-    margin-top: 0;
 }
 
-footer a {
-  color: black;
-  text-decoration: none;
+.slider-wrapper footer.copyright a {
+    color: white;
+    text-decoration: none;
 }
 
 /* -------------------- HEADER LINE -------------------- */
@@ -531,7 +534,8 @@ header hr {
   .movie-list-5,
   .movie-list-6,
   .movie-list-7 {
-    margin-top: 80px;
+    margin-top: 60px;
+    gap: 40px;
   }
 
   .watch_btn {
@@ -1221,7 +1225,7 @@ img {
     }
 }
 
-footer {
-    background: white;
+.slider-wrapper footer.copyright {
+    background: none;
     font-family: "Roboto Slab", Rockwell, sans-serif;
 }
