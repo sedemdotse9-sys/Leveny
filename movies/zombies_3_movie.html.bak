@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Zombies 3 | Leveny</title>
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/style110.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+  <link rel="manifest" href="/favicon/site.webmanifest" />
+</head>
+
+<body data-current-movie="zombies_3_movie.html">
+
+  <!-- ============================================================
+      DESKTOP LAYOUT
+  ============================================================ -->
+  <header>
+    <nav class="nav_bar">
+        <h2 class="logo">Leveny</h2>
+        <ul class="nav_links">
+            <a href="../index.html"><i class="fas fa-home"></i>Home</a>
+            <li class="shared-dropdown">
+                <a href="../genres.html" class="genre-link">
+                  <i class="fa-solid fa-compact-disc"></i>Genres
+                </a>
+                <span class="dropdown-arrow" id="genreDropdownArrow">
+                  <i class="fas fa-chevron-down"></i>
+                </span>
+                <div class="dropdown-content" id="genreDropdown">
+                  <a href="../genres.html#action"><i class="fas fa-explosion" style="color:#3498db;"></i> Action & Adventure</a>
+                  <a href="../genres.html#superhero"><i class="fas fa-mask" style="color:#e74c3c;"></i> Superhero</a>
+                  <a href="../genres.html#animation"><i class="fas fa-dragon" style="color:#f39c12;"></i> Animation</a>
+                  <a href="../genres.html#fantasy"><i class="fas fa-hat-wizard" style="color:#9b59b6;"></i> Fantasy</a>
+                  <a href="../genres.html#scifi"><i class="fas fa-robot" style="color:#1abc9c;"></i> Sci-Fi</a>
+                  <a href="../genres.html#family"><i class="fas fa-child" style="color:#2ecc71;"></i> Family</a>
+                  <a href="../genres.html#thriller"><i class="fas fa-search" style="color:#95a5a6;"></i> Thriller</a>
+                  <a href="../genres.html#horror"><i class="fas fa-ghost" style="color:#e74c3c;"></i> Horror</a>
+                  <a href="../genres.html#musical"><i class="fas fa-music" style="color:#e84393;"></i> Musical</a>
+                </div>
+            </li>
+            <a href="../Profile.html"><i class="fa-regular fa-user"></i>Profile</a>
+            <a href="../Movie_Request.html"><i class="fas fa-envelope"></i>Request</a>
+        </ul>
+    </nav>
+    <hr>
+  </header>
+
+  <main class="movie-page">
+    <section class="video-section">
+      <div class="frost-wrap" id="frostWrap">
+        <!-- IMDb ID: tt14301252 -->
+        <iframe src="https://vidsrc.me/embed/movie/tt14301252"
+          width="100%" height="450"
+          frameborder="0" allowfullscreen
+          allow="autoplay; fullscreen">
+        </iframe>
+        <div class="frost-click" id="frostClick"></div>
+      </div>
+      <button class="download-btn">
+        <a href="https://ik2mqisu1w.y9a8ua48mhss5ye.cyou/res/614774a84bca32182e1b81d831542d9a/00a8231314d992193326bfaf27f61424/Zombies_3_(2022)_WEB-DL_high_(fzmovies.net)_38fa8d7bcf3910868509c1980b55d0ac.mp4?fromwebsite" download>
+          <i class="fa fa-download"></i> Download
+        </a>
+      </button>
+    <a class="broken-link" href="#" data-movie="Zombies 3">
+      <i class="fas fa-triangle-exclamation"></i> Broken download link?
+    </a>
+    </section>
+    <section class="details-section">
+      <h3 class="movie-title">ZOMBIES 3</h3>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search movies...">
+        <button><i class="fas fa-search"></i></button>
+        <div class="search-dropdown" id="searchDropdown"></div>
+      </div>
+      <p class="info">
+        2022 &nbsp;|&nbsp; <span>90mins 00secs</span> &nbsp;|&nbsp; Musical
+      </p>
+      <p class="summary">
+        In their final year at Seabrook, Zed and Addison are on the verge of everything they've worked for, with Zed chasing a football scholarship that could make him the first zombie ever accepted into college. When a spaceship crash-lands and reveals a new group of alien outsiders desperate for acceptance, the town's hard-won unity is tested once again, forcing everyone to decide just how far their newfound tolerance really extends.
+      </p>
+      <div class="related-movies"></div>
+    </div>
+    </section>
+  </main>
+
+  <!-- ============================================================
+      MOBILE LAYOUT
+  ============================================================ -->
+
+  <div id="mobHeader">
+    <span class="mob-logo">Leveny</span>
+    <button id="mobThemeToggle" aria-label="Toggle dark mode">🌙</button>
+    <a href="../Profile.html" id="mobProfileBtn" aria-label="Profile">
+      <i class="fa-regular fa-user"></i>
+    </a>
+  </div>
+
+  <div id="mobMovieSearchBar">
+    <i class="fas fa-search"></i>
+    <input type="text" id="mobMovieSearchInput" placeholder="Search movies...">
+    <div id="mobMovieSearchDrop"></div>
+  </div>
+
+  <div id="mobPage">
+
+    <div id="mobVideoWrap">
+      <div id="mobFrostWrap">
+        <!-- IMDb ID: tt14301252 -->
+        <iframe src="https://vidsrc.me/embed/movie/tt14301252"
+          width="100%" height="240"
+          frameborder="0" allowfullscreen
+          allow="autoplay; fullscreen; picture-in-picture">
+        </iframe>
+        <div id="mobFrostClick"></div>
+      </div>
+    </div>
+
+    <a href="https://ik2mqisu1w.y9a8ua48mhss5ye.cyou/res/614774a84bca32182e1b81d831542d9a/00a8231314d992193326bfaf27f61424/Zombies_3_(2022)_WEB-DL_high_(fzmovies.net)_38fa8d7bcf3910868509c1980b55d0ac.mp4?fromwebsite" download id="mobDownloadBtn">
+      <i class="fas fa-download"></i> Download Movie
+    </a>
+    <a class="mob-broken-link" href="#" data-movie="Zombies 3">
+      <i class="fas fa-triangle-exclamation"></i> Broken download link?
+    </a>
+
+    <div id="mobMovieInfo">
+      <div id="mobMovieTitle">ZOMBIES 3</div>
+      <div id="mobMovieMeta">
+        <span>2022</span>
+        <span class="mob-meta-badge">Musical</span>
+        <span>90 mins</span>
+      </div>
+      <p id="mobMovieSummary">
+        In their final year at Seabrook, Zed chases a scholarship that could make him the first zombie in college while Addison plans her own future. When a crashed spaceship brings a new group of outsiders seeking acceptance, the town's unity faces its biggest test yet.
+      </p>
+    </div>
+
+    <div id="mobRelatedLabel">You Might Also Like</div>
+    <div id="mobRelatedGrid"></div>
+<div id="mobFooter">
+        <a href="../disclaimer.html">Disclaimer!</a>
+      </div>
+
+  </div>
+
+  <nav id="mobBottomNav">
+    <a href="../index.html" class="mob-movie-nav-item">
+      <i class="fas fa-home"></i><span>Home</span>
+    </a>
+    <button class="mob-movie-nav-item" id="mobGenresBtn">
+      <i class="fa-solid fa-compact-disc"></i><span>Genres</span>
+    </button>
+    <a href="../Movie_Request.html" class="mob-movie-nav-item">
+      <i class="fas fa-envelope"></i><span>Request</span>
+    </a>
+    <a href="../Profile.html" class="mob-movie-nav-item">
+      <i class="fa-regular fa-user"></i><span>Profile</span>
+    </a>
+  </nav>
+
+  <!-- GENRES PANEL BACKDROP -->
+  <div id="mobGenreBackdrop" style="
+    display:none; position:fixed; inset:0; z-index:998;
+    background:rgba(0,0,0,0.5); backdrop-filter:blur(4px);
+  "></div>
+
+  <!-- GENRES SLIDE-UP PANEL -->
+  <div id="mobGenrePanel" style="
+    position:fixed; bottom:0; left:0; right:0; z-index:999;
+    background:rgba(18,18,18,0.97); border-radius:20px 20px 0 0;
+    padding:24px 16px 48px; transform:translateY(100%); bottom:35px;
+    transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    border-top:1px solid var(--mob-accent-dim);
+    ">
+    <h3 style="font-family:Rockwell,sans-serif;color:#fff;margin:0 0 18px;font-size:17px;">Browse Genres</h3>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+      <a href="../genre-results.html?genre=action"  class="mob-genre-pill"><i class="fas fa-explosion"  style="color:#3498db;"></i><span>Action</span></a>
+      <a href="../genre-results.html?genre=superhero" class="mob-genre-pill"><i class="fas fa-mask"     style="color:#e74c3c;"></i><span>Superhero</span></a>
+      <a href="../genre-results.html?genre=animation" class="mob-genre-pill"><i class="fas fa-dragon"   style="color:#f39c12;"></i><span>Animation</span></a>
+      <a href="../genre-results.html?genre=fantasy"   class="mob-genre-pill"><i class="fas fa-hat-wizard" style="color:#9b59b6;"></i><span>Fantasy</span></a>
+      <a href="../genre-results.html?genre=scifi"     class="mob-genre-pill"><i class="fas fa-robot"    style="color:#1abc9c;"></i><span>Sci-Fi</span></a>
+      <a href="../genre-results.html?genre=family"    class="mob-genre-pill"><i class="fas fa-child"    style="color:#2ecc71;"></i><span>Family</span></a>
+      <a href="../genre-results.html?genre=thriller"  class="mob-genre-pill"><i class="fas fa-search"   style="color:#95a5a6;"></i><span>Thriller</span></a>
+      <a href="../genre-results.html?genre=horror"    class="mob-genre-pill"><i class="fas fa-ghost"    style="color:#e74c3c;"></i><span>Horror</span></a>
+      <a href="../genre-results.html?genre=musical"   class="mob-genre-pill"><i class="fas fa-music"    style="color:#e84393;"></i><span>Musical</span></a>
+    </div>
+  </div>
+
+  <!-- ============================================================
+      SCRIPTS
+  ============================================================ -->
+  <script src="../js/movies.js"></script>
+  <script src="../js/related.js"></script>
+  <script src="../js/script.js"></script>
+  <script src="../js/search.js"></script>
+
+  <script>
+function __isMobileViewport() {
+  return window.innerWidth <= 1024 ||
+    (window.matchMedia('(orientation: landscape)').matches &&
+     window.innerHeight <= 1024 &&
+     window.matchMedia('(pointer: coarse)').matches);
+}
+
+    (function () {
+      if (!__isMobileViewport()) return;
+
+      const btn      = document.getElementById('mobGenresBtn');
+      const panel    = document.getElementById('mobGenrePanel');
+      const backdrop = document.getElementById('mobGenreBackdrop');
+
+      function openPanel() {
+        panel.style.transform        = 'translateY(0)';
+        backdrop.style.display       = 'block';
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closePanel() {
+        panel.style.transform        = 'translateY(100%)';
+        backdrop.style.display       = 'none';
+        document.body.style.overflow = '';
+      }
+
+      btn?.addEventListener('click', openPanel);
+      backdrop?.addEventListener('click', closePanel);
+    })();
+  </script>
+
+  <script>
+    const iframe = document.querySelector('.video-section iframe');
+    iframe?.addEventListener('click', function () {
+      this.classList.add('unblurred');
+    });
+  </script>
+
+  <footer class="copyright">
+    <a href="../disclaimer.html">Disclaimer!</a>
+  </footer>
+
+  <script>
+    document.getElementById('frostClick')?.addEventListener('click', function () {
+      document.getElementById('frostWrap').classList.add('unblurred');
+    });
+  </script>
+  <script>
+    document.getElementById('mobFrostClick')?.addEventListener('click', function () {
+      document.getElementById('mobFrostWrap').classList.add('unblurred');
+    });
+  </script>
+
+
+<!-- broken-link-report-script (Formspree version) -->
+<script>
+  (function () {
+    const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xgoyjjgj';
+
+    document.querySelectorAll('.broken-link, .mob-broken-link').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (link.classList.contains('reported') || link.classList.contains('sending')) return;
+
+        const movie = link.dataset.movie || document.title;
+        link.classList.add('sending');
+        link.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Reporting...';
+
+        const data = new FormData();
+
+        data.append('_subject', '🚨 Broken Download Link Report');
+        data.append('requestType', 'broken-link');
+        data.append('movieTitle', movie);
+        data.append(
+          'message',
+          `A user reported a broken download link.
+
+        Movie: ${movie}
+        Page: ${window.location.href}
+        Time: ${new Date().toLocaleString()}`
+        );
+        data.append('reportType', 'broken-download-link');
+        data.append('movieTitle', movie);
+
+        fetch(FORMSPREE_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: data
+        })
+        .then(function (response) {
+          link.classList.remove('sending');
+          if (response.ok) {
+            link.classList.add('reported');
+            link.innerHTML = '<i class="fas fa-circle-check"></i> Thanks, reported!';
+          } else {
+            link.innerHTML = '<i class="fas fa-triangle-exclamation"></i> Failed, try again?';
+          }
+        })
+        .catch(function () {
+          link.classList.remove('sending');
+          link.innerHTML = '<i class="fas fa-triangle-exclamation"></i> Failed, try again?';
+        });
+      });
+    });
+  })();
+</script>
+</body>
+</html>
