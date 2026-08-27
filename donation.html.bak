@@ -98,11 +98,6 @@
             </a>
         </nav>
     </div>
-        <button type="button" class="sidebar-nav-item" id="sidebarInstallBtn" hidden>
-            <i class="fa-solid fa-arrow-down-to-line"></i><span>Install App</span>
-        </button>
-
-
 
     <div class="sidebar-bottom">
         <a class="sidebar-logout" href="login.html">

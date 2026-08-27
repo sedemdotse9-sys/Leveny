@@ -57,6 +57,8 @@
     </a>
 </div>
 
+<div id="sidebarBackdrop" class="sidebar-backdrop"></div>
+
 <aside class="app-sidebar" id="appSidebar">
     <div class="sidebar-scroll">
         <div class="sidebar-profile">
@@ -96,16 +98,22 @@
             </a>
         </nav>
     </div>
+        <button type="button" class="sidebar-nav-item" id="sidebarInstallBtn" hidden>
+            <i class="fa-solid fa-arrow-down-to-line"></i><span>Install App</span>
+        </button>
+
+
 
     <div class="sidebar-bottom">
-        <button type="button" class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Collapse sidebar" aria-expanded="true">
-            <i class="fa-solid fa-bars" id="sidebarToggleIcon"></i><span>Collapse</span>
-        </button>
         <a class="sidebar-logout" href="login.html">
             <i class="fa-solid fa-arrow-right-from-bracket"></i><span>Log Out</span>
         </a>
     </div>
 </aside>
+
+<button type="button" class="sidebar-fab" id="sidebarToggleBtn" aria-label="Open sidebar" aria-expanded="false" aria-controls="appSidebar">
+    <i class="fa-solid fa-bars" id="sidebarToggleIcon"></i>
+</button>
 
 <main class="app-main" id="appMain">
     <div class="app-main-inner">

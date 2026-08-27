@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Donation | Leveny</title>
+    <title>Watch Later | Leveny</title>
 
     <link rel="stylesheet" href="css/design.css">
     <link rel="stylesheet" href="css/mobile.css">
@@ -98,11 +98,6 @@
             </a>
         </nav>
     </div>
-        <button type="button" class="sidebar-nav-item" id="sidebarInstallBtn" hidden>
-            <i class="fa-solid fa-arrow-down-to-line"></i><span>Install App</span>
-        </button>
-
-
 
     <div class="sidebar-bottom">
         <a class="sidebar-logout" href="login.html">
@@ -117,12 +112,12 @@
 
 <main class="app-main" id="appMain">
     <div class="app-main-inner">
-        <h1 class="app-page-title">Donation</h1>
+        <h1 class="app-page-title">Watch Later</h1>
 
         <div class="downloads-empty">
-            <i class="fa-solid fa-hand-holding-heart"></i>
-            <p>Support Leveny.</p>
-            <span>Donation options will show up here.</span>
+            <i class="fa-solid fa-bookmark"></i>
+            <p>Nothing saved for later yet.</p>
+            <span>Movies and shows you save will show up here.</span>
         </div>
     </div>
 </main>

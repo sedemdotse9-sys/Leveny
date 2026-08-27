@@ -305,33 +305,6 @@
             }
         });
     }
-    /* ---- PWA: install prompt ---- */
-    function initInstallPrompt() {
-        const installBtn = document.getElementById('sidebarInstallBtn');
-        if (!installBtn) return;
-
-        let deferredPrompt = null;
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            installBtn.hidden = false;
-        });
-
-        installBtn.addEventListener('click', async () => {
-            if (!deferredPrompt) return;
-            deferredPrompt.prompt();
-            await deferredPrompt.userChoice;
-            deferredPrompt = null;
-            installBtn.hidden = true;
-        });
-
-        window.addEventListener('appinstalled', () => {
-            installBtn.hidden = true;
-        });
-    }
-
-
 
     /* ---- Init ---- */
     document.addEventListener('DOMContentLoaded', () => {
@@ -345,7 +318,6 @@
         initDownloads();
         initGenresPanel();
         initBottomNavActiveState();
-        initInstallPrompt();
     });
 
 })();
