@@ -116,4 +116,7 @@ const LEVENY_MOVIES = [
     { title: "Land of Wolves", href: "../movies/land_of_wolves_movie.html", genre: "action", poster: "images/posters/land_of_wolves.jpg", discover: 4 , background: "images/backgrounds/land_of_wolves_backg.jpg"  },
     { title: "Above & Below", href: "../movies/above_and_below_movie.html", genre: "thriller", poster: "images/posters/above_and_below.jpg", discover: 1 , background: "images/backgrounds/above_and_below_backg.jpg"  },
     { title: "Turning Point", href: "../movies/turning_point_movie.html", genre: "thriller", poster: "images/posters/turning_point.jpg", discover: 4 , background: "images/backgrounds/turning_point_backg.jpg"  },
+    { title: "Zombies 2", href: "../movies/zombies_2_movie.html", genre: "musical", poster: "images/posters/zombies_2.jpg", discover: 7 , background: "images/backgrounds/zombies_2_backg.jpg"  },
+    { title: "Zombies 3", href: "../movies/zombies_3_movie.html", genre: "musical", poster: "images/posters/zombies_3.jpg", discover: 1 , background: "images/backgrounds/zombies_3_backg.jpg"  },
+    { title: "Zombies 4", href: "../movies/zombies_4_movie.html", genre: "musical", poster: "images/posters/zombies_4.jpg", discover: 4 , background: "images/backgrounds/zombies_4_backg.jpg"  },
 ];
