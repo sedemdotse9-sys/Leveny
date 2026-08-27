@@ -5,7 +5,10 @@
 
    Unlike mobile.js's initMobileHome(), this runs on BOTH desktop
    and mobile — the reference design calls for the color-cycle
-   everywhere on these two pages, not just on small screens.
+   everywhere on these two pages, not just on small screens. The
+   blurred slideshow backdrop (#authBgBlur) also now renders at
+   every screen size — it's just a plain fixed layer, so no
+   extra gating is needed here beyond what already exists.
 
    Stays in sync with the homepage: it reads the same
    'leveny-slide-state' sessionStorage key that mobile.js writes,
@@ -131,16 +134,27 @@
     }
 
     /* ---- Init ---- */
-    document.addEventListener('DOMContentLoaded', () => {
-        document.body.classList.add('auth-page');
-        initDarkMode();
-        buildThemeToggle();
-        initGenresPanel();
-        initBottomNavActiveState();
-        applyAccent(currentIdx);
-        tick();
-        initDesktopSplit();
-    });
+    // document.addEventListener('DOMContentLoaded', () => {
+    //     document.body.classList.add('auth-page');
+    //     initDarkMode();
+    //     buildThemeToggle();
+    //     initGenresPanel();
+    //     initBottomNavActiveState();
+    //     applyAccent(currentIdx);
+    //     tick();
+    //     initDesktopSplit();
+    // });
+
+    /* ---- Fake auth: no backend yet, so submitting either form just
+   sends the person straight to the dashboard. ---- */
+    function initAuthRedirect() {
+        document.querySelectorAll('.auth-split-form form').forEach(form => {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                window.location.href = 'downloads.html';
+            });
+        });
+    }
 
     /* ============================================================
        DESKTOP SPLIT LOGIN/SIGNUP LAYOUT (≥1025px)
@@ -148,7 +162,10 @@
        the SAME index/timer as the accent cycle above, so the
        image, the accent color, and the homepage stay in lockstep.
        Cancels the "neon" treatment entirely for this panel — no
-       color bar, no dots, just crossfading photos.
+       color bar, no dots, just crossfading photos. The blurred
+       backdrop images (SLIDE_IMAGES -> splitBgEls) are built here
+       too and are what mobile sees behind the .auth-card, since
+       #authBgBlur's CSS is no longer scoped to desktop-only.
     ============================================================ */
     const SLIDE_IMAGES = [
         { file: '../images/backgrounds/way.jpg',    pos: '78% 35%' }, // Avatar
@@ -166,17 +183,22 @@
     function buildDesktopSplitImages() {
         const slideshow = document.getElementById('authSlideshow');
         const bgBlur = document.getElementById('authBgBlur');
-        if (!slideshow || !bgBlur) return;
+        if (!bgBlur) return; // no backdrop element on this page at all
 
         SLIDE_IMAGES.forEach((s, i) => {
-            const img = document.createElement('img');
-            img.className = 'auth-slide-img' + (i === currentIdx ? ' active' : '');
-            img.src = s.file;
-            img.style.objectPosition = s.pos;
-            img.alt = '';
-            slideshow.insertBefore(img, slideshow.firstChild);
-            splitImgEls.push(img);
+            // Portrait slideshow image — only exists on pages that have
+            // the desktop split markup (#authSlideshow).
+            if (slideshow) {
+                const img = document.createElement('img');
+                img.className = 'auth-slide-img' + (i === currentIdx ? ' active' : '');
+                img.src = s.file;
+                img.style.objectPosition = s.pos;
+                img.alt = '';
+                slideshow.insertBefore(img, slideshow.firstChild);
+                splitImgEls.push(img);
+            }
 
+            // Full-bleed blurred backdrop — shared by mobile & desktop.
             const bg = document.createElement('img');
             bg.className = 'auth-bg-blur-img' + (i === currentIdx ? ' active' : '');
             bg.src = s.file;
@@ -192,10 +214,10 @@
     }
 
     function initDesktopSplit() {
-        const split = document.getElementById('authSplit');
-        if (!split) return; // page doesn't have the split markup
-
         buildDesktopSplitImages();
+
+        const split = document.getElementById('authSplit');
+        if (!split) return; // page doesn't have the split markup — nothing left to wire up
 
         /* Mode toggle: Login <-> Sign Up, no page reload */
         document.querySelectorAll('.auth-split-switch-link').forEach(link => {
@@ -208,9 +230,25 @@
                     form.hidden = form.dataset.form !== target;
                 });
 
+                document.querySelectorAll('.auth-slide-toptext').forEach(el => {
+                    el.classList.toggle('active', el.dataset.form === target);
+                });
+
                 document.title = (target === 'signup' ? 'Sign Up' : 'Login') + ' | Leveny';
             });
         });
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+    document.body.classList.add('auth-page');
+    initDarkMode();
+    buildThemeToggle();
+    initGenresPanel();
+    initBottomNavActiveState();
+    applyAccent(currentIdx);
+    tick();
+    initDesktopSplit();
+    initAuthRedirect(); // NEW
+    });
 
 })();

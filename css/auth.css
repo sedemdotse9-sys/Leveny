@@ -1,18 +1,17 @@
 /* ============================================================
    AUTH.CSS — Leveny
    Login / Sign Up pages.
-   Reuses the same neon accent variables as mobile.css, but
-   unlike mobile.css this file is NOT gated behind a max-width
-   media query — the color-cycling background and the liquid
-   glass button are active on desktop AND mobile here, driven by
-   js/auth.js (which stays in sync with the homepage's slide
-   timer via sessionStorage).
 
-   Responsive structure mirrors design.css: height-based tiers
-   for short desktop screens, a clamp()-based fluid tier for
-   narrow laptops, then a width-based cascade down through
-   tablets and phones, plus a dedicated landscape-phone tier and
-   notch-safe padding.
+   UNIFIED LAYOUT (all screen sizes now use .auth-split):
+   - Desktop (>=1025px): slideshow panel + form panel side by side.
+   - Mobile/tablet (<=1024px): blurred background only, no
+     slideshow panel, form centered alone. Same form styling/
+     fonts as desktop, just laid out simply.
+
+   The old centered glass card (.auth-wrapper/.auth-card) is
+   fully retired below — kept in the file (unused) rather than
+   deleted, in case any of its rules are still referenced
+   elsewhere; .auth-wrapper is unconditionally hidden now.
    ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&display=swap');
@@ -24,727 +23,31 @@
     --accent-dim:  rgba(0,168,255,0.12);
 }
 
-/* ============================================================
-   PAGE BACKGROUND — color-cycling wash, active at all sizes
-============================================================ */
-body.auth-page {
-    margin: 0;
-    min-height: 100vh;
-    background-color: #ddeeff;
-    color: #111;
-    transition: background-color 1s ease, color 0.4s ease;
-    position: relative;
-    overflow-x: hidden;
-    overflow-y: hidden;
-}
-
-body.auth-page.dark-mode {
-    background-color: #0D0D0D;
-    color: #f0f0f0;
-}
-
-body.auth-page::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background:
-        radial-gradient(ellipse 100% 55% at 50% -5%, var(--accent-glow) 0%, transparent 70%),
-        linear-gradient(160deg, var(--accent-dim) 0%, transparent 60%);
-    transition: background 1s ease;
-}
-
-body.auth-page.dark-mode::after {
-    background:
-        radial-gradient(ellipse 90% 55% at 50% -5%, var(--accent-glow) 0%, transparent 65%),
-        linear-gradient(160deg, var(--accent-dim) 0%, transparent 55%);
-}
-
-/* ============================================================
-   AUTH WRAPPER — centers the card, sits above the bg wash
-   (Base/tall-desktop defaults — tiers below override per size)
-============================================================ */
-.auth-wrapper {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 24px 20px 16px;
-    box-sizing: border-box;
-}
-
-/* ============================================================
-   LIQUID GLASS CARD
-============================================================ */
-.auth-card {
-    position: relative;
-    width: 100%;
-    max-width: 400px;
-    padding: 16px 28px 14px;
-    border-radius: 32px;
-    overflow: hidden;
-    box-sizing: border-box;
-    text-align: center;
-    margin-top: 25px;
-
-    background: rgba(255,255,255,0.35);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255,255,255,0.5);
-    box-shadow:
-        0 8px 40px rgba(0,0,0,0.10),
-        0 0 50px var(--accent-dim);
-    transition: background 0.4s ease, border-color 1s ease, box-shadow 1s ease, padding 0.3s ease;
-}
-
-body.dark-mode .auth-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.10);
-    box-shadow:
-        0 8px 50px rgba(0,0,0,0.6),
-        0 0 60px var(--accent-glow);
-}
-
-/* Top-left highlight intentionally disabled — left side stays dark/plain */
-.auth-card::before {
-    content: '';
-    position: absolute;
-    top: -30%;
-    left: -30%;
-    width: 65%;
-    height: 65%;
-    background: radial-gradient(circle, rgba(255,255,255,0.85) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-    transition: opacity 1s ease;
-    display: none;
-}
-
-/* Whitish liquid-glass highlight, bottom-right (kept) */
-.auth-card::after {
-    content: '';
-    position: absolute;
-    bottom: -30%;
-    right: -30%;
-    width: 60%;
-    height: 60%;
-    background: radial-gradient(circle, rgba(255,255,255,0.55) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-    transition: opacity 1s ease;
-}
-
-body.dark-mode .auth-card::after {
-    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
-}
-
-/* Everything inside the card sits above the glass highlight */
-.auth-card > * {
-    position: relative;
-    z-index: 1;
-}
-
-/* ============================================================
-   LOGO + HEADING
-============================================================ */
-.auth-logo {
-    width: 56px;
-    height: 56px;
-    border-radius: 20px;
-    object-fit: cover;
-    margin: 0 auto 12px;
-    display: block;
-    box-shadow: 0 6px 20px var(--accent-dim);
-    transition: box-shadow 1s ease, width 0.3s ease, height 0.3s ease;
-}
-
-body.dark-mode .auth-logo {
-    box-shadow: 0 0 22px var(--accent-glow);
-}
-
-.auth-heading {
-    font-family: 'Bebas Neue', sans-serif;
-    font-weight: 100;
-    letter-spacing: 4px;
-    font-size: 28px;
-    color: #111;
-    margin: 0 0 16px;
-    transition: color 0.4s ease, text-shadow 1s ease;
-}
-
-body.dark-mode .auth-heading {
-    color: #fff;
-    text-shadow: 0 0 18px var(--accent-glow);
-}
-
-/* ============================================================
-   FORM FIELDS — underline style, matching the reference layout
-============================================================ */
-.auth-field {
-    text-align: left;
-    margin-bottom: 10px;
-}
-
-.auth-field label {
-    display: block;
+.nav_links {
     font-family: Rockwell, "Roboto Slab", sans-serif;
-    font-size: 14px;
-    color: #444;
-    margin-bottom: 10px;
-    transition: color 0.4s ease;
-}
-
-body.dark-mode .auth-field label {
-    color: #bbb;
-}
-
-.auth-field input {
-    width: 100%;
-    border: none;
-    border-bottom: 1.5px solid rgba(0,0,0,0.25);
-    background: transparent;
-    padding: 4px 2px 8px;
-    font-family: Rockwell, "Roboto Slab", sans-serif;
-    font-size: 15px;
-    color: #111;
-    box-sizing: border-box;
-    outline: none;
-    transition: border-color 0.3s ease, color 0.4s ease;
-}
-
-body.dark-mode .auth-field input {
-    border-bottom-color: rgba(255,255,255,0.25);
-    color: #f0f0f0;
-}
-
-.auth-field input::placeholder {
-    color: #999;
-}
-
-body.dark-mode .auth-field input::placeholder {
-    color: #666;
-}
-
-.auth-field input:focus {
-    border-bottom-color: var(--accent);
 }
 
 /* ============================================================
-   FORGOT PASSWORD
+   RETIRE THE OLD CENTERED CARD — .auth-split now handles every
+   screen size, so the old card never shows anywhere.
 ============================================================ */
-.auth-forgot {
-    text-align: right;
-    margin: -6px 0 16px;
-}
-
-.auth-forgot a {
-    font-family: Rockwell, "Roboto Slab", sans-serif;
-    font-size: 13px;
-    color: #666;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.auth-forgot a:hover {
-    color: var(--accent);
-}
-
-body.dark-mode .auth-forgot a {
-    color: #999;
-}
+.auth-wrapper { display: none !important; }
 
 /* ============================================================
-   LIQUID GLASS BUTTON
+   BLURRED BACKGROUND — global, all screen sizes.
+   Crossfades through the same 7 slide photos, on the same timer
+   as the homepage, via auth.js. Previously desktop-only; now
+   unconditional so mobile gets it too.
 ============================================================ */
-.auth-submit {
-    width: 100%;
-    padding: 13px;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    font-family: Rockwell, "Roboto Slab", sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: #fff;
-    margin-bottom: 10px;
-
-    background: linear-gradient(135deg, var(--accent) 0%, var(--accent) 100%);
-    background-color: var(--accent);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow:
-        0 8px 24px var(--accent-dim),
-        inset 0 1px 0 rgba(255,255,255,0.5),
-        inset 0 -2px 6px rgba(0,0,0,0.12);
-    transition: background 1s ease, box-shadow 1s ease, transform 0.15s ease, padding 0.3s ease;
-}
-
-.auth-submit:active {
-    transform: scale(0.98);
-}
-
-body.dark-mode .auth-submit {
-    box-shadow:
-        0 0 24px var(--accent-glow),
-        inset 0 1px 0 rgba(255,255,255,0.25),
-        inset 0 -2px 6px rgba(0,0,0,0.3);
-}
-
-/* ============================================================
-   SOCIAL SIGN-IN
-============================================================ */
-.auth-social-label {
-    font-family: Rockwell, "Roboto Slab", sans-serif;
-    font-size: 13px;
-    color: #555;
-    margin-bottom: 10px;
-    transition: color 0.4s ease;
-}
-
-body.dark-mode .auth-social-label {
-    color: #999;
-}
-
-.auth-social-row {
-    display: flex;
-    justify-content: center;
-    gap: 14px;
-}
-
-.auth-social-btn {
-    width: 52px;
-    height: 52px;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    font-size: 19px;
-
-    background: rgba(255,255,255,0.5);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.6);
-    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-    transition: transform 0.15s ease, background 0.4s ease, border-color 1s ease, box-shadow 1s ease, width 0.3s ease, height 0.3s ease;
-}
-
-.auth-social-btn:active {
-    transform: scale(0.92);
-}
-
-body.dark-mode .auth-social-btn {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    box-shadow: none;
-}
-
-.auth-social-btn.google i { color: #EA4335; }
-.auth-social-btn.facebook i { color: #1877F2; }
-.auth-social-btn.twitter i { color: #1DA1F2; }
-
-/* ============================================================
-   SWITCH LINK (Login <-> Sign Up)
-============================================================ */
-.auth-switch {
-    margin-top: 16px;
-    font-family: Rockwell, "Roboto Slab", sans-serif;
-    font-size: 13px;
-    color: #555;
-    transition: color 0.4s ease;
-}
-
-body.dark-mode .auth-switch {
-    color: #999;
-}
-
-.auth-switch a {
-    color: var(--accent);
-    text-decoration: none;
-    font-weight: 700;
-    transition: color 1s ease;
-}
-
-.auth-switch a:hover {
-    text-decoration: underline;
-}
-
-/* ============================================================
-   RESPONSIVE DESIGN
-============================================================ */
-
-/* ------------------------------------------------------------
-   TIER 1 — Short-height desktop screens (any width ≥1025px).
-   Same idea as design.css's short-laptop fix: trims vertical
-   spacing so the whole card clears the viewport without
-   scrolling, keyed off HEIGHT so it also catches wide monitors
-   that just happen to be short.
------------------------------------------------------------- */
-@media screen and (max-height: 800px) and (min-width: 1025px) {
-  .auth-wrapper {
-    padding: 16px 20px 12px;
-  }
-  .auth-card {
-    padding: 14px 26px 12px;
-    margin-top: 12px;
-  }
-  .auth-heading {
-    font-size: 26px;
-    margin-bottom: 12px;
-  }
-  .auth-logo {
-    width: 48px;
-    height: 48px;
-    margin-bottom: 8px;
-  }
-  .auth-field {
-    margin-bottom: 8px;
-  }
-}
-
-/* ------------------------------------------------------------
-   TIER 2 — Very short desktop screens (≥1025px wide)
------------------------------------------------------------- */
-@media screen and (max-height: 650px) and (min-width: 1025px) {
-  .auth-wrapper {
-    padding: 10px 20px 8px;
-  }
-  .auth-card {
-    padding: 10px 24px 10px;
-    margin-top: 0;
-  }
-  .auth-heading {
-    font-size: 22px;
-    margin-bottom: 8px;
-  }
-  .auth-logo {
-    width: 40px;
-    height: 40px;
-    margin-bottom: 6px;
-  }
-  .auth-field {
-    margin-bottom: 6px;
-  }
-  .auth-field label {
-    font-size: 13px;
-    margin-bottom: 4px;
-  }
-  .auth-submit {
-    padding: 10px;
-    margin-bottom: 8px;
-  }
-  .auth-social-btn {
-    width: 44px;
-    height: 44px;
-  }
-}
-
-/* ------------------------------------------------------------
-   TIER 3 — Small laptops / narrow desktops (1025px–1440px).
-   Fluid clamp() scaling, same approach as design.css's matching
-   block — has no effect above 1440px.
------------------------------------------------------------- */
-@media screen and (min-width: 1025px) and (max-width: 1440px) {
-  .auth-card {
-    max-width: clamp(320px, 34vw, 400px);
-    padding: clamp(14px, 1.6vw, 16px) clamp(22px, 2.8vw, 28px) clamp(12px, 1.4vw, 14px);
-  }
-  .auth-heading {
-    font-size: clamp(24px, 2.4vw, 28px);
-  }
-  .auth-logo {
-    width: clamp(46px, 4.5vw, 56px);
-    height: clamp(46px, 4.5vw, 56px);
-  }
-  .auth-field {
-    margin-bottom: clamp(8px, 1vw, 10px);
-  }
-  .auth-social-btn {
-    width: clamp(44px, 4vw, 52px);
-    height: clamp(44px, 4vw, 52px);
-  }
-}
-
-/* ------------------------------------------------------------
-   TIER 4 — Large tablets / mobile layout switch (1024px and
-   below). This is where #mobileHeader (position: sticky) enters
-   the flow above .auth-wrapper, so min-height must subtract its
-   height instead of assuming the desktop fixed-header pattern.
------------------------------------------------------------- */
-@media screen and (max-width: 1024px),
-       screen and (orientation: landscape) and (max-height: 1024px) and (pointer: coarse) {
-  .auth-wrapper {
-    padding: 8px 16px 80px;
-    min-height: calc(100vh - 70px);
-  }
-  .auth-card {
-    padding: 20px 24px 16px;
-    border-radius: 28px;
-    margin-top: 0;
-  }
-  .auth-heading {
-    font-size: 24px;
-    margin-bottom: 12px;
-  }
-  .auth-logo {
-    width: 44px;
-    height: 44px;
-    margin-bottom: 6px;
-  }
-  .auth-field {
-    margin-bottom: 10px;
-  }
-  .auth-field label {
-    font-size: 13px;
-    margin-bottom: 6px;
-  }
-  .auth-forgot {
-    margin: -2px 0 10px;
-  }
-  .auth-submit {
-    padding: 11px;
-    margin-bottom: 10px;
-  }
-  .auth-social-label {
-    font-size: 12px;
-    margin-bottom: 6px;
-  }
-  .auth-social-btn {
-    width: 44px;
-    height: 44px;
-  }
-  .auth-switch {
-    margin-top: 10px;
-    font-size: 12px;
-  }
-}
-
-/* ------------------------------------------------------------
-   TIER 5 — Small tablets / large phones (768px and below)
------------------------------------------------------------- */
-@media screen and (max-width: 768px) {
-  .auth-card {
-    padding: 18px 22px 14px;
-  }
-  .auth-heading {
-    font-size: 23px;
-  }
-  .auth-logo {
-    width: 42px;
-    height: 42px;
-  }
-}
-
-/* ------------------------------------------------------------
-   TIER 6 — Mobile phones (480px and below)
------------------------------------------------------------- */
-@media screen and (max-width: 480px) {
-  .auth-wrapper {
-    padding: 6px 14px 76px;
-  }
-  .auth-card {
-    padding: 16px 18px 12px;
-    border-radius: 24px;
-  }
-  .auth-heading {
-    font-size: 21px;
-    margin-bottom: 10px;
-  }
-  .auth-logo {
-    width: 38px;
-    height: 38px;
-    margin-bottom: 5px;
-  }
-  .auth-field {
-    margin-bottom: 8px;
-  }
-  .auth-field label {
-    font-size: 12px;
-    margin-bottom: 5px;
-  }
-  .auth-field input {
-    font-size: 14px;
-  }
-  .auth-forgot {
-    margin: -2px 0 8px;
-  }
-  .auth-forgot a {
-    font-size: 12px;
-  }
-  .auth-submit {
-    padding: 10px;
-    font-size: 14px;
-    margin-bottom: 8px;
-  }
-  .auth-social-label {
-    font-size: 11px;
-    margin-bottom: 5px;
-  }
-  .auth-social-row {
-    gap: 10px;
-  }
-  .auth-social-btn {
-    width: 40px;
-    height: 40px;
-    font-size: 16px;
-    border-radius: 13px;
-  }
-  .auth-switch {
-    margin-top: 8px;
-    font-size: 11px;
-  }
-}
-
-/* ------------------------------------------------------------
-   TIER 7 — Small mobile phones (360px and below)
------------------------------------------------------------- */
-@media screen and (max-width: 360px) {
-  .auth-card {
-    padding: 14px 16px 10px;
-  }
-  .auth-heading {
-    font-size: 19px;
-  }
-  .auth-logo {
-    width: 34px;
-    height: 34px;
-  }
-  .auth-field label {
-    font-size: 11px;
-  }
-  .auth-field input {
-    font-size: 13px;
-  }
-  .auth-social-btn {
-    width: 36px;
-    height: 36px;
-    font-size: 14px;
-  }
-}
-
-/* ------------------------------------------------------------
-   TIER 8 — Landscape phones (short height, e.g. rotated phone).
-   The tightest tier — needs to fit a 4-field Sign Up form in a
-   very short viewport without scrolling.
------------------------------------------------------------- */
-@media screen and (orientation: landscape) and (max-height: 500px) {
-  .auth-wrapper {
-    padding: 4px 16px 64px;
-    min-height: calc(100vh - 56px);
-  }
-  .auth-card {
-    padding: 10px 20px 8px;
-  }
-  .auth-heading {
-    font-size: 18px;
-    margin-bottom: 6px;
-  }
-  .auth-logo {
-    width: 30px;
-    height: 30px;
-    margin-bottom: 4px;
-  }
-  .auth-field {
-    margin-bottom: 5px;
-  }
-  .auth-field label {
-    font-size: 11px;
-    margin-bottom: 3px;
-  }
-  .auth-forgot {
-    margin: -1px 0 6px;
-  }
-  .auth-submit {
-    padding: 8px;
-    font-size: 13px;
-    margin-bottom: 6px;
-  }
-  .auth-social-label {
-    font-size: 10px;
-    margin-bottom: 4px;
-  }
-  .auth-social-btn {
-    width: 34px;
-    height: 34px;
-    font-size: 13px;
-    border-radius: 10px;
-  }
-  .auth-switch {
-    margin-top: 6px;
-    font-size: 10px;
-  }
-}
-
-/* ------------------------------------------------------------
-   Notch-safe padding — same @supports pattern as design.css
------------------------------------------------------------- */
-@supports (padding: max(0px)) {
-  @media screen and (max-width: 1024px),
-         screen and (orientation: landscape) and (max-height: 1024px) and (pointer: coarse) {
-    .auth-wrapper {
-      padding-left: max(16px, env(safe-area-inset-left));
-      padding-right: max(16px, env(safe-area-inset-right));
-      padding-bottom: max(80px, calc(env(safe-area-inset-bottom) + 70px));
-    }
-  }
-}
-
-/* ============================================================
-   ACCESSIBILITY — visible focus, reduced motion respected
-============================================================ */
-.auth-field input:focus-visible,
-.auth-submit:focus-visible,
-.auth-social-btn:focus-visible,
-.auth-forgot a:focus-visible,
-.auth-switch a:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 3px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    body.auth-page,
-    body.auth-page::after,
-    .auth-card,
-    .auth-card::before,
-    .auth-card::after,
-    .auth-heading,
-    .auth-submit,
-    .auth-social-btn {
-        transition: none !important;
-    }
-}
-
-/* ============================================================
-   DESKTOP SPLIT LOGIN/SIGNUP LAYOUT (≥1025px only)
-   Separate design from the mobile/tablet centered glass card
-   above — this is a dark, fixed-theme UI matching the
-   reference design, independent of the site's light/dark
-   toggle. .auth-wrapper (the old card) is hidden at this size;
-   .auth-split takes over.
-============================================================ */
-
-@media screen and (min-width: 1025px) {
-
-  .auth-wrapper { display: none !important; }
-
-  body.auth-page {
-    background-color: #0a0a0a;
-  }
-
-  /* ---- Full-bleed blurred backdrop, crossfades with the slide ---- */
-  .auth-bg-blur {
+.auth-bg-blur {
     position: fixed;
     inset: 0;
     z-index: 0;
     overflow: hidden;
     pointer-events: none;
-  }
+}
 
-  .auth-bg-blur-img {
+.auth-bg-blur-img {
     position: absolute;
     inset: -10%;
     width: 120%;
@@ -754,23 +57,243 @@ body.dark-mode .auth-switch {
     filter: blur(70px) brightness(0.55) saturate(1.35);
     transform: scale(1.1);
     transition: opacity 1.4s ease;
-  }
+}
 
-  .auth-bg-blur-img.active {
+.auth-bg-blur-img.active {
     opacity: 1;
-  }
+}
 
-  /* Body's own accent wash is redundant behind the photo blur here */
-  body.auth-page::after {
-    display: none;
-  }
+body.auth-page {
+    margin: 0;
+    min-height: 100vh;
+    background-color: #0a0a0a;
+    color: #f0f0f0;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+/* ============================================================
+   HEADING TEXT — mobile vs desktop swap.
+   Mobile shows the combined greeting+action phrase since there's
+   no separate slideshow panel to put a greeting on; desktop
+   keeps the plain "Login"/"Sign Up" here (its own greeting lives
+   in .auth-slide-top-text on the slideshow panel instead).
+============================================================ */
+.auth-heading-mobile { display: inline; }
+.auth-heading-desktop { display: none; }
+
+@media screen and (min-width: 1025px) {
+    .auth-heading-mobile { display: none; }
+    .auth-heading-desktop { display: inline; }
+}
+
+/* ============================================================
+   MOBILE/TABLET SIMPLE LAYOUT (1024px and below)
+   Blurred background only, no slideshow panel, form centered
+   alone. Same field/button styling and fonts as the desktop
+   panel (Segoe UI family, same weights), just without the
+   absolute-positioned split layout desktop uses.
+============================================================ */
+@media screen and (max-width: 1024px),
+       screen and (orientation: landscape) and (max-height: 1024px) and (pointer: coarse) {
+
+    .auth-slideshow { display: none; }
+
+    .auth-split {
+        display: block;
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        min-height: calc(100vh - 70px);
+        margin: 0;
+        padding: 32px 20px 100px;
+        box-sizing: border-box;
+    }
+
+    .auth-split-formwrap {
+        position: relative;
+        margin-top: 55px;
+        top: auto;
+        left: 0 !important;
+        width: 100%;
+        height: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .auth-split-form {
+        width: 100%;
+        max-width: 340px;
+    }
+
+    .auth-split-form[hidden] {
+        display: none;
+    }
+
+    .auth-split-heading {
+        font-family: 'Bebas Neue', sans-serif;
+        font-weight: 100;
+        letter-spacing: 3px;
+        font-size: 26px;
+        color: #ffffff;
+        margin: 0 0 24px;
+        text-align: center;
+    }
+
+    .auth-split-field {
+        position: relative;
+        margin-bottom: 14px;
+    }
+
+    .auth-split-field i {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgba(255,255,255,0.4);
+        font-size: 14px;
+        pointer-events: none;
+    }
+
+    .auth-split-field input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 13px 16px 13px 42px;
+        border-radius: 14px;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.05);
+        color: #f0f0f0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        outline: none;
+        transition: border-color 0.3s ease, background 0.3s ease;
+    }
+
+    .auth-split-field input::placeholder {
+        color: rgba(255,255,255,0.35);
+    }
+
+    .auth-split-field input:focus {
+        border-color: var(--accent, #2196f3);
+        background: rgba(255,255,255,0.08);
+    }
+
+    .auth-split-forgot {
+        text-align: right;
+        margin: -2px 0 18px;
+    }
+
+    .auth-split-forgot a {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        color: rgba(255,255,255,0.5);
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .auth-split-forgot a:hover {
+        color: #ffffff;
+    }
+
+    .auth-split-btn {
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 14px;
+        cursor: pointer;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 15px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        color: #ffffff;
+        margin-bottom: 12px;
+        background: linear-gradient(135deg, #4dabf7 0%, #1565c0 100%);
+        transition: transform 0.15s ease, box-shadow 0.3s ease;
+    }
+
+    .auth-split-btn:active {
+        transform: scale(0.98);
+    }
+
+    .auth-split-google {
+        width: 100%;
+        padding: 13px;
+        border-radius: 14px;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.04);
+        color: #f0f0f0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 22px;
+    }
+
+    .auth-split-google i {
+        font-size: 15px;
+        color: #EA4335;
+    }
+
+    .auth-split-switch {
+        text-align: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        color: rgba(255,255,255,0.55);
+    }
+
+    .auth-split-switch a {
+        color: #4dabf7;
+        text-decoration: none;
+        font-weight: 700;
+    }
+
+    .auth-split-switch a:hover {
+        text-decoration: underline;
+    }
+}
+
+/* ============================================================
+   ACCESSIBILITY — visible focus, reduced motion respected
+============================================================ */
+.auth-split-field input:focus-visible,
+.auth-split-btn:focus-visible,
+.auth-split-google:focus-visible,
+.auth-split-forgot a:focus-visible,
+.auth-split-switch a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .auth-bg-blur-img,
+    .auth-slide-img,
+    .auth-split-btn,
+    .auth-split-google {
+        transition: none !important;
+    }
+}
+
+/* ============================================================
+   DESKTOP SPLIT LOGIN/SIGNUP LAYOUT (≥1025px only)
+============================================================ */
+
+@media screen and (min-width: 1025px) {
 
   /* ---- Split container ---- */
   .auth-split {
     display: none; /* JS/media query below turns this on */
     position: relative;
     z-index: 1;
-    width: min(1400px, 230vw);
+    width: min(1430px, 230vw);
     height: min(700px, 93vh);
     margin: 6vh auto;
     overflow: hidden;
@@ -784,8 +307,7 @@ body.dark-mode .auth-switch {
     height: calc(100% - 80px);
     border-radius: 32px;
     overflow: hidden;
-    left: 0;
-    /* box-shadow: 0 30px 80px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.06); */
+    left: 20px;
     transition: left 0.7s cubic-bezier(0.65, 0, 0.35, 1);
   } 
 
@@ -805,6 +327,34 @@ body.dark-mode .auth-switch {
 
   .auth-slide-img.active {
     opacity: 1;
+  }
+
+  /* ---- Top overlay: "Welcome Back, Go Ahead" / "You're New, Welcome" ----
+     Same horizontal alignment as the brand block below (same
+     padding), font-family/weight matching .auth-split-forgot a. */
+  .auth-slide-top-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 22px 22px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.30) 60%, transparent 100%);
+  }
+
+  .auth-slide-top-text {
+    display: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    color: rgba(255,255,255,0.85);
+  }
+
+  .auth-split[data-mode="login"] .auth-slide-top-login {
+    display: block;
+  }
+
+  .auth-split[data-mode="signup"] .auth-slide-top-signup {
+    display: block;
   }
 
   .auth-slide-overlay {
@@ -840,9 +390,10 @@ body.dark-mode .auth-switch {
   }
 
   .auth-slide-tagline {
-    font-family: Rockwell, "Roboto Slab", sans-serif;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 12px;
     color: rgba(255,255,255,0.65);
+    font-weight: 600;
   }
 
   /* ---- Form panel ---- */
@@ -859,11 +410,11 @@ body.dark-mode .auth-switch {
   }
 
   .auth-split[data-mode="login"] .auth-split-formwrap {
-    left: 880px;
+    left: 850px;
   }
 
   .auth-split[data-mode="signup"] .auth-split-formwrap {
-    left: calc(100% - 1450px);
+    left: calc(100% - 1420px);
   }
 
   .auth-split-form {
@@ -878,7 +429,7 @@ body.dark-mode .auth-switch {
   .auth-split-heading {
     font-family: 'Bebas Neue', sans-serif;
     font-weight: 100;
-    letter-spacing: 4px;
+    letter-spacing: 3px;
     font-size: 32px;
     color: #ffffff;
     margin: 0 0 26px;
@@ -907,10 +458,11 @@ body.dark-mode .auth-switch {
     border: 1px solid rgba(255,255,255,0.08);
     background: rgba(255,255,255,0.05);
     color: #f0f0f0;
-    font-family: Rockwell, "Roboto Slab", sans-serif;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 14px;
     outline: none;
     transition: border-color 0.3s ease, background 0.3s ease;
+    font-weight: 600;
   }
 
   .auth-split-field input::placeholder {
@@ -928,11 +480,12 @@ body.dark-mode .auth-switch {
   }
 
   .auth-split-forgot a {
-    font-family: Rockwell, "Roboto Slab", sans-serif;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 12px;
     color: rgba(255,255,255,0.5);
     text-decoration: none;
     transition: color 0.3s ease;
+    font-weight: 600;
   }
 
   .auth-split-forgot a:hover {
@@ -947,14 +500,13 @@ body.dark-mode .auth-switch {
     border: none;
     border-radius: 14px;
     cursor: pointer;
-    font-family: Rockwell, "Roboto Slab", sans-serif;
-    font-size: 14px;
-    font-weight: 700;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
     letter-spacing: 0.5px;
     color: #ffffff;
     margin-bottom: 12px;
     background: linear-gradient(135deg, #4dabf7 0%, #1565c0 100%);
-    /* box-shadow: 0 10px 24px rgba(33,150,243,0.35); */
     transition: transform 0.15s ease, box-shadow 0.3s ease;
   }
 
@@ -973,7 +525,7 @@ body.dark-mode .auth-switch {
     border: 1px solid rgba(255,255,255,0.08);
     background: rgba(255,255,255,0.04);
     color: #f0f0f0;
-    font-family: Rockwell, "Roboto Slab", sans-serif;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
@@ -996,9 +548,10 @@ body.dark-mode .auth-switch {
 
   .auth-split-switch {
     text-align: center;
-    font-family: Rockwell, "Roboto Slab", sans-serif;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 13px;
     color: rgba(255,255,255,0.55);
+    font-weight: 600;
   }
 
   .auth-split-switch a {
@@ -1011,7 +564,6 @@ body.dark-mode .auth-switch {
     text-decoration: underline;
   }
 }
-
 /* Show the split layout only at desktop sizes — actual toggling
    between flex/none is driven by this same breakpoint; JS never
    needs to touch display directly. */
