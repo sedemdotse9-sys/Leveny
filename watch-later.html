@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch Later | Leveny</title>
+
+    <link rel="stylesheet" href="css/design.css">
+    <link rel="stylesheet" href="css/mobile.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap">
+
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/favicon/site.webmanifest" />
+</head>
+<body class="app-page">
+
+<header class="app-header">
+    <nav class="nav_bar">
+        <h2 class="logo">Leveny</h2>
+        <ul class="nav_links">
+            <a href="index.html"><i class="fas fa-home"></i>Home</a>
+            <li class="shared-dropdown">
+                <a class="genre-link" href="genres.html">
+                    <i class="fa-solid fa-compact-disc"></i>Genres
+                </a>
+                <span class="dropdown-arrow" id="genreDropdownArrow">
+                    <i class="fas fa-chevron-down"></i>
+                </span>
+                <div class="dropdown-content" id="genreDropdown">
+                    <a href="genres.html#action"><i class="fas fa-explosion" style="color:#3498db;"></i> Action &amp; Adventure</a>
+                    <a href="genres.html#superhero"><i class="fas fa-mask" style="color:#e74c3c;"></i> Superhero</a>
+                    <a href="genres.html#animation"><i class="fas fa-dragon" style="color:#f39c12;"></i> Animation</a>
+                    <a href="genres.html#fantasy"><i class="fas fa-hat-wizard" style="color:#9b59b6;"></i> Fantasy</a>
+                    <a href="genres.html#scifi"><i class="fas fa-robot" style="color:#1abc9c;"></i> Sci-Fi</a>
+                    <a href="genres.html#family"><i class="fas fa-child" style="color:#2ecc71;"></i> Family</a>
+                    <a href="genres.html#thriller"><i class="fas fa-search" style="color:#95a5a6;"></i> Thriller</a>
+                    <a href="genres.html#horror"><i class="fas fa-ghost" style="color:#e74c3c;"></i> Horror</a>
+                    <a href="genres.html#musical"><i class="fas fa-music" style="color:#e84393;"></i> Musical</a>
+                </div>
+            </li>
+            <a href="Movie_Request.html"><i class="fas fa-envelope"></i>Request</a>
+            <a href="downloads.html"><i class="fa-regular fa-user"></i>Profile</a>
+        </ul>
+    </nav>
+    <hr>
+</header>
+
+<div id="mobileHeader">
+    <span class="mobile-logo">Leve<span class="mobile-logo-ny">ny</span></span>
+    <a class="mobile-profile-btn" href="downloads.html">
+        <i class="fa-regular fa-user"></i>
+    </a>
+</div>
+
+<aside class="app-sidebar" id="appSidebar">
+    <div class="sidebar-scroll">
+        <div class="sidebar-profile">
+            <div class="avatar-wrap">
+                <button type="button" class="sidebar-avatar-btn" id="sidebarAvatarBtn" aria-haspopup="true" aria-expanded="false" aria-label="Profile picture options">
+                    <span class="sidebar-avatar" id="sidebarAvatar">
+                        <i class="fa-regular fa-user"></i>
+                    </span>
+                </button>
+
+                <div class="avatar-menu" id="avatarMenu" hidden>
+                    <button type="button" class="avatar-menu-item" id="avatarAddBtn" data-action="add" hidden>
+                        <i class="fa-solid fa-plus"></i> Add Photo
+                    </button>
+                    <button type="button" class="avatar-menu-item avatar-menu-danger" id="avatarDeleteBtn" data-action="delete" hidden>
+                        <i class="fa-solid fa-trash"></i> Delete Photo
+                    </button>
+                </div>
+                <input type="file" id="avatarFileInput" accept="image/*" hidden>
+            </div>
+
+            <span class="sidebar-username" id="sidebarUsername">Guest</span>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a class="sidebar-nav-item" href="downloads.html">
+                <i class="fa-solid fa-download"></i><span>Downloads</span>
+            </a>
+            <a class="sidebar-nav-item" href="watch-history.html">
+                <i class="fa-solid fa-clock-rotate-left"></i><span>Watch History</span>
+            </a>
+            <a class="sidebar-nav-item active" href="watch-later.html">
+                <i class="fa-solid fa-bookmark"></i><span>Watch Later</span>
+            </a>
+            <a class="sidebar-nav-item" href="donation.html">
+                <i class="fa-solid fa-hand-holding-heart"></i><span>Donation</span>
+            </a>
+        </nav>
+    </div>
+
+    <div class="sidebar-bottom">
+        <button type="button" class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Collapse sidebar" aria-expanded="true">
+            <i class="fa-solid fa-bars" id="sidebarToggleIcon"></i><span>Collapse</span>
+        </button>
+        <a class="sidebar-logout" href="login.html">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i><span>Log Out</span>
+        </a>
+    </div>
+</aside>
+
+<main class="app-main" id="appMain">
+    <div class="app-main-inner">
+        <h1 class="app-page-title">Watch Later</h1>
+
+        <div class="downloads-empty">
+            <i class="fa-solid fa-bookmark"></i>
+            <p>Nothing saved for later yet.</p>
+            <span>Movies and shows you save will show up here.</span>
+        </div>
+    </div>
+</main>
+
+<footer class="app-footer">
+    <a href="disclaimer.html">Disclaimer!</a>
+</footer>
+
+<div id="genresPanelBackdrop"></div>
+<div id="mobileGenresPanel">
+    <h3>Browse Genres</h3>
+    <div class="mob-genre-grid">
+        <a class="mob-genre-item" href="genre-results.html?genre=action"><i class="fas fa-explosion" style="color:#3498db;"></i><span>Action</span></a>
+        <a class="mob-genre-item" href="genre-results.html?genre=superhero"><i class="fas fa-mask" style="color:#e74c3c;"></i><span>Superhero</span></a>
+        <a class="mob-genre-item" href="genre-results.html?genre=animation"><i class="fas fa-dragon" style="color:#f39c12;"></i><span>Animation</span></a>
+        <a class="mob-genre-item" href="genre-results.html?genre=fantasy"><i class="fas fa-hat-wizard" style="color:#9b59b6;"></i><span>Fantasy</span></a>
+        <a class="mob-genre-item" href="genre-results.html?genre=scifi"><i class="fas fa-robot" style="color:#1abc9c;"></i><span>Sci-Fi</span></a>
+        <a class="mob-genre-item" href="genre-results.html?genre=family"><i class="fas fa-child" style="color:#2ecc71;"></i><span>Family</span></a>
+        <a class="mob-genre-item" href="genre-results.html?genre=thriller"><i class="fas fa-search" style="color:#95a5a6;"></i><span>Thriller</span></a>
+        <a class="mob-genre-item" href="genre-results.html?genre=horror"><i class="fas fa-ghost" style="color:#e74c3c;"></i><span>Horror</span></a>
+        <a class="mob-genre-item" href="genre-results.html?genre=musical"><i class="fas fa-music" style="color:#e84393;"></i><span>Musical</span></a>
+    </div>
+</div>
+
+<nav id="mobileBottomNav">
+    <a class="mob-nav-item" href="index.html"><i class="fas fa-home"></i><span>Home</span></a>
+    <button class="mob-nav-item" id="mobGenresBtn"><i class="fa-solid fa-compact-disc"></i><span>Genres</span></button>
+    <a class="mob-nav-item" href="Movie_Request.html"><i class="fas fa-envelope"></i><span>Request</span></a>
+    <a class="mob-nav-item" href="downloads.html"><i class="fa-regular fa-user"></i><span>Profile</span></a>
+</nav>
+
+<script src="js/script.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

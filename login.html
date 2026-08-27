@@ -64,52 +64,19 @@
 </div>
 
 <!-- ============================================================
-    LOGIN FORM
-============================================================ -->
-<div class="auth-wrapper">
-    <div class="auth-card">
-        <img class="auth-logo" src="/favicon/apple-touch-icon.png" alt="Leveny">
-        <h1 class="auth-heading">Login</h1>
-
-        <form onsubmit="return false;">
-            <div class="auth-field">
-                <label for="loginUsername">Username</label>
-                <input type="text" id="loginUsername" name="username" placeholder="Enter your username" autocomplete="username">
-            </div>
-            <div class="auth-field">
-                <label for="loginPassword">Password</label>
-                <input type="password" id="loginPassword" name="password" placeholder="Enter your password" autocomplete="current-password">
-            </div>
-
-            <div class="auth-forgot">
-                <a href="#">Forgot Your Password?</a>
-            </div>
-
-            <button type="submit" class="auth-submit">LOGIN</button>
-        </form>
-
-        <div class="auth-social-label">Or Login With Social Account</div>
-        <div class="auth-social-row">
-            <a href="#" class="auth-social-btn google" aria-label="Continue with Google"><i class="fa-brands fa-google"></i></a>
-            <a href="#" class="auth-social-btn facebook" aria-label="Continue with Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="#" class="auth-social-btn twitter" aria-label="Continue with Twitter"><i class="fa-brands fa-twitter"></i></a>
-        </div>
-
-        <div class="auth-switch">
-            Don't have an account? <a href="signup.html">Sign Up</a>
-        </div>
-    </div>
-</div>
-
-<!-- ============================================================
-    DESKTOP SPLIT LOGIN/SIGNUP LAYOUT (≥1025px)
-    Hidden by CSS below 1025px — mobile/tablet uses the
-    .auth-wrapper card above instead.
+    LOGIN / SIGN UP — unified layout, all screen sizes.
+    Desktop: slideshow panel + form panel side by side.
+    Mobile: blurred background only, no slideshow panel, form
+    centered alone.
 ============================================================ -->
 <div class="auth-bg-blur" id="authBgBlur"></div>
 
 <div class="auth-split" id="authSplit" data-mode="login">
     <div class="auth-slideshow" id="authSlideshow">
+        <div class="auth-slide-top-overlay">
+            <span class="auth-slide-top-text auth-slide-top-login">Welcome Back, Go Ahead</span>
+            <span class="auth-slide-top-text auth-slide-top-signup">You're New, Welcome</span>
+        </div>
         <div class="auth-slide-overlay">
             <div class="auth-slide-brand">
                 <img class="auth-slide-logo" src="/favicon/apple-touch-icon.png" alt="Leveny">
@@ -121,7 +88,10 @@
 
     <div class="auth-split-formwrap">
         <div class="auth-split-form" data-form="login">
-            <h1 class="auth-split-heading">Login</h1>
+            <h1 class="auth-split-heading">
+                <span class="auth-heading-desktop">Login</span>
+                <span class="auth-heading-mobile">Welcome Back: Login</span>
+            </h1>
 
             <form onsubmit="return false;">
                 <div class="auth-split-field">
@@ -150,7 +120,10 @@
         </div>
 
         <div class="auth-split-form" data-form="signup" hidden>
-            <h1 class="auth-split-heading">Sign Up</h1>
+            <h1 class="auth-split-heading">
+                <span class="auth-heading-desktop">Sign Up</span>
+                <span class="auth-heading-mobile">You're New: Sign Up</span>
+            </h1>
 
             <form onsubmit="return false;">
                 <div class="auth-split-field">
