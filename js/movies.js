@@ -119,4 +119,8 @@ const LEVENY_MOVIES = [
     { title: "Zombies 2", href: "../movies/zombies_2_movie.html", genre: "musical", poster: "images/posters/zombies_2.jpg", discover: 7 , background: "images/backgrounds/zombies_2_backg.jpg"  },
     { title: "Zombies 3", href: "../movies/zombies_3_movie.html", genre: "musical", poster: "images/posters/zombies_3.jpg", discover: 1 , background: "images/backgrounds/zombies_3_backg.jpg"  },
     { title: "Zombies 4", href: "../movies/zombies_4_movie.html", genre: "musical", poster: "images/posters/zombies_4.jpg", discover: 4 , background: "images/backgrounds/zombies_4_backg.jpg"  },
+    { title: "Transformers", href: "../movies/transformers_movie.html", genre: "scifi", poster: "images/posters/transformers.jpg", discover: 4 , background: "images/backgrounds/transformers_backg.jpg"  },
+    { title: "Transformers 2: Revenge Of The Fallen", href: "../movies/transformers_2_revenge_of_the_fallen_movie.html", genre: "scifi", poster: "images/posters/transformers_2_revenge_of_the_fallen.jpg", discover: 1 , background: "images/backgrounds/transformers_2_revenge_of_the_fallen_backg.jpg"  },
+    { title: "Transformers 3: Dark Of The Moon", href: "../movies/transformers_3_dark_of_the_moon_movie.html", genre: "scifi", poster: "images/posters/transformers_3_dark_of_the_moon.jpg", discover: 1 , background: "images/backgrounds/transformers_3_dark_of_the_moon_backg.jpg"  },
+    { title: "Transformers 4: Age Of Extinction", href: "../movies/transformers_4_age_of_extinction_movie.html", genre: "scifi", poster: "images/posters/transformers_4_age_of_extinction.jpg", discover: 2 , background: "images/backgrounds/transformers_4_age_of_extinction_backg.jpg"},
 ];
