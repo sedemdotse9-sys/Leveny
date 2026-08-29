@@ -150,6 +150,7 @@
 #thriller { background: linear-gradient(135deg, #37474f, #546e7a); }
 #horror { background: linear-gradient(135deg, #c62828, #e53935); }
 #musical { background: linear-gradient(135deg, #d81b60, #ec407a); }
+#romance { background: linear-gradient(135deg, #ff4d6d, #ff758f); }
 
 .genre-slide-header {
     text-align: center;
@@ -236,6 +237,42 @@
     font-size: 13px;
     color: #aaa;
     margin: 0;
+}
+
+/* -------------------- PAGE FOOTER (moved inside .genres-container) -------------------- */
+/* ★ ADDED — previously this footer sat below <main>, outside the
+   dark container, on the plain white <body> background — that gap
+   is what caused the black/white banding at the bottom of the page.
+   Now it's part of the container's own flow and dark theme. */
+ footer.copyright {
+    position: relative;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 16px;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
+    background: transparent;
+    text-align: center;
+    margin-top: 11px;
+    margin-bottom: -10px;
+}
+
+footer.copyright a {
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+/* .genres-container footer.copyright a:hover {
+    color: #ffffff;
+} */
+
+/* Below 1024px, #mobileFooter (in genres-mobile.css) already shows
+   the same Disclaimer link — hide this one there so it doesn't
+   duplicate it. */
+@media screen and (max-width: 1024px),
+       screen and (orientation: landscape) and (max-height: 1024px) and (pointer: coarse) {
+    .genres-container footer.copyright {
+        display: none;
+    }
 }
 
 /* -------------------- GENRE PAGINATION -------------------- */

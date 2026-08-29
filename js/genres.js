@@ -23,6 +23,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const ROWS_PER_PAGE   = 4;
     const MOVIES_PER_PAGE = MOVIES_PER_ROW * ROWS_PER_PAGE; // 24
 
+    // ★ FIXED — genre order now comes from the actual .genre-slide
+    // sections in the DOM, not from moviesByGenre. This means a genre
+    // with zero movies so far (like a brand-new "romance" section)
+    // still shows up, still gets a working #hash, and still gets
+    // included in prev/next arrow navigation — it just renders an
+    // empty grid until movies are tagged with that genre.
+    const GENRE_ORDER = Array.from(document.querySelectorAll('.genre-slide'))
+        .map(el => el.dataset.genre)
+        .filter(Boolean);
+
     let currentGenre = 'action';
     let currentPage  = 1;
 
@@ -34,7 +44,10 @@ document.addEventListener('DOMContentLoaded', function () {
         setupGenreNavigation();
 
         const hash = window.location.hash.substring(1);
-        if (hash && moviesByGenre[hash]) {
+        // ★ FIXED — was `moviesByGenre[hash]`, which failed for any
+        // genre with no movies yet. Now checks that the section
+        // actually exists on the page instead.
+        if (hash && document.getElementById(hash)) {
             switchGenre(hash);
         }
     }
@@ -54,14 +67,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function switchGenre(genre) {
-        if (!moviesByGenre[genre] || currentGenre === genre) return;
+        // ★ FIXED — was `if (!moviesByGenre[genre] || ...)`, which
+        // blocked switching to any genre with zero movies so far.
+        const section = document.getElementById(genre);
+        if (!section || currentGenre === genre) return;
 
         currentGenre = genre;
         currentPage  = 1;
 
         document.querySelectorAll('.genre-slide').forEach(s => s.classList.remove('active'));
-        const section = document.getElementById(genre);
-        if (section) section.classList.add('active');
+        section.classList.add('active');
 
         loadMoviesForGenre(genre);
         window.location.hash = genre;
@@ -69,23 +84,27 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function prevGenre() {
-        const genres = Object.keys(moviesByGenre);
-        const i = genres.indexOf(currentGenre);
-        switchGenre(genres[i > 0 ? i - 1 : genres.length - 1]);
+        // ★ FIXED — was `Object.keys(moviesByGenre)`, which skipped
+        // any genre with zero movies. Now uses GENRE_ORDER (built
+        // from the DOM sections) so every genre is reachable.
+        const i = GENRE_ORDER.indexOf(currentGenre);
+        switchGenre(GENRE_ORDER[i > 0 ? i - 1 : GENRE_ORDER.length - 1]);
     }
 
     function nextGenre() {
-        const genres = Object.keys(moviesByGenre);
-        const i = genres.indexOf(currentGenre);
-        switchGenre(genres[i < genres.length - 1 ? i + 1 : 0]);
+        const i = GENRE_ORDER.indexOf(currentGenre);
+        switchGenre(GENRE_ORDER[i < GENRE_ORDER.length - 1 ? i + 1 : 0]);
     }
 
     // ── 5. LOAD MOVIES INTO ROWS ────────────────────────────────────
     function loadMoviesForGenre(genre) {
-        const movies = moviesByGenre[genre];
-        if (!movies) return;
+        // ★ FIXED — was `const movies = moviesByGenre[genre]; if (!movies) return;`
+        // which meant a genre with no movies yet never even cleared
+        // its rows or rendered an empty pagination state. Now it
+        // defaults to an empty array and renders normally (empty).
+        const movies = moviesByGenre[genre] || [];
 
-        const section       = document.getElementById(genre);
+        const section = document.getElementById(genre);
         if (!section) return;
 
         const rowContainers = Array.from(
@@ -138,6 +157,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         pagination.innerHTML = '';
 
+        // ★ FIXED — a genre with 0 movies now has totalPages === 0,
+        // so this just renders no page numbers instead of leaving
+        // stale ones in place.
         for (let i = 1; i <= totalPages; i++) {
             const span = document.createElement('span');
             span.className = 'page-numbers' + (i === currentPage ? ' active' : '');

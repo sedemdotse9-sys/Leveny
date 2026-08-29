@@ -123,6 +123,7 @@
     #mobileGenreView[data-genre="thriller"]   { background: linear-gradient(135deg, #37474f, #546e7a); }
     #mobileGenreView[data-genre="horror"]     { background: linear-gradient(135deg, #c62828, #e53935); }
     #mobileGenreView[data-genre="musical"]    { background: linear-gradient(135deg, #d81b60, #ec407a); }
+    #mobileGenreView[data-genre="romance"]    { background: linear-gradient(135deg, #ff4d6d, #ff758f); }
 
     /* ============================================================
        MOVIE GRID — 2-col layout

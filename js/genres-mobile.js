@@ -58,6 +58,7 @@ if (__isMobileViewport()) {
         thriller:  'Thriller',
         horror:    'Horror',
         musical:   'Musical',
+        romance:   'Romance',
     };
 
     let activeGenre = null;
