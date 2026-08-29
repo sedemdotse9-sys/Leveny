@@ -130,4 +130,7 @@ const LEVENY_MOVIES = [
     { title: "The Whisper", href: "../movies/the_whisper_man_movie.html", genre: "thriller", poster: "images/posters/the_whisper_man.jpg", discover: 5 , background: "images/backgrounds/the_whisper_man_backg.jpg"},
     { title: "Madfabulous", href: "../movies/madfabulous_movie.html", genre: "family", poster: "images/posters/madfabulous.jpg", discover: 7 , background: "images/backgrounds/madfabulous_backg.jpg"},
     { title: "Gaskins: The Hitchhiker Killer", href: "../movies/gaskins_the_hitchhiker_killer_movie.html", genre: "horror", poster: "images/posters/gaskins_the_hitchhiker_killer.jpg", discover: 2 , background: "images/backgrounds/gaskins_the_hitchhiker_killer_backg.jpg"},
+    { title: "Love Finds You", href: "../movies/love_finds_you_movie.html", genre: "fantasy", poster: "images/posters/love_finds_you.jpg", discover: 2 , background: "images/backgrounds/love_finds_you_backg.jpg"},
+    { title: "Barreda", href: "../movies/barreda_movie.html", genre: "thriller", poster: "images/posters/barreda.jpg", discover: 5 , background: "images/backgrounds/barreda_backg.jpg"},
+    { title: "Penny Lane Is Dead", href: "../movies/penny_lane_is_dead_movie.html", genre: "horror", poster: "images/posters/penny_lane_is_dead.jpg", discover: 4 , background: "images/backgrounds/penny_lane_is_dead_backg.jpg"},
 ];
