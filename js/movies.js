@@ -133,4 +133,5 @@ const LEVENY_MOVIES = [
     { title: "Love Finds You", href: "../movies/love_finds_you_movie.html", genre: "romance", poster: "images/posters/love_finds_you.jpg", discover: 2 , background: "images/backgrounds/love_finds_you_backg.jpg"},
     { title: "Barreda", href: "../movies/barreda_movie.html", genre: "thriller", poster: "images/posters/barreda.jpg", discover: 5 , background: "images/backgrounds/barreda_backg.jpg"},
     { title: "Penny Lane Is Dead", href: "../movies/penny_lane_is_dead_movie.html", genre: "horror", poster: "images/posters/penny_lane_is_dead.jpg", discover: 4 , background: "images/backgrounds/penny_lane_is_dead_backg.jpg"},
+    { title: "Mile 22", href: "../movies/mile_22_movie.html", genre: "thriller", poster: "images/posters/mile_22.jpg", discover: 5 , background: "images/backgrounds/mile_22_backg.jpg"},
 ];
