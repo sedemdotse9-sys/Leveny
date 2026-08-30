@@ -85,7 +85,7 @@ const LEVENY_MOVIES = [
     { title: "The Suicide Squad", href: "../movies/the_suicide_squad_movie.html", genre: "superhero", poster: "images/posters/the_suicide_squad.jpg", discover: 4 , background: "images/backgrounds/the_suicide_squad_backg.jpg"},
     { title: "Meg 2: The Trench", href: "../movies/meg_2_the_trench_movie.html", genre: "action", poster: "images/posters/meg_2_the_trench.jpg", discover: 1 , background: "images/backgrounds/meg_2_the_trench_backg.jpg"},
     { title: "2 Guns", href: "../movies/two_guns_movie.html", genre: "action", poster: "images/posters/2_guns.jpg", discover: 5 , background: "images/backgrounds/2_guns_backg.jpg"},
-    { title: "Now You See Me", href: "../movies/now_you_see_me_movie.html", genre: "action", poster: "images/posters/now_you_see_me.jpg", discover: 5 , background: "images/backgrounds/now_you_see_me_backg.jpg"},
+    { title: "Now You See Me", href: "../movies/now_you_see_me_movie.html", genre: "fantasy", poster: "images/posters/now_you_see_me.jpg", discover: 5 , background: "images/backgrounds/now_you_see_me_backg.jpg"},
     { title: "The Lost World: Jurassic Park", href: "../movies/the_lost_world_jurassic_park_movie.html", genre: "adventure", poster: "images/posters/the_lost_world_jurassic_park.jpg", discover: 3 , background: "images/backgrounds/the_lost_world_jurassic_park_backg.jpg"},
     { title: "Michael", href: "../movies/michael_movie.html", genre: "musical", poster: "images/posters/michael.jpg", discover: 4 , background: "images/backgrounds/michael_backg.jpg"},
     { title: "The Last House", href: "../movies/the_last_house_movie.html", genre: "horror", poster: "images/posters/the_last_house.jpg", discover: 3 , background: "images/backgrounds/the_last_house_backg.jpg"},
@@ -138,4 +138,5 @@ const LEVENY_MOVIES = [
     { title: "Batman: Knightfall Part 1: Knightfall", href: "../movies/batman_knightfall_part_1_knightfall_movie.html", genre: "superhero", poster: "images/posters/batman_knightfall_part_1_knightfall.jpg", discover: 5 , background: "images/backgrounds/batman_knightfall_part_1_knightfall_backg.jpg"},
     { title: "Hadestown: The Musical", href: "../movies/hadestown_the_musical_movie.html", genre: "musical", poster: "images/posters/hadestown_the_musical.jpg", discover: 1 , background: "images/backgrounds/hadestown_the_musical_backg.jpg"},
     { title: "Back To The 90's", href: "../movies/back_to_the_90's_movie.html", genre: "scifi", poster: "images/posters/back_to_the_90's.jpg", discover: 1 , background: "images/backgrounds/back_to_the_90's_backg.jpg"},
+    { title: "Now You See Me 2", href: "../movies/now_you_see_me_2_movie.html", genre: "fantasy", poster: "images/posters/now_you_see_me_2.jpg", discover: 5 , background: "images/backgrounds/now_you_see_me_2_backg.jpg"},
 ];
