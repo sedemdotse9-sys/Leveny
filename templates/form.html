@@ -70,6 +70,17 @@
   }
   input:focus, textarea:focus, select:focus { border-color: var(--accent); box-shadow:0 0 0 3px var(--accent-dim); }
   textarea { min-height: 100px; resize: vertical; }
+  /* Fix native <option> popup contrast — without this, dark mode leaves
+     white text on the browser's default white dropdown background. */
+  select option {
+    background:#1a1a1a;
+    color:#f0f0f0;
+  }
+  body.light select option {
+    background:#ffffff;
+    color:#111111;
+  }
+  .autofilled-hint { font-size:11px; opacity:.5; margin-top:4px; }
   .row2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
   .hint { font-size:11px; opacity:.55; margin-top:4px; }
   #submitBtn {
@@ -120,7 +131,7 @@
   <form method="POST" action="{{ url_for('generate') }}">
     <div class="field">
       <label>Movie Title</label>
-      <input type="text" name="title" placeholder="e.g. Transformers One" required>
+      <input type="text" name="title" id="titleInput" placeholder="e.g. Transformers One" required>
     </div>
 
     <div class="field">
@@ -136,11 +147,13 @@
     <div class="row2">
       <div class="field">
         <label>HTML filename</label>
-        <input type="text" name="html_filename" placeholder="transformers_one_movie.html" required>
+        <input type="text" name="html_filename" id="htmlFilename" placeholder="transformers_one_movie.html" required>
+        <div class="autofilled-hint">Auto-generated from the title — edit it and it'll stop auto-updating.</div>
       </div>
       <div class="field">
         <label>CSS filename</label>
-        <input type="text" name="css_filename" placeholder="style119.css" required>
+        <input type="text" name="css_filename" id="cssFilename" value="{{ next_css }}" required>
+        <div class="autofilled-hint">Auto-suggested from the highest style*.css in your css/ folder.</div>
       </div>
     </div>
 
@@ -174,12 +187,12 @@
     <div class="row2">
       <div class="field">
         <label>Poster filename</label>
-        <input type="text" name="poster_file" placeholder="transformers_one.jpg" required>
+        <input type="text" name="poster_file" id="posterFilename" placeholder="transformers_one.jpg" required>
         <div class="hint">images/posters/&lt;this&gt; — fine if the file doesn't exist yet.</div>
       </div>
       <div class="field">
         <label>Background filename</label>
-        <input type="text" name="background_file" placeholder="transformers_one_backg.jpg" required>
+        <input type="text" name="background_file" id="backgroundFilename" placeholder="transformers_one_backg.jpg" required>
         <div class="hint">images/backgrounds/&lt;this&gt;</div>
       </div>
     </div>
@@ -194,5 +207,43 @@
 </main>
 
 <div id="bottomNav">movies/ &nbsp;·&nbsp; css/ &nbsp;·&nbsp; js/movies.js</div>
+
+<script>
+  // Auto-generate html/poster/background filenames from the title,
+  // mirroring the site's existing convention:
+  //   "Around The World In 80 Days"
+  //     -> around_the_world_in_80_days_movie.html
+  //     -> around_the_world_in_80_days.jpg
+  //     -> around_the_world_in_80_days_backg.jpg
+  // Runs of non [a-z0-9'] chars collapse to a single underscore;
+  // apostrophes are kept (matches e.g. the_devil's_mouth_movie.html).
+  function slugify(title) {
+    return title
+      .toLowerCase()
+      .replace(/[^a-z0-9']+/g, '_')
+      .replace(/^_+|_+$/g, '');
+  }
+
+  const titleInput = document.getElementById('titleInput');
+  const htmlField = document.getElementById('htmlFilename');
+  const posterField = document.getElementById('posterFilename');
+  const bgField = document.getElementById('backgroundFilename');
+
+  // Track whether the user has manually typed into a field —
+  // once they do, we stop overwriting it on further title changes.
+  const dirty = { html: false, poster: false, background: false };
+
+  htmlField.addEventListener('input', () => { dirty.html = true; });
+  posterField.addEventListener('input', () => { dirty.poster = true; });
+  bgField.addEventListener('input', () => { dirty.background = true; });
+
+  titleInput.addEventListener('input', () => {
+    const slug = slugify(titleInput.value);
+    if (!slug) return;
+    if (!dirty.html) htmlField.value = slug + '_movie.html';
+    if (!dirty.poster) posterField.value = slug + '.jpg';
+    if (!dirty.background) bgField.value = slug + '_backg.jpg';
+  });
+</script>
 </body>
 </html>

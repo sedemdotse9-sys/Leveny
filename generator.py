@@ -28,10 +28,41 @@ GENRE_META = {
     "thriller":  {"label": "Thriller",  "accent": "#95a5a6"},
     "horror":    {"label": "Horror",    "accent": "#e74c3c"},
     "musical":   {"label": "Musical",   "accent": "#e84393"},
+    "romance":   {"label": "Romance",   "accent": "#ff4d6d"},
 }
 
 GENRE_ORDER = ["action", "superhero", "animation", "fantasy", "scifi",
-               "family", "thriller", "horror", "musical"]
+               "family", "thriller", "horror", "musical", "romance"]
+
+
+# ----------------------------------------------------------------------
+# CSS filename auto-increment
+# ----------------------------------------------------------------------
+def next_css_filename(css_dir):
+    """
+    Scans css_dir for files named style<N>.css (ignoring .bak files and
+    non-numbered files like style.css) and returns 'style<N+1>.css'.
+    """
+    highest = 0
+    if os.path.isdir(css_dir):
+        for name in os.listdir(css_dir):
+            match = re.fullmatch(r"style(\d+)\.css", name)
+            if match:
+                highest = max(highest, int(match.group(1)))
+    return f"style{highest + 1}.css"
+
+
+def slugify_filename(title):
+    """
+    'Around The World In 80 Days' -> 'around_the_world_in_80_days'
+    Mirrors the site's existing filename convention: lowercase, runs of
+    non [a-z0-9'] characters collapse to a single underscore, apostrophes
+    are preserved (matching e.g. the_devil's_mouth_movie.html).
+    """
+    slug = title.lower()
+    slug = re.sub(r"[^a-z0-9']+", "_", slug)
+    slug = slug.strip("_")
+    return slug
 
 
 # ----------------------------------------------------------------------
@@ -103,6 +134,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <a href="../genres.html#thriller"><i class="fas fa-search" style="color:#95a5a6;"></i> Thriller</a>
 <a href="../genres.html#horror"><i class="fas fa-ghost" style="color:#e74c3c;"></i> Horror</a>
 <a href="../genres.html#musical"><i class="fas fa-music" style="color:#e84393;"></i> Musical</a>
+<a href="../genres.html#romance"><i class="fas fa-heart" style="color:#ff4d6d;"></i> Romance</a>
 </div>
 </li>
 <a href="../Profile.html"><i class="fa-regular fa-user"></i>Profile</a>
@@ -230,6 +262,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <a class="mob-genre-pill" href="../genre-results.html?genre=thriller"><i class="fas fa-search" style="color:#95a5a6;"></i><span>Thriller</span></a>
 <a class="mob-genre-pill" href="../genre-results.html?genre=horror"><i class="fas fa-ghost" style="color:#e74c3c;"></i><span>Horror</span></a>
 <a class="mob-genre-pill" href="../genre-results.html?genre=musical"><i class="fas fa-music" style="color:#e84393;"></i><span>Musical</span></a>
+<a class="mob-genre-pill" href="../genre-results.html?genre=romance"><i class="fas fa-heart" style="color:#ff4d6d;"></i><span>Romance</span></a>
 </div>
 </div>
 <!-- ============================================================
