@@ -24,7 +24,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 
 from generator import (
     GENRE_META, GENRE_ORDER, build_html, build_css,
-    build_movies_js_entry, append_to_movies_js,
+    build_movies_js_entry, append_to_movies_js, next_css_filename,
 )
 
 # ----------------------------------------------------------------------
@@ -41,7 +41,12 @@ app.secret_key = "leveny-local-tool"  # local use only
 
 @app.route("/", methods=["GET"])
 def index():
-    return render_template("form.html", genres=GENRE_ORDER, genre_meta=GENRE_META)
+    return render_template(
+        "form.html",
+        genres=GENRE_ORDER,
+        genre_meta=GENRE_META,
+        next_css=next_css_filename(CSS_DIR),
+    )
 
 
 @app.route("/generate", methods=["POST"])
