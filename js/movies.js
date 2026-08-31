@@ -139,4 +139,8 @@ const LEVENY_MOVIES = [
     { title: "Hadestown: The Musical", href: "../movies/hadestown_the_musical_movie.html", genre: "musical", poster: "images/posters/hadestown_the_musical.jpg", discover: 1 , background: "images/backgrounds/hadestown_the_musical_backg.jpg"},
     { title: "Back To The 90's", href: "../movies/back_to_the_90's_movie.html", genre: "scifi", poster: "images/posters/back_to_the_90's.jpg", discover: 1 , background: "images/backgrounds/back_to_the_90's_backg.jpg"},
     { title: "Now You See Me 2", href: "../movies/now_you_see_me_2_movie.html", genre: "fantasy", poster: "images/posters/now_you_see_me_2.jpg", discover: 5 , background: "images/backgrounds/now_you_see_me_2_backg.jpg"},
+    { title: "Now You See Me: Now You Don't", href: "../movies/now_you_see_me_now_you_don't_movie.html", genre: "fantasy", poster: "images/posters/now_you_see_me_now_you_don't.jpg", discover: 1 , background: "images/backgrounds/now_you_see_me_now_you_dont_backg.jpg"},
+    { title: "Enola Holmes", href: "../movies/enola_holmes_movie.html", genre: "family", poster: "images/posters/enola_holmes.jpg", discover: 1 , background: "images/backgrounds/enola_holmes_backg.jpg"},
+    { title: "Enola Holmes 2", href: "../movies/enola_holmes_2_movie.html", genre: "fantasy", poster: "images/posters/enola_holmes_2.jpg", discover: 1 , background: "images/backgrounds/enola_holmes_2_backg.jpg"},
+    { title: "Enola Holmes 3", href: "../movies/enola_holmes_3_movie.html", genre: "family", poster: "images/posters/enola_holmes_3.jpg", discover: 2 , background: "images/backgrounds/enola_holmes_3_backg.jpg"},
 ];
