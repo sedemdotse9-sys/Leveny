@@ -143,4 +143,7 @@ const LEVENY_MOVIES = [
     { title: "Enola Holmes", href: "../movies/enola_holmes_movie.html", genre: "family", poster: "images/posters/enola_holmes.jpg", discover: 1 , background: "images/backgrounds/enola_holmes_backg.jpg"},
     { title: "Enola Holmes 2", href: "../movies/enola_holmes_2_movie.html", genre: "fantasy", poster: "images/posters/enola_holmes_2.jpg", discover: 1 , background: "images/backgrounds/enola_holmes_2_backg.jpg"},
     { title: "Enola Holmes 3", href: "../movies/enola_holmes_3_movie.html", genre: "family", poster: "images/posters/enola_holmes_3.jpg", discover: 2 , background: "images/backgrounds/enola_holmes_3_backg.jpg"},
+    { title: "Damsel", href: "../movies/damsel_movie.html", genre: "fantasy", poster: "images/posters/damsel.jpg", discover: 2 , background: "images/backgrounds/damsel_backg.jpg"},
+    { title: "Fearless", href: "../movies/fearless_movie.html", genre: "animation", poster: "images/posters/fearless.jpg", discover: 1 , background: "images/backgrounds/fearless_backg.jpg"},
+    { title: "The Willoughbys", href: "../movies/the_willoughbys_movie.html", genre: "animation", poster: "images/posters/the_willoughbys.jpg", discover: 1 , background: "images/backgrounds/the_willoughbys_backg.jpg"},
 ];
