@@ -146,4 +146,6 @@ const LEVENY_MOVIES = [
     { title: "Damsel", href: "../movies/damsel_movie.html", genre: "fantasy", poster: "images/posters/damsel.jpg", discover: 2 , background: "images/backgrounds/damsel_backg.jpg"},
     { title: "Fearless", href: "../movies/fearless_movie.html", genre: "animation", poster: "images/posters/fearless.jpg", discover: 1 , background: "images/backgrounds/fearless_backg.jpg"},
     { title: "The Willoughbys", href: "../movies/the_willoughbys_movie.html", genre: "animation", poster: "images/posters/the_willoughbys.jpg", discover: 1 , background: "images/backgrounds/the_willoughbys_backg.jpg"},
+    { title: "Hunger Games: Catching Fire", href: "../movies/hunger_games_catching_fire_movie.html", genre: "action", poster: "images/posters/hunger_games_catching_fire.jpg", discover: 4 , background: "images/backgrounds/hunger_games_catching_fire_backg.jpg"},
+    { title: "Hunger Games: Mockingjay Part 1", href: "../movies/hunger_games_mockingjay_part_1_movie.html", genre: "action", poster: "images/posters/hunger_games_mockingjay_part_1.jpg", discover: 2 , background: "images/backgrounds/hunger_games_mockingjay_part_1_backg.jpg"},
 ];
