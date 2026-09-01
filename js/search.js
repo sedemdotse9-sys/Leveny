@@ -1,4 +1,3 @@
-
 function __isMobileViewport() {
   // True for phones/tablets in portrait (width <=1024) AND for tablets
   // rotated to landscape (their short side, now the height, is <=1024
@@ -16,7 +15,121 @@ function __isMobileViewport() {
    homepage poster rows (color-coded, pulled from movies.js).
    All movie data lives in movies.js (LEVENY_MOVIES).
    Never hardcode movies here — edit movies.js only.
+
+   ★ CHANGED — search is now fuzzy / typo-tolerant. Instead of a
+   strict `.includes()` check, every title gets a relevance score:
+     - exact substring matches score highest
+     - otherwise each query word is compared against each title
+       word using edit-distance, so typos / missing letters /
+       partial words still surface a match
+   Results are sorted by score, so the closest matches float to
+   the top even when nothing is spelled exactly right.
 ============================================================ */
+
+/* ============================================================
+   ★ CHANGED — shared fuzzy search utility
+   Used by both the desktop dropdown and the mobile dropdown so
+   they always behave the same way.
+============================================================ */
+function __levenshteinDistance(a, b) {
+    const m = a.length, n = b.length;
+    if (m === 0) return n;
+    if (n === 0) return m;
+
+    const dp = new Array(n + 1);
+    for (let j = 0; j <= n; j++) dp[j] = j;
+
+    for (let i = 1; i <= m; i++) {
+        let prev = dp[0];
+        dp[0] = i;
+        for (let j = 1; j <= n; j++) {
+            const temp = dp[j];
+            dp[j] = a[i - 1] === b[j - 1]
+                ? prev
+                : 1 + Math.min(prev, dp[j], dp[j - 1]);
+            prev = temp;
+        }
+    }
+    return dp[n];
+}
+
+function __normalizeSearchText(str) {
+    return str
+        .toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // strip accents
+        .replace(/[^a-z0-9\s]/g, ' ')                       // punctuation -> space
+        .replace(/\s+/g, ' ')
+        .trim();
+}
+
+// Returns a relevance score for how well `query` matches `title`.
+// 0 (or less) means "not a match" and should be filtered out.
+function __fuzzyScore(query, title) {
+    const q = __normalizeSearchText(query);
+    const t = __normalizeSearchText(title);
+    if (!q) return 0;
+
+    // Strong signal: query appears verbatim somewhere in the title.
+    // Shorter gap between query length and title length scores higher
+    // (so "avatar" ranks the Avatar movie above a longer title that
+    // merely contains the word "avatar" deep in a subtitle).
+    if (t.includes(q)) {
+        return 1000 - (t.length - q.length);
+    }
+
+    const queryWords = q.split(' ').filter(Boolean);
+    const titleWords = t.split(' ').filter(Boolean);
+
+    let totalScore = 0;
+    let matchedWords = 0;
+
+    queryWords.forEach(qw => {
+        let bestWordScore = 0;
+
+        titleWords.forEach(tw => {
+            if (tw.includes(qw) || qw.includes(tw)) {
+                // partial word match, e.g. "aveng" -> "avengers"
+                bestWordScore = Math.max(bestWordScore, 50);
+                return;
+            }
+
+            const dist = __levenshteinDistance(qw, tw);
+            const maxLen = Math.max(qw.length, tw.length);
+            const similarity = 1 - dist / maxLen;
+
+            // Typo tolerance threshold. Short words (<=3 chars) need
+            // to be near-exact so we don't match on noise.
+            const threshold = qw.length <= 3 ? 0.8 : 0.55;
+
+            if (similarity >= threshold) {
+                bestWordScore = Math.max(bestWordScore, similarity * 40);
+            }
+        });
+
+        if (bestWordScore > 0) matchedWords++;
+        totalScore += bestWordScore;
+    });
+
+    // Require most of the query's words to have found some match,
+    // otherwise a two-word query like "the room" could weakly match
+    // almost anything.
+    const requiredMatches = Math.ceil(queryWords.length / 2);
+    if (matchedWords < requiredMatches) return 0;
+
+    return totalScore;
+}
+
+// Filters + ranks a movie list against a query. Movies is expected to
+// be an array of objects with at least a `title`; any extra fields
+// pass through untouched.
+function __fuzzySearchMovies(movies, query, limit) {
+    const scored = movies
+        .map(m => ({ movie: m, score: __fuzzyScore(query, m.title) }))
+        .filter(entry => entry.score > 0)
+        .sort((a, b) => b.score - a.score);
+
+    return (limit ? scored.slice(0, limit) : scored).map(entry => entry.movie);
+}
 
 /* ============================================================
    DESKTOP SEARCH
@@ -54,11 +167,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         searchInput.addEventListener("input", () => {
-            const query = searchInput.value.toLowerCase().trim();
+            const query = searchInput.value.trim();
             if (!query) { searchDropdown.style.display = "none"; return; }
-            renderDesktopDropdown(
-                desktopMovies.filter(m => m.title.toLowerCase().includes(query))
-            );
+            // ★ CHANGED — fuzzy match instead of strict includes()
+            renderDesktopDropdown(__fuzzySearchMovies(desktopMovies, query));
         });
 
         document.addEventListener("click", e => {
@@ -112,12 +224,11 @@ function initMobileMovieSearch() {
         if (mobInput && mobDrop) {
 
             mobInput.addEventListener('input', () => {
-                const q = mobInput.value.trim().toLowerCase();
+                const q = mobInput.value.trim();
                 if (!q) { mobDrop.style.display = 'none'; return; }
 
-                const matches = LEVENY_MOVIES.filter(m =>
-                    m.title.toLowerCase().includes(q)
-                );
+                // ★ CHANGED — fuzzy match instead of strict includes()
+                const matches = __fuzzySearchMovies(LEVENY_MOVIES, q);
 
                 mobDrop.style.display = 'block';
                 // ★ CHANGED — detect if we're on homepage or a movie page
