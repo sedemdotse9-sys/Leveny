@@ -154,4 +154,5 @@ const LEVENY_MOVIES = [
     { title: "Just Play Dead", href: "../movies/just_play_dead_movie.html", genre: "thriller", poster: "images/posters/just_play_dead.jpg", discover: 1 , background: "images/backgrounds/just_play_dead_backg.jpg"},
     { title: "The Keeper of The Camphor Tree", href: "../movies/the_keeper_of_the_camphor_tree_movie.html", genre: "animation", poster: "images/posters/the_keeper_of_the_camphor_tree.jpg", discover: 5 , background: "images/backgrounds/the_keeper_of_the_camphor_tree_backg.jpg"},
     { title: "The Story of Everything", href: "../movies/the_story_of_everything_movie.html", genre: "family", poster: "images/posters/the_story_of_everything.jpg", discover: 1 , background: "images/backgrounds/the_story_of_everything_backg.jpg"},
+    { title: "The Wrecking Crew", href: "../movies/the_wrecking_crew_movie.html", genre: "action", poster: "images/posters/the_wrecking_crew.jpg", discover: 2 , background: "images/backgrounds/the_wrecking_crew_backg.jpg"},
 ];
