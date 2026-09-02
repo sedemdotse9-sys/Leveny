@@ -1,16 +1,16 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/design.css">
-    <link rel="stylesheet" href="css/request.css">
-    <link rel="stylesheet" href="css/tutorial-request.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <title>Request | Leveny</title>
-
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="css/design.css" rel="stylesheet"/>
+<link href="css/request.css" rel="stylesheet"/>
+<link href="css/tutorial-request.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Rajdhani:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<title>Request | Leveny</title>
+<style>
     /* ============================================================
        MOBILE STYLES — Movie Request Page
        Batman Dark Knight glassmorphism + Pinterest masonry feel
@@ -45,7 +45,7 @@
         overflow-y: auto;
         padding: 0;
         margin: 0;
-        font-family: 'Rajdhani', sans-serif;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
       }
 
       /* Batman atmosphere — deep shadow fog */
@@ -120,7 +120,7 @@
       #mobReqHeader .mob-logo {
         font-family: 'Bebas Neue', sans-serif;
         font-size: 26px;
-        letter-spacing: 1.5px;
+        letter-spacing: 4px;
         color: #fff;
         flex: 1;
         text-decoration: none;
@@ -286,7 +286,7 @@
         border: 1px solid rgba(140,140,220,0.16);
         background: rgba(8,8,16,0.60);
         color: #e8e8ff;
-        font-family: 'Rajdhani', sans-serif;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
         font-size: 15px;
         font-weight: 500;
         outline: none;
@@ -402,7 +402,7 @@
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         color: rgba(180,180,220,0.55);
-        font-family: 'Rajdhani', sans-serif;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
         font-size: 14px;
         font-weight: 600;
         cursor: pointer;
@@ -595,7 +595,7 @@
 
       .mob-req-nav-item span {
         font-size: 10px;
-        font-family: 'Rajdhani', sans-serif;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
         font-weight: 600;
         letter-spacing: 0.5px;
       }
@@ -604,261 +604,234 @@
 
     } /* end @media 768px */
   </style>
-    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
-    <link rel="shortcut icon" href="/favicon/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
-    <link rel="manifest" href="/favicon/site.webmanifest" />
-</head>
-
+<link href="/favicon/favicon-96x96.png" rel="icon" sizes="96x96" type="image/png"/>
+<link href="/favicon/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="/favicon/favicon.ico" rel="shortcut icon"/>
+<link href="/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/favicon/site.webmanifest" rel="manifest"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&amp;display=swap" rel="stylesheet"/></head>
 <body>
-
-  <!-- ============================================================
+<!-- ============================================================
        DESKTOP LAYOUT — completely unchanged
   ============================================================ -->
-  <header>
-    <nav class="nav_bar">
-      <h2 class="logo">
-        <a href="index.html" style="text-decoration: none; color: white;">Leveny</a>
-      </h2>
-      <ul class="nav_links" style="font-family: Rockwell, sans-serif;">
-        <a href="index.html"><i class="fas fa-home"></i>Home</a>
-        <a href="Genres.html"><i class="fa-solid fa-compact-disc"></i>Genres</a>
-        <a href="Movie_Request.html"><i class="fas fa-envelope"></i>Request</a>
-        <a href="Profile.html"><i class="fa-regular fa-user"></i>Profile</a>
-      </ul>
-      <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Search movies...">
-        <button><i class="fas fa-search"></i></button>
-        <div class="search-dropdown" id="searchDropdown"></div>
-      </div>
-    </nav>
-    <hr>
-  </header>
-
-  <main class="request-container">
-    <section class="request-hero">
-      <h1><i class="fas fa-film"></i> Request Center</h1>
-      <p>Can't find a movie on Leveny? Tell us what you're looking for and we'll try to add it.</p>
-    </section>
-
-    <section class="request-form-section">
-      <form id="movieRequestForm" class="request-form" action="https://formspree.io/f/xgoyjjgj" method="POST">
-        <input type="hidden" name="_subject" value="🎬 New Movie Request - Leveny">
-        <input type="hidden" name="requestType" value="new-movie">
-        <input type="text" name="_gotcha" style="display:none !important;">
-        <h2 class="form-title"><i class="fas fa-plus-circle"></i> Request a New Movie</h2>
-        <p class="form-description">Can't find a movie? Request it and we'll try to add it to Leveny.</p>
-        <div class="form-group">
-          <label for="movieTitle"><i class="fas fa-heading"></i> Movie Title *</label>
-          <input type="text" id="movieTitle" name="movieTitle" placeholder="e.g., Interstellar" required>
-        </div>
-        <div class="form-group">
-          <label for="releaseYear"><i class="fas fa-calendar-alt"></i> Release Year</label>
-          <input type="number" id="releaseYear" name="releaseYear" min="1900" max="2026" placeholder="e.g., 2023">
-        </div>
-        <div class="form-group">
-          <label for="movieGenre"><i class="fas fa-tags"></i> Genre</label>
-          <select id="movieGenre" name="movieGenre">
-            <option value="" selected disabled>Select a genre</option>
-            <option value="action">Action</option>
-            <option value="adventure">Adventure</option>
-            <option value="musical">Musical</option>
-            <option value="drama">Drama</option>
-            <option value="sci-fi">Sci-Fi</option>
-            <option value="horror">Horror</option>
-            <option value="animation">Animation</option>
-            <option value="fantasy">Fantasy</option>
-            <option value="documentary">Documentary</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-        <div class="form-buttons">
-          <button type="submit" class="submit-btn"><i class="fas fa-paper-plane"></i> Submit Movie Request</button>
-          <button type="reset" class="reset-btn"><i class="fas fa-redo"></i> Clear Form</button>
-        </div>
-      </form>
-    </section>
-
-    <section class="request-info">
-      <h2><i class="fas fa-info-circle"></i> How It Works</h2>
-      <div class="info-cards">
-        <div class="info-card"><i class="fas fa-pencil-alt"></i><h3>Fill the Form</h3><p>Give us the movie title and any details you know, like the year or genre.</p></div>
-        <div class="info-card"><i class="fas fa-clipboard-check"></i><h3>We Review</h3><p>Our team checks availability and works on adding your request.</p></div>
-        <div class="info-card"><i class="fas fa-check-circle"></i><h3>Request Fulfilled</h3><p>We'll notify you once your request is processed and available.</p></div>
-      </div>
-      <div class="info-cards">
-        <div class="info-card"><i class="fas fa-plus-circle"></i><h3>New Movies</h3><p>Request movies not yet in our library. We'll work on licensing.</p></div>
-        <div class="info-card"><i class="fas fa-clock"></i><h3>Processing Time</h3><p>Requests typically processed within 3-5 business days.</p></div>
-      </div>
-      <p class="note"><i class="fas fa-exclamation-triangle"></i> We cannot guarantee all requests due to licensing restrictions and availability.</p>
-    </section>
-  </main>
-
-  <!-- ============================================================
+<header>
+<nav class="nav_bar">
+<h2 class="logo">
+<a href="index.html" style="text-decoration: none; color: white;">Leveny</a>
+</h2>
+<ul class="nav_links" style='font-family: "Roboto Slab", Rockwell, sans-serif;'>
+<a href="index.html"><i class="fas fa-home"></i>Home</a>
+<a href="Genres.html"><i class="fa-solid fa-compact-disc"></i>Genres</a>
+<a href="Movie_Request.html"><i class="fas fa-envelope"></i>Request</a>
+<a href="Profile.html"><i class="fa-regular fa-user"></i>Profile</a>
+</ul>
+<div class="search-box">
+<input id="searchInput" placeholder="Search movies..." type="text"/>
+<button><i class="fas fa-search"></i></button>
+<div class="search-dropdown" id="searchDropdown"></div>
+</div>
+</nav>
+<hr/>
+</header>
+<main class="request-container">
+<section class="request-hero">
+<h1><i class="fas fa-film"></i> Request Center</h1>
+<p>Can't find a movie on Leveny? Tell us what you're looking for and we'll try to add it.</p>
+</section>
+<section class="request-form-section">
+<form action="https://formspree.io/f/xgoyjjgj" class="request-form" id="movieRequestForm" method="POST">
+<input name="_subject" type="hidden" value="🎬 New Movie Request - Leveny"/>
+<input name="requestType" type="hidden" value="new-movie"/>
+<input name="_gotcha" style="display:none !important;" type="text"/>
+<h2 class="form-title"><i class="fas fa-plus-circle"></i> Request a New Movie</h2>
+<p class="form-description">Can't find a movie? Request it and we'll try to add it to Leveny.</p>
+<div class="form-group">
+<label for="movieTitle"><i class="fas fa-heading"></i> Movie Title *</label>
+<input id="movieTitle" name="movieTitle" placeholder="e.g., Interstellar" required="" type="text"/>
+</div>
+<div class="form-group">
+<label for="releaseYear"><i class="fas fa-calendar-alt"></i> Release Year</label>
+<input id="releaseYear" max="2026" min="1900" name="releaseYear" placeholder="e.g., 2023" type="number"/>
+</div>
+<div class="form-group">
+<label for="movieGenre"><i class="fas fa-tags"></i> Genre</label>
+<select id="movieGenre" name="movieGenre">
+<option disabled="" selected="" value="">Select a genre</option>
+<option value="action">Action</option>
+<option value="adventure">Adventure</option>
+<option value="musical">Musical</option>
+<option value="drama">Drama</option>
+<option value="sci-fi">Sci-Fi</option>
+<option value="horror">Horror</option>
+<option value="animation">Animation</option>
+<option value="fantasy">Fantasy</option>
+<option value="documentary">Documentary</option>
+<option value="other">Other</option>
+</select>
+</div>
+<div class="form-buttons">
+<button class="submit-btn" type="submit"><i class="fas fa-paper-plane"></i> Submit Movie Request</button>
+<button class="reset-btn" type="reset"><i class="fas fa-redo"></i> Clear Form</button>
+</div>
+</form>
+</section>
+<section class="request-info">
+<h2><i class="fas fa-info-circle"></i> How It Works</h2>
+<div class="info-cards">
+<div class="info-card"><i class="fas fa-pencil-alt"></i><h3>Fill the Form</h3><p>Give us the movie title and any details you know, like the year or genre.</p></div>
+<div class="info-card"><i class="fas fa-clipboard-check"></i><h3>We Review</h3><p>Our team checks availability and works on adding your request.</p></div>
+<div class="info-card"><i class="fas fa-check-circle"></i><h3>Request Fulfilled</h3><p>We'll notify you once your request is processed and available.</p></div>
+</div>
+<div class="info-cards">
+<div class="info-card"><i class="fas fa-plus-circle"></i><h3>New Movies</h3><p>Request movies not yet in our library. We'll work on licensing.</p></div>
+<div class="info-card"><i class="fas fa-clock"></i><h3>Processing Time</h3><p>Requests typically processed within 3-5 business days.</p></div>
+</div>
+<p class="note"><i class="fas fa-exclamation-triangle"></i> We cannot guarantee all requests due to licensing restrictions and availability.</p>
+</section>
+</main>
+<!-- ============================================================
        MOBILE LAYOUT
   ============================================================ -->
-
-  <div id="mobReqHeader">
-    <span class="mob-logo">Leve<span>ny</span></span>
-    <a href="Profile.html" id="mobReqProfileBtn" aria-label="Profile">
-      <i class="fa-regular fa-user"></i>
-    </a>
-  </div>
-
-  <div id="mobReqPage">
-
-    <!-- Hero -->
-    <div id="mobReqHero">
-      <h1><i class="fas fa-film"></i>Request Center</h1>
-      <p>Missing a movie? Drop a request and we'll get on it.</p>
-    </div>
-
-    <!-- Toast -->
-    <div id="mobToast" class="mob-toast"></div>
-
-    <!-- Form title -->
-    <div class="mob-form-title-card">
-      <h2><i class="fas fa-plus-circle"></i> New Movie</h2>
-      <p>Can't find a movie? Request it and we'll try to add it to Leveny.</p>
-    </div>
-
-    <!-- Form -->
-    <form id="mobMovieRequestForm" action="https://formspree.io/f/xgoyjjgj" method="POST">
-      <input type="hidden" name="_subject" value="🎬 New Movie Request - Leveny">
-      <input type="hidden" name="requestType" value="new-movie">
-      <input type="text" name="_gotcha" style="display:none !important;">
-
-      <div id="mobReqFormWrap">
-
-        <div class="mob-form-card">
-          <label><i class="fas fa-heading"></i> Movie Title</label>
-          <input type="text" name="movieTitle" placeholder="e.g., Interstellar, Avengers…" required>
-        </div>
-
-        <div class="mob-form-card">
-          <label><i class="fas fa-calendar-alt"></i> Release Year</label>
-          <input type="number" name="releaseYear" min="1900" max="2026" placeholder="e.g., 2023">
-        </div>
-
-        <div class="mob-form-card">
-          <label><i class="fas fa-tags"></i> Genre</label>
-          <select name="movieGenre">
-            <option value="" selected disabled>Select a genre</option>
-            <option value="action">Action</option>
-            <option value="adventure">Adventure</option>
-            <option value="musical">Musical</option>
-            <option value="drama">Drama</option>
-            <option value="sci-fi">Sci-Fi</option>
-            <option value="horror">Horror</option>
-            <option value="animation">Animation</option>
-            <option value="fantasy">Fantasy</option>
-            <option value="documentary">Documentary</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-
-        <div class="mob-form-btns">
-          <button type="submit" class="mob-submit-btn"><i class="fas fa-paper-plane"></i> Submit</button>
-          <button type="reset" class="mob-reset-btn"><i class="fas fa-redo"></i> Clear</button>
-        </div>
-
-      </div>
-    </form>
-
-    <!-- How It Works — Pinterest masonry grid -->
-    <div id="mobHowItWorks">
-      <div class="mob-section-label"><i class="fas fa-info-circle"></i> How It Works</div>
-      <div class="mob-how-grid">
-        <div class="mob-how-card tall">
-          <i class="fas fa-pencil-alt card-icon"></i>
-          <h3>Fill the Form</h3>
-          <p>Give us the title and any details you know, like the year or genre.</p>
-        </div>
-        <div class="mob-how-card">
-          <i class="fas fa-clipboard-check card-icon"></i>
-          <h3>We Review</h3>
-          <p>Our team checks availability and gets to work.</p>
-        </div>
-        <div class="mob-how-card">
-          <i class="fas fa-plus-circle card-icon"></i>
-          <h3>New Movies</h3>
-          <p>Not in the library yet? We work on licensing.</p>
-        </div>
-        <div class="mob-how-card tall">
-          <i class="fas fa-check-circle card-icon"></i>
-          <h3>Fulfilled</h3>
-          <p>We notify you once your request is processed and live on Leveny.</p>
-        </div>
-      </div>
-    </div>
-
-    <div id="mobReqNote">
-      <i class="fas fa-exclamation-triangle"></i>
+<div id="mobReqHeader">
+<span class="mob-logo">Leve<span>ny</span></span>
+<a aria-label="Profile" href="Profile.html" id="mobReqProfileBtn">
+<i class="fa-regular fa-user"></i>
+</a>
+</div>
+<div id="mobReqPage">
+<!-- Hero -->
+<div id="mobReqHero">
+<h1><i class="fas fa-film"></i>Request Center</h1>
+<p>Missing a movie? Drop a request and we'll get on it.</p>
+</div>
+<!-- Toast -->
+<div class="mob-toast" id="mobToast"></div>
+<!-- Form title -->
+<div class="mob-form-title-card">
+<h2><i class="fas fa-plus-circle"></i> New Movie</h2>
+<p>Can't find a movie? Request it and we'll try to add it to Leveny.</p>
+</div>
+<!-- Form -->
+<form action="https://formspree.io/f/xgoyjjgj" id="mobMovieRequestForm" method="POST">
+<input name="_subject" type="hidden" value="🎬 New Movie Request - Leveny"/>
+<input name="requestType" type="hidden" value="new-movie"/>
+<input name="_gotcha" style="display:none !important;" type="text"/>
+<div id="mobReqFormWrap">
+<div class="mob-form-card">
+<label><i class="fas fa-heading"></i> Movie Title</label>
+<input name="movieTitle" placeholder="e.g., Interstellar, Avengers…" required="" type="text"/>
+</div>
+<div class="mob-form-card">
+<label><i class="fas fa-calendar-alt"></i> Release Year</label>
+<input max="2026" min="1900" name="releaseYear" placeholder="e.g., 2023" type="number"/>
+</div>
+<div class="mob-form-card">
+<label><i class="fas fa-tags"></i> Genre</label>
+<select name="movieGenre">
+<option disabled="" selected="" value="">Select a genre</option>
+<option value="action">Action</option>
+<option value="adventure">Adventure</option>
+<option value="musical">Musical</option>
+<option value="drama">Drama</option>
+<option value="sci-fi">Sci-Fi</option>
+<option value="horror">Horror</option>
+<option value="animation">Animation</option>
+<option value="fantasy">Fantasy</option>
+<option value="documentary">Documentary</option>
+<option value="other">Other</option>
+</select>
+</div>
+<div class="mob-form-btns">
+<button class="mob-submit-btn" type="submit"><i class="fas fa-paper-plane"></i> Submit</button>
+<button class="mob-reset-btn" type="reset"><i class="fas fa-redo"></i> Clear</button>
+</div>
+</div>
+</form>
+<!-- How It Works — Pinterest masonry grid -->
+<div id="mobHowItWorks">
+<div class="mob-section-label"><i class="fas fa-info-circle"></i> How It Works</div>
+<div class="mob-how-grid">
+<div class="mob-how-card tall">
+<i class="fas fa-pencil-alt card-icon"></i>
+<h3>Fill the Form</h3>
+<p>Give us the title and any details you know, like the year or genre.</p>
+</div>
+<div class="mob-how-card">
+<i class="fas fa-clipboard-check card-icon"></i>
+<h3>We Review</h3>
+<p>Our team checks availability and gets to work.</p>
+</div>
+<div class="mob-how-card">
+<i class="fas fa-plus-circle card-icon"></i>
+<h3>New Movies</h3>
+<p>Not in the library yet? We work on licensing.</p>
+</div>
+<div class="mob-how-card tall">
+<i class="fas fa-check-circle card-icon"></i>
+<h3>Fulfilled</h3>
+<p>We notify you once your request is processed and live on Leveny.</p>
+</div>
+</div>
+</div>
+<div id="mobReqNote">
+<i class="fas fa-exclamation-triangle"></i>
       We can't guarantee all requests due to licensing and availability.
     </div>
-
-  </div>
-
-  <!-- GENRES PANEL BACKDROP -->
-  <div id="genresPanelBackdrop"></div>
-
-  <!-- GENRES SLIDE-UP PANEL -->
-  <div id="mobileGenresPanel">
-    <h3>Browse Genres</h3>
-    <div class="mob-genre-grid">
-      <a href="genre-results.html?genre=action"    class="mob-genre-item"><i class="fas fa-explosion"  style="color:#3498db;"></i><span>Action</span></a>
-      <a href="genre-results.html?genre=superhero" class="mob-genre-item"><i class="fas fa-mask"        style="color:#e74c3c;"></i><span>Superhero</span></a>
-      <a href="genre-results.html?genre=animation" class="mob-genre-item"><i class="fas fa-dragon"      style="color:#f39c12;"></i><span>Animation</span></a>
-      <a href="genre-results.html?genre=fantasy"   class="mob-genre-item"><i class="fas fa-hat-wizard"  style="color:#9b59b6;"></i><span>Fantasy</span></a>
-      <a href="genre-results.html?genre=scifi"     class="mob-genre-item"><i class="fas fa-robot"       style="color:#1abc9c;"></i><span>Sci-Fi</span></a>
-      <a href="genre-results.html?genre=family"    class="mob-genre-item"><i class="fas fa-child"       style="color:#2ecc71;"></i><span>Family</span></a>
-      <a href="genre-results.html?genre=thriller"  class="mob-genre-item"><i class="fas fa-search"      style="color:#95a5a6;"></i><span>Thriller</span></a>
-      <a href="genre-results.html?genre=horror"    class="mob-genre-item"><i class="fas fa-ghost"       style="color:#e74c3c;"></i><span>Horror</span></a>
-      <a href="genre-results.html?genre=musical"   class="mob-genre-item"><i class="fas fa-music"       style="color:#e84393;"></i><span>Musical</span></a>
-    </div>
-  </div>
-
-  <!-- GENRE RESULTS VIEW -->
-  <div id="mobileGenreView">
-    <div class="mob-genre-topbar">
-      <button class="mob-genre-back-btn" id="mobileGenreBackBtn">
-        <i class="fas fa-arrow-left"></i>
-      </button>
-      <div class="mob-genre-view-title" id="mobileGenreViewTitle">Genre</div>
-    </div>
-    <div id="mobileGenreGrid"></div>
-    <div id="mobileGenrePagination"></div>
-  </div>
-
-  <nav id="mobReqBottomNav">
-    <a href="index.html" class="mob-req-nav-item">
-      <i class="fas fa-home"></i><span>Home</span>
-    </a>
-    <button class="mob-req-nav-item" id="mobGenresBtn">
-      <i class="fa-solid fa-compact-disc"></i><span>Genres</span>
-    </button>
-    <a href="Movie_Request.html" class="mob-req-nav-item active-nav">
-      <i class="fas fa-envelope"></i><span>Request</span>
-    </a>
-    <a href="Profile.html" class="mob-req-nav-item">
-      <i class="fa-regular fa-user"></i><span>Profile</span>
-    </a>
-  </nav>
-
-  <!-- ============================================================
+</div>
+<!-- GENRES PANEL BACKDROP -->
+<div id="genresPanelBackdrop"></div>
+<!-- GENRES SLIDE-UP PANEL -->
+<div id="mobileGenresPanel">
+<h3>Browse Genres</h3>
+<div class="mob-genre-grid">
+<a class="mob-genre-item" href="genre-results.html?genre=action"><i class="fas fa-explosion" style="color:#3498db;"></i><span>Action</span></a>
+<a class="mob-genre-item" href="genre-results.html?genre=superhero"><i class="fas fa-mask" style="color:#e74c3c;"></i><span>Superhero</span></a>
+<a class="mob-genre-item" href="genre-results.html?genre=animation"><i class="fas fa-dragon" style="color:#f39c12;"></i><span>Animation</span></a>
+<a class="mob-genre-item" href="genre-results.html?genre=fantasy"><i class="fas fa-hat-wizard" style="color:#9b59b6;"></i><span>Fantasy</span></a>
+<a class="mob-genre-item" href="genre-results.html?genre=scifi"><i class="fas fa-robot" style="color:#1abc9c;"></i><span>Sci-Fi</span></a>
+<a class="mob-genre-item" href="genre-results.html?genre=family"><i class="fas fa-child" style="color:#2ecc71;"></i><span>Family</span></a>
+<a class="mob-genre-item" href="genre-results.html?genre=thriller"><i class="fas fa-search" style="color:#95a5a6;"></i><span>Thriller</span></a>
+<a class="mob-genre-item" href="genre-results.html?genre=horror"><i class="fas fa-ghost" style="color:#e74c3c;"></i><span>Horror</span></a>
+<a class="mob-genre-item" href="genre-results.html?genre=musical"><i class="fas fa-music" style="color:#e84393;"></i><span>Musical</span></a>
+<a class="mob-genre-item" href="genre-results.html?genre=romance"><i class="fas fa-heart" style="color:#ff4d6d;"></i><span>Romance</span></a>
+</div>
+</div>
+<!-- GENRE RESULTS VIEW -->
+<div id="mobileGenreView">
+<div class="mob-genre-topbar">
+<button class="mob-genre-back-btn" id="mobileGenreBackBtn">
+<i class="fas fa-arrow-left"></i>
+</button>
+<div class="mob-genre-view-title" id="mobileGenreViewTitle">Genre</div>
+</div>
+<div id="mobileGenreGrid"></div>
+<div id="mobileGenrePagination"></div>
+</div>
+<nav id="mobReqBottomNav" style='font-family: "Roboto Slab", Rockwell, sans-serif !important;'>
+<a class="mob-req-nav-item" href="index.html">
+<i class="fas fa-home"></i><span>Home</span>
+</a>
+<button class="mob-req-nav-item" id="mobGenresBtn">
+<i class="fa-solid fa-compact-disc"></i><span>Genres</span>
+</button>
+<a class="mob-req-nav-item active-nav" href="Movie_Request.html">
+<i class="fas fa-envelope"></i><span>Request</span>
+</a>
+<a class="mob-req-nav-item" href="Profile.html">
+<i class="fa-regular fa-user"></i><span>Profile</span>
+</a>
+</nav>
+<!-- ============================================================
        SCRIPTS
   ============================================================ -->
-  <script>window.__levenyGenresHooked = true;</script>
-
-  <script src="js/script.js"></script>
-  <script src="js/search.js"></script>
-  <script src="js/request.js"></script>
-  <script src="js/mobile.js"></script>
-  <script src="js/genres-mobile.js"></script>
-  <!-- <script src="js/tour.js"></script> -->
-
-  <style>
+<script>window.__levenyGenresHooked = true;</script>
+<script src="js/script.js"></script>
+<script src="js/search.js"></script>
+<script src="js/request.js"></script>
+<script src="js/mobile.js"></script>
+<script src="js/genres-mobile.js"></script>
+<!-- <script src="js/tour.js"></script> -->
+<style>
   /* ============================================================
      GENRES PANEL + GENRE RESULTS VIEW
      Mirrors index.html behaviour on the Request page.
@@ -897,9 +870,9 @@
     #mobileGenresPanel.open { transform: translateY(0); visibility: visible !important; }
 
     #mobileGenresPanel h3 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 22px;
-      letter-spacing: 2px;
+      font-family: "Roboto Slab", Rockwell, sans-serif;
+      font-size: 16px;
+      /* letter-spacing: 2px; */
       color: rgba(200,200,255,0.80);
       margin: 0 0 18px;
       text-align: center;
@@ -920,9 +893,9 @@
       padding: 14px 8px;
       border-radius: 16px;
       text-decoration: none;
-      font-family: 'Rajdhani', Rockwell, sans-serif;
-      font-size: 13px;
-      font-weight: 600;
+      font-family: "Roboto Slab", Rockwell, sans-serif;
+      font-size: 11px;
+      font-weight: 100;
       color: rgba(200,200,230,0.80);
       background: rgba(20,20,36,0.70);
       border: 1px solid rgba(140,140,220,0.14);
@@ -1011,13 +984,13 @@
     #mobileGenreGrid .mob-card-info { padding: 8px 10px 10px; }
 
     #mobileGenreGrid .mob-card-title {
-      font-size: 12px; font-family: Rockwell, sans-serif; font-weight: 700;
+      font-size: 12px; font-family: "Roboto Slab", Rockwell, sans-serif; font-weight: 700;
       color: #e8e8ff; white-space: nowrap; overflow: hidden;
       text-overflow: ellipsis; margin-bottom: 2px;
     }
 
     #mobileGenreGrid .mob-card-genre {
-      font-size: 11px; font-family: Rockwell, sans-serif;
+      font-size: 11px; font-family: "Roboto Slab", Rockwell, sans-serif;
       color: rgba(160,160,255,0.65);
     }
 
@@ -1031,7 +1004,7 @@
       border: 1px solid rgba(140,140,220,0.22);
       background: rgba(16,16,28,0.80);
       color: rgba(180,180,230,0.70);
-      font-family: 'Rajdhani', sans-serif; font-size: 14px; font-weight: 600;
+      font-family: "Roboto Slab", Rockwell, sans-serif; font-size: 14px; font-weight: 600;
       cursor: pointer; transition: background 0.2s, color 0.2s;
     }
 
@@ -1079,8 +1052,7 @@
     .mob-suggest-bar a:active { opacity: 0.70; }
   }
   </style>
-
-  <script>
+<script>
 function __isMobileViewport() {
   // True for phones/tablets in portrait (width <=1024) AND for tablets
   // rotated to landscape (their short side, now the height, is <=1024
@@ -1165,28 +1137,23 @@ function __isMobileViewport() {
     });
   }
   </script>
-
-  <!-- ============================================================
+<!-- ============================================================
   SUGGESTION LINK — Desktop + Mobile
   ============================================================ -->
-
-  <!-- DESKTOP version -->
-  <div class="suggest-bar">
-    <i class="fas fa-lightbulb"></i>
-    <a href="https://mail.google.com/mail/?view=cm&to=sedemdotse24@gmail.com&su=Leveny+Site+Suggestion" target="_blank" rel="noopener">
+<!-- DESKTOP version -->
+<div class="suggest-bar">
+<i class="fas fa-lightbulb"></i>
+<a href="https://mail.google.com/mail/?view=cm&amp;to=sedemdotse24@gmail.com&amp;su=Leveny+Site+Suggestion" rel="noopener" target="_blank">
       SUGGESTION LINK!
     </a>
-  </div>
-  <!-- MOBILE version -->
-  <div class="mob-suggest-bar">
-    <i class="fas fa-lightbulb"></i>
-    <span><a href="mailto:sedemdotse24@gmail.com?subject=Leveny%20Site%20Suggestion" target="_blank" rel="noopener">SUGGESTION LINK!</a></span>
-  </div>
-
-
-  <footer class="copyright">
-    <a href="disclaimer.html">Disclaimer!</a>
+</div>
+<!-- MOBILE version -->
+<div class="mob-suggest-bar">
+<i class="fas fa-lightbulb"></i>
+<span><a href="mailto:sedemdotse24@gmail.com?subject=Leveny%20Site%20Suggestion" rel="noopener" target="_blank">SUGGESTION LINK!</a></span>
+</div>
+<footer class="copyright">
+<a href="disclaimer.html">Disclaimer!</a>
 </footer>
-
 </body>
 </html>

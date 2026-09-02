@@ -1,206 +1,185 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>The Channel | Leveny</title>
-
-  <link rel="stylesheet" href="../css/style.css">
-  <link rel="stylesheet" href="../css/style93.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
-  <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
-  <link rel="shortcut icon" href="/favicon/favicon.ico" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
-  <link rel="manifest" href="/favicon/site.webmanifest" />
-</head>
-
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>The Channel | Leveny</title>
+<link href="../css/style.css" rel="stylesheet"/>
+<link href="../css/style93.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;display=swap" rel="stylesheet"/>
+<link href="/favicon/favicon-96x96.png" rel="icon" sizes="96x96" type="image/png"/>
+<link href="/favicon/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="/favicon/favicon.ico" rel="shortcut icon"/>
+<link href="/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/favicon/site.webmanifest" rel="manifest"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&amp;display=swap" rel="stylesheet"/></head>
 <body data-current-movie="the_channel_movie.html">
-
-  <!-- ============================================================
+<!-- ============================================================
       DESKTOP LAYOUT
   ============================================================ -->
-  <header>
-    <nav class="nav_bar">
-        <h2 class="logo">Leveny</h2>
-        <ul class="nav_links">
-            <a href="../index.html"><i class="fas fa-home"></i>Home</a>
-            <li class="shared-dropdown">
-                <a href="../genres.html" class="genre-link">
-                  <i class="fa-solid fa-compact-disc"></i>Genres
+<header>
+<nav class="nav_bar">
+<h2 class="logo">Leveny</h2>
+<ul class="nav_links">
+<a href="../index.html"><i class="fas fa-home"></i>Home</a>
+<li class="shared-dropdown">
+<a class="genre-link" href="../genres.html">
+<i class="fa-solid fa-compact-disc"></i>Genres
                 </a>
-                <span class="dropdown-arrow" id="genreDropdownArrow">
-                  <i class="fas fa-chevron-down"></i>
-                </span>
-                <div class="dropdown-content" id="genreDropdown">
-                  <a href="../genres.html#action"><i class="fas fa-explosion" style="color:#3498db;"></i> Action & Adventure</a>
-                  <a href="../genres.html#superhero"><i class="fas fa-mask" style="color:#e74c3c;"></i> Superhero</a>
-                  <a href="../genres.html#animation"><i class="fas fa-dragon" style="color:#f39c12;"></i> Animation</a>
-                  <a href="../genres.html#fantasy"><i class="fas fa-hat-wizard" style="color:#9b59b6;"></i> Fantasy</a>
-                  <a href="../genres.html#scifi"><i class="fas fa-robot" style="color:#1abc9c;"></i> Sci-Fi</a>
-                  <a href="../genres.html#family"><i class="fas fa-child" style="color:#2ecc71;"></i> Family</a>
-                  <a href="../genres.html#thriller"><i class="fas fa-search" style="color:#95a5a6;"></i> Thriller</a>
-                  <a href="../genres.html#horror"><i class="fas fa-ghost" style="color:#e74c3c;"></i> Horror</a>
-                  <a href="../genres.html#musical"><i class="fas fa-music" style="color:#e84393;"></i> Musical</a>
-                </div>
-            </li>
-            <a href="../Profile.html"><i class="fa-regular fa-user"></i>Profile</a>
-            <a href="../Movie_Request.html"><i class="fas fa-envelope"></i>Request</a>
-        </ul>
-    </nav>
-    <hr>
-  </header>
-
-  <main class="movie-page">
-    <section class="video-section">
-      <div class="frost-wrap" id="frostWrap">
-        <!-- IMDb ID: tt15665274 -->
-        <iframe src="https://vidsrc.me/embed/movie/tt15665274"
-          width="100%" height="450"
-          frameborder="0" allowfullscreen
-          allow="autoplay; fullscreen">
-        </iframe>
-        <div class="frost-click" id="frostClick"></div>
-      </div>
-      <button class="download-btn">
-        <a href="https://wildshare.net/ca49373ab69c6fa8/The.Channel.2023.NaijaPrey.com.mkv" download>
-          <i class="fa fa-download"></i> Download
+<span class="dropdown-arrow" id="genreDropdownArrow">
+<i class="fas fa-chevron-down"></i>
+</span>
+<div class="dropdown-content" id="genreDropdown">
+<a href="../genres.html#action"><i class="fas fa-explosion" style="color:#3498db;"></i> Action &amp; Adventure</a>
+<a href="../genres.html#superhero"><i class="fas fa-mask" style="color:#e74c3c;"></i> Superhero</a>
+<a href="../genres.html#animation"><i class="fas fa-dragon" style="color:#f39c12;"></i> Animation</a>
+<a href="../genres.html#fantasy"><i class="fas fa-hat-wizard" style="color:#9b59b6;"></i> Fantasy</a>
+<a href="../genres.html#scifi"><i class="fas fa-robot" style="color:#1abc9c;"></i> Sci-Fi</a>
+<a href="../genres.html#family"><i class="fas fa-child" style="color:#2ecc71;"></i> Family</a>
+<a href="../genres.html#thriller"><i class="fas fa-search" style="color:#95a5a6;"></i> Thriller</a>
+<a href="../genres.html#horror"><i class="fas fa-ghost" style="color:#e74c3c;"></i> Horror</a>
+<a href="../genres.html#musical"><i class="fas fa-music" style="color:#e84393;"></i> Musical</a>
+<a href="../genres.html#romance"><i class="fas fa-heart" style="color:#ff4d6d;"></i> Romance</a>
+</div>
+</li>
+<a href="../Profile.html"><i class="fa-regular fa-user"></i>Profile</a>
+<a href="../Movie_Request.html"><i class="fas fa-envelope"></i>Request</a>
+</ul>
+</nav>
+<hr/>
+</header>
+<main class="movie-page">
+<section class="video-section">
+<div class="frost-wrap" id="frostWrap">
+<!-- IMDb ID: tt15665274 -->
+<iframe allow="autoplay; fullscreen" allowfullscreen="" frameborder="0" height="450" src="https://vidsrc.me/embed/movie/tt15665274" width="100%">
+</iframe>
+<div class="frost-click" id="frostClick"></div>
+</div>
+<button class="download-btn">
+<a download="" href="https://wildshare.net/ca49373ab69c6fa8/The.Channel.2023.NaijaPrey.com.mkv">
+<i class="fa fa-download"></i> Download
         </a>
-      </button>
-    <a class="broken-link" href="#" data-movie="The Channel">
-      <i class="fas fa-triangle-exclamation"></i> Broken download link?
+</button>
+<a class="broken-link" data-movie="THE CHANNEL" href="#">
+<i class="fas fa-triangle-exclamation"></i> Broken download link?
     </a>
-    </section>
-    <section class="details-section">
-      <h3 class="movie-title">THE CHANNEL</h3>
-      <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Search movies...">
-        <button><i class="fas fa-search"></i></button>
-        <div class="search-dropdown" id="searchDropdown"></div>
-      </div>
-      <p class="info">
-        2023 &nbsp;|&nbsp; <span>95mins 00secs</span> &nbsp;|&nbsp; Action
+</section>
+<section class="details-section">
+<h3 class="movie-title">THE CHANNEL</h3>
+<div class="search-box">
+<input id="searchInput" placeholder="Search movies..." type="text"/>
+<button><i class="fas fa-search"></i></button>
+<div class="search-dropdown" id="searchDropdown"></div>
+</div>
+<p class="info">
+        2023  |  <span>95mins 00secs</span>  |  Action
       </p>
-      <p class="summary">
+<p class="summary">
         After a bank heist in New Orleans spirals into a bloody shootout, a desperate criminal, his volatile brother, and their crew of ex-marines find themselves trapped in the city with nowhere left to run. As a relentless FBI agent closes the net block by block, the brothers must decide how far they're willing to go to protect each other and the people they left behind.
       </p>
-      <div class="related-movies"></div>
-    </div>
-    </section>
-  </main>
+<div class="related-movies"></div>
 
-  <!-- ============================================================
+</section>
+</main>
+<!-- ============================================================
       MOBILE LAYOUT
   ============================================================ -->
-
-  <div id="mobHeader">
-    <span class="mob-logo">Leveny</span>
-    <button id="mobThemeToggle" aria-label="Toggle dark mode">🌙</button>
-    <a href="../Profile.html" id="mobProfileBtn" aria-label="Profile">
-      <i class="fa-regular fa-user"></i>
+<div id="mobHeader">
+<span class="mob-logo">Leveny</span>
+<button aria-label="Toggle dark mode" id="mobThemeToggle">🌙</button>
+<a aria-label="Profile" href="../Profile.html" id="mobProfileBtn">
+<i class="fa-regular fa-user"></i>
+</a>
+</div>
+<div id="mobMovieSearchBar">
+<i class="fas fa-search"></i>
+<input id="mobMovieSearchInput" placeholder="Search movies..." type="text"/>
+<div id="mobMovieSearchDrop"></div>
+</div>
+<div id="mobPage">
+<div id="mobVideoWrap">
+<div id="mobFrostWrap">
+<!-- IMDb ID: tt15665274 -->
+<iframe allow="autoplay; fullscreen; picture-in-picture" allowfullscreen="" frameborder="0" height="240" src="https://vidsrc.me/embed/movie/tt15665274" width="100%">
+</iframe>
+<div id="mobFrostClick"></div>
+</div>
+</div>
+<a download="" href="https://wildshare.net/ca49373ab69c6fa8/The.Channel.2023.NaijaPrey.com.mkv" id="mobDownloadBtn">
+<i class="fas fa-download"></i> Download Movie
     </a>
-  </div>
-
-  <div id="mobMovieSearchBar">
-    <i class="fas fa-search"></i>
-    <input type="text" id="mobMovieSearchInput" placeholder="Search movies...">
-    <div id="mobMovieSearchDrop"></div>
-  </div>
-
-  <div id="mobPage">
-
-    <div id="mobVideoWrap">
-      <div id="mobFrostWrap">
-        <!-- IMDb ID: tt15665274 -->
-        <iframe src="https://vidsrc.me/embed/movie/tt15665274"
-          width="100%" height="240"
-          frameborder="0" allowfullscreen
-          allow="autoplay; fullscreen; picture-in-picture">
-        </iframe>
-        <div id="mobFrostClick"></div>
-      </div>
-    </div>
-
-    <a href="https://wildshare.net/ca49373ab69c6fa8/The.Channel.2023.NaijaPrey.com.mkv" download id="mobDownloadBtn">
-      <i class="fas fa-download"></i> Download Movie
+<a class="mob-broken-link" data-movie="THE CHANNEL" href="#">
+<i class="fas fa-triangle-exclamation"></i> Broken download link?
     </a>
-    <a class="mob-broken-link" href="#" data-movie="The Channel">
-      <i class="fas fa-triangle-exclamation"></i> Broken download link?
-    </a>
-
-    <div id="mobMovieInfo">
-      <div id="mobMovieTitle">THE CHANNEL</div>
-      <div id="mobMovieMeta">
-        <span>2023</span>
-        <span class="mob-meta-badge">Action</span>
-        <span>95 mins</span>
-      </div>
-      <p id="mobMovieSummary">
+<div id="mobMovieInfo">
+<div id="mobMovieTitle">THE CHANNEL</div>
+<div id="mobMovieMeta">
+<span>2023</span>
+<span class="mob-meta-badge">Action</span>
+<span>95 mins</span>
+</div>
+<p id="mobMovieSummary">
         A New Orleans bank heist goes bloody, trapping a desperate criminal, his volatile brother, and their ex-marine crew in the city with a relentless FBI agent closing in. The brothers have to decide how far they'll go to survive and protect the people they love.
       </p>
-    </div>
-
-    <div id="mobRelatedLabel">You Might Also Like</div>
-    <div id="mobRelatedGrid"></div>
+</div>
+<div id="mobRelatedLabel">You Might Also Like</div>
+<div id="mobRelatedGrid"></div>
 <div id="mobFooter">
-        <a href="../disclaimer.html">Disclaimer!</a>
-      </div>
-
-  </div>
-
-  <nav id="mobBottomNav">
-    <a href="../index.html" class="mob-movie-nav-item">
-      <i class="fas fa-home"></i><span>Home</span>
-    </a>
-    <button class="mob-movie-nav-item" id="mobGenresBtn">
-      <i class="fa-solid fa-compact-disc"></i><span>Genres</span>
-    </button>
-    <a href="../Movie_Request.html" class="mob-movie-nav-item">
-      <i class="fas fa-envelope"></i><span>Request</span>
-    </a>
-    <a href="../Profile.html" class="mob-movie-nav-item">
-      <i class="fa-regular fa-user"></i><span>Profile</span>
-    </a>
-  </nav>
-
-  <!-- GENRES PANEL BACKDROP -->
-  <div id="mobGenreBackdrop" style="
+<a href="../disclaimer.html">Disclaimer!</a>
+</div>
+</div>
+<nav id="mobBottomNav">
+<a class="mob-movie-nav-item" href="../index.html">
+<i class="fas fa-home"></i><span>Home</span>
+</a>
+<button class="mob-movie-nav-item" id="mobGenresBtn">
+<i class="fa-solid fa-compact-disc"></i><span>Genres</span>
+</button>
+<a class="mob-movie-nav-item" href="../Movie_Request.html">
+<i class="fas fa-envelope"></i><span>Request</span>
+</a>
+<a class="mob-movie-nav-item" href="../Profile.html">
+<i class="fa-regular fa-user"></i><span>Profile</span>
+</a>
+</nav>
+<!-- GENRES PANEL BACKDROP -->
+<div id="mobGenreBackdrop" style="
     display:none; position:fixed; inset:0; z-index:998;
     background:rgba(0,0,0,0.5); backdrop-filter:blur(4px);
   "></div>
-
-  <!-- GENRES SLIDE-UP PANEL -->
-  <div id="mobGenrePanel" style="
+<!-- GENRES SLIDE-UP PANEL -->
+<div id="mobGenrePanel" style="
     position:fixed; bottom:0; left:0; right:0; z-index:999;
     background:rgba(18,18,18,0.97); border-radius:20px 20px 0 0;
     padding:24px 16px 48px; transform:translateY(100%); bottom:35px;
     transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);
     border-top:1px solid var(--mob-accent-dim);
     ">
-    <h3 style="font-family:Rockwell,sans-serif;color:#fff;margin:0 0 18px;font-size:17px;">Browse Genres</h3>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
-      <a href="../genre-results.html?genre=action"  class="mob-genre-pill"><i class="fas fa-explosion"  style="color:#3498db;"></i><span>Action</span></a>
-      <a href="../genre-results.html?genre=superhero" class="mob-genre-pill"><i class="fas fa-mask"     style="color:#e74c3c;"></i><span>Superhero</span></a>
-      <a href="../genre-results.html?genre=animation" class="mob-genre-pill"><i class="fas fa-dragon"   style="color:#f39c12;"></i><span>Animation</span></a>
-      <a href="../genre-results.html?genre=fantasy"   class="mob-genre-pill"><i class="fas fa-hat-wizard" style="color:#9b59b6;"></i><span>Fantasy</span></a>
-      <a href="../genre-results.html?genre=scifi"     class="mob-genre-pill"><i class="fas fa-robot"    style="color:#1abc9c;"></i><span>Sci-Fi</span></a>
-      <a href="../genre-results.html?genre=family"    class="mob-genre-pill"><i class="fas fa-child"    style="color:#2ecc71;"></i><span>Family</span></a>
-      <a href="../genre-results.html?genre=thriller"  class="mob-genre-pill"><i class="fas fa-search"   style="color:#95a5a6;"></i><span>Thriller</span></a>
-      <a href="../genre-results.html?genre=horror"    class="mob-genre-pill"><i class="fas fa-ghost"    style="color:#e74c3c;"></i><span>Horror</span></a>
-      <a href="../genre-results.html?genre=musical"   class="mob-genre-pill"><i class="fas fa-music"    style="color:#e84393;"></i><span>Musical</span></a>
-    </div>
-  </div>
-
-  <!-- ============================================================
+<h3 style='font-family: "Roboto Slab", Rockwell, sans-serif;color:#fff;margin:0 0 18px;font-size:17px;'>Browse Genres</h3>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+<a class="mob-genre-pill" href="../genre-results.html?genre=action"><i class="fas fa-explosion" style="color:#3498db;"></i><span>Action</span></a>
+<a class="mob-genre-pill" href="../genre-results.html?genre=superhero"><i class="fas fa-mask" style="color:#e74c3c;"></i><span>Superhero</span></a>
+<a class="mob-genre-pill" href="../genre-results.html?genre=animation"><i class="fas fa-dragon" style="color:#f39c12;"></i><span>Animation</span></a>
+<a class="mob-genre-pill" href="../genre-results.html?genre=fantasy"><i class="fas fa-hat-wizard" style="color:#9b59b6;"></i><span>Fantasy</span></a>
+<a class="mob-genre-pill" href="../genre-results.html?genre=scifi"><i class="fas fa-robot" style="color:#1abc9c;"></i><span>Sci-Fi</span></a>
+<a class="mob-genre-pill" href="../genre-results.html?genre=family"><i class="fas fa-child" style="color:#2ecc71;"></i><span>Family</span></a>
+<a class="mob-genre-pill" href="../genre-results.html?genre=thriller"><i class="fas fa-search" style="color:#95a5a6;"></i><span>Thriller</span></a>
+<a class="mob-genre-pill" href="../genre-results.html?genre=horror"><i class="fas fa-ghost" style="color:#e74c3c;"></i><span>Horror</span></a>
+<a class="mob-genre-pill" href="../genre-results.html?genre=musical"><i class="fas fa-music" style="color:#e84393;"></i><span>Musical</span></a>
+<a class="mob-genre-pill" href="../genre-results.html?genre=romance"><i class="fas fa-heart" style="color:#ff4d6d;"></i><span>Romance</span></a>
+</div>
+</div>
+<!-- ============================================================
       SCRIPTS
   ============================================================ -->
-  <script src="../js/movies.js"></script>
-  <script src="../js/related.js"></script>
-  <script src="../js/script.js"></script>
-  <script src="../js/search.js"></script>
-
-  <script>
+<script src="../js/movies.js"></script>
+<script src="../js/related.js"></script>
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<script>
 function __isMobileViewport() {
   return window.innerWidth <= 1024 ||
     (window.matchMedia('(orientation: landscape)').matches &&
@@ -231,30 +210,25 @@ function __isMobileViewport() {
       backdrop?.addEventListener('click', closePanel);
     })();
   </script>
-
-  <script>
+<script>
     const iframe = document.querySelector('.video-section iframe');
     iframe?.addEventListener('click', function () {
       this.classList.add('unblurred');
     });
   </script>
-
-  <footer class="copyright">
-    <a href="../disclaimer.html">Disclaimer!</a>
-  </footer>
-
-  <script>
+<footer class="copyright">
+<a href="../disclaimer.html">Disclaimer!</a>
+</footer>
+<script>
     document.getElementById('frostClick')?.addEventListener('click', function () {
       document.getElementById('frostWrap').classList.add('unblurred');
     });
   </script>
-  <script>
+<script>
     document.getElementById('mobFrostClick')?.addEventListener('click', function () {
       document.getElementById('mobFrostWrap').classList.add('unblurred');
     });
   </script>
-
-
 <!-- broken-link-report-script (Formspree version) -->
 <script>
   (function () {

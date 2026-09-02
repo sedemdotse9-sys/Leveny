@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/design.css">
-    <link rel="stylesheet" href="css/genres.css">
-    <link rel="stylesheet" href="css/genres-mobile.css">   <!-- ★ ADD THIS LINE -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-    <title>Leveny - Genres</title>
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="css/design.css" rel="stylesheet"/>
+<link href="css/genres.css" rel="stylesheet"/>
+<link href="css/genres-mobile.css" rel="stylesheet"/> <!-- ★ ADD THIS LINE -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;display=swap" rel="stylesheet"/>
+<title>Leveny - Genres</title>
+<style>
         :root {
             --action-color: #0a2e5c;
             --superhero-color: #1a1a2e;
@@ -20,385 +20,445 @@
             --thriller-color: #37474f;
             --horror-color: #c62828;
             --musical-color: #d81b60;
+            --romance-color: #ff4d6d;
         }
     </style>
-    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
-    <link rel="shortcut icon" href="/favicon/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
-    <link rel="manifest" href="/favicon/site.webmanifest" />
-</head>
-
-<body style="font-family: Rockwell, 'sans-serif';">
-    <header>
-        <nav class="nav_bar">
-            <h2 class="logo">Leveny</h2>
-            <ul class="nav_links">
-                <a href="index.html"><i class="fas fa-home"></i>Home</a>
-                <a href="genres.html"><i class="fa-solid fa-compact-disc"></i>Genres</a>
-                <a href="Movie_Request.html"><i class="fas fa-envelope"></i>Request</a>
-                <a href="Profile.html"><i class="fa-regular fa-user"></i>Profile</a>
-                
-            </ul>
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Search movies...">
-                <button><i class="fas fa-search"></i></button>
-                <div class="search-dropdown" id="searchDropdown"></div>
-            </div>
-        </nav>
-        <hr>
-    </header>
-
-    <!-- Place these outside any container, just after <header> -->
-    <div class="genre-arrow-left" id="genrePrev">&lt;</div>
-    <div class="genre-arrow-right" id="genreNext">&gt;</div>
-
-    <main class="genres-container">
-        <!-- GENRE SECTIONS (as slides) -->
-        <div class="genre-slides-container">
-            <!-- ACTION/ADVENTURE -->
-            <section class="genre-slide active" id="action" data-genre="action">
-                <div class="genre-slide-header">
-                    <h2><i class="fas fa-explosion"></i> Action & Adventure</h2>
-                    <p>High-octane thrills, epic journeys, and explosive sequences</p>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Action Movies will be loaded here by JavaScript -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Action Movies will be loaded here by JavaScript -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Action Movies will be loaded here by JavaScript -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Action Movies will be loaded here by JavaScript -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Action Movies will be loaded here by JavaScript -->
-                    </div>
-                </div>
-                <div class="genre-pagination">
-                    <span class="page-numbers" data-page="1">1</span>
-                    <span class="page-numbers" data-page="2">2</span>
-                    <span class="page-numbers" data-page="3">3</span>
-                </div>
-            </section>
-
-            <!-- SUPERHERO -->
-            <section class="genre-slide" id="superhero" data-genre="superhero">
-                <div class="genre-slide-header">
-                    <h2><i class="fas fa-mask"></i> Superhero & Comic Book</h2>
-                    <p>Heroes, villains, and extraordinary powers</p>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Superhero Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Superhero Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Superhero Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Superhero Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Superhero Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="genre-pagination">
-                    <span class="page-numbers" data-page="1">1</span>
-                    <span class="page-numbers" data-page="2">2</span>
-                </div>
-            </section>
-
-            <!-- ANIMATION -->
-            <section class="genre-slide" id="animation" data-genre="animation">
-                <div class="genre-slide-header">
-                    <h2><i class="fas fa-dragon"></i> Animation</h2>
-                    <p>Animated wonders for all ages</p>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Animation Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Animation Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Animation Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Animation Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Animation Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="genre-pagination">
-                    <span class="page-numbers" data-page="1">1</span>
-                    <span class="page-numbers" data-page="2">2</span>
-                    <span class="page-numbers" data-page="3">3</span>
-                </div>
-            </section>
-
-            <!-- FANTASY -->
-            <section class="genre-slide" id="fantasy" data-genre="fantasy">
-                <div class="genre-slide-header">
-                    <h2><i class="fas fa-hat-wizard"></i> Fantasy</h2>
-                    <p>Magical worlds and mythical creatures</p>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Fantasy Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Fantasy Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Fantasy Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Fantasy Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Fantasy Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="genre-pagination">
-                    <span class="page-numbers" data-page="1">1</span>
-                    <span class="page-numbers" data-page="2">2</span>
-                </div>
-            </section>
-
-            <!-- SCI-FI -->
-            <section class="genre-slide" id="scifi" data-genre="scifi">
-                <div class="genre-slide-header">
-                    <h2><i class="fas fa-robot"></i> Science Fiction</h2>
-                    <p>Futuristic technology and space exploration</p>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Sci-Fi Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Sci-Fi Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Sci-Fi Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Sci-Fi Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Sci-Fi Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="genre-pagination">
-                    <span class="page-numbers" data-page="1">1</span>
-                    <span class="page-numbers" data-page="2">2</span>
-                </div>
-            </section>
-
-            <!-- FAMILY -->
-            <section class="genre-slide" id="family" data-genre="family">
-                <div class="genre-slide-header">
-                    <h2><i class="fas fa-child"></i> Family & Kids</h2>
-                    <p>Fun for the whole family</p>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Family Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Family Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Family Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Family Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Family Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="genre-pagination">
-                    <span class="page-numbers" data-page="1">1</span>
-                    <span class="page-numbers" data-page="2">2</span>
-                    <span class="page-numbers" data-page="3">3</span>
-                </div>
-            </section>
-
-            <!-- THRILLER -->
-            <section class="genre-slide" id="thriller" data-genre="thriller">
-                <div class="genre-slide-header">
-                    <h2><i class="fas fa-search"></i> Thriller & Mystery</h2>
-                    <p>Suspense, puzzles, and mind-bending plots</p>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Thriller Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Thriller Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Thriller Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Thriller Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Thriller Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="genre-pagination">
-                    <span class="page-numbers" data-page="1">1</span>
-                </div>
-            </section>
-
-            <!-- HORROR -->
-            <section class="genre-slide" id="horror" data-genre="horror">
-                <div class="genre-slide-header">
-                    <h2><i class="fas fa-ghost"></i> Horror</h2>
-                    <p>Chills, thrills, and nightmares</p>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Horror Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Horror Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Horror Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Horror Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Horror Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="genre-pagination">
-                    <span class="page-numbers" data-page="1">1</span>
-                </div>
-            </section>
-
-            <!-- MUSICAL -->
-            <section class="genre-slide" id="musical" data-genre="musical">
-                <div class="genre-slide-header">
-                    <h2><i class="fas fa-music"></i> Musical</h2>
-                    <p>Song, dance, and spectacular performances</p>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Musical Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Musical Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Musical Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Musical Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="movie-slider">
-                    <div class="movie-slider-container">
-                        <!-- Musical Movies will be loaded here -->
-                    </div>
-                </div>
-                <div class="genre-pagination">
-                    <span class="page-numbers" data-page="1">1</span>
-                    <span class="page-numbers" data-page="2">2</span>
-                </div>
-            </section>
-        </div>
-    </main>
-
-    <script src="js/movies.js"></script>
-    <script src="js/script.js"></script>
-    <script src="js/search.js"></script>
-    <script src="js/genres.js"></script>
-
+<link href="/favicon/favicon-96x96.png" rel="icon" sizes="96x96" type="image/png"/>
+<link href="/favicon/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="/favicon/favicon.ico" rel="shortcut icon"/>
+<link href="/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/favicon/site.webmanifest" rel="manifest"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&amp;display=swap" rel="stylesheet"/></head>
+<body style='font-family: "Roboto Slab", Rockwell, sans-serif;'>
+<header>
+<nav class="nav_bar">
+<h2 class="logo">Leveny</h2>
+<ul class="nav_links">
+<a href="index.html"><i class="fas fa-home"></i>Home</a>
+<a href="genres.html"><i class="fa-solid fa-compact-disc"></i>Genres</a>
+<a href="Movie_Request.html"><i class="fas fa-envelope"></i>Request</a>
+<a href="Profile.html"><i class="fa-regular fa-user"></i>Profile</a>
+</ul>
+<div class="search-box">
+<input id="searchInput" placeholder="Search movies..." type="text"/>
+<button><i class="fas fa-search"></i></button>
+<div class="search-dropdown" id="searchDropdown"></div>
+</div>
+</nav>
+<hr/>
+</header>
+<!-- Place these outside any container, just after <header> -->
+<div class="genre-arrow-left" id="genrePrev">&lt;</div>
+<div class="genre-arrow-right" id="genreNext">&gt;</div>
+<main class="genres-container">
+<!-- GENRE SECTIONS (as slides) -->
+<div class="genre-slides-container">
+<!-- ACTION/ADVENTURE -->
+<section class="genre-slide active" data-genre="action" id="action">
+    <div class="genre-slide-header">
+    <h2><i class="fas fa-explosion"></i> Action &amp; Adventure</h2>
+    <p>High-octane thrills, epic journeys, and explosive sequences</p>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Action Movies will be loaded here by JavaScript -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Action Movies will be loaded here by JavaScript -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Action Movies will be loaded here by JavaScript -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Action Movies will be loaded here by JavaScript -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Action Movies will be loaded here by JavaScript -->
+    </div>
+    </div>
+    <div class="genre-pagination">
+    <span class="page-numbers" data-page="1">1</span>
+    <span class="page-numbers" data-page="2">2</span>
+    <span class="page-numbers" data-page="3">3</span>
+    </div>
     <footer class="copyright">
         <a href="../disclaimer.html">Disclaimer!</a>
-</footer>
+    </footer>
+</section>
+<!-- SUPERHERO -->
+<section class="genre-slide" data-genre="superhero" id="superhero">
+    <div class="genre-slide-header">
+    <h2><i class="fas fa-mask"></i> Superhero &amp; Comic Book</h2>
+    <p>Heroes, villains, and extraordinary powers</p>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Superhero Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Superhero Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Superhero Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Superhero Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Superhero Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="genre-pagination">
+    <span class="page-numbers" data-page="1">1</span>
+    <span class="page-numbers" data-page="2">2</span>
+    </div>
+    <footer class="copyright">
+        <a href="../disclaimer.html">Disclaimer!</a>
+    </footer>
+    </section>
+<!-- ANIMATION -->
+<section class="genre-slide" data-genre="animation" id="animation">
+    <div class="genre-slide-header">
+    <h2><i class="fas fa-dragon"></i> Animation</h2>
+    <p>Animated wonders for all ages</p>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Animation Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Animation Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Animation Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Animation Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Animation Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="genre-pagination">
+    <span class="page-numbers" data-page="1">1</span>
+    <span class="page-numbers" data-page="2">2</span>
+    <span class="page-numbers" data-page="3">3</span>
+    </div>
+    <footer class="copyright">
+        <a href="../disclaimer.html">Disclaimer!</a>
+    </footer>
+</section>
+<!-- FANTASY -->
+<section class="genre-slide" data-genre="fantasy" id="fantasy">
+    <div class="genre-slide-header">
+    <h2><i class="fas fa-hat-wizard"></i> Fantasy</h2>
+    <p>Magical worlds and mythical creatures</p>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Fantasy Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Fantasy Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Fantasy Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Fantasy Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Fantasy Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="genre-pagination">
+    <span class="page-numbers" data-page="1">1</span>
+    <span class="page-numbers" data-page="2">2</span>
+    </div>
+    <footer class="copyright">
+        <a href="../disclaimer.html">Disclaimer!</a>
+    </footer>
+</section>
+<!-- SCI-FI -->
+<section class="genre-slide" data-genre="scifi" id="scifi">
+    <div class="genre-slide-header">
+    <h2><i class="fas fa-robot"></i> Science Fiction</h2>
+    <p>Futuristic technology and space exploration</p>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Sci-Fi Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Sci-Fi Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Sci-Fi Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Sci-Fi Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Sci-Fi Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="genre-pagination">
+    <span class="page-numbers" data-page="1">1</span>
+    <span class="page-numbers" data-page="2">2</span>
+    </div>
+    <footer class="copyright">
+        <a href="../disclaimer.html">Disclaimer!</a>
+    </footer>
+</section>
+<!-- FAMILY -->
+<section class="genre-slide" data-genre="family" id="family">
+    <div class="genre-slide-header">
+    <h2><i class="fas fa-child"></i> Family &amp; Kids</h2>
+    <p>Fun for the whole family</p>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Family Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Family Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Family Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Family Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Family Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="genre-pagination">
+    <span class="page-numbers" data-page="1">1</span>
+    <span class="page-numbers" data-page="2">2</span>
+    <span class="page-numbers" data-page="3">3</span>
+    </div>
+    <footer class="copyright">
+        <a href="../disclaimer.html">Disclaimer!</a>
+    </footer>
+</section>
+<!-- THRILLER -->
+<section class="genre-slide" data-genre="thriller" id="thriller">
+    <div class="genre-slide-header">
+    <h2><i class="fas fa-search"></i> Thriller &amp; Mystery</h2>
+    <p>Suspense, puzzles, and mind-bending plots</p>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Thriller Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Thriller Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Thriller Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Thriller Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Thriller Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="genre-pagination">
+    <span class="page-numbers" data-page="1">1</span>
+    </div>
+    <footer class="copyright">
+        <a href="../disclaimer.html">Disclaimer!</a>
+    </footer>
+</section>
+<!-- HORROR -->
+<section class="genre-slide" data-genre="horror" id="horror">
+    <div class="genre-slide-header">
+    <h2><i class="fas fa-ghost"></i> Horror</h2>
+    <p>Chills, thrills, and nightmares</p>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Horror Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Horror Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Horror Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Horror Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Horror Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="genre-pagination">
+    <span class="page-numbers" data-page="1">1</span>
+    </div>
+    <footer class="copyright">
+        <a href="../disclaimer.html">Disclaimer!</a>
+    </footer>
+</section>
+<!-- MUSICAL -->
+<section class="genre-slide" data-genre="musical" id="musical">
+    <div class="genre-slide-header">
+    <h2><i class="fas fa-music"></i> Musical</h2>
+    <p>Song, dance, and spectacular performances</p>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Musical Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Musical Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Musical Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Musical Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Musical Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="genre-pagination">
+    <span class="page-numbers" data-page="1">1</span>
+    <span class="page-numbers" data-page="2">2</span>
+    </div>
+    <footer class="copyright">
+        <a href="../disclaimer.html">Disclaimer!</a>
+    </footer>
+</section>
+<!-- ROMANCE -->
+<section class="genre-slide" data-genre="romance" id="romance">
+    <div class="genre-slide-header">
+    <h2><i class="fas fa-heart"></i> Romance</h2>
+    <p>Heartfelt love stories and unforgettable connections</p>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Romance Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Romance Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Romance Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Romance Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="movie-slider">
+    <div class="movie-slider-container">
+    <!-- Romance Movies will be loaded here -->
+    </div>
+    </div>
+    <div class="genre-pagination">
+    <span class="page-numbers" data-page="1">1</span>
+    </div>
+    <footer class="copyright">
+    <a href="../disclaimer.html">Disclaimer!</a>
+    </footer>
+</section>
+
+
+</div>
+<!-- ★ MOVED — footer now lives inside .genres-container so it sits
+     on the dark page background instead of falling through to the
+     plain white <body> background below it. -->
+
+</main>
+<script src="js/movies.js"></script>
+<script src="js/script.js"></script>
+<script src="js/search.js"></script>
+<script src="js/genres.js"></script>
+
+<!-- MOBILE FOOTER -->
+<div id="mobileFooter">
+    <a href="../disclaimer.html">Disclaimer!</a>
+</div>
 </body>
 </html>

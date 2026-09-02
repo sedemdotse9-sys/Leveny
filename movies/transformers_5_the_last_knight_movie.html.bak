@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Transformers 5: The Last Knight | Leveny</title>
+<link href="../css/style116.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;display=swap" rel="stylesheet"/>
+<style>
+    /* ============================================================
+       MOBILE STYLES — Tron: Legacy Movie Page
+       Teal accent — Sci-Fi genre
+       Only active on screens 768px and below.
+       Desktop layout (style7.css) is completely untouched.
+    ============================================================ */
+
+    @media screen and (min-width: 1025px) and (not ((orientation: landscape) and (max-height: 1024px) and (pointer: coarse))) {
+      #mobHeader,
+      #mobMovieSearchBar,
+      #mobPage,
+      #mobBottomNav { display: none !important;
+        padding: 0 4px env(safe-area-inset-bottom, 8px);
+    }
+    }
+
+    @media screen and (max-width: 1024px),
+       screen and (orientation: landscape) and (max-height: 1024px) and (pointer: coarse) {
+
+      header,
+      .movie-page,
+      footer { display: none !important; }
+
+      body {
+        background: none !important;
+        background-color: #e0f7f4 !important;
+        color: #111;
+        /* overflow-x: hidden; */
+        overflow-y: auto;
+        padding: 0;
+        margin: 0;
+        transition: background-color 1s ease, color 0.4s ease;
+      }
+
+      body::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 110% 60% at 50% -8%,
+            rgba(26,188,156,0.55) 0%, transparent 65%),
+          radial-gradient(ellipse 70% 40% at 80% 90%,
+            rgba(26,188,156,0.35) 0%, transparent 60%),
+          linear-gradient(175deg,
+            rgba(26,188,156,0.28) 0%,
+            rgba(26,188,156,0.18) 40%,
+            transparent 75%);
+      }
+
+      body.dark-mode {
+        background-color: #0D0D0D !important;
+        color: #f0f0f0;
+      }
+
+      body.dark-mode::after {
+        background:
+          radial-gradient(ellipse 110% 60% at 50% -8%,
+            rgba(26,188,156,0.55) 0%, transparent 65%),
+          radial-gradient(ellipse 70% 40% at 80% 90%,
+            rgba(26,188,156,0.35) 0%, transparent 60%),
+          linear-gradient(175deg,
+            rgba(26,188,156,0.28) 0%,
+            rgba(26,188,156,0.18) 40%,
+            transparent 75%);
+      }
+
+      #mobHeader,
+      #mobMovieSearchBar,
+      #mobPage,
+      #mobBottomNav {
+        position: relative;
+        z-index: 1;
+        padding: 0 4px env(safe-area-inset-bottom, 8px);
+    }
+
+      /* ============================================================
+         HEADER
+      ============================================================ */
+      #mobHeader {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 16px 10px;
+        position: sticky;
+        top: 0;
+        z-index: 999;
+        gap: 10px;
+        background: rgba(255,255,255,0.30);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(26,188,156,0.20);
+        box-shadow: 0 2px 20px rgba(26,188,156,0.20);
+        transition: background 0.4s, border-color 1s, box-shadow 1s;
+      }
+
+      #mobHeader::before {
+        content: '';
+        position: absolute;
+        inset: -20px 0;
+        z-index: -1;
+        background: radial-gradient(ellipse 100% 120% at 50% 0%, rgba(26,188,156,0.35) 0%, transparent 70%);
+        pointer-events: none;
+      }
+
+      body.dark-mode #mobHeader {
+        background: rgba(13,13,13,0.70);
+        border-bottom: 1px solid rgba(26,188,156,0.13);
+        box-shadow: 0 1px 0 0 rgba(26,188,156,0.13),
+                    0 4px 24px rgba(0,0,0,0.6);
+      }
+
+      #mobHeader .mob-logo {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 26px;
+        font-weight: 400;
+        letter-spacing: 4px;
+        color: #111;
+        flex: 1;
+        text-decoration: none;
+        transition: color 0.4s;
+      }
+
+      body.dark-mode #mobHeader .mob-logo { color: #fff; }
+
+      #mobThemeToggle {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: 1px solid #1abc9c;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 17px;
+        flex-shrink: 0;
+        transition: background 0.4s, box-shadow 0.4s, transform 0.25s ease;
+        background: rgba(255,255,255,0.35);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 0 10px rgba(26,188,156,0.22),
+                    inset 0 0 6px rgba(26,188,156,0.13);
+        color: #333;
+      }
+
+      body.dark-mode #mobThemeToggle {
+        background: rgba(26,188,156,0.13);
+        box-shadow: 0 0 14px rgba(26,188,156,0.38);
+        color: #1abc9c;
+      }
+
+      #mobThemeToggle:active { transform: scale(0.88) rotate(20deg); }
+
+      #mobProfileBtn {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        font-size: 15px;
+        flex-shrink: 0;
+        background: transparent;
+        color: #1abc9c;
+        border: 1px solid #1abc9c;
+        box-shadow: 0 0 10px rgba(26,188,156,0.22);
+        transition: background 0.4s, box-shadow 0.4s;
+      }
+
+      body.dark-mode #mobProfileBtn {
+        background: rgba(26,188,156,0.13);
+        box-shadow: 0 0 10px rgba(26,188,156,0.38);
+      }
+
+      /* ============================================================
+         SEARCH BAR
+      ============================================================ */
+      #mobMovieSearchBar {
+        display: flex;
+        align-items: center;
+        border-radius: 24px;
+        padding: 10px 16px;
+        margin: 10px 12px 12px;
+        gap: 10px;
+        position: relative;
+        z-index: 950;
+        background: rgba(255,255,255,0.30);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(26,188,156,0.20);
+        box-shadow: 0 0 12px rgba(26,188,156,0.20),
+                    inset 0 0 8px rgba(26,188,156,0.13);
+        transition: background 0.4s, border-color 0.4s, box-shadow 0.4s;
+      }
+
+      body.dark-mode #mobMovieSearchBar {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(26,188,156,0.13);
+        box-shadow: 0 0 12px rgba(26,188,156,0.13);
+      }
+
+      #mobMovieSearchBar i { color: #1abc9c; font-size: 14px; flex-shrink: 0; }
+
+      #mobMovieSearchInput {
+        border: none;
+        background: transparent;
+        outline: none;
+        font-size: 16px;
+        color: #111;
+        width: 100%;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
+      }
+
+      body.dark-mode #mobMovieSearchInput { color: #f0f0f0; }
+      #mobMovieSearchInput::placeholder { color: #666; }
+      body.dark-mode #mobMovieSearchInput::placeholder { color: #555; }
+
+      #mobMovieSearchDrop {
+        display: none;
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 0;
+        right: 0;
+        border-radius: 16px;
+        z-index: 960;
+        overflow: hidden;
+        max-height: 280px;
+        overflow-y: auto;
+        background: rgba(255,255,255,0.98);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(26,188,156,0.20);
+        box-shadow: 0 8px 30px rgba(26,188,156,0.20);
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--mob-accent, #00A8FF) transparent;
+}
+#mobMovieSearchDrop::-webkit-scrollbar {
+    width: 8px;
+}
+#mobMovieSearchDrop::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 8px 0;
+}
+#mobMovieSearchDrop::-webkit-scrollbar-thumb {
+    background: var(--mob-accent, #00A8FF);
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+
+
+
+
+      body.dark-mode #mobMovieSearchDrop {
+        background: rgba(18,18,18,0.97);
+        border: 1px solid rgba(26,188,156,0.13);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.7);
+      }
+
+      .mob-search-drop-item {
+        padding: 12px 16px;
+        color: #111;
+        font-size: 14px;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
+        border-bottom: 1px solid rgba(26,188,156,0.13);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      body.dark-mode .mob-search-drop-item { color: #ddd; border-bottom-color: rgba(255,255,255,0.06); }
+      .mob-search-drop-item:last-child { border-bottom: none; }
+      .mob-search-drop-item:active { background: rgba(26,188,156,0.13); }
+      .mob-search-drop-item i { color: #1abc9c; font-size: 12px; }
+
+      /* ============================================================
+         MAIN PAGE CONTENT
+      ============================================================ */
+      #mobPage {
+        padding: 14px 12px 76px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      #mobVideoWrap {
+        border-radius: 20px;
+        overflow: hidden;
+        background: #000;
+        box-shadow: 0 0 0 1.5px #1abc9c,
+                    0 0 20px rgba(26,188,156,0.22),
+                    0 8px 32px rgba(0,0,0,0.18);
+      }
+
+      body.dark-mode #mobVideoWrap {
+        box-shadow: 0 0 0 1.5px #1abc9c,
+                    0 0 24px rgba(26,188,156,0.38),
+                    0 8px 40px rgba(0,0,0,0.55);
+      }
+
+      #mobVideoWrap video {
+        width: 100%;
+        display: block;
+        height: 240px;
+        object-fit: contain;
+        background: #000;
+      }
+
+      #mobDownloadBtn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 13px;
+        border-radius: 20px;
+        text-decoration: none;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
+        font-size: 15px;
+        font-weight: 700;
+        transition: transform 0.15s;
+        background: rgba(255,255,255,0.30);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border: 1px solid #1abc9c;
+        color: #1abc9c;
+        box-shadow: 0 0 14px rgba(26,188,156,0.22),
+                    inset 0 0 8px rgba(26,188,156,0.13);
+      }
+
+      body.dark-mode #mobDownloadBtn {
+        background: rgba(26,188,156,0.13);
+        box-shadow: 0 0 14px rgba(26,188,156,0.38);
+      }
+
+      #mobDownloadBtn:active { transform: scale(0.97); }
+      #mobDownloadBtn i { font-size: 16px; }
+      .mob-broken-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        margin-top: -2px;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
+        font-size: 12px;
+        color: rgba(60,60,60,0.60);
+        text-decoration: none;
+        transition: color 0.4s ease;
+      }
+
+      .mob-broken-link i {
+        font-size: 11px;
+        color: var(--mob-accent);
+      }
+
+      body.dark-mode .mob-broken-link {
+        color: rgba(220,220,220,0.55);
+      }
+
+      .mob-broken-link:active {
+        opacity: 0.65;
+      }
+      .mob-broken-link.reported {
+        color: #2ecc71 !important;
+        pointer-events: none;
+        cursor: default;
+      }
+
+      .mob-broken-link.reported i {
+        color: #2ecc71 !important;
+      }
+
+      #mobMovieInfo {
+        background: rgba(255,255,255,0.28);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border: 1px solid rgba(26,188,156,0.20);
+        border-radius: 20px;
+        padding: 16px;
+        box-shadow: 0 0 10px rgba(26,188,156,0.13);
+        position: relative;
+      }
+
+      #mobMovieInfo::before {
+        content: '';
+        position: absolute;
+        inset: -20px 0;
+        z-index: -1;
+        background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(26,188,156,0.35) 0%, transparent 70%);
+        pointer-events: none;
+      }
+
+      body.dark-mode #mobMovieInfo {
+        background: rgba(255,255,255,0.04);
+        border-color: rgba(255,255,255,0.07);
+        box-shadow: none;
+      }
+
+      #mobMovieTitle {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 34px;
+        letter-spacing: 2px;
+        color: #111;
+        margin-bottom: 8px;
+        line-height: 1;
+        transition: color 0.4s;
+      }
+
+      body.dark-mode #mobMovieTitle { color: #fff; }
+
+      #mobMovieMeta {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
+        font-size: 12px;
+        color: #555;
+      }
+
+      body.dark-mode #mobMovieMeta { color: #888; }
+
+      .mob-meta-badge {
+        background: #1abc9c;
+        color: #fff;
+        padding: 2px 10px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 700;
+        box-shadow: 0 0 8px rgba(26,188,156,0.22);
+      }
+
+      body.dark-mode .mob-meta-badge {
+        background: rgba(26,188,156,0.13);
+        color: #1abc9c;
+        border: 1px solid #1abc9c;
+        box-shadow: 0 0 8px rgba(26,188,156,0.38);
+      }
+
+      #mobMovieSummary {
+        font-family: "Roboto Slab", Rockwell, sans-serif;
+        font-size: 13px;
+        line-height: 1.6;
+        color: #333;
+        transition: color 0.4s;
+      }
+
+      body.dark-mode #mobMovieSummary { color: #bbb; }
+
+      #mobRelatedLabel {
+        font-family: "Roboto Slab", Rockwell, sans-serif;
+        font-size: 17px;
+        font-weight: 700;
+        color: #111;
+        padding: 2px 0 10px;
+        transition: color 0.4s;
+      }
+
+      body.dark-mode #mobRelatedLabel { color: #fff; }
+
+      #mobRelatedGrid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .mob-related-card {
+        border-radius: 16px;
+        overflow: hidden;
+        text-decoration: none;
+        display: block;
+        transition: transform 0.15s ease;
+        background: rgba(255,255,255,0.30);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border: 1px solid rgba(26,188,156,0.20);
+        box-shadow: 0 0 10px rgba(26,188,156,0.13),
+                    0 2px 12px rgba(0,0,0,0.08);
+      }
+
+      body.dark-mode .mob-related-card {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.07);
+        box-shadow: none;
+      }
+
+      .mob-related-card:active {
+        transform: scale(0.97);
+        border-color: #1abc9c;
+        box-shadow: 0 0 16px rgba(26,188,156,0.22);
+      }
+
+      body.dark-mode .mob-related-card:active {
+        border-color: #1abc9c;
+        box-shadow: 0 0 16px rgba(26,188,156,0.38);
+      }
+
+      .mob-related-card img {
+        width: 100%;
+        aspect-ratio: 2 / 3;
+        object-fit: cover;
+        display: block;
+      }
+
+      .mob-related-card-info { padding: 8px 10px 10px; }
+
+      .mob-related-card-title {
+        font-size: 12px;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
+        font-weight: 700;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 2px;
+        color: #111;
+        transition: color 0.4s;
+      }
+
+      body.dark-mode .mob-related-card-title { color: #f0f0f0; }
+
+      .mob-related-card-genre {
+        font-size: 11px;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
+        color: #1abc9c;
+      }
+
+      /* ============================================================
+         BOTTOM NAV
+      ============================================================ */
+      #mobBottomNav {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        min-height: 62px;
+        z-index: 1000;
+        align-items: center;
+        justify-content: space-around;
+        padding: 8px 4px env(safe-area-inset-bottom, 8px);
+        background: rgba(255,255,255,0.80);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-top: 1px solid rgba(26,188,156,0.20);
+        box-shadow: 0 -4px 20px rgba(26,188,156,0.20),
+                    0 -1px 0 rgba(26,188,156,0.20);
+        transition: background 0.4s, border-color 0.4s, box-shadow 0.4s;
+      }
+
+      body.dark-mode #mobBottomNav {
+        background: rgba(13,13,13,0.85);
+        border-top: 1px solid rgba(26,188,156,0.13);
+        box-shadow: 0 -4px 24px rgba(0,0,0,0.5),
+                    0 -1px 0 rgba(26,188,156,0.13);
+        padding: 0 4px env(safe-area-inset-bottom, 8px);
+    }
+
+      .mob-movie-nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        text-decoration: none;
+        color: #888;
+        flex: 1;
+        padding: 8px 0;
+        transition: color 0.3s;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+      }
+
+      .mob-movie-nav-item i { font-size: 20px; transition: transform 0.2s; }
+
+      .mob-movie-nav-item span {
+        font-size: 10px;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
+        font-weight: 600;
+      }
+
+      .mob-genre-pill {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        padding: 14px 8px;
+        border-radius: 14px;
+        text-decoration: none;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
+        font-size: 12px;
+        color: #ccc;
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.08);
+        transition: background 0.2s;
+      }
+      .mob-genre-pill:active { background: rgba(0,200,100,0.13); }
+      .mob-genre-pill i { font-size: 20px; }
+
+      #mobGenrePanel h3 {
+        text-align: center;
+      }
+
+    
+      #mobFrostWrap {
+        position: relative;
+        width: 100%;
+      }
+
+      #mobFrostWrap iframe {
+        width: 100%;
+        height: 240px;
+        border: none;
+        display: block;
+        filter: blur(10px);
+        transition: filter 0.4s ease;
+      }
+
+      #mobFrostWrap.unblurred iframe {
+        filter: none;
+      }
+
+      #mobFrostClick {
+        position: absolute;
+        inset: 0;
+        z-index: 10;
+        cursor: pointer;
+        border-radius: 20px;
+      }
+
+      #mobFrostWrap.unblurred #mobFrostClick {
+        display: none;
+      }
+
+    } /* end @media 768px */
+
+      #mobFooter {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 8px 12px 4px;
+        font-family: "Roboto Slab", Rockwell, sans-serif;
+        font-size: 15px;
+      
+
+}
+
+      #mobFooter a {
+        color: #f39c12;
+        text-decoration: none;
+      
+
+}
+  </style>
+<link href="/favicon/favicon-96x96.png" rel="icon" sizes="96x96" type="image/png"/>
+<link href="/favicon/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="/favicon/favicon.ico" rel="shortcut icon"/>
+<link href="/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/favicon/site.webmanifest" rel="manifest"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&amp;display=swap" rel="stylesheet"/></head>
+<body data-current-movie="transformers_5_the_last_knight_movie.html">
+<!-- ============================================================
+       DESKTOP LAYOUT — completely unchanged
+  ============================================================ -->
+<header>
+<nav class="nav_bar">
+<h2 class="logo">Leveny</h2>
+<ul class="nav_links">
+<a href="../index.html"><i class="fas fa-home"></i>Home</a>
+<li class="shared-dropdown">
+<a class="genre-link" href="../Genres.html">
+<i class="fa-solid fa-compact-disc"></i>Genres
+                </a>
+<span class="dropdown-arrow" id="genreDropdownArrow">
+<i class="fas fa-chevron-down"></i>
+</span>
+<div class="dropdown-content" id="genreDropdown">
+<a href="../Genres.html#action"><i class="fas fa-explosion" style="color: #3498db;"></i> Action &amp; Adventure</a>
+<a href="../Genres.html#superhero"><i class="fas fa-mask" style="color: #e74c3c;"></i> Superhero</a>
+<a href="../Genres.html#animation"><i class="fas fa-dragon" style="color: #f39c12;"></i> Animation</a>
+<a href="../Genres.html#fantasy"><i class="fas fa-hat-wizard" style="color: #9b59b6;"></i> Fantasy</a>
+<a href="../Genres.html#scifi"><i class="fas fa-robot" style="color: #1abc9c;"></i> Sci-Fi</a>
+<a href="../Genres.html#family"><i class="fas fa-child" style="color: #2ecc71;"></i> Family</a>
+<a href="../Genres.html#thriller"><i class="fas fa-search" style="color: #95a5a6;"></i> Thriller</a>
+<a href="../Genres.html#horror"><i class="fas fa-ghost" style="color: #e74c3c;"></i> Horror</a>
+<a href="../Genres.html#musical"><i class="fas fa-music" style="color: #e84393;"></i> Musical</a>
+<a href="../Genres.html#romance"><i class="fas fa-heart" style="color: #ff4d6d;"></i> Romance</a>
+</div>
+</li>
+<a href="../Profile.html"><i class="fa-regular fa-user"></i>Profile</a>
+<a href="../Movie_Request.html"><i class="fas fa-envelope"></i>Request</a>
+</ul>
+</nav>
+<hr/>
+</header>
+<main class="movie-page">
+<section class="video-section">
+<div class="frost-wrap" id="frostWrap">
+<iframe allow="autoplay; fullscreen" allowfullscreen="" frameborder="0" height="430" src="https://vidsrc.me/embed/movie/tt3371366" width="100%">
+</iframe>
+<div class="frost-click" id="frostClick"></div>
+</div>
+<button class="download-btn">
+<a download="" href="https://wildshare.net/342b2f0d03c7986f">
+<i class="fa fa-download"></i> Download
+        </a>
+</button>
+<a class="broken-link" data-movie="TRANSFORMERS 5: THE LAST KNIGHT" href="#">
+<i class="fas fa-triangle-exclamation"></i> Broken download link?
+      </a>
+</section>
+<section class="details-section">
+<h3 class="movie-title">TRANSFORMERS 5: THE LAST KNIGHT</h3>
+<div class="search-box">
+<input id="searchInput" placeholder="Search movies..." type="text"/>
+<button><i class="fas fa-search"></i></button>
+<div class="search-dropdown" id="searchDropdown"></div>
+</div>
+<p class="info">
+        2017  |  <span>154mins 00secs</span>  |  Sci-Fi
+      </p>
+<p class="summary">
+        In the past, King Arthur and his knights won a battle with the help of Merlin and a Cybertronian staff of ultimate power. In the present day, humans and Transformers are at war, and Transformers are treated as outlaws. Optimus Prime drifts into deep space and finds his ruined home world, Cybertron.
+      </p>
+<div class="related-movies"></div>
+</section>
+</main>
+<!-- ============================================================
+       MOBILE LAYOUT
+  ============================================================ -->
+<div id="mobHeader">
+<span class="mob-logo">Leveny</span>
+<button aria-label="Toggle dark mode" id="mobThemeToggle">🌙</button>
+<a aria-label="Profile" href="../Profile.html" id="mobProfileBtn">
+<i class="fa-regular fa-user"></i>
+</a>
+</div>
+<div id="mobMovieSearchBar">
+<i class="fas fa-search"></i>
+<input id="mobMovieSearchInput" placeholder="Search movies..." type="text"/>
+<div id="mobMovieSearchDrop"></div>
+</div>
+<div id="mobPage">
+<div id="mobVideoWrap">
+<div id="mobFrostWrap">
+<iframe allow="autoplay; fullscreen; picture-in-picture" allowfullscreen="" frameborder="0" height="240" src="https://vidsrc.me/embed/movie/tt3371366" width="100%">
+</iframe>
+<div id="mobFrostClick"></div>
+</div>
+</div>
+<a download="" href="https://wildshare.net/342b2f0d03c7986f" id="mobDownloadBtn">
+<i class="fas fa-download"></i> Download Movie
+    </a>
+<a class="mob-broken-link" data-movie="TRANSFORMERS 5: THE LAST KNIGHT" href="#">
+<i class="fas fa-triangle-exclamation"></i> Broken download link?
+    </a>
+<div id="mobMovieInfo">
+<div id="mobMovieTitle">TRANSFORMERS 5: THE LAST KNIGHT</div>
+<div id="mobMovieMeta">
+<span>2017</span>
+<span class="mob-meta-badge">Sci-Fi</span>
+<span>154 mins</span>
+</div>
+<p id="mobMovieSummary">
+        In the past, King Arthur and his knights won a battle with the help of Merlin and a Cybertronian staff of ultimate power. In the present day, humans and Transformers are at war, and Transformers are treated as outlaws. Optimus Prime drifts into deep space and finds his ruined home world, Cybertron.
+      </p>
+</div>
+<div id="mobRelatedLabel">You Might Also Like</div>
+<div id="mobRelatedGrid"></div>
+<div id="mobFooter">
+<a href="../disclaimer.html">Disclaimer!</a>
+</div>
+</div>
+<nav id="mobBottomNav">
+<a class="mob-movie-nav-item" href="../index.html">
+<i class="fas fa-home"></i><span>Home</span>
+</a>
+<button class="mob-movie-nav-item" id="mobGenresBtn">
+<i class="fa-solid fa-compact-disc"></i><span>Genres</span>
+</button>
+<a class="mob-movie-nav-item" href="../Movie_Request.html">
+<i class="fas fa-envelope"></i><span>Request</span>
+</a>
+<a class="mob-movie-nav-item" href="../Profile.html">
+<i class="fa-regular fa-user"></i><span>Profile</span>
+</a>
+</nav>
+<!-- GENRES PANEL BACKDROP -->
+<div id="mobGenreBackdrop" style="
+    display:none; position:fixed; inset:0; z-index:998;
+    background:rgba(0,0,0,0.5); backdrop-filter:blur(4px);
+  "></div>
+<!-- GENRES SLIDE-UP PANEL -->
+<div id="mobGenrePanel" style="
+    position:fixed; bottom:0; left:0; right:0; z-index:999;
+    background:rgba(18,18,18,0.97); border-radius:20px 20px 0 0;
+    padding:24px 16px 48px; transform:translateY(100%); bottom:35px;
+    transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    border-top:1px solid rgba(0,200,100,0.13);
+    ">
+<h3 style='font-family: "Roboto Slab", Rockwell, sans-serif;color:#fff;margin:0 0 18px;font-size:17px;'>Browse Genres</h3>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+<a class="mob-genre-pill" href="../genre-results.html?genre=action"><i class="fas fa-explosion" style="color:#3498db;"></i><span>Action</span></a>
+<a class="mob-genre-pill" href="../genre-results.html?genre=superhero"><i class="fas fa-mask" style="color:#e74c3c;"></i><span>Superhero</span></a>
+<a class="mob-genre-pill" href="../genre-results.html?genre=animation"><i class="fas fa-dragon" style="color:#f39c12;"></i><span>Animation</span></a>
+<a class="mob-genre-pill" href="../genre-results.html?genre=fantasy"><i class="fas fa-hat-wizard" style="color:#9b59b6;"></i><span>Fantasy</span></a>
+<a class="mob-genre-pill" href="../genre-results.html?genre=scifi"><i class="fas fa-robot" style="color:#1abc9c;"></i><span>Sci-Fi</span></a>
+<a class="mob-genre-pill" href="../genre-results.html?genre=family"><i class="fas fa-child" style="color:#2ecc71;"></i><span>Family</span></a>
+<a class="mob-genre-pill" href="../genre-results.html?genre=thriller"><i class="fas fa-search" style="color:#95a5a6;"></i><span>Thriller</span></a>
+<a class="mob-genre-pill" href="../genre-results.html?genre=horror"><i class="fas fa-ghost" style="color:#e74c3c;"></i><span>Horror</span></a>
+<a class="mob-genre-pill" href="../genre-results.html?genre=musical"><i class="fas fa-music" style="color:#e84393;"></i><span>Musical</span></a>
+<a class="mob-genre-pill" href="../genre-results.html?genre=romance"><i class="fas fa-heart" style="color:#ff4d6d;"></i><span>Romance</span></a>
+</div>
+</div>
+<!-- ============================================================
+       SCRIPTS
+  ============================================================ -->
+<script src="../js/script.js"></script>
+<script src="../js/search.js"></script>
+<script src="../js/movies.js"></script>
+<script src="../js/related.js"></script>
+<script>
+function __isMobileViewport() {
+  // True for phones/tablets in portrait (width <=1024) AND for tablets
+  // rotated to landscape (their short side, now the height, is <=1024
+  // and they're a touch device -- this is what keeps a rotated tablet
+  // from being mistaken for a small laptop).
+  return window.innerWidth <= 1024 ||
+    (window.matchMedia('(orientation: landscape)').matches &&
+     window.innerHeight <= 1024 &&
+     window.matchMedia('(pointer: coarse)').matches);
+}
+
+    (function () {
+      if (!__isMobileViewport()) return;
+
+      const btn      = document.getElementById('mobGenresBtn');
+      const panel    = document.getElementById('mobGenrePanel');
+      const backdrop = document.getElementById('mobGenreBackdrop');
+
+      function openPanel() {
+        panel.style.transform        = 'translateY(0)';
+        backdrop.style.display       = 'block';
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closePanel() {
+        panel.style.transform        = 'translateY(100%)';
+        backdrop.style.display       = 'none';
+        document.body.style.overflow = '';
+      }
+
+      btn?.addEventListener('click', openPanel);
+      backdrop?.addEventListener('click', closePanel);
+    })();
+  </script>
+<footer class="copyright">
+<a href="../disclaimer.html">Disclaimer!</a>
+</footer>
+<script>
+    document.getElementById('frostClick')?.addEventListener('click', function () {
+      document.getElementById('frostWrap').classList.add('unblurred');
+    });
+  </script>
+<script>
+    document.getElementById('mobFrostClick')?.addEventListener('click', function () {
+      document.getElementById('mobFrostWrap').classList.add('unblurred');
+    });
+  </script>
+<!-- broken-link-report-script (Formspree version) -->
+<script>
+    (function () {
+      const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xgoyjjgj'; // <-- replace with your real endpoint
+
+      document.querySelectorAll('.broken-link, .mob-broken-link').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          if (link.classList.contains('reported') || link.classList.contains('sending')) return;
+
+          const movie = link.dataset.movie || document.title;
+          link.classList.add('sending');
+          link.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Reporting...';
+
+          const data = new FormData();
+          data.append('subject', 'Broken Download Link');
+          data.append('message', `The download link for "${movie}" appears to be broken and needs fixing.`);
+          data.append('page', window.location.href);
+
+          fetch(FORMSPREE_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Accept': 'application/json' },
+            body: data
+          })
+          .then(function (response) {
+            link.classList.remove('sending');
+            if (response.ok) {
+              link.classList.add('reported');
+              link.innerHTML = '<i class="fas fa-circle-check"></i> Thanks, reported!';
+            } else {
+              link.innerHTML = '<i class="fas fa-triangle-exclamation"></i> Failed, try again?';
+            }
+          })
+          .catch(function () {
+            link.classList.remove('sending');
+            link.innerHTML = '<i class="fas fa-triangle-exclamation"></i> Failed, try again?';
+          });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -671,7 +671,7 @@
       }
 
       #mobFrostWrap.unblurred iframe {
-        filter: blur(0);
+        filter: none;
       }
 
       #mobFrostClick {
@@ -693,13 +693,15 @@
         text-align: center;
         padding: 8px 12px 4px;
         font-family: "Roboto Slab", Rockwell, sans-serif;
-        font-size: 12px;
-      }
+        font-size: 15px;
+      
+}
 
       #mobFooter a {
-        color: var(--mob-accent, #00A8FF);
+        color: var(--mob-accent, #f39c12);
         text-decoration: none;
-      }
+      
+}
 
   </style>
 <link href="/favicon/favicon-96x96.png" rel="icon" sizes="96x96" type="image/png"/>
@@ -734,6 +736,7 @@
 <a href="../Genres.html#thriller"><i class="fas fa-search" style="color:#95a5a6;"></i> Thriller</a>
 <a href="../Genres.html#horror"><i class="fas fa-ghost" style="color:#e74c3c;"></i> Horror</a>
 <a href="../Genres.html#musical"><i class="fas fa-music" style="color:#e84393;"></i> Musical</a>
+<a href="../Genres.html#romance"><i class="fas fa-heart" style="color:#ff4d6d;"></i> Romance</a>
 </div>
 </li>
 <a href="../Profile.html"><i class="fa-regular fa-user"></i>Profile</a>
@@ -754,7 +757,7 @@
 <i class="fa fa-download"></i> Download
         </a>
 </button>
-<a class="broken-link" data-movie="Uncharted" href="#">
+<a class="broken-link" data-movie="UNCHARTED" href="#">
 <i class="fas fa-triangle-exclamation"></i> Broken download link?
       </a>
 </section>
@@ -800,7 +803,7 @@
 <a download="" href="https://transfer.it/t/OQWee84BhZDC" id="mobDownloadBtn">
 <i class="fas fa-download"></i> Download Movie
     </a>
-<a class="mob-broken-link" data-movie="Uncharted" href="#">
+<a class="mob-broken-link" data-movie="UNCHARTED" href="#">
 <i class="fas fa-triangle-exclamation"></i> Broken download link?
     </a>
 <div id="mobMovieInfo">
@@ -858,6 +861,7 @@
 <a class="mob-genre-pill" href="../genre-results.html?genre=thriller"><i class="fas fa-search" style="color:#95a5a6;"></i><span>Thriller</span></a>
 <a class="mob-genre-pill" href="../genre-results.html?genre=horror"><i class="fas fa-ghost" style="color:#e74c3c;"></i><span>Horror</span></a>
 <a class="mob-genre-pill" href="../genre-results.html?genre=musical"><i class="fas fa-music" style="color:#e84393;"></i><span>Musical</span></a>
+<a class="mob-genre-pill" href="../genre-results.html?genre=romance"><i class="fas fa-heart" style="color:#ff4d6d;"></i><span>Romance</span></a>
 </div>
 </div>
 <!-- ============================================================
