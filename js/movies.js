@@ -156,4 +156,7 @@ const LEVENY_MOVIES = [
     { title: "The Story of Everything", href: "../movies/the_story_of_everything_movie.html", genre: "family", poster: "images/posters/the_story_of_everything.jpg", discover: 1 , background: "images/backgrounds/the_story_of_everything_backg.jpg"},
     { title: "The Wrecking Crew", href: "../movies/the_wrecking_crew_movie.html", genre: "action", poster: "images/posters/the_wrecking_crew.jpg", discover: 2 , background: "images/backgrounds/the_wrecking_crew_backg.jpg"},
     { title: "Mean Girls", href: "../movies/mean_girls_movie.html", genre: "romance", poster: "images/posters/mean_girls.jpg", discover: 7 , background: "images/backgrounds/mean_girls_backg.jpg"},
+    { title: "Spider Island", href: "../movies/spider_island_movie.html", genre: "horror", poster: "images/posters/spider_island.jpg", discover: 1 , background: "images/backgrounds/spider_island_backg.jpg"},
+    { title: "The Runner", href: "../movies/the_runner_movie.html", genre: "thriller", poster: "images/posters/the_runner.jpg", discover: 2 , background: "images/backgrounds/the_runner_backg.jpg"},
+    { title: "The Brink of War", href: "../movies/the_brink_of_war_movie.html", genre: "thriller", poster: "images/posters/the_brink_of_war.jpg", discover: 1 , background: "images/backgrounds/the_brink_of_war_backg.jpg"},
 ];
