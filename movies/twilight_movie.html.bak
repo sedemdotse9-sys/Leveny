@@ -670,7 +670,7 @@
       }
 
       #mobFrostWrap.unblurred iframe {
-        filter: blur(0);
+        filter: none;
       }
 
       #mobFrostClick {
@@ -692,13 +692,15 @@
         text-align: center;
         padding: 8px 12px 4px;
         font-family: "Roboto Slab", Rockwell, sans-serif;
-        font-size: 12px;
-      }
+        font-size: 15px;
+      
+}
 
       #mobFooter a {
-        color: var(--mob-accent, #00A8FF);
+        color: var(--mob-accent, #f39c12);
         text-decoration: none;
-      }
+      
+}
   </style>
 <link href="/favicon/favicon-96x96.png" rel="icon" sizes="96x96" type="image/png"/>
 <link href="/favicon/favicon.svg" rel="icon" type="image/svg+xml"/>
@@ -752,7 +754,7 @@
 <i class="fa fa-download"></i> Download
         </a>
 </button>
-<a class="broken-link" data-movie="Twilight" href="#">
+<a class="broken-link" data-movie="TWILIGHT" href="#">
 <i class="fas fa-triangle-exclamation"></i> Broken download link?
       </a>
 </section>
@@ -798,7 +800,7 @@
 <a download="" href="https://transfer.it/t/RndWeoxVFJoY" id="mobDownloadBtn">
 <i class="fas fa-download"></i> Download Movie
     </a>
-<a class="mob-broken-link" data-movie="Twilight" href="#">
+<a class="mob-broken-link" data-movie="TWILIGHT" href="#">
 <i class="fas fa-triangle-exclamation"></i> Broken download link?
     </a>
 <div id="mobMovieInfo">

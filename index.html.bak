@@ -1,313 +1,291 @@
 <!DOCTYPE html>
-<html lang="en" class="light">
+<html class="light" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/design.css">
-    <link rel="stylesheet" href="css/mobile.css">
-    <link rel="stylesheet" href="css/genres-mobile.css">
-    <link rel="stylesheet" href="css/tutorial.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96">
-    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg">
-    <link rel="shortcut icon" href="/favicon/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
-    <link rel="manifest" href="/favicon/site.webmanifest">
-    <link rel="canonical" href="https://leveny.online/" />
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <link href="css/design.css" rel="stylesheet"/>
+    <link href="css/mobile.css" rel="stylesheet"/>
+    <link href="css/genres-mobile.css" rel="stylesheet"/>
+    <link href="css/tutorial.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;display=swap" rel="stylesheet"/>
+    <link href="/favicon/favicon-96x96.png" rel="icon" sizes="96x96" type="image/png"/>
+    <link href="/favicon/favicon.svg" rel="icon" type="image/svg+xml"/>
+    <link href="/favicon/favicon.ico" rel="shortcut icon"/>
+    <link href="/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+    <link href="/favicon/site.webmanifest" rel="manifest"/>
+    <link href="https://leveny.online/" rel="canonical"/>
     <title>Leveny</title>
-
     <!-- Tailwind CSS via CDN with custom neon config -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        /* Near-black base for dark mode */
-                        void: '#0D0D0D',
+            tailwind.config = { 
+                darkMode: 'class',
+                theme: {
+                    extend: {
+                        colors: {
+                            /* Near-black base for dark mode */
+                            void: '#0D0D0D',
 
-                        /* Neon accent palette — one per slide */
-                        neon: {
-                            blue:   '#00A8FF',   /* Avatar         */
-                            yellow: '#FFD600',   /* Jurassic       */
-                            green:  '#00FF7F',   /* Ben 10         */
-                            red:    '#FF2D2D',   /* Deadpool       */
-                            gray:   '#A0AEC0',   /* Batman         */
-                            orange: '#FF6B00',   /* Lion King      */
-                            purple: '#BF5FFF',   /* Ballerina      */
+                            /* Neon accent palette — one per slide */
+                            neon: {
+                                blue:   '#00A8FF',   /* Avatar         */
+                                yellow: '#FFD600',   /* Jurassic       */
+                                green:  '#00FF7F',   /* Ben 10         */
+                                red:    '#FF2D2D',   /* Deadpool       */
+                                gray:   '#A0AEC0',   /* Batman         */
+                                orange: '#FF6B00',   /* Lion King      */
+                                purple: '#BF5FFF',   /* Ballerina      */
+                            },
+
+                            /* Light mode soft palette counterparts */
+                            soft: {
+                                blue:   '#EBF5FF',
+                                yellow: '#FFFDE7',
+                                green:  '#EAFFF4',
+                                red:    '#FFF0F0',
+                                gray:   '#F5F5F7',
+                                orange: '#FFF3E0',
+                                purple: '#F5EEFF',
+                            }
                         },
-
-                        /* Light mode soft palette counterparts */
-                        soft: {
-                            blue:   '#EBF5FF',
-                            yellow: '#FFFDE7',
-                            green:  '#EAFFF4',
-                            red:    '#FFF0F0',
-                            gray:   '#F5F5F7',
-                            orange: '#FFF3E0',
-                            purple: '#F5EEFF',
+                        boxShadow: {
+                            /* Neon glow shadows for dark mode */
+                            'glow-blue':   '0 0 12px 2px rgba(0,168,255,0.55)',
+                            'glow-yellow': '0 0 12px 2px rgba(255,214,0,0.55)',
+                            'glow-green':  '0 0 12px 2px rgba(0,255,127,0.55)',
+                            'glow-red':    '0 0 12px 2px rgba(255,45,45,0.55)',
+                            'glow-gray':   '0 0 12px 2px rgba(160,174,192,0.45)',
+                            'glow-orange': '0 0 12px 2px rgba(255,107,0,0.55)',
+                            'glow-purple': '0 0 12px 2px rgba(191,95,255,0.55)',
+                        },
+                        backdropBlur: {
+                            xs: '4px',
                         }
-                    },
-                    boxShadow: {
-                        /* Neon glow shadows for dark mode */
-                        'glow-blue':   '0 0 12px 2px rgba(0,168,255,0.55)',
-                        'glow-yellow': '0 0 12px 2px rgba(255,214,0,0.55)',
-                        'glow-green':  '0 0 12px 2px rgba(0,255,127,0.55)',
-                        'glow-red':    '0 0 12px 2px rgba(255,45,45,0.55)',
-                        'glow-gray':   '0 0 12px 2px rgba(160,174,192,0.45)',
-                        'glow-orange': '0 0 12px 2px rgba(255,107,0,0.55)',
-                        'glow-purple': '0 0 12px 2px rgba(191,95,255,0.55)',
-                    },
-                    backdropBlur: {
-                        xs: '4px',
                     }
                 }
             }
-        }
-    </script>
-</head>
-
-<body style="font-family: Rockwell, 'sans-serif';">
-    <header>
-        <nav class="nav_bar">
-            <h2 class="logo">Leveny</h2>
-            <ul class="nav_links">
-                <a href="index.html"><i class="fas fa-home"></i>Home</a>
-                <li class="shared-dropdown">
-                    <a href="Genres.html" class="genre-link">
-                        <i class="fa-solid fa-compact-disc"></i>Genres
-                    </a>
-                    <span class="dropdown-arrow" id="genreDropdownArrow">
-                        <i class="fas fa-chevron-down"></i>
-                    </span>
-                    <div class="dropdown-content" id="genreDropdown">
-                        <a href="genres.html#action"><i class="fas fa-explosion" style="color:#3498db;"></i> Action & Adventure</a>
-                        <a href="genres.html#superhero"><i class="fas fa-mask" style="color:#e74c3c;"></i> Superhero</a>
-                        <a href="genres.html#animation"><i class="fas fa-dragon" style="color:#f39c12;"></i> Animation</a>
-                        <a href="genres.html#fantasy"><i class="fas fa-hat-wizard" style="color:#9b59b6;"></i> Fantasy</a>
-                        <a href="genres.html#scifi"><i class="fas fa-robot" style="color:#1abc9c;"></i> Sci-Fi</a>
-                        <a href="genres.html#family"><i class="fas fa-child" style="color:#2ecc71;"></i> Family</a>
-                        <a href="genres.html#thriller"><i class="fas fa-search" style="color:#95a5a6;"></i> Thriller</a>
-                        <a href="genres.html#horror"><i class="fas fa-ghost" style="color:#e74c3c;"></i> Horror</a>
-                        <a href="genres.html#musical"><i class="fas fa-music" style="color:#e84393;"></i> Musical</a>
-                    </div>
-                </li>
-                <a href="Movie_Request.html"><i class="fas fa-envelope"></i>Request</a>
-                <a href="https://leveny-backend.onrender.com//profile.html"><i class="fa-regular fa-user"></i>Profile</a>
-                
-            </ul>
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Search movies...">
-                <button><i class="fas fa-search"></i></button>
-                <div class="search-dropdown" id="searchDropdown"></div>
+        </script>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&amp;display=swap" rel="stylesheet"/></head>
+<body style='font-family: "Roboto Slab", Rockwell, sans-serif;'>
+<header>
+    <nav class="nav_bar">
+    <h2 class="logo">Leveny</h2>
+    <ul class="nav_links">
+        <a href="index.html">
+            <i class="fas fa-home"></i>Home
+        </a>
+        <li class="shared-dropdown">
+            <a class="genre-link" href="Genres.html">
+                <i class="fa-solid fa-compact-disc"></i>Genres
+            </a>
+            <span class="dropdown-arrow" id="genreDropdownArrow">
+                <i class="fas fa-chevron-down"></i>
+            </span>
+            <div class="dropdown-content" id="genreDropdown">
+                <a href="genres.html#action"><i class="fas fa-explosion" style="color:#3498db;"></i> Action &amp; Adventure</a>
+                <a href="genres.html#superhero"><i class="fas fa-mask" style="color:#e74c3c;"></i> Superhero</a>
+                <a href="genres.html#animation"><i class="fas fa-dragon" style="color:#f39c12;"></i> Animation</a>
+                <a href="genres.html#fantasy"><i class="fas fa-hat-wizard" style="color:#9b59b6;"></i> Fantasy</a>
+                <a href="genres.html#scifi"><i class="fas fa-robot" style="color:#1abc9c;"></i> Sci-Fi</a>
+                <a href="genres.html#family"><i class="fas fa-child" style="color:#2ecc71;"></i> Family</a>
+                <a href="genres.html#thriller"><i class="fas fa-search" style="color:#95a5a6;"></i> Thriller</a>
+                <a href="genres.html#horror"><i class="fas fa-ghost" style="color:#e74c3c;"></i> Horror</a>
+                <a href="genres.html#musical"><i class="fas fa-music" style="color:#e84393;"></i> Musical</a>
+                <a href="genres.html#romance"><i class="fas fa-heart" style="color:#ff4d6d;"></i> Romance</a>
             </div>
-        </nav>
-        <hr>
-    </header>
-
-    <div class="slider-wrapper">
-        <div class="arrow_left">&lt;</div>
-        <div class="arrow_right">&gt;</div>
-        <div class="slider-container">
-
-            <!-- SLIDE 1 -->
-            <section class="slide slide1">
-                <main class="slider-content">
-                    <div class="main_body"><p>AVATAR: THE WAY OF WATER</p></div>
-                    <div class="main_2"><p>In the distant world of Pandora, peace never stays still for long. Years after the battle that united Jake Sully and Neytiri, their family has grown beneath the shade of the sacred trees and the glow of bioluminescent forests. But when an old threat from the sky returns, the Sullys are forced to flee their home and seek refuge among the oceanic Metkayina clan people of the reef who live in harmony with the sea and its breathtaking mysteries. As they learn the "way of water", bonds are tested, and the line between survival and surrender blurs. Love, loss, and loyalty intertwine as Pandora's heart beats once more beneath the waves.</p></div>
-                    <button class="watch_btn"><a href="movies/avatar_way_of_water_movie.html">Watch Now</a></button>
-                    <button class="more_btn"><a href="discover.html#blue">More<span class="plus-sign">+</span></a></button>
-                    <div class="movie-section"><div class="movie-list"></div></div>
-                </main>
-            </section>
-
-            <!-- SLIDE 2 -->
-            <section class="slide slide2">
-                <main>
-                    <div class="main_body_2"><p>JURASSIC WORLD: DOMINION</p></div>
-                    <div class="main_2"><p>In a world forever changed by dinosaurs roaming freely among humans, the delicate balance between species is shattered. Years after the catastrophic events on Isla Nublar, dinosaurs now live and hunt alongside humanity, creating tension, fear, and fascination. As new threats emerge and the boundaries of survival are tested, heroes from the past and present must unite to confront the consequences of genetic power and ambition. Loyalties are challenged, unexpected alliances form, and the fight for coexistence pushes both humans and dinosaurs to the brink. Adventure, danger, and awe collide as the planet faces a new era where predators and people share the same world.</p></div>
-                    <button class="watch_btn"><a href="movies/jurassic_park_dominion_movie.html">Watch Now</a></button>
-                    <button class="more_btn"><a href="discover.html#yellow">More<span class="plus-sign">+</span></a></button>
-                    <div class="movie-section"><div class="movie-list-2"></div></div>
-                </main>
-            </section>
-
-            <!-- SLIDE 3 -->
-            <section class="slide slide3">
-                <main>
-                    <div class="main_body_3"><p>THE GRINCH</p></div>
-                    <div class="main_3"><p>High above the cheerful town of Whoville, a green, solitary creature has spent years perfecting his isolation, irritated by the endless carols, decorations, and festivities that erupt every winter below. When the holiday season arrives once again in full force, his patience finally snaps, and he hatches a scheme to sneak into town disguised as Santa and steal every last trace of Christmas before it can begin. Armed with a reluctant, oversized reindeer companion and a mountain of stolen presents, he sets his plan into motion under cover of night.</p></div>
-                    <button class="watch_btn"><a href="movies/the_grinch_movie.html">Watch Now</a></button>
-                    <button class="more_btn"><a href="discover.html#green">More<span class="plus-sign">+</span></a></button>
-                    <div class="movie-section"><div class="movie-list-3"></div></div>
-                </main>
-            </section>
-
-            <!-- SLIDE 4 -->
-            <section class="slide slide4">
-                <main>
-                    <div class="main_body_4"><p>DEADPOOL</p></div>
-                    <div class="main_4"><p>Wade Wilson is a former Special Forces operative turned mercenary. After being diagnosed with terminal cancer, he agrees to undergo an experimental treatment offered by a mysterious organization, hoping for a cure. The procedure, however, leaves him horribly scarred but gives him accelerated healing powers. Adopting the alter ego Deadpool, Wade sets out to hunt down the man responsible for his disfigurement while cracking jokes, breaking the fourth wall, and taking revenge in his own chaotic, irreverent style. Along the way, he reconnects with his love interest Vanessa and tangles with enemies and mercenaries, all while redefining what it means to be an antihero.</p></div>
-                    <button class="watch_btn"><a href="movies/deadpool_movie.html">Watch Now</a></button>
-                    <button class="more_btn"><a href="discover.html#red">More<span class="plus-sign">+</span></a></button>
-                    <div class="movie-section"><div class="movie-list-4"></div></div>
-                </main>
-            </section>
-
-            <!-- SLIDE 5 -->
-            <section class="slide slide5">
-                <main>
-                    <div class="main_body_5"><p>BATMAN: DARK KNIGHT</p></div>
-                    <div class="main_5"><p>In his second year of fighting crime, Batman uncovers corruption that has long plagued Gotham City while tracking a sadistic serial killer known as The Riddler, who targets the city's elite with cryptic messages and deadly traps. As Batman investigates, he forms uneasy alliances with Catwoman, James Gordon, and other key figures in Gotham. The investigation exposes a web of deceit and corruption reaching the highest levels of Gotham's government and criminal underworld. Through the chaos, Batman confronts his own inner darkness, testing his moral code and determination to protect the city without becoming the very thing he fights against.</p></div>
-                    <button class="watch_btn"><a href="movies/batman_the_dark_knigt_movie.html">Watch Now</a></button>
-                    <button class="more_btn"><a href="discover.html#black">More<span class="plus-sign">+</span></a></button>
-                    <div class="movie-section"><div class="movie-list-5"></div></div>
-                </main>
-            </section>
-
-            <!-- SLIDE 6 -->
-            <section class="slide slide6">
-                <main>
-                    <div class="main_body_6"><p>THE LION KING</p></div>
-                    <div class="main_6"><p>In the Pride Lands of Africa, Simba, a young lion prince, is destined to inherit the throne from his father, Mufasa. However, Simba's evil uncle, Scar, plots to seize the kingdom for himself. After a tragic event orchestrated by Scar, Simba flees into exile, burdened by guilt and loss. During his time away, he meets new friends, Timon and Pumbaa, and learns to live by the carefree motto, "Hakuna Matata." As he matures, Simba is confronted with his past and must return to reclaim his rightful place as king, confronting Scar and restoring balance to the Pride Lands. The story is a coming-of-age tale full of adventure, humor, and memorable music.</p></div>
-                    <button class="watch_btn"><a href="movies/lion_king_movie.html">Watch Now</a></button>
-                    <button class="more_btn"><a href="discover.html#orange">More<span class="plus-sign">+</span></a></button>
-                    <div class="movie-section"><div class="movie-list-6"></div></div>
-                </main>
-            </section>
-
-            <!-- SLIDE 7 -->
-            <section class="slide slide7">
-                <main>
-                    <div class="main_body_7"><p>Ballerina</p></div>
-                    <div class="main_7"><p>Set in late 19th-century France, the story follows Félicie, a spirited orphan from Brittany who dreams of becoming a ballet dancer. She escapes her rural orphanage with her inventive best friend Victor, who aspires to be an inventor. They head to Paris, where Félicie, through a bit of clever trickery, takes the place of a spoiled dancer named Camille at the prestigious Paris Opera Ballet school. Under the strict and demanding guidance of the head instructor Mérante, and with the help of a kind and mysterious cleaner named Odette (a former ballet star herself), Félicie must train rigorously while hiding her true identity.</p></div>
-                    <button class="watch_btn"><a href="movies/ballerina_movie.html">Watch Now</a></button>
-                    <button class="more_btn"><a href="discover.html#purple">More<span class="plus-sign">+</span></a></button>
-                    <div class="movie-section"><div class="movie-list-7"></div></div>
-                </main>
-            </section>
-
-        </div>
+        </li>
+        <a href="Movie_Request.html"><i class="fas fa-envelope"></i>Request</a>
+        <a href="login.html"><i class="fa-regular fa-user"></i>Profile</a>
+    </ul>
+    <div class="search-box">
+        <input id="searchInput" placeholder="Search movies..." type="text"/>
+        <button><i class="fas fa-search"></i></button>
+        <div class="search-dropdown" id="searchDropdown"></div>
     </div>
+    </nav>
+    <hr/>
+</header>
+<div class="slider-wrapper">
+<div class="arrow_left">&lt;</div>
+<div class="arrow_right">&gt;</div>
+<div class="slider-container">
 
-    <script src="js/movies.js"></script>
-    <script src="js/script.js"></script>
-    <script src="js/search.js"></script>
+<!-- SLIDE 1 -->
+<section class="slide slide1">
+    <main class="slider-content">
+        <div class="main_body"><p>AVATAR: THE WAY OF WATER</p></div>
+        <div class="main_2"><p>In the distant world of Pandora, peace never stays still for long. Years after the battle that united Jake Sully and Neytiri, their family has grown beneath the shade of the sacred trees and the glow of bioluminescent forests. But when an old threat from the sky returns, the Sullys are forced to flee their home and seek refuge among the oceanic Metkayina clan people of the reef who live in harmony with the sea and its breathtaking mysteries. As they learn the "way of water", bonds are tested, and the line between survival and surrender blurs.</p></div>
+        <button class="watch_btn"><a href="movies/avatar_way_of_water_movie.html">Watch Now</a></button>
+        <button class="more_btn"><a href="discover.html?theme=1">More<span class="plus-sign">+</span></a></button>
+        <div class="movie-section"><div class="movie-list"></div></div>
+    </main>
+</section>
 
-    <!-- ============================================================
+<!-- SLIDE 2 -->
+<section class="slide slide2">
+    <main>
+        <div class="main_body_2"><p>JURASSIC WORLD: DOMINION</p></div>
+        <div class="main_2"><p>In a world forever changed by dinosaurs roaming freely among humans, the delicate balance between species is shattered. Years after the catastrophic events on Isla Nublar, dinosaurs now live and hunt alongside humanity, creating tension, fear, and fascination. As new threats emerge and the boundaries of survival are tested, heroes from the past and present must unite to confront the consequences of genetic power and ambition. Loyalties are challenged, unexpected alliances form, and the fight for coexistence pushes both humans and dinosaurs to the brink.</p></div>
+        <button class="watch_btn"><a href="movies/jurassic_park_dominion_movie.html">Watch Now</a></button>
+        <button class="more_btn"><a href="discover.html?theme=2">More<span class="plus-sign">+</span></a></button>
+        <div class="movie-section"><div class="movie-list-2"></div></div>
+    </main>
+</section>
+
+<!-- SLIDE 3 -->
+<section class="slide slide3">
+    <main>
+        <div class="main_body_3"><p>THE GRINCH</p></div>
+        <div class="main_3"><p>High above the cheerful town of Whoville, a green, solitary creature has spent years perfecting his isolation, irritated by the endless carols, decorations, and festivities that erupt every winter below. When the holiday season arrives once again in full force, his patience finally snaps, and he hatches a scheme to sneak into town disguised as Santa and steal every last trace of Christmas before it can begin. And so with the ring of the first bell, his plan began.</p></div>
+        <button class="watch_btn"><a href="movies/the_grinch_movie.html">Watch Now</a></button>
+        <button class="more_btn"><a href="discover.html?theme=3">More<span class="plus-sign">+</span></a></button>
+        <div class="movie-section"><div class="movie-list-3"></div></div>
+    </main>
+</section>
+
+<!-- SLIDE 4 -->
+<section class="slide slide4">
+    <main>
+        <div class="main_body_4"><p>DEADPOOL</p></div>
+        <div class="main_4"><p>Wade Wilson is a former Special Forces operative turned mercenary. After being diagnosed with terminal cancer, he agrees to undergo an experimental treatment offered by a mysterious organization, hoping for a cure. The procedure, however, leaves him horribly scarred but gives him accelerated healing powers. Adopting the alter ego Deadpool, Wade sets out to hunt down the man responsible for his disfigurement while cracking jokes, breaking the fourth wall, and taking revenge in his own chaotic, irreverent style.</p></div>
+        <button class="watch_btn"><a href="movies/deadpool_movie.html">Watch Now</a></button>
+        <button class="more_btn"><a href="discover.html?theme=4">More<span class="plus-sign">+</span></a></button>
+        <div class="movie-section"><div class="movie-list-4"></div></div>
+    </main>
+</section>
+
+<!-- SLIDE 5 -->
+<section class="slide slide5">
+    <main>
+        <div class="main_body_5"><p>BATMAN: DARK KNIGHT</p></div>
+        <div class="main_5"><p>In his second year of fighting crime, Batman uncovers corruption that has long plagued Gotham City while tracking a sadistic serial killer known as The Riddler, who targets the city's elite with cryptic messages and deadly traps. As Batman investigates, he forms uneasy alliances with Catwoman, James Gordon, and other key figures in Gotham. The investigation exposes a web of deceit and corruption reaching the highest levels of Gotham's government and criminal underworld. As the dark knight, Batman must face his greatest challenge yet.</p></div>
+        <button class="watch_btn"><a href="movies/batman_the_dark_knigt_movie.html">Watch Now</a></button>
+        <button class="more_btn"><a href="discover.html?theme=5">More<span class="plus-sign">+</span></a></button>
+        <div class="movie-section"><div class="movie-list-5"></div></div>
+    </main>
+</section>
+
+<!-- SLIDE 6 -->
+<section class="slide slide6">
+    <main>
+        <div class="main_body_6"><p>THE LION KING</p></div>
+        <div class="main_6"><p>In the Pride Lands of Africa, Simba, a young lion prince, is destined to inherit the throne from his father, Mufasa. However, Simba's evil uncle, Scar, plots to seize the kingdom for himself. After a tragic event orchestrated by Scar, Simba flees into exile, burdened by guilt and loss. During his time away, he meets new friends, Timon and Pumbaa, and learns to live by the carefree motto, "Hakuna Matata." As he matures, Simba is confronted with his past and must return to reclaim his rightful place as king, confronting Scar and restoring balance to the Pride Lands.</p></div>
+        <button class="watch_btn"><a href="movies/lion_king_movie.html">Watch Now</a></button>
+        <button class="more_btn"><a href="discover.html?theme=6">More<span class="plus-sign">+</span></a></button>
+        <div class="movie-section"><div class="movie-list-6"></div></div>
+    </main>
+</section>
+
+<!-- SLIDE 7 -->
+<section class="slide slide7">
+    <main>
+        <div class="main_body_7"><p>Ballerina</p></div>
+        <div class="main_7"><p>Set in late 19th-century France, the story follows Félicie, a spirited orphan from Brittany who dreams of becoming a ballet dancer. She escapes her rural orphanage with her inventive best friend Victor, who aspires to be an inventor. They head to Paris, where Félicie, through a bit of clever trickery, takes the place of a spoiled dancer named Camille at the prestigious Paris Opera Ballet school. Félicie must train rigorously while hiding her true identity to defeat the Evil before her. As she does this, she changes the whole course of her life.</p></div>
+        <button class="watch_btn"><a href="movies/ballerina_movie.html">Watch Now</a></button>
+        <button class="more_btn"><a href="discover.html?theme=7">More<span class="plus-sign">+</span></a></button>
+        <div class="movie-section"><div class="movie-list-7"></div></div>
+    </main>
+</section>
+</div>
+
+<footer class="copyright">
+    <a href="disclaimer.html">Disclaimer</a>
+    <span> | Copyright &copy; 2026 Leveny. All rights reserved.</span>
+</footer>
+
+</div>
+
+<script src="js/movies.js"></script>
+<script src="js/script.js"></script>
+<script src="js/search.js"></script>
+
+<!-- ============================================================
          MOBILE UI
     ============================================================ -->
+<!-- MOBILE HEADER -->
+<div id="mobileHeader">
+    <span class="mobile-logo">Leve<span class="mobile-logo-ny">ny</span></span>
+    <a class="mobile-profile-btn" href="login.html">
+        <i class="fa-regular fa-user"></i>
+    </a>
+</div>
 
-    <!-- MOBILE HEADER -->
-    <div id="mobileHeader">
-        <span class="mobile-logo">Leve<span class="mobile-logo-ny">ny</span></span>
-        <a href="https://leveny-backend.onrender.com/profile.html" class="mobile-profile-btn">
-            <i class="fa-regular fa-user"></i>
-        </a>
+<!-- MOBILE SEARCH -->
+<div id="mobileSearchWrapper">
+    <i class="fas fa-search"></i>
+    <input id="mobileSearchInput" placeholder="Search movies..." type="text"/>
+</div>
+<div id="mobileSearchResults"></div>
+
+<!-- FEATURED BANNER — built by mobile.js -->
+<div id="mobileFeatured"></div>
+
+<!-- SECTION LABEL -->
+<div class="mob-section-label">All Movies</div>
+
+<!-- MOVIES GRID -->
+<div id="mobileMoviesSection"></div>
+<div id="mobileMoviesPagination"></div>
+
+<!-- GENRES PANEL BACKDROP -->
+<div id="genresPanelBackdrop"></div>
+
+<!-- GENRES SLIDE-UP PANEL -->
+<div id="mobileGenresPanel">
+    <h3>Browse Genres</h3>
+    <div class="mob-genre-grid">
+        <a class="mob-genre-item" href="genre-results.html?genre=action"><i class="fas fa-explosion" style="color:#3498db;"></i><span>Action</span></a>
+        <a class="mob-genre-item" href="genre-results.html?genre=superhero"><i class="fas fa-mask" style="color:#e74c3c;"></i><span>Superhero</span></a>
+        <a class="mob-genre-item" href="genre-results.html?genre=animation"><i class="fas fa-dragon" style="color:#f39c12;"></i><span>Animation</span></a>
+        <a class="mob-genre-item" href="genre-results.html?genre=fantasy"><i class="fas fa-hat-wizard" style="color:#9b59b6;"></i><span>Fantasy</span></a>
+        <a class="mob-genre-item" href="genre-results.html?genre=scifi"><i class="fas fa-robot" style="color:#1abc9c;"></i><span>Sci-Fi</span></a>
+        <a class="mob-genre-item" href="genre-results.html?genre=family"><i class="fas fa-child" style="color:#2ecc71;"></i><span>Family</span></a>
+        <a class="mob-genre-item" href="genre-results.html?genre=thriller"><i class="fas fa-search" style="color:#95a5a6;"></i><span>Thriller</span></a>
+        <a class="mob-genre-item" href="genre-results.html?genre=horror"><i class="fas fa-ghost" style="color:#e74c3c;"></i><span>Horror</span></a>
+        <a class="mob-genre-item" href="genre-results.html?genre=musical"><i class="fas fa-music" style="color:#e84393;"></i><span>Musical</span></a>
+        <a class="mob-genre-item" href="genre-results.html?genre=romance"><i class="fas fa-heart" style="color:#ff4d6d;"></i><span>Romance</span></a>
     </div>
+</div>
 
-    <!-- MOBILE SEARCH -->
-    <div id="mobileSearchWrapper">
-        <i class="fas fa-search"></i>
-        <input type="text" id="mobileSearchInput" placeholder="Search movies...">
+<!-- BOTTOM NAV BAR -->
+<div id="mobileFooter">
+    <a href="disclaimer.html">Disclaimer</a><span> | Copyright &copy; 2026 Leveny. All rights reserved.</span>
+</div>
+<nav id="mobileBottomNav">
+    <a class="mob-nav-item active" href="index.html"><i class="fas fa-home"></i><span>Home</span></a>
+    <button class="mob-nav-item" id="mobGenresBtn"><i class="fa-solid fa-compact-disc"></i><span>Genres</span></button>
+    <a class="mob-nav-item" href="Movie_Request.html"><i class="fas fa-envelope"></i><span>Request</span></a>
+    <a class="mob-nav-item" href="login.html"><i class="fa-regular fa-user"></i><span>Profile</span></a>
+</nav>
+<script src="js/mobile.js"></script>
+
+<!-- GENRE RESULTS VIEW — shown when a genre is picked from the panel -->
+<div id="mobileGenreView">
+    <div class="mob-genre-topbar">
+        <button class="mob-genre-back-btn" id="mobileGenreBackBtn">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <div class="mob-genre-view-title" id="mobileGenreViewTitle">Genre</div>
     </div>
-    <div id="mobileSearchResults"></div>
+    <div id="mobileGenreGrid"></div>
+    <div id="mobileGenrePagination"></div>
+</div>
+<script src="js/genres-mobile.js"></script>
 
-    <!-- FEATURED BANNER — built by mobile.js -->
-    <div id="mobileFeatured"></div>
-
-    <!-- SECTION LABEL -->
-    <div class="mob-section-label">All Movies</div>
-
-    <!-- MOVIES GRID -->
-    <div id="mobileMoviesSection"></div>
-    <div id="mobileMoviesPagination"></div>
-
-    <!-- GENRES PANEL BACKDROP -->
-    <div id="genresPanelBackdrop"></div>
-
-    <!-- GENRES SLIDE-UP PANEL -->
-    <div id="mobileGenresPanel">
-        <h3>Browse Genres</h3>
-        <div class="mob-genre-grid">
-            <a href="genre-results.html?genre=action" class="mob-genre-item"><i class="fas fa-explosion" style="color:#3498db;"></i><span>Action</span></a>
-            <a href="genre-results.html?genre=superhero" class="mob-genre-item"><i class="fas fa-mask" style="color:#e74c3c;"></i><span>Superhero</span></a>
-            <a href="genre-results.html?genre=animation" class="mob-genre-item"><i class="fas fa-dragon" style="color:#f39c12;"></i><span>Animation</span></a>
-            <a href="genre-results.html?genre=fantasy" class="mob-genre-item"><i class="fas fa-hat-wizard" style="color:#9b59b6;"></i><span>Fantasy</span></a>
-            <a href="genre-results.html?genre=scifi" class="mob-genre-item"><i class="fas fa-robot" style="color:#1abc9c;"></i><span>Sci-Fi</span></a>
-            <a href="genre-results.html?genre=family" class="mob-genre-item"><i class="fas fa-child" style="color:#2ecc71;"></i><span>Family</span></a>
-            <a href="genre-results.html?genre=thriller" class="mob-genre-item"><i class="fas fa-search" style="color:#95a5a6;"></i><span>Thriller</span></a>
-            <a href="genre-results.html?genre=horror" class="mob-genre-item"><i class="fas fa-ghost" style="color:#e74c3c;"></i><span>Horror</span></a>
-            <a href="genre-results.html?genre=musical" class="mob-genre-item"><i class="fas fa-music" style="color:#e84393;"></i><span>Musical</span></a>
-        </div>
-    </div>
-
-    <!-- BOTTOM NAV BAR -->
-    <div id="mobileFooter">
-      <a href="disclaimer.html">Disclaimer!</a>
-    </div>
-    <nav id="mobileBottomNav">
-        <a href="index.html" class="mob-nav-item active"><i class="fas fa-home"></i><span>Home</span></a>
-        <button class="mob-nav-item" id="mobGenresBtn"><i class="fa-solid fa-compact-disc"></i><span>Genres</span></button>
-        <a href="Movie_Request.html" class="mob-nav-item"><i class="fas fa-envelope"></i><span>Request</span></a>
-        <a href="https://leveny-backend.onrender.com/profile.html" class="mob-nav-item"><i class="fa-regular fa-user"></i><span>Profile</span></a>
-    </nav>
-
-    <script src="js/mobile.js"></script>
-
-    <!-- GENRE RESULTS VIEW — shown when a genre is picked from the panel -->
-    <div id="mobileGenreView">
-        <div class="mob-genre-topbar">
-            <button class="mob-genre-back-btn" id="mobileGenreBackBtn">
-                <i class="fas fa-arrow-left"></i>
-            </button>
-            <div class="mob-genre-view-title" id="mobileGenreViewTitle">Genre</div>
-        </div>
-        <div id="mobileGenreGrid"></div>
-        <div id="mobileGenrePagination"></div>
-    </div>
-
-    <script src="js/genres-mobile.js"></script>
-
-    <!-- ============================================================
-         HOMEPAGE TUTORIAL — see css/tutorial.css and js/tutorial.js
-    ============================================================ -->
-    <div id="tut-scrim">
-        <div class="tut-card">
-            <div class="tut-art" id="tut-art"></div>
-            <div class="tut-body">
-                <button class="tut-close">✕</button>
-                <div class="tut-step-label" id="tut-label"></div>
-                <h3 class="tut-title" id="tut-title"></h3>
-                <p class="tut-text" id="tut-text"></p>
-                <div class="tut-footer">
-                    <div class="tut-dots" id="tut-dots"></div>
-                    <div class="tut-btns">
-                        <button class="tut-btn ghost" data-action="back">Back</button>
-                        <button class="tut-btn primary" data-action="next">Next</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <button id="tut-help-btn" title="Replay tutorial" style="font-family: Arial, Helvetica, sans-serif;">?</button>
-    <script src="js/tutorial.js"></script>
-
-    <script type="application/ld+json">
+<!-- Google reads this to find your short brand name -->
+<script type="application/ld+json">
     {
-        "@context": "https://Leveny.online",
+        "@context": "https://schema.org",
         "@type": "WebSite",
-        "name": "Leveny: Movies & Streaming",
+        "name": "Leveny | 2026 Latest Movies Streaming",
         "url": "https://leveny.online"
     }
-    </script>
+</script>
 
-    <meta property="og:leveny.online" content="Leveny: Movies & Streaming">
+<!-- Social networks and Google read these for your brand and tagline -->
+<meta property="og:site_name" content="Leveny" />
+<meta property="og:title" content="Leveny | 2026 Latest Movies Streaming" />
 
-    <footer class="copyright">
-        <a href="disclaimer.html">Disclaimer!</a>
-    </footer>
 </body>
 </html>
