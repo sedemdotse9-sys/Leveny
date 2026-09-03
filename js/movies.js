@@ -159,4 +159,7 @@ const LEVENY_MOVIES = [
     { title: "Spider Island", href: "../movies/spider_island_movie.html", genre: "horror", poster: "images/posters/spider_island.jpg", discover: 1 , background: "images/backgrounds/spider_island_backg.jpg"},
     { title: "The Runner", href: "../movies/the_runner_movie.html", genre: "thriller", poster: "images/posters/the_runner.jpg", discover: 2 , background: "images/backgrounds/the_runner_backg.jpg"},
     { title: "The Brink of War", href: "../movies/the_brink_of_war_movie.html", genre: "thriller", poster: "images/posters/the_brink_of_war.jpg", discover: 1 , background: "images/backgrounds/the_brink_of_war_backg.jpg"},
+    { title: "Clash of The Thundermans", href: "../movies/clash_of_the_thundermans_movie.html", genre: "family", poster: "images/posters/clash_of_the_thundermans.jpg", discover: 4 , background: "images/backgrounds/clash_of_the_thundermans_backg.jpg"},
+    { title: "Ne Zha", href: "../movies/ne_zha_movie.html", genre: "fantasy", poster: "images/posters/ne_zha.jpg", discover: 4 , background: "images/backgrounds/ne_zha_backg.jpg"},
+    { title: "Ne Zha 2", href: "../movies/ne_zha_2_movie.html", genre: "fantasy", poster: "images/posters/ne_zha_2.jpg", discover: 4 , background: "images/backgrounds/ne_zha_2_backg.jpg"},
 ];
