@@ -81,6 +81,7 @@
         Following the catastrophic events of the first film, the rebellious demon child Ne Zha and the dragon prince Ao Bing find their physical bodies completely destroyed after enduring the heavenly lightning strike together. To prevent their souls from fading away permanently, Master Taiyi Zhenren expends his powerful Seven-Colored Sacred Lotus to painstakingly reconstruct new physical vessels for the duo.
       </p>
 <div class="related-movies"></div>
+
 </section>
 </main>
 <!-- ============================================================
@@ -127,7 +128,7 @@
 <div id="mobRelatedLabel">You Might Also Like</div>
 <div id="mobRelatedGrid"></div>
 <div id="mobFooter">
-<a href="../disclaimer.html">Disclaimer</a><span> | Copyright © 2026 Leveny. All rights reserved.</span>
+<a href="../disclaimer.html">Disclaimer!</a>
 </div>
 </div>
 <nav id="mobBottomNav">
@@ -216,7 +217,7 @@ function __isMobileViewport() {
     });
   </script>
 <footer class="copyright">
-<a href="../disclaimer.html">Disclaimer</a><span> | Copyright © 2026 Leveny. All rights reserved.</span>
+<a href="../disclaimer.html">Disclaimer!</a>
 </footer>
 <script>
     document.getElementById('frostClick')?.addEventListener('click', function () {
