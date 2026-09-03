@@ -162,4 +162,7 @@ const LEVENY_MOVIES = [
     { title: "Clash of The Thundermans", href: "../movies/clash_of_the_thundermans_movie.html", genre: "family", poster: "images/posters/clash_of_the_thundermans.jpg", discover: 4 , background: "images/backgrounds/clash_of_the_thundermans_backg.jpg"},
     { title: "Ne Zha", href: "../movies/ne_zha_movie.html", genre: "fantasy", poster: "images/posters/ne_zha.jpg", discover: 4 , background: "images/backgrounds/ne_zha_backg.jpg"},
     { title: "Ne Zha 2", href: "../movies/ne_zha_2_movie.html", genre: "fantasy", poster: "images/posters/ne_zha_2.jpg", discover: 4 , background: "images/backgrounds/ne_zha_2_backg.jpg"},
+    { title: "Taken", href: "../movies/taken_movie.html", genre: "thriller", poster: "images/posters/taken.jpg", discover: 5 , background: "images/backgrounds/taken_backg.jpg"},
+    { title: "Taken 2", href: "../movies/taken_2_movie.html", genre: "thriller", poster: "images/posters/taken_2.jpg", discover: 5 , background: "images/backgrounds/taken_2_backg.jpg"},
+    { title: "Taken 3", href: "../movies/taken_3_movie.html", genre: "thriller", poster: "images/posters/taken_3.jpg", discover: 6 , background: "images/backgrounds/taken_3_backg.jpg"},
 ];
