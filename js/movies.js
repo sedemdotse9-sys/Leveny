@@ -165,4 +165,5 @@ const LEVENY_MOVIES = [
     { title: "Taken", href: "../movies/taken_movie.html", genre: "thriller", poster: "images/posters/taken.jpg", discover: 5 , background: "images/backgrounds/taken_backg.jpg"},
     { title: "Taken 2", href: "../movies/taken_2_movie.html", genre: "thriller", poster: "images/posters/taken_2.jpg", discover: 5 , background: "images/backgrounds/taken_2_backg.jpg"},
     { title: "Taken 3", href: "../movies/taken_3_movie.html", genre: "thriller", poster: "images/posters/taken_3.jpg", discover: 6 , background: "images/backgrounds/taken_3_backg.jpg"},
+    { title: "Dungeons & Dragons: Honor Among Thieves", href: "../movies/dungeons_dragons_honor_among_thieves_movie.html", genre: "fantasy", poster: "images/posters/dungeons_dragons_honor_among_thieves.jpg", discover: 4 , background: "images/backgrounds/dungeons_dragons_honor_among_thieves_backg.jpg"},
 ];
