@@ -166,4 +166,7 @@ const LEVENY_MOVIES = [
     { title: "Taken 2", href: "../movies/taken_2_movie.html", genre: "thriller", poster: "images/posters/taken_2.jpg", discover: 5 , background: "images/backgrounds/taken_2_backg.jpg"},
     { title: "Taken 3", href: "../movies/taken_3_movie.html", genre: "thriller", poster: "images/posters/taken_3.jpg", discover: 6 , background: "images/backgrounds/taken_3_backg.jpg"},
     { title: "Dungeons & Dragons: Honor Among Thieves", href: "../movies/dungeons_dragons_honor_among_thieves_movie.html", genre: "fantasy", poster: "images/posters/dungeons_dragons_honor_among_thieves.jpg", discover: 4 , background: "images/backgrounds/dungeons_dragons_honor_among_thieves_backg.jpg"},
+    { title: "Dark Hollow", href: "../movies/dark_hollow_movie.html", genre: "horror", poster: "images/posters/dark_hollow.jpg", discover: 5 , background: "images/backgrounds/dark_hollow_backg.jpg"},
+    { title: "Mayday", href: "../movies/mayday_movie.html", genre: "action", poster: "images/posters/mayday.jpg", discover: 3 , background: "images/backgrounds/mayday_backg.jpg"},
+    { title: "Splash City", href: "../movies/splash_city_movie.html", genre: "thriller", poster: "images/posters/splash_city.jpg", discover: 5 , background: "images/backgrounds/splash_city_backg.jpg"},
 ];
