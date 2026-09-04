@@ -169,4 +169,6 @@ const LEVENY_MOVIES = [
     { title: "Dark Hollow", href: "../movies/dark_hollow_movie.html", genre: "horror", poster: "images/posters/dark_hollow.jpg", discover: 5 , background: "images/backgrounds/dark_hollow_backg.jpg"},
     { title: "Mayday", href: "../movies/mayday_movie.html", genre: "action", poster: "images/posters/mayday.jpg", discover: 3 , background: "images/backgrounds/mayday_backg.jpg"},
     { title: "Splash City", href: "../movies/splash_city_movie.html", genre: "thriller", poster: "images/posters/splash_city.jpg", discover: 5 , background: "images/backgrounds/splash_city_backg.jpg"},
+    { title: "Angel Has Fallen", href: "../movies/angel_has_fallen_movie.html", genre: "action", poster: "images/posters/angel_has_fallen.jpg", discover: 6 , background: "images/backgrounds/angel_has_fallen_backg.jpg"},
+    { title: "London Has Fallen", href: "../movies/london_has_fallen_movie.html", genre: "action", poster: "images/posters/london_has_fallen.jpg", discover: 4 , background: "images/backgrounds/london_has_fallen_backg.jpg"},
 ];
