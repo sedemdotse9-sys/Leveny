@@ -81,6 +81,7 @@
         The British Prime Minister dies under mysterious circumstances. World leaders from the Western world gather in London for his state funeral, which is supposed to be the most protected event on Earth. A terrorist group orchestrates a massive, coordinated attack on the city during the ceremony, aiming to assassinate the attending heads of state and destroy major London landmarks.
       </p>
 <div class="related-movies"></div>
+
 </section>
 </main>
 <!-- ============================================================
@@ -127,7 +128,7 @@
 <div id="mobRelatedLabel">You Might Also Like</div>
 <div id="mobRelatedGrid"></div>
 <div id="mobFooter">
-<a href="../disclaimer.html">Disclaimer</a><span> | Copyright © 2026 Leveny. All rights reserved.</span>
+<a href="../disclaimer.html">Disclaimer!</a>
 </div>
 </div>
 <nav id="mobBottomNav">
@@ -216,7 +217,7 @@ function __isMobileViewport() {
     });
   </script>
 <footer class="copyright">
-<a href="../disclaimer.html">Disclaimer</a><span> | Copyright © 2026 Leveny. All rights reserved.</span>
+<a href="../disclaimer.html">Disclaimer!</a>
 </footer>
 <script>
     document.getElementById('frostClick')?.addEventListener('click', function () {
