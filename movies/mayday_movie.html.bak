@@ -4,9 +4,9 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
-<title>London Has Fallen | Leveny</title>
+<title>Mayday | Leveny</title>
 <link href="../css/style.css" rel="stylesheet"/>
-<link href="../css/style163.css" rel="stylesheet"/>
+<link href="../css/style160.css" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;display=swap" rel="stylesheet"/>
 <link href="/favicon/favicon-96x96.png" rel="icon" sizes="96x96" type="image/png"/>
@@ -15,7 +15,7 @@
 <link href="/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="/favicon/site.webmanifest" rel="manifest"/>
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&amp;display=swap" rel="stylesheet"/></head>
-<body data-current-movie="london_has_fallen_movie.html">
+<body data-current-movie="mayday_movie.html">
 <!-- ============================================================
       DESKTOP LAYOUT
   ============================================================ -->
@@ -53,34 +53,35 @@
 <main class="movie-page">
 <section class="video-section">
 <div class="frost-wrap" id="frostWrap">
-<!-- IMDb ID: tt3300542 -->
-<iframe allow="autoplay; fullscreen" allowfullscreen="" frameborder="0" height="450" src="https://vidsrc.me/embed/movie/tt3300542" width="100%">
+<!-- IMDb ID: tt28014327 [1] (https://www.imdb.com/title/tt28014327/technical/), [2] (https://pro.imdb.com/title/tt28014327/public/), [3] (https://www.imdb.com/title/tt28014327/) -->
+<iframe allow="autoplay; fullscreen" allowfullscreen="" frameborder="0" height="450" src="https://vidsrc.me/embed/movie/tt28014327 [1] (https://www.imdb.com/title/tt28014327/technical/), [2] (https://pro.imdb.com/title/tt28014327/public/), [3] (https://www.imdb.com/title/tt28014327/)" width="100%">
 </iframe>
 <div class="frost-click" id="frostClick"></div>
 </div>
 <button class="download-btn">
-<a download="" href="https://wildshare.net/2e3cb370578115e0">
+<a download="" href="https://wildshare.net/ee97d8fa336680fd/Mayday.2026.NaijaPrey.com.mkv">
 <i class="fa fa-download"></i> Download
         </a>
 </button>
-<a class="broken-link" data-movie="LONDON HAS FALLEN" href="#">
+<a class="broken-link" data-movie="MAYDAY" href="#">
 <i class="fas fa-triangle-exclamation"></i> Broken download link?
     </a>
 </section>
 <section class="details-section">
-<h3 class="movie-title">LONDON HAS FALLEN</h3>
+<h3 class="movie-title">MAYDAY</h3>
 <div class="search-box">
 <input id="searchInput" placeholder="Search movies..." type="text"/>
 <button><i class="fas fa-search"></i></button>
 <div class="search-dropdown" id="searchDropdown"></div>
 </div>
 <p class="info">
-        2016  |  <span>99mins 00secs</span>  |  Action
+        2026  |  <span>110mins 00secs</span>  |  Action
       </p>
 <p class="summary">
-        The British Prime Minister dies under mysterious circumstances. World leaders from the Western world gather in London for his state funeral, which is supposed to be the most protected event on Earth. A terrorist group orchestrates a massive, coordinated attack on the city during the ceremony, aiming to assassinate the attending heads of state and destroy major London landmarks.
+        Set at the height of the Cold War in 1987, hotshot U.S. Navy pilot Lieutenant Troy "Assassin" Kelly (Ryan Reynolds) is sent on a top-secret reconnaissance mission over Soviet territory. The operation implodes when his plane is fired upon, forcing him to execute a harrowing ejection and crash-land deep in the harsh Russian wilderness.
       </p>
 <div class="related-movies"></div>
+
 </section>
 </main>
 <!-- ============================================================
@@ -101,33 +102,33 @@
 <div id="mobPage">
 <div id="mobVideoWrap">
 <div id="mobFrostWrap">
-<!-- IMDb ID: tt3300542 -->
-<iframe allow="autoplay; fullscreen; picture-in-picture" allowfullscreen="" frameborder="0" height="240" src="https://vidsrc.me/embed/movie/tt3300542" width="100%">
+<!-- IMDb ID: tt28014327 [1] (https://www.imdb.com/title/tt28014327/technical/), [2] (https://pro.imdb.com/title/tt28014327/public/), [3] (https://www.imdb.com/title/tt28014327/) -->
+<iframe allow="autoplay; fullscreen; picture-in-picture" allowfullscreen="" frameborder="0" height="240" src="https://vidsrc.me/embed/movie/tt28014327 [1] (https://www.imdb.com/title/tt28014327/technical/), [2] (https://pro.imdb.com/title/tt28014327/public/), [3] (https://www.imdb.com/title/tt28014327/)" width="100%">
 </iframe>
 <div id="mobFrostClick"></div>
 </div>
 </div>
-<a download="" href="https://wildshare.net/2e3cb370578115e0" id="mobDownloadBtn">
+<a download="" href="https://wildshare.net/ee97d8fa336680fd/Mayday.2026.NaijaPrey.com.mkv" id="mobDownloadBtn">
 <i class="fas fa-download"></i> Download Movie
     </a>
-<a class="mob-broken-link" data-movie="LONDON HAS FALLEN" href="#">
+<a class="mob-broken-link" data-movie="MAYDAY" href="#">
 <i class="fas fa-triangle-exclamation"></i> Broken download link?
     </a>
 <div id="mobMovieInfo">
-<div id="mobMovieTitle">LONDON HAS FALLEN</div>
+<div id="mobMovieTitle">MAYDAY</div>
 <div id="mobMovieMeta">
-<span>2016</span>
+<span>2026</span>
 <span class="mob-meta-badge">Action</span>
-<span>99 mins</span>
+<span>110 mins</span>
 </div>
 <p id="mobMovieSummary">
-        The British Prime Minister dies under mysterious circumstances. World leaders from the Western world gather in London for his state funeral, which is supposed to be the most protected event on Earth. A terrorist group orchestrates a massive, coordinated attack on the city during the ceremony, aiming to assassinate the attending heads of state and destroy major London landmarks.
+        Set at the height of the Cold War in 1987, hotshot U.S. Navy pilot Lieutenant Troy "Assassin" Kelly (Ryan Reynolds) is sent on a top-secret reconnaissance mission over Soviet territory. The operation implodes when his plane is fired upon, forcing him to execute a harrowing ejection and crash-land deep in the harsh Russian wilderness.
       </p>
 </div>
 <div id="mobRelatedLabel">You Might Also Like</div>
 <div id="mobRelatedGrid"></div>
 <div id="mobFooter">
-<a href="../disclaimer.html">Disclaimer</a><span> | Copyright © 2026 Leveny. All rights reserved.</span>
+<a href="../disclaimer.html">Disclaimer!</a>
 </div>
 </div>
 <nav id="mobBottomNav">
@@ -216,7 +217,7 @@ function __isMobileViewport() {
     });
   </script>
 <footer class="copyright">
-<a href="../disclaimer.html">Disclaimer</a><span> | Copyright © 2026 Leveny. All rights reserved.</span>
+<a href="../disclaimer.html">Disclaimer!</a>
 </footer>
 <script>
     document.getElementById('frostClick')?.addEventListener('click', function () {

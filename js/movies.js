@@ -171,4 +171,6 @@ const LEVENY_MOVIES = [
     { title: "Splash City", href: "../movies/splash_city_movie.html", genre: "thriller", poster: "images/posters/splash_city.jpg", discover: 5 , background: "images/backgrounds/splash_city_backg.jpg"},
     { title: "Angel Has Fallen", href: "../movies/angel_has_fallen_movie.html", genre: "action", poster: "images/posters/angel_has_fallen.jpg", discover: 6 , background: "images/backgrounds/angel_has_fallen_backg.jpg"},
     { title: "London Has Fallen", href: "../movies/london_has_fallen_movie.html", genre: "action", poster: "images/posters/london_has_fallen.jpg", discover: 4 , background: "images/backgrounds/london_has_fallen_backg.jpg"},
+    { title: "Tron: Ares", href: "../movies/tron_ares_movie.html", genre: "scifi", poster: "images/posters/tron_ares.jpg", discover: 4 , background: "images/backgrounds/tron_ares_backg.jpg"},
+    { title: "To All the Boys I've Loved Before", href: "../movies/to_all_the_boys_i've_loved_before_movie.html", genre: "romance", poster: "images/posters/to_all_the_boys_ive_loved_before.jpg", discover: 5 , background: "images/backgrounds/to_all_the_boys_ive_loved_before_backg.jpg"},
 ];
