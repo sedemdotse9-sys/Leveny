@@ -1,0 +1,593 @@
+/* ============================================================
+   COMMENTS.CSS — Leveny
+   Page-specific styles for comments.html. Sits on top of
+   design.css + mobile.css + app.css, the same layering every
+   other "after login" page uses (app.css gives the sidebar,
+   header, footer, accent-cycle chrome; this file only adds the
+   comments-page content).
+============================================================ */
+
+/* ---- Page intro row (title + live pulse + owner sign-in) ---- */
+.comments-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+}
+
+.comments-head .app-page-title {
+    margin-bottom: 0;
+}
+
+.live-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--accent);
+    background: var(--accent-dim);
+    border: 1px solid var(--accent);
+    padding: 5px 10px 5px 8px;
+    border-radius: 999px;
+    text-transform: uppercase;
+}
+
+.live-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 0 var(--accent-glow);
+    animation: livePulse 1.8s ease-out infinite;
+}
+
+@keyframes livePulse {
+    0%   { box-shadow: 0 0 0 0 var(--accent-glow); }
+    70%  { box-shadow: 0 0 0 7px rgba(0,0,0,0); }
+    100% { box-shadow: 0 0 0 0 rgba(0,0,0,0); }
+}
+
+.owner-gate-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid rgba(120,120,120,0.35);
+    background: rgba(255,255,255,0.5);
+    color: #555;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 7px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+body.dark-mode .owner-gate-btn {
+    background: rgba(255,255,255,0.06);
+    color: #bbb;
+    border-color: rgba(255,255,255,0.15);
+}
+
+.owner-gate-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.owner-gate-btn.is-owner {
+    color: #fff;
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+/* ---- Section wrapper ---- */
+.comments-section {
+    margin-bottom: 28px;
+}
+
+.comments-section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.comments-section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: #222;
+}
+
+body.dark-mode .comments-section-title {
+    color: #eee;
+}
+
+.comments-section-title i {
+    color: var(--accent);
+}
+
+.comments-count-badge {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--accent-dim);
+    border-radius: 999px;
+    padding: 2px 9px;
+}
+
+.small-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 8px 13px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: filter 0.2s ease, transform 0.15s ease;
+}
+
+.small-action-btn:hover { filter: brightness(1.08); }
+.small-action-btn:active { transform: scale(0.97); }
+
+/* ---- Glass card (announcement / composer / comment shared base) ---- */
+.glass-card {
+    border-radius: 16px;
+    background: rgba(255,255,255,0.6);
+    border: 1px solid rgba(255,255,255,0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 16px 18px;
+}
+
+body.dark-mode .glass-card {
+    background: rgba(255,255,255,0.045);
+    border: 1px solid rgba(255,255,255,0.09);
+}
+
+/* ---- Announcements ---- */
+.announcement-card {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+.announcement-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--accent);
+}
+
+.announcement-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.announcement-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--accent);
+    padding: 3px 9px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.announcement-time {
+    font-size: 11px;
+    color: #888;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
+}
+
+.announcement-text {
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: #222;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+body.dark-mode .announcement-text {
+    color: #f0f0f0;
+}
+
+.announcement-composer {
+    margin-bottom: 14px;
+}
+
+.announcement-composer[hidden] { display: none; }
+
+/* ---- Composer (comment form) ---- */
+.comment-composer-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.composer-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent-dim);
+    color: var(--accent);
+    font-weight: 700;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
+    overflow: hidden;
+}
+
+.composer-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.composer-fields {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.composer-name-input {
+    width: 100%;
+    max-width: 220px;
+    border: 1px solid rgba(120,120,120,0.3);
+    background: rgba(255,255,255,0.7);
+    border-radius: 8px;
+    padding: 7px 10px;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #222;
+}
+
+body.dark-mode .composer-name-input {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.15);
+    color: #eee;
+}
+
+.composer-textarea {
+    width: 100%;
+    min-height: 74px;
+    resize: vertical;
+    border: 1px solid rgba(120,120,120,0.3);
+    background: rgba(255,255,255,0.7);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #222;
+}
+
+.composer-textarea:focus, .composer-name-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-dim);
+}
+
+body.dark-mode .composer-textarea {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.15);
+    color: #eee;
+}
+
+.composer-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.composer-char-count {
+    font-size: 11px;
+    color: #999;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
+}
+
+.composer-status {
+    font-size: 12px;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
+    color: #e74c3c;
+    min-height: 14px;
+}
+
+.composer-status.ok { color: #2ecc71; }
+
+/* ---- Comments feed ---- */
+.comment-item {
+    display: flex;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(120,120,120,0.12);
+}
+
+.comment-item:last-child { border-bottom: none; }
+
+.comment-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent-dim);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 14px;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
+}
+
+.comment-avatar.is-owner {
+    background: var(--accent);
+    color: #fff;
+}
+
+.comment-body { flex: 1; min-width: 0; }
+
+.comment-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 3px;
+}
+
+.comment-name {
+    font-family: "Roboto Slab", Rockwell, sans-serif;
+    font-weight: 700;
+    font-size: 13.5px;
+    color: #222;
+}
+
+body.dark-mode .comment-name { color: #f0f0f0; }
+
+.owner-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--accent);
+    padding: 2px 8px;
+    border-radius: 999px;
+    text-transform: uppercase;
+}
+
+.comment-time {
+    font-size: 11px;
+    color: #999;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
+}
+
+.comment-text {
+    font-size: 14px;
+    line-height: 1.55;
+    color: #333;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+body.dark-mode .comment-text { color: #ddd; }
+
+.comment-actions { margin-top: 6px; }
+
+.comment-reply-btn {
+    border: none;
+    background: transparent;
+    color: var(--accent);
+    font-family: "Roboto Slab", Rockwell, sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 2px 0;
+}
+
+.comment-reply-btn:hover { text-decoration: underline; }
+
+.reply-composer {
+    margin-top: 10px;
+    padding-left: 12px;
+    border-left: 2px solid var(--accent-dim);
+}
+
+.reply-composer[hidden] { display: none; }
+
+.replies-list {
+    margin-top: 12px;
+    padding-left: 14px;
+    border-left: 2px solid var(--accent-dim);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.reply-item { display: flex; gap: 10px; }
+
+.reply-item .comment-avatar {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+}
+
+.reply-item .comment-name { font-size: 12.5px; }
+.reply-item .comment-text { font-size: 13px; }
+
+/* ---- Empty states (reuses .downloads-empty from app.css, tweaks below) ---- */
+.comments-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
+}
+
+body.dark-mode .comments-empty { color: #888; }
+
+.comments-empty i {
+    font-size: 32px;
+    margin-bottom: 12px;
+    color: var(--accent);
+    display: block;
+}
+
+.comments-empty p {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0 0 4px;
+    color: #333;
+}
+
+body.dark-mode .comments-empty p { color: #eee; }
+
+.comments-empty span { font-size: 12.5px; }
+
+[hidden] { display: none !important; }
+
+/* ---- Owner sign-in modal ---- */
+.owner-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    background: rgba(0,0,0,0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.owner-modal-backdrop[hidden] { display: none; }
+
+.owner-modal {
+    width: 100%;
+    max-width: 340px;
+    border-radius: 16px;
+    background: #fff;
+    padding: 22px 20px;
+}
+
+body.dark-mode .owner-modal {
+    background: #121212;
+    border: 1px solid var(--accent-dim);
+}
+
+.owner-modal h3 {
+    font-family: "Bebas Neue", sans-serif;
+    letter-spacing: 1px;
+    font-size: 22px;
+    margin-bottom: 4px;
+    color: #111;
+}
+
+body.dark-mode .owner-modal h3 { color: #fff; }
+
+.owner-modal p.owner-modal-sub {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 16px;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
+}
+
+.owner-modal input {
+    width: 100%;
+    border: 1px solid rgba(120,120,120,0.3);
+    background: rgba(0,0,0,0.03);
+    border-radius: 9px;
+    padding: 10px 12px;
+    font-size: 13.5px;
+    margin-bottom: 10px;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
+    color: #222;
+}
+
+body.dark-mode .owner-modal input {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.15);
+    color: #eee;
+}
+
+.owner-modal input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-dim);
+}
+
+.owner-modal-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.owner-modal-actions button {
+    flex: 1;
+    border: none;
+    border-radius: 9px;
+    padding: 10px;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+#ownerSignInCancel {
+    background: rgba(120,120,120,0.15);
+    color: #555;
+}
+
+body.dark-mode #ownerSignInCancel {
+    background: rgba(255,255,255,0.08);
+    color: #ccc;
+}
+
+#ownerSignInSubmit {
+    background: var(--accent);
+    color: #fff;
+}
+
+.owner-modal-error {
+    font-size: 12px;
+    color: #e74c3c;
+    margin-bottom: 8px;
+    min-height: 14px;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
+}
+
+/* ============================================================
+   Small screens
+============================================================ */
+@media screen and (max-width: 480px) {
+    .comments-head { gap: 8px; }
+    .comment-composer-row { gap: 9px; }
+    .composer-avatar { width: 34px; height: 34px; }
+    .composer-name-input { max-width: 150px; }
+}
