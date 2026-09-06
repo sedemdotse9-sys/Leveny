@@ -173,4 +173,8 @@ const LEVENY_MOVIES = [
     { title: "London Has Fallen", href: "../movies/london_has_fallen_movie.html", genre: "action", poster: "images/posters/london_has_fallen.jpg", discover: 4 , background: "images/backgrounds/london_has_fallen_backg.jpg"},
     { title: "Tron: Ares", href: "../movies/tron_ares_movie.html", genre: "scifi", poster: "images/posters/tron_ares.jpg", discover: 4 , background: "images/backgrounds/tron_ares_backg.jpg"},
     { title: "To All the Boys I've Loved Before", href: "../movies/to_all_the_boys_i've_loved_before_movie.html", genre: "romance", poster: "images/posters/to_all_the_boys_ive_loved_before.jpg", discover: 5 , background: "images/backgrounds/to_all_the_boys_ive_loved_before_backg.jpg"},
+    { title: "Rebel Ridge", href: "../movies/rebel_ridge_movie.html", genre: "action", poster: "images/posters/rebel_ridge.jpg", discover: 3 , background: "images/backgrounds/rebel_ridge_backg.jpg"},
+    { title: "An Unexpected Valentine", href: "../movies/an_unexpected_valentine_movie.html", genre: "romance", poster: "images/posters/an_unexpected_valentine.jpg", discover: 4 , background: "images/backgrounds/an_unexpected_valentine_backg.jpg"},
+    { title: "Yesterday", href: "../movies/yesterday_movie.html", genre: "romance", poster: "images/posters/yesterday.jpg", discover: 2 , background: "images/backgrounds/yesterday_backg.jpg"},
+    { title: "Ready Player One", href: "../movies/ready_player_one_movie.html", genre: "scifi", poster: "images/posters/ready_player_one.jpg", discover: 1 , background: "images/backgrounds/ready_player_one_backg.jpg"},
 ];
