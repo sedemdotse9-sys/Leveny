@@ -177,4 +177,9 @@ const LEVENY_MOVIES = [
     { title: "An Unexpected Valentine", href: "../movies/an_unexpected_valentine_movie.html", genre: "romance", poster: "images/posters/an_unexpected_valentine.jpg", discover: 4 , background: "images/backgrounds/an_unexpected_valentine_backg.jpg"},
     { title: "Yesterday", href: "../movies/yesterday_movie.html", genre: "romance", poster: "images/posters/yesterday.jpg", discover: 2 , background: "images/backgrounds/yesterday_backg.jpg"},
     { title: "Ready Player One", href: "../movies/ready_player_one_movie.html", genre: "scifi", poster: "images/posters/ready_player_one.jpg", discover: 1 , background: "images/backgrounds/ready_player_one_backg.jpg"},
+    { title: "Eternals", href: "../movies/eternals_movie.html", genre: "superhero", poster: "images/posters/eternals.jpg", discover: 2 , background: "images/backgrounds/eternals_backg.jpg"},
+    { title: "Ghost In The Shell", href: "../movies/ghost_in_the_shell_movie.html", genre: "scifi", poster: "images/posters/ghost_in_the_shell.jpg", discover: 1 , background: "images/backgrounds/ghost_in_the_shell_backg.jpg"},
+    { title: "Moana: The Movie", href: "../movies/moana_the_movie_movie.html", genre: "family", poster: "images/posters/moana_the_movie.jpg", discover: 1 , background: "images/backgrounds/moana_the_movie_backg.jpg"},
+    { title: "Moana", href: "../movies/moana_movie.html", genre: "animation", poster: "images/posters/moana.jpg", discover: 1 , background: "images/backgrounds/moana_backg.jpg"},
+    { title: "Moana 2", href: "../movies/moana_2_movie.html", genre: "animation", poster: "images/posters/moana_2.jpg", discover: 1 , background: "images/backgrounds/moana_2_backg.jpg"},
 ];
