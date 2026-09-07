@@ -40,8 +40,9 @@
     const db = firebase.firestore();
     const auth = firebase.auth();
 
-    const OWNER_NAME = window.LEVENY_OWNER_NAME || 'Sedem';
+    const OWNER_NAME = window.LEVENY_OWNER_NAME || 'Owner';
     const GUEST_NAME = 'Guest';
+    const COMMENT_LIFETIME_MS = 20 * 24 * 60 * 60 * 1000; // 20 days — comments (not announcements) expire client-side after this
 
     let isOwnerSignedIn = false;
     let allComments = []; // flat list from Firestore, newest first by createdAt
@@ -200,7 +201,7 @@
 
         db.collection('announcements')
             .orderBy('createdAt', 'desc')
-            .limit(5)
+            .limit(20)
             .onSnapshot((snap) => {
                 list.innerHTML = '';
                 if (snap.empty) {
@@ -222,12 +223,48 @@
                     const ts = d.createdAt && d.createdAt.toDate ? d.createdAt.toDate() : null;
                     top.appendChild(el('span', 'announcement-time', ts ? timeAgo(ts) : 'just now'));
 
+                    const deleteBtn = el('button', 'announcement-delete-btn owner-only');
+                    deleteBtn.type = 'button';
+                    deleteBtn.hidden = !isOwnerSignedIn;
+                    deleteBtn.title = 'Delete this announcement';
+                    deleteBtn.appendChild(el('i', 'fa-solid fa-trash'));
+                    deleteBtn.addEventListener('click', async () => {
+                        if (!confirm('Delete this announcement? This cannot be undone.')) return;
+                        deleteBtn.disabled = true;
+                        try {
+                            await db.collection('announcements').doc(doc.id).delete();
+                        } catch (err) {
+                            console.error(err);
+                            alert('Could not delete — check your sign-in.');
+                            deleteBtn.disabled = false;
+                        }
+                    });
+                    top.appendChild(deleteBtn);
+
                     card.appendChild(top);
                     card.appendChild(el('p', 'announcement-text', d.text || ''));
                     list.appendChild(card);
                 });
+                // Re-apply owner-only visibility to the delete buttons we
+                // just built, in case sign-in state changed mid-render.
+                document.querySelectorAll('#announcementsList .owner-only').forEach(node => {
+                    node.hidden = !isOwnerSignedIn;
+                });
             }, (err) => {
                 console.error('announcements listener error', err);
+                // If this fires with code "permission-denied" right after you
+                // sign out, your Firestore rules are almost certainly gating
+                // *reads* on the announcements collection to isOwner() (i.e.
+                // signed-in only) instead of just gating writes/deletes that
+                // way. Reads on /announcements/{id} need to stay public
+                // (allow read: if true;) so everyone — including you, signed
+                // out — keeps seeing them; only create/delete should require
+                // isOwner(). This is a firestore.rules fix in the Firebase
+                // Console, not something this file can patch on its own.
+                if (err && err.code === 'permission-denied') {
+                    empty.hidden = false;
+                    empty.querySelector('p').textContent = 'Could not load announcements — check Firestore read rules.';
+                }
             });
     }
 
@@ -345,7 +382,7 @@
         return wrap;
     }
 
-    function buildCommentNode(comment, isReply) {
+    function buildCommentNode(comment, isReply, visibleComments) {
         const item = el('div', isReply ? 'reply-item' : 'comment-item');
 
         const avatar = el('div', 'comment-avatar' + (comment.isOwner ? ' is-owner' : ''), initials(comment.name));
@@ -377,12 +414,12 @@
             body.appendChild(actions);
             body.appendChild(replyBox);
 
-            const replies = allComments.filter(c => c.parentId === comment.id);
+            const replies = visibleComments.filter(c => c.parentId === comment.id);
             if (replies.length) {
                 const repliesList = el('div', 'replies-list');
                 replies
                     .sort((a, b) => (a.createdAtMs || 0) - (b.createdAtMs || 0))
-                    .forEach(r => repliesList.appendChild(buildCommentNode(r, true)));
+                    .forEach(r => repliesList.appendChild(buildCommentNode(r, true, visibleComments)));
                 body.appendChild(repliesList);
             }
         }
@@ -398,8 +435,16 @@
         const countBadge = document.getElementById('commentsCountBadge');
         if (!list) return;
 
-        const topLevel = allComments.filter(c => !c.parentId);
-        if (countBadge) countBadge.textContent = String(allComments.length);
+        // Comments (and replies) older than COMMENT_LIFETIME_MS quietly
+        // stop being shown — this never touches announcements, and it
+        // doesn't delete anything from Firestore, it just hides expired
+        // ones client-side. Anything with no timestamp yet (just posted,
+        // still waiting on the server clock) is always kept.
+        const cutoff = Date.now() - COMMENT_LIFETIME_MS;
+        const visibleComments = allComments.filter(c => !c.createdAtMs || c.createdAtMs >= cutoff);
+
+        const topLevel = visibleComments.filter(c => !c.parentId);
+        if (countBadge) countBadge.textContent = String(visibleComments.length);
 
         if (!topLevel.length) {
             list.innerHTML = '';
@@ -410,7 +455,7 @@
         list.innerHTML = '';
         topLevel
             .sort((a, b) => (b.createdAtMs || 0) - (a.createdAtMs || 0))
-            .forEach(c => list.appendChild(buildCommentNode(c, false)));
+            .forEach(c => list.appendChild(buildCommentNode(c, false, visibleComments)));
     }
 
     function initCommentsFeed() {
@@ -446,6 +491,12 @@
         initAnnouncements();
         initComposer();
         initCommentsFeed();
+
+        // Nothing pushes a "your 20 days are up" event from Firestore —
+        // re-run the expiry filter periodically so a comment that ages
+        // past 20 days while the page is left open still disappears,
+        // not just on the next fresh page load.
+        setInterval(renderComments, 60 * 60 * 1000); // hourly is plenty for a 20-day window
     });
 
 })();

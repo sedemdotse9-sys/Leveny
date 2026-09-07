@@ -34,4 +34,4 @@ window.LEVENY_FIREBASE_CONFIG = {
 window.LEVENY_OWNER_UID = "PkxVtLppn1dtMe55siwc5lHFBzm1";
 
 /* The name shown on your own replies & announcements. */
-window.LEVENY_OWNER_NAME = "Sedem";
+window.LEVENY_OWNER_NAME = "Owner";
