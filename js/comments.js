@@ -41,6 +41,7 @@
     const auth = firebase.auth();
 
     const OWNER_NAME = window.LEVENY_OWNER_NAME || 'Sedem';
+    const GUEST_NAME = 'Guest';
 
     let isOwnerSignedIn = false;
     let allComments = []; // flat list from Firestore, newest first by createdAt
@@ -79,19 +80,6 @@
         if (className) e.className = className;
         if (text !== undefined) e.textContent = text;
         return e;
-    }
-
-    /* ---------------- name persistence (matches leveny-username) ---------------- */
-
-    function getStoredName() {
-        const fromComments = localStorage.getItem('leveny-comment-name');
-        if (fromComments) return fromComments;
-        const fromSite = localStorage.getItem('leveny-username');
-        return fromSite && fromSite.trim() ? fromSite.trim() : '';
-    }
-
-    function storeName(name) {
-        localStorage.setItem('leveny-comment-name', name);
     }
 
     /* ---------------- Owner sign-in modal ---------------- */
@@ -246,26 +234,18 @@
     /* ---------------- Comment composer ---------------- */
 
     function initComposer() {
-        const nameInput = document.getElementById('commentName');
         const textArea = document.getElementById('commentText');
         const charCount = document.getElementById('commentCharCount');
         const status = document.getElementById('commentStatus');
         const postBtn = document.getElementById('postCommentBtn');
         const avatarEl = document.getElementById('composerAvatar');
-        if (!nameInput || !textArea || !postBtn) return;
+        if (!textArea || !postBtn) return;
 
-        nameInput.value = getStoredName();
-
-        const savedAvatar = localStorage.getItem('leveny-avatar');
-        if (savedAvatar && avatarEl) {
-            avatarEl.innerHTML = `<img src="${savedAvatar}" alt="">`;
-        } else if (avatarEl) {
-            avatarEl.textContent = initials(nameInput.value || 'You');
-        }
-
-        nameInput.addEventListener('input', () => {
-            if (avatarEl && !savedAvatar) avatarEl.textContent = initials(nameInput.value || 'You');
-        });
+        // Every visitor posts as the same shared "Guest" identity — no
+        // name field, no accounts. Your replies are the only ones that
+        // ever carry a different name (OWNER_NAME, tagged isOwner:true
+        // and enforced server-side in firestore.rules).
+        if (avatarEl) avatarEl.textContent = initials(GUEST_NAME);
 
         const MAX = 1000;
         textArea.addEventListener('input', () => {
@@ -274,7 +254,7 @@
         });
 
         postBtn.addEventListener('click', async () => {
-            const name = nameInput.value.trim() || 'Guest';
+            const name = GUEST_NAME;
             const text = textArea.value.trim();
             status.textContent = '';
             status.classList.remove('ok');
@@ -297,7 +277,6 @@
                     parentId: null,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
-                storeName(name);
                 textArea.value = '';
                 charCount.textContent = `${MAX} characters left`;
                 status.textContent = 'Posted!';
