@@ -1,11 +1,39 @@
 /* ============================================================
    COMMENTS.CSS — Leveny
    Page-specific styles for comments.html. Sits on top of
-   design.css + mobile.css + app.css, the same layering every
-   other "after login" page uses (app.css gives the sidebar,
-   header, footer, accent-cycle chrome; this file only adds the
-   comments-page content).
+   design.css + mobile.css + app.css (header, footer, accent
+   colors, dark-mode variables all come from there).
+
+   Unlike every other "app" page, comments.html has NO sidebar —
+   body.no-sidebar below cancels out whatever margin/width app.css
+   normally reserves for it, and centers the content column
+   instead on desktop. Nothing here touches app.css itself, so
+   other pages (downloads, watch-history, etc.) keep their
+   sidebar untouched.
 ============================================================ */
+
+/* ============================================================
+   LAYOUT — no sidebar, centered content (desktop)
+============================================================ */
+body.no-sidebar .app-main {
+    margin-left: 0 !important;
+    width: 100% !important;
+}
+
+body.no-sidebar .app-main-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+/* Any leftover sidebar-toggle affordances from app.css/app.js
+   (e.g. a floating hamburger button) have nothing to open on this
+   page, so they're hidden rather than left dangling. */
+body.no-sidebar .sidebar-fab,
+body.no-sidebar .sidebar-backdrop {
+    display: none !important;
+}
 
 /* ---- Page intro row (title + live pulse + owner sign-in) ---- */
 .comments-head {
@@ -242,12 +270,6 @@ body.dark-mode .announcement-text {
     overflow: hidden;
 }
 
-.composer-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
 .composer-fields {
     flex: 1;
     min-width: 0;
@@ -256,23 +278,20 @@ body.dark-mode .announcement-text {
     gap: 8px;
 }
 
-.composer-name-input {
-    width: 100%;
-    max-width: 220px;
-    border: 1px solid rgba(120,120,120,0.3);
-    background: rgba(255,255,255,0.7);
-    border-radius: 8px;
-    padding: 7px 10px;
+/* Replaces the old name-input field — every visitor posts as the
+   same shared "Guest" identity, so this is a label, not a field. */
+.composer-guest-label {
     font-family: "Roboto Slab", Rockwell, sans-serif;
     font-size: 12.5px;
-    font-weight: 700;
-    color: #222;
+    color: #777;
 }
 
-body.dark-mode .composer-name-input {
-    background: rgba(255,255,255,0.06);
-    border-color: rgba(255,255,255,0.15);
-    color: #eee;
+.composer-guest-label strong {
+    color: var(--accent);
+}
+
+body.dark-mode .composer-guest-label {
+    color: #999;
 }
 
 .composer-textarea {
@@ -289,7 +308,7 @@ body.dark-mode .composer-name-input {
     color: #222;
 }
 
-.composer-textarea:focus, .composer-name-input:focus {
+.composer-textarea:focus {
     outline: none;
     border-color: var(--accent);
     box-shadow: 0 0 0 3px var(--accent-dim);
@@ -306,6 +325,7 @@ body.dark-mode .composer-textarea {
     align-items: center;
     justify-content: space-between;
     gap: 10px;
+    flex-wrap: wrap;
 }
 
 .composer-char-count {
@@ -444,7 +464,7 @@ body.dark-mode .comment-text { color: #ddd; }
 .reply-item .comment-name { font-size: 12.5px; }
 .reply-item .comment-text { font-size: 13px; }
 
-/* ---- Empty states (reuses .downloads-empty from app.css, tweaks below) ---- */
+/* ---- Empty states ---- */
 .comments-empty {
     text-align: center;
     padding: 40px 20px;
@@ -583,11 +603,117 @@ body.dark-mode #ownerSignInCancel {
 }
 
 /* ============================================================
-   Small screens
+   RESPONSIVE — a full breakpoint ladder (tablet at 1024px,
+   phone at 768px, small phone at 480px, tiny phone at 360px)
+   instead of the single 480px cutoff this file used to have.
 ============================================================ */
+
+/* ---- Tablet / small laptop ---- */
+@media screen and (max-width: 1024px) {
+    body.no-sidebar .app-main-inner {
+        max-width: 640px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+/* ---- Phone (portrait & landscape) ---- */
+@media screen and (max-width: 768px) {
+    body.no-sidebar .app-main-inner {
+        max-width: 100%;
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .comments-head {
+        gap: 10px;
+    }
+
+    .comments-head .app-page-title {
+        font-size: 22px;
+    }
+
+    .owner-gate-btn span {
+        display: none; /* icon-only on narrow screens */
+    }
+
+    .glass-card {
+        padding: 14px 14px;
+    }
+
+    .comment-composer-row {
+        gap: 10px;
+    }
+
+    .composer-avatar {
+        width: 36px;
+        height: 36px;
+        font-size: 13px;
+    }
+
+    .comments-section-title {
+        font-size: 14px;
+    }
+
+    .announcement-text,
+    .comment-text {
+        font-size: 13.5px;
+    }
+}
+
+/* ---- Small phones ---- */
 @media screen and (max-width: 480px) {
+    body.no-sidebar .app-main-inner {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
     .comments-head { gap: 8px; }
+
     .comment-composer-row { gap: 9px; }
+
     .composer-avatar { width: 34px; height: 34px; }
-    .composer-name-input { max-width: 150px; }
+
+    .composer-guest-label { font-size: 11.5px; }
+
+    .composer-footer {
+        gap: 6px;
+    }
+
+    .small-action-btn {
+        font-size: 11.5px;
+        padding: 7px 11px;
+    }
+
+    .comment-item {
+        gap: 9px;
+        padding: 11px 0;
+    }
+
+    .comment-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+    }
+
+    .replies-list,
+    .reply-composer {
+        padding-left: 10px;
+    }
+
+    .owner-modal {
+        padding: 18px 16px;
+    }
+}
+
+/* ---- Very small phones ---- */
+@media screen and (max-width: 360px) {
+    .comments-head .app-page-title {
+        font-size: 19px;
+    }
+
+    .composer-textarea {
+        font-size: 13px;
+        min-height: 64px;
+    }
 }
