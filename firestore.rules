@@ -4,9 +4,8 @@
 // Paste this whole file into:
 //   Firebase Console > Firestore Database > Rules > (replace all) > Publish
 //
-// Replace OWNER_UID_PLACEHOLDER below with your own Auth UID
-// (Authentication > Users > User UID column) — the same value
-// you put in js/firebase-config.js as LEVENY_OWNER_UID.
+// Owner UID below is already filled in to match js/firebase-config.js's
+// LEVENY_OWNER_UID (Authentication > Users > User UID column).
 // ============================================================
 
 rules_version = '2';
@@ -16,7 +15,7 @@ service cloud.firestore {
 
     function isOwner() {
       return request.auth != null
-        && request.auth.uid == "OWNER_UID_PLACEHOLDER";
+        && request.auth.uid == "PkxVtLppn1dtMe55siwc5lHFBzm1";
     }
 
     // Announcements: anyone can read, only the owner can write.
