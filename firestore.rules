@@ -1,0 +1,61 @@
+// ============================================================
+// Leveny — Firestore Security Rules
+//
+// Paste this whole file into:
+//   Firebase Console > Firestore Database > Rules > (replace all) > Publish
+//
+// Replace OWNER_UID_PLACEHOLDER below with your own Auth UID
+// (Authentication > Users > User UID column) — the same value
+// you put in js/firebase-config.js as LEVENY_OWNER_UID.
+// ============================================================
+
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isOwner() {
+      return request.auth != null
+        && request.auth.uid == "OWNER_UID_PLACEHOLDER";
+    }
+
+    // Announcements: anyone can read, only the owner can write.
+    match /announcements/{announcementId} {
+      allow read: if true;
+      allow create: if isOwner()
+        && request.resource.data.text is string
+        && request.resource.data.text.size() > 0
+        && request.resource.data.text.size() <= 2000;
+      allow update, delete: if isOwner();
+    }
+
+    // Comments (top-level comments AND replies live in the same
+    // collection — a reply just sets parentId to the comment
+    // it's replying to). Anyone can post a comment; only the
+    // owner can mark one as an official reply (isOwner: true),
+    // and that's enforced here, not just in the UI.
+    match /comments/{commentId} {
+      allow read: if true;
+
+      allow create: if
+        request.resource.data.name is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 60
+        && request.resource.data.text is string
+        && request.resource.data.text.size() > 0
+        && request.resource.data.text.size() <= 1000
+        && (request.resource.data.parentId == null || request.resource.data.parentId is string)
+        && (
+             // A regular visitor's comment/reply must be tagged isOwner:false
+             (request.resource.data.isOwner == false)
+             ||
+             // Only the signed-in owner may tag a reply isOwner:true
+             (request.resource.data.isOwner == true && isOwner())
+           );
+
+      // Only the owner can delete/moderate comments (e.g. spam).
+      allow update: if false;
+      allow delete: if isOwner();
+    }
+  }
+}
