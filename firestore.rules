@@ -1,13 +1,3 @@
-// ============================================================
-// Leveny — Firestore Security Rules
-//
-// Paste this whole file into:
-//   Firebase Console > Firestore Database > Rules > (replace all) > Publish
-//
-// Owner UID below is already filled in to match js/firebase-config.js's
-// LEVENY_OWNER_UID (Authentication > Users > User UID column).
-// ============================================================
-
 rules_version = '2';
 
 service cloud.firestore {
@@ -45,14 +35,11 @@ service cloud.firestore {
         && request.resource.data.text.size() <= 1000
         && (request.resource.data.parentId == null || request.resource.data.parentId is string)
         && (
-             // A regular visitor's comment/reply must be tagged isOwner:false
              (request.resource.data.isOwner == false)
              ||
-             // Only the signed-in owner may tag a reply isOwner:true
              (request.resource.data.isOwner == true && isOwner())
            );
 
-      // Only the owner can delete/moderate comments (e.g. spam).
       allow update: if false;
       allow delete: if isOwner();
     }
