@@ -223,14 +223,14 @@ body.dark-mode .announcement-card {
     align-items: center;
     gap: 6px;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 15px;
-    font-weight: 500;
+    font-size: 14px;
+    /* font-weight: 100; */
     color: #fff;
     background: var(--accent);
     padding: 5px 12px;
     border-radius: 999px;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
+    letter-spacing: 1.0px;
 }
 
 .announcement-time {
@@ -256,7 +256,7 @@ body.dark-mode .announcement-card {
 .announcement-delete-btn[hidden] { display: none; }
 
 .announcement-text {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
     font-size: 18px;
     font-weight: 100;
     line-height: 1.6;
