@@ -137,8 +137,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <a href="../genres.html#romance"><i class="fas fa-heart" style="color:#ff4d6d;"></i> Romance</a>
 </div>
 </li>
-<a href="../Profile.html"><i class="fa-regular fa-user"></i>Profile</a>
 <a href="../Movie_Request.html"><i class="fas fa-envelope"></i>Request</a>
+<a href="../comments.html"><i class="fa-solid fa-comments"></i>Comments</a>
 </ul>
 </nav>
 <hr/>
@@ -183,8 +183,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <div id="mobHeader">
 <span class="mob-logo">Leveny</span>
 <button aria-label="Toggle dark mode" id="mobThemeToggle">🌙</button>
-<a aria-label="Profile" href="../Profile.html" id="mobProfileBtn">
-<i class="fa-regular fa-user"></i>
+<a aria-label="Comments" href="../comments.html" id="mobProfileBtn">
+<i class="fa-solid fa-comments"></i>
 </a>
 </div>
 <div id="mobMovieSearchBar">
@@ -234,8 +234,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <a class="mob-movie-nav-item" href="../Movie_Request.html">
 <i class="fas fa-envelope"></i><span>Request</span>
 </a>
-<a class="mob-movie-nav-item" href="../Profile.html">
-<i class="fa-regular fa-user"></i><span>Profile</span>
+<a class="mob-movie-nav-item" href="../comments.html">
+<i class="fa-solid fa-comments"></i><span>Comments</span>
 </a>
 </nav>
 <!-- GENRES PANEL BACKDROP -->

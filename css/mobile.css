@@ -2,6 +2,18 @@
    MOBILE.CSS — Leveny
    Neon dark mode (#0D0D0D) + Deeply tinted frosted glass light mode.
    Dark/light toggle button in header.
+
+   CHANGE: the blanket "footer { display:none !important; }" rule
+   below used to hide EVERY <footer> element on mobile, regardless
+   of class — correct for pages like index.html/Genres.html, which
+   have a separate #mobileFooter div standing in for mobile. But
+   comments.html (and downloads.html, watch-history.html, etc.)
+   share one <footer class="app-footer"> across every screen size —
+   app.css already has its own responsive rules for it. This rule
+   was killing it before app.css ever got a chance to style it.
+   Narrowed to footer:not(.app-footer) so those pages' footer
+   survives on mobile; index.html/Genres.html are unaffected since
+   their footer uses class="copyright", not app-footer.
    ============================================================ */
 
 /* Google Fonts fallback for Rockwell (not available on iOS/Android by
@@ -31,7 +43,7 @@
     #mobileSidebar,
     .hamburger,
     .theme-toggle,
-    footer {
+    footer:not(.app-footer) {
         display: none !important;
     }
 
