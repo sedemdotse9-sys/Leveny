@@ -20,6 +20,21 @@
      columns, and .app-page-title font-size now step down at the
      same breakpoints design.css uses for nav/hero elements, so
      the whole page chrome resizes as one coherent system.
+   - FOOTER FIX (latest pass): .app-footer used to be
+     position:fixed, pinned just above the mobile bottom nav (or
+     12px from the bottom on desktop) so it floated over the page
+     content permanently, on every screen, at all times. That's
+     been changed to a normal in-flow element. body.app-page is
+     already display:flex; flex-direction:column with min-height
+     100vh, and .app-main already has flex:1 — so with the footer
+     no longer taken out of flow, it now naturally sits pinned to
+     the bottom of the viewport when page content is short, and
+     gets pushed below the fold (only reachable by scrolling) once
+     content is taller than the viewport. .app-main no longer
+     needs the extra +60px of padding-bottom that used to exist
+     solely to keep content clear of the floating footer, and the
+     footer itself picks up bottom spacing on mobile so it isn't
+     hidden behind the fixed #mobileBottomNav bar.
 ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&display=swap');
@@ -96,9 +111,6 @@ body.app-page.dark-mode::after {
     margin-top: 0;
 }
 
-.nav_bar .nav_links a.active {
-    color: #ffcc00;
-}
 
 /* ============================================================
    SIDEBAR — off-canvas overlay drawer on every breakpoint.
@@ -409,13 +421,18 @@ body.sidebar-open .sidebar-fab {
 /* ============================================================
    MAIN CONTENT — always full width; the sidebar never reserves
    layout space on any breakpoint.
+
+   padding-bottom only needs to clear the fixed mobile bottom nav
+   now — the old "+60px" on top of that existed purely to keep
+   content clear of the floating fixed footer, which no longer
+   floats over content (see .app-footer below).
 ============================================================ */
 .app-main {
     position: relative;
     z-index: 1;
     margin-left: 0;
     padding-top: 14px;
-    padding-bottom: calc(var(--app-bottomnav-h) + 60px);
+    padding-bottom: var(--app-bottomnav-h);
     flex: 1;
     min-height: 0;
     box-sizing: border-box;
@@ -520,18 +537,22 @@ body.dark-mode .dl-card-title {
 }
 
 /* ============================================================
-   FOOTER
+   FOOTER — now a normal in-flow block instead of position:fixed.
+   body.app-page is a flex column with min-height:100vh and
+   .app-main is flex:1, so this footer is the last flex item:
+   it sits pinned to the bottom of the viewport when the page's
+   content is shorter than the screen, and gets pushed down below
+   the fold — only visible once the user scrolls all the way down
+   — once content is taller than the viewport. It also picks up
+   bottom spacing on mobile so the fixed #mobileBottomNav bar
+   never sits on top of it.
 ============================================================ */
 .app-footer {
-    position: fixed;
-    bottom: var(--app-bottomnav-h);
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 895;
+    width: 100%;
     text-align: center;
+    padding: 16px 12px calc(16px + var(--app-bottomnav-h));
     font-size: 15px;
     font-family: "Roboto Slab", Rockwell, sans-serif;
-    pointer-events: none;
 }
 
 .app-footer a {
@@ -552,7 +573,7 @@ body.dark-mode .app-footer a {
 
     .app-main {
         padding-top: 100px;
-        padding-bottom: 60px;
+        padding-bottom: 30px;
     }
 
     .app-main-inner {
@@ -569,11 +590,12 @@ body.dark-mode .app-footer a {
         gap: 20px;
     }
 
+    /* No bottom nav to clear on desktop, so the footer doesn't
+       need the extra bottom padding reserved for it on mobile. */
     .app-footer {
-        bottom: 12px;
+        padding: 20px 12px;
     }
 
-    /* No bottom nav to clear on desktop */
     .sidebar-fab {
         bottom: 24px;
     }
@@ -781,7 +803,7 @@ body.dark-mode .app-footer a {
 @media screen and (orientation: landscape) and (max-height: 500px) {
     .app-main {
         padding-top: 8px;
-        padding-bottom: calc(var(--app-bottomnav-h) + 30px);
+        padding-bottom: calc(var(--app-bottomnav-h) + 10px);
     }
 
     .app-page-title {
