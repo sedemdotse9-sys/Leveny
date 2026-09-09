@@ -553,7 +553,6 @@ body.dark-mode .dl-card-title {
     padding: 16px 12px calc(16px + var(--app-bottomnav-h));
     font-size: 15px;
     font-family: "Roboto Slab", Rockwell, sans-serif;
-
 }
 
 .app-footer a {
@@ -595,8 +594,7 @@ body.dark-mode .app-footer a {
        need the extra bottom padding reserved for it on mobile. */
     .app-footer {
         padding: 20px 12px;
-    font-size: 15px;
-}
+    }
 
     .sidebar-fab {
         bottom: 24px;
@@ -712,9 +710,8 @@ body.dark-mode .app-footer a {
     }
 
     .app-footer {
-        font-size: 15px;
-    
-}
+        font-size: 13px;
+    }
 }
 
 /* ============================================================
