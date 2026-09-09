@@ -2,6 +2,18 @@
    MOBILE.CSS — Leveny
    Neon dark mode (#0D0D0D) + Deeply tinted frosted glass light mode.
    Dark/light toggle button in header.
+
+   CHANGE: the blanket "footer { display:none !important; }" rule
+   below used to hide EVERY <footer> element on mobile, regardless
+   of class — correct for pages like index.html/Genres.html, which
+   have a separate #mobileFooter div standing in for mobile. But
+   comments.html (and downloads.html, watch-history.html, etc.)
+   share one <footer class="app-footer"> across every screen size —
+   app.css already has its own responsive rules for it. This rule
+   was killing it before app.css ever got a chance to style it.
+   Narrowed to footer:not(.app-footer) so those pages' footer
+   survives on mobile; index.html/Genres.html are unaffected since
+   their footer uses class="copyright", not app-footer.
    ============================================================ */
 
 /* Google Fonts fallback for Rockwell (not available on iOS/Android by
@@ -31,7 +43,7 @@
     #mobileSidebar,
     .hamburger,
     .theme-toggle,
-    footer {
+    footer:not(.app-footer) {
         display: none !important;
     }
 
@@ -52,18 +64,12 @@ footer a {
         transition: background-color 1s ease, color 0.4s ease;
     }
 
-    /*
-      LIGHT MODE: strong tinted wash — a big radial gradient
-      in the accent color bleeds across the whole page,
-      sitting on top of the already-tinted body background.
-    */
     body::after {
         content: '';
         position: fixed;
         inset: 0;
         z-index: 0;
         pointer-events: none;
-        /* Two-layer wash: top bloom + subtle full-page tint */
         background:
             radial-gradient(ellipse 100% 55% at 50% -5%,
                 var(--accent-glow) 0%, transparent 70%),
@@ -72,7 +78,6 @@ footer a {
         transition: background 1s ease;
     }
 
-    /* DARK MODE body */
     body.dark-mode {
         background-color: #0D0D0D;
         color: #f0f0f0;
@@ -86,8 +91,6 @@ footer a {
                 var(--accent-dim) 0%, transparent 55%);
     }
 
-
-    /* All UI above bg */
     #mobileHeader,
     #mobileSearchWrapper,
     #mobileCategoryBar,
@@ -101,9 +104,8 @@ footer a {
         z-index: 1;
     }
 
-    /* -------- MOBILE PAGE SCROLLBAR -------- */
     body {
-        scrollbar-width: thin;                 /* Firefox */
+        scrollbar-width: thin;
         scrollbar-color: var(--accent) transparent;
     }
 
@@ -118,7 +120,7 @@ footer a {
 
     body::-webkit-scrollbar-thumb {
         background: var(--accent);
-        border-radius: 10px;          /* rounds top + bottom edges of the thumb */
+        border-radius: 10px;
         border: 2px solid transparent;
         background-clip: padding-box;
     }
@@ -128,10 +130,6 @@ footer a {
         box-shadow: 0 0 6px var(--accent-glow);
     }
 
-
-    /* ============================================================
-       MOBILE HEADER
-    ============================================================ */
     #mobileHeader {
         display: flex;
         align-items: center;
@@ -171,7 +169,6 @@ footer a {
         text-shadow: 0 0 18px var(--accent-glow);
     }
 
-    /* ---- DARK/LIGHT TOGGLE BUTTON ---- */
     #mobileThemeToggle {
         width: 38px;
         height: 38px;
@@ -185,7 +182,6 @@ footer a {
         flex-shrink: 0;
         transition: background 1s ease, box-shadow 1s ease, transform 0.25s ease;
 
-        /* Light mode: tinted glass button */
         background: rgba(255,255,255,0.55);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
@@ -204,7 +200,6 @@ footer a {
         transform: scale(0.88) rotate(20deg);
     }
 
-    /* Profile button */
     #mobileHeader .mobile-profile-btn {
         width: 36px;
         height: 36px;
@@ -227,9 +222,6 @@ footer a {
         box-shadow: 0 0 10px var(--accent-glow);
     }
 
-    /* ============================================================
-       SEARCH BAR
-    ============================================================ */
     #mobileSearchWrapper {
         display: flex;
         align-items: center;
@@ -238,7 +230,7 @@ footer a {
         margin: 10px 12px 12px;
         gap: 10px;
         position: relative;
-        z-index: 950;          /* ← lifts wrapper above other page elements */
+        z-index: 950;
         transition: background 0.4s, border-color 1s, box-shadow 1s;
 
         background: rgba(255,255,255,0.45);
@@ -283,7 +275,6 @@ footer a {
     overscroll-behavior: contain;
 }
 
-/* === AUTO-INJECTED: search scrollbar fix === */
 #mobileSearchResults::-webkit-scrollbar {
     width: 8px;
 }
@@ -300,27 +291,10 @@ footer a {
     background-clip: padding-box;
 }
 
-
 body.dark-mode #mobileSearchResults {
     background: rgba(18,18,18,0.97);
     border: 1px solid var(--accent-dim);
     box-shadow: 0 8px 30px rgba(0,0,0,0.7), 0 0 0 1px var(--accent-dim);
-}
-
-#mobileSearchResults::-webkit-scrollbar {
-    width: 8px;
-}
-
-#mobileSearchResults::-webkit-scrollbar-track {
-    background: transparent;
-    margin: 8px 0;
-}
-
-#mobileSearchResults::-webkit-scrollbar-thumb {
-    background: var(--accent);
-    border-radius: 8px;
-    border: 2px solid transparent;
-    background-clip: padding-box;
 }
 
 #mobileSearchResults .mob-search-drop-item {
@@ -346,10 +320,6 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item:active { background: v
 #mobileSearchResults .mob-search-drop-item i { color: #bbb; font-size: 12px; }
 body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accent); }
 
-
-    /* ============================================================
-       FEATURED BANNER
-    ============================================================ */
     #mobileFeatured {
         margin: 0 12px 16px;
         border-radius: 22px;
@@ -480,9 +450,6 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accen
         box-shadow: 0 0 6px var(--accent-glow);
     }
 
-    /* ============================================================
-       SECTION LABEL
-    ============================================================ */
     .mob-section-label {
         font-family: "Roboto Slab", Rockwell, sans-serif;
         font-size: 17px;
@@ -494,9 +461,6 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accen
 
     body.dark-mode .mob-section-label { color: #ffffff; }
 
-    /* ============================================================
-       MOVIES GRID
-    ============================================================ */
     #mobileMoviesSection {
         display: grid !important;
         grid-template-columns: repeat(2, 1fr);
@@ -563,10 +527,6 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accen
 
     body.dark-mode .mob-card-genre { color: #555; }
 
-
-    /* ============================================================
-       BOTTOM NAV BAR
-    ============================================================ */
     #mobileBottomNav {
         display: flex;
         position: fixed;
@@ -590,17 +550,20 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accen
         text-align: center;
         padding: 8px 12px 80px;
         font-family: "Roboto Slab", Rockwell, sans-serif;
-        font-size: 12px;
+        font-size: 15px;
+        margin-bottom: 70px;
     }
 
     #mobileFooter a {
-        color: #111;
+        color: var(--accent, #f39c12);
         text-decoration: none;
         transition: color 0.4s;
+
     }
 
     body.dark-mode #mobileFooter a {
-        color: #f0f0f0;
+        color: var(--accent, #f39c12);
+
     }
 
     body.dark-mode #mobileBottomNav {
@@ -641,9 +604,6 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accen
         filter: drop-shadow(0 0 6px var(--accent-glow));
     }
 
-    /* ============================================================
-       GENRES PANEL
-    ============================================================ */
     #genresPanelBackdrop {
         display: none;
         position: fixed;
@@ -745,13 +705,15 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accen
 }
 
 #mobileMoviesPagination {
+    position: relative;   /* ← add this */
+    z-index: 2;
+    margin-top: -40px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
     gap: 6px;
     padding: 16px 12px 16px;
-
 }
 
 .mob-page-btn {
@@ -759,11 +721,11 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accen
     height: 36px;
     padding: 0 10px;
     border-radius: 12px;
-    border: 1px solid var(--accent-dim, rgba(0,0,0,0.1));
+    border: 1px solid var(--accent-dim, rgba(0,0,0,1.0)) !important;
     background: rgba(255,255,255,0.30);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    color: #333;
+    color: black ;
     font-family: "Roboto Slab", Rockwell, sans-serif;
     font-size: 13px;
     font-weight: 700;
@@ -795,6 +757,24 @@ body.dark-mode .mob-page-btn.active {
     border-color: var(--accent);
 }
 
+/* ---- ellipsis between page numbers (not a button, not clickable) ---- */
+.mob-page-ellipsis {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 36px;
+    color: black;
+    font-weight: 700;
+    font-family: "Roboto Slab", Rockwell, sans-serif;
+    font-size: 13px;
+    user-select: none;
+}
+
+body.dark-mode .mob-page-ellipsis {
+    color: #ddd;
+}
+
 /* ============================================================
    HIDE ALL MOBILE UI ON DESKTOP
 ============================================================ */
@@ -809,7 +789,10 @@ body.dark-mode .mob-page-btn.active {
     #mobileBottomNav,
     #mobileGenresPanel,
     #genresPanelBackdrop,
-    #mobileFooter { display: none !important; }
+    #mobileFooter { display: none !important;
+    font-size: 15px;
+    text-align: center;
+}
 }
 
 /* Hide mobile-only elements on desktop */

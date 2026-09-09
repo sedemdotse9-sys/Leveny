@@ -15,12 +15,16 @@ Does three things in one run:
      already be correct; included anyway so the script is safe to
      re-run without assuming that.)
 
-  2. FONT SIZE — sets font-size: 15px on every one of those same
-     footer blocks, wherever they're styled (a .css file, or an
-     embedded <style> block in an .html file) — matching the size
-     comments.html's footer already uses (app.css's .app-footer).
-     Only edits a block that already exists; never invents new footer
-     CSS in a file that doesn't style one.
+  2. FONT SIZE — sets font-size: 12px on those same footer blocks,
+     but ONLY when the block is nested inside a mobile @media query
+     (max-width <= 1024px by default — matching this site's own
+     __isMobileViewport() breakpoint, see genre-results.html). A
+     footer selector styled at the top level, or inside a desktop/
+     min-width query, is left completely alone, so desktop footers
+     never get resized. Only edits a block that already exists;
+     never invents new footer CSS in a file that doesn't style one.
+     Use --mobile-breakpoint to change the cutoff if your site uses
+     a different one.
 
   3. GENERATOR PATCH — additionally patches generator.py itself (if
      found in the folder you point this at) so every movie page you
@@ -60,7 +64,8 @@ except ImportError:
 
 LINK_TEXT = "Disclaimer"
 COPYRIGHT_TEXT = " | Copyright \u00A9 2026 Leveny. All rights reserved."
-NEW_FONT_SIZE = "15px"  # matches comments.html's footer (app.css .app-footer)
+NEW_FONT_SIZE = "12px"  # only applied inside mobile @media blocks — see Part 2
+MOBILE_MAX_WIDTH = 1024  # px; an @media max-width at or below this counts as "mobile"
 
 FOOTER_SELECTORS = [
     "footer.copyright",
@@ -133,9 +138,48 @@ def process_html_text(path: Path, dry_run: bool, make_backup: bool):
 
 # ----------------------------------------------------------------------
 # Part 2 — font-size (CSS files + embedded <style> blocks)
+#   Mobile-only: a footer selector block only gets resized when it's
+#   physically nested inside an @media rule whose max-width is <=
+#   MOBILE_MAX_WIDTH. Anything at the top level, or inside a desktop /
+#   min-width query, is left untouched.
 # ----------------------------------------------------------------------
 
-def set_font_size_in_css_text(css_text: str):
+def _find_mobile_media_ranges(css_text: str, max_width: int):
+    """
+    Returns (content_start, content_end) index pairs for every top-level
+    @media block in css_text whose condition contains a max-width value
+    <= max_width. Only the block's CONTENTS (between its opening and
+    matching closing brace) are returned — not the "@media (...) {"
+    header itself — so replacements stay inside the rule body.
+
+    Nested @media blocks aren't specially unwrapped (this codebase
+    doesn't use them), but everything inside a matched range — nested
+    rules included — is still scanned normally.
+    """
+    ranges = []
+    for m in re.finditer(r"@media\s*([^{]*)\{", css_text):
+        condition = m.group(1)
+        is_mobile = any(
+            int(w) <= max_width
+            for w in re.findall(r"max-width\s*:\s*(\d+)", condition)
+        )
+        if not is_mobile:
+            continue
+
+        depth = 1
+        i = m.end()
+        while i < len(css_text) and depth > 0:
+            if css_text[i] == "{":
+                depth += 1
+            elif css_text[i] == "}":
+                depth -= 1
+            i += 1
+        ranges.append((m.end(), i - 1))  # i-1 = index of the matching "}"
+
+    return ranges
+
+
+def _resize_footers_in_segment(segment: str):
     count = 0
 
     for sel in FOOTER_SELECTORS:
@@ -160,17 +204,38 @@ def set_font_size_in_css_text(css_text: str):
 
             return f"{sel}{opener}{new_body}\n{closer}"
 
-        css_text = pattern.sub(_fix_block, css_text)
+        segment = pattern.sub(_fix_block, segment)
 
-    return css_text, count
+    return segment, count
 
 
-def process_css_file(path: Path, dry_run: bool, make_backup: bool) -> int:
+def set_font_size_in_css_text(css_text: str, max_width: int = MOBILE_MAX_WIDTH):
+    mobile_ranges = _find_mobile_media_ranges(css_text, max_width)
+    if not mobile_ranges:
+        return css_text, 0  # no mobile-scoped @media block here — nothing to touch
+
+    new_text = css_text
+    offset = 0
+    total_count = 0
+
+    for start, end in mobile_ranges:
+        s, e = start + offset, end + offset
+        segment = new_text[s:e]
+        new_segment, seg_count = _resize_footers_in_segment(segment)
+        if seg_count:
+            new_text = new_text[:s] + new_segment + new_text[e:]
+            offset += len(new_segment) - len(segment)
+            total_count += seg_count
+
+    return new_text, total_count
+
+
+def process_css_file(path: Path, dry_run: bool, make_backup: bool, max_width: int = MOBILE_MAX_WIDTH) -> int:
     original = path.read_text(encoding="utf-8", errors="ignore")
     if not any(sel.lstrip("#.") in original for sel in FOOTER_SELECTORS):
         return 0
 
-    new_css, count = set_font_size_in_css_text(original)
+    new_css, count = set_font_size_in_css_text(original, max_width)
     if count == 0:
         return 0
 
@@ -182,7 +247,7 @@ def process_css_file(path: Path, dry_run: bool, make_backup: bool) -> int:
     return count
 
 
-def process_html_fontsize(path: Path, dry_run: bool, make_backup: bool) -> int:
+def process_html_fontsize(path: Path, dry_run: bool, make_backup: bool, max_width: int = MOBILE_MAX_WIDTH) -> int:
     original_html = path.read_text(encoding="utf-8", errors="ignore")
     if not any(sel.lstrip("#.") in original_html for sel in FOOTER_SELECTORS):
         return 0
@@ -194,7 +259,7 @@ def process_html_fontsize(path: Path, dry_run: bool, make_backup: bool) -> int:
         block_text = style_tag.string
         if not block_text:
             continue
-        new_css, count = set_font_size_in_css_text(block_text)
+        new_css, count = set_font_size_in_css_text(block_text, max_width)
         if count:
             style_tag.string.replace_with(new_css)
             total_count += count
@@ -215,7 +280,7 @@ def process_html_fontsize(path: Path, dry_run: bool, make_backup: bool) -> int:
 # Part 3 — generator.py's templates (so future movie pages inherit both)
 # ----------------------------------------------------------------------
 
-def patch_generator(path: Path, dry_run: bool, make_backup: bool):
+def patch_generator(path: Path, dry_run: bool, make_backup: bool, max_width: int = MOBILE_MAX_WIDTH):
     original = path.read_text(encoding="utf-8", errors="ignore")
     content = original
     report = []
@@ -242,25 +307,26 @@ def patch_generator(path: Path, dry_run: bool, make_backup: bool):
     else:
         report.append("OK (or not found): HTML_TEMPLATE footer(s) already correct, or pattern didn't match — verify manually.")
 
-    # --- 3b. CSS_TEMPLATE #mobFooter font-size ---
-    mobfooter_css_re = re.compile(r'(#mobFooter\s*\{)([^}]*)(\})')
-    match = mobfooter_css_re.search(content)
-    if match:
-        opener, body, closer = match.groups()
-        if re.search(r"font-size\s*:\s*[^;]+;", body, re.IGNORECASE):
-            new_body = re.sub(r"font-size\s*:\s*[^;]+;", f"font-size: {NEW_FONT_SIZE};", body, flags=re.IGNORECASE)
-        else:
-            new_body = body.rstrip() + f"\n    font-size: {NEW_FONT_SIZE};"
-        if new_body != body:
-            content = content[:match.start()] + opener + new_body + "\n" + closer + content[match.end():]
-            report.append(f"FIXED: #mobFooter font-size in CSS_TEMPLATE set to {NEW_FONT_SIZE}.")
-        else:
-            report.append("OK: #mobFooter font-size in CSS_TEMPLATE already correct.")
+    # --- 3b. CSS_TEMPLATE footer font-size (mobile-scoped, same rule as Part 2) ---
+    new_css_template, n = set_font_size_in_css_text(content, max_width)
+    if n:
+        content = new_css_template
+        report.append(
+            f"FIXED: {n} footer block(s) inside a mobile @media query in CSS_TEMPLATE "
+            f"set to {NEW_FONT_SIZE}."
+        )
+    elif any(sel in content for sel in FOOTER_SELECTORS):
+        report.append(
+            "NOT FOUND (mobile-scoped): a footer selector exists in CSS_TEMPLATE but not "
+            "inside a mobile @media block — left untouched so desktop styling isn't "
+            "affected. If it's mobile-only despite that, wrap it in a media query or "
+            "adjust generator.py manually."
+        )
     else:
         report.append(
-            "NOT FOUND: no #mobFooter block in CSS_TEMPLATE — if movie pages get their "
-            "footer sizing from css/style.css instead, that file is covered separately "
-            "by this script's normal recursive CSS scan, not this generator.py-specific step."
+            "NOT FOUND: no footer selector block in CSS_TEMPLATE — if movie pages get "
+            "their footer sizing from css/style.css instead, that file is covered "
+            "separately by this script's normal recursive CSS scan."
         )
 
     if content != original and not dry_run:
@@ -282,6 +348,11 @@ def main():
     parser.add_argument("folder", type=str, help="Folder to scan recursively (your repo root)")
     parser.add_argument("--dry-run", action="store_true", help="Preview changes without writing files")
     parser.add_argument("--no-backup", action="store_true", help="Skip creating .bak backups")
+    parser.add_argument(
+        "--mobile-breakpoint", type=int, default=MOBILE_MAX_WIDTH,
+        help=f"Max-width (px) an @media query must be at or under to count as 'mobile' "
+             f"for the font-size pass (default: {MOBILE_MAX_WIDTH})"
+    )
     args = parser.parse_args()
 
     root = Path(args.folder)
@@ -290,6 +361,7 @@ def main():
 
     dry_run = args.dry_run
     make_backup = not args.no_backup
+    max_width = args.mobile_breakpoint
 
     html_files = sorted(set(root.rglob("*.html")) | set(root.rglob("*.htm")))
     css_files = sorted(root.rglob("*.css"))
@@ -309,19 +381,19 @@ def main():
                 print(f"    - {r}")
     print(f"{text_changed} file(s) had footer text updated.\n")
 
-    # --- Part 2: font-size ---
-    print("=== Font size ===")
+    # --- Part 2: font-size (mobile @media blocks only, max-width <= {max_width}px) ---
+    print(f"=== Font size (mobile-scoped: @media max-width <= {max_width}px) ===")
     size_changed = 0
     size_fixes = 0
     for path in css_files:
-        count = process_css_file(path, dry_run, make_backup)
+        count = process_css_file(path, dry_run, make_backup, max_width)
         if count:
             size_changed += 1
             size_fixes += count
             tag = "[DRY RUN] " if dry_run else ""
             print(f"{tag}{path}: {count} footer block(s) set to {NEW_FONT_SIZE}")
     for path in html_files:
-        count = process_html_fontsize(path, dry_run, make_backup)
+        count = process_html_fontsize(path, dry_run, make_backup, max_width)
         if count:
             size_changed += 1
             size_fixes += count
@@ -333,7 +405,7 @@ def main():
     print("=== generator.py ===")
     generator_path = root / "generator.py"
     if generator_path.is_file():
-        report = patch_generator(generator_path, dry_run, make_backup)
+        report = patch_generator(generator_path, dry_run, make_backup, max_width)
         for line in report:
             print(f"  - {line}")
     else:

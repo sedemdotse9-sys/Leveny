@@ -550,9 +550,10 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accen
         text-align: center;
         padding: 8px 12px 80px;
         font-family: "Roboto Slab", Rockwell, sans-serif;
-        font-size: 15px;
+        font-size: 12px;
         margin-bottom: 70px;
-    }
+    
+}
 
     #mobileFooter a {
         color: var(--accent, #f39c12);
