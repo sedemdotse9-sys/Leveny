@@ -81,6 +81,7 @@
         Set against the backdrop of modern-day Los Angeles, the story follows Mia Dolan, an aspiring actress working as a barista on a studio lot, and Sebastian Wilder, a passionate jazz pianist dedicated to preserving traditional jazz. After a series of chance encounters, the two fall deeply in love, bonded by their shared determination to achieve their creative dreams.
       </p>
 <div class="related-movies"></div>
+
 </section>
 </main>
 <!-- ============================================================
@@ -127,7 +128,7 @@
 <div id="mobRelatedLabel">You Might Also Like</div>
 <div id="mobRelatedGrid"></div>
 <div id="mobFooter">
-<a href="../disclaimer.html">Disclaimer</a><span> | Copyright © 2026 Leveny. All rights reserved.</span>
+<a href="../disclaimer.html">Disclaimer!</a>
 </div>
 </div>
 <nav id="mobBottomNav">
@@ -216,7 +217,7 @@ function __isMobileViewport() {
     });
   </script>
 <footer class="copyright">
-<a href="../disclaimer.html">Disclaimer</a><span> | Copyright © 2026 Leveny. All rights reserved.</span>
+<a href="../disclaimer.html">Disclaimer!</a>
 </footer>
 <script>
     document.getElementById('frostClick')?.addEventListener('click', function () {
