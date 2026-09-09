@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -345,7 +346,8 @@
         flex-wrap: wrap;
         gap: 8px;
         padding: 4px 0;
-        margin-top: 50px;
+        margin-top: 15px;
+        margin-bottom: 8px;
       }
 
       .gr-page-btn {
@@ -455,7 +457,7 @@
       /* ============================================================
       FOOTER
       ============================================================ */
-      #grFooter {
+      /* #grFooter {
         text-align: center;
         font-size: 15px;
         font-family: "Roboto Slab", Rockwell, sans-serif;
@@ -466,7 +468,7 @@
       #grFooter a {
         color: var(--gr-accent, #00A8FF);
         text-decoration: none;
-      }
+      } */
 
       /* ★ ADDED — genre pill style for the slide-up panel */
       .mob-genre-pill {
@@ -486,6 +488,18 @@
       }
       .mob-genre-pill:active { background: var(--gr-accent-dim); }
       .mob-genre-pill i { font-size: 20px; }
+
+      footer.copyright {
+        margin-top: -90px;  
+        margin-bottom: 70px;
+        position: relative;
+        z-index: 1;
+        font-size: 12px;
+      }
+
+      footer.copyright a {
+        color: var(--gr-accent, #00A8FF);
+      }
 
 /* ★ ADDED — remove tap highlight */
       * {
@@ -557,12 +571,10 @@
 <a class="mob-genre-pill" href="genre-results.html?genre=romance"><i class="fas fa-heart" style="color:#ff4d6d;"></i><span style="font-size: 11px; color: #888;">Romance</span></a>
 </div>
 </div>
-
 <!-- FOOTER (mobile) -->
-<div id="grFooter">
-  <a href="../disclaimer.html">Disclaimer!</a>
-</div>
-
+<!-- <div id="grFooter">
+<a href="../disclaimer.html">Disclaimer</a><span> | Copyright © 2026 Leveny. All rights reserved.</span>
+</div> -->
 <!-- BOTTOM NAV -->
 <nav id="grBottomNav">
 <a class="gr-nav-item" href="index.html">
@@ -575,8 +587,8 @@
 <a class="gr-nav-item" href="Movie_Request.html">
 <i class="fas fa-envelope"></i><span>Request</span>
 </a>
-<a class="gr-nav-item" href="Profile.html">
-<i class="fa-regular fa-user"></i><span>Profile</span>
+<a class="gr-nav-item" href="comments.html">
+<i class="fa-solid fa-comments"></i><span>Comments</span>
 </a>
 </nav>
 <!-- ============================================================
@@ -659,12 +671,14 @@ function __isMobileViewport() {
     ============================================================ */
     let movies = [];
 
-    if (typeof LEVENY_MOVIES !== 'undefined') {
-      movies = LEVENY_MOVIES.filter(m => {
+  if (typeof LEVENY_MOVIES !== 'undefined') {
+    movies = LEVENY_MOVIES
+      .filter(m => {
         const g = (m.genre || '').toLowerCase().replace(/[^a-z]/g, '');
         return g === genreKey;
-      });
-    }
+      })
+      .reverse(); // newest-added (last in movies.js) shows first, matches homepage
+  }
 
     if (bannerCount) bannerCount.textContent = movies.length + ' movie' + (movies.length !== 1 ? 's' : '');
 
@@ -804,7 +818,7 @@ function __isMobileViewport() {
   })();
   </script>
 <footer class="copyright">
-<a href="../disclaimer.html">Disclaimer!</a>
+<a href="../disclaimer.html">Disclaimer</a><span> | Copyright © 2026 Leveny. All rights reserved.</span>
 </footer>
 </body>
 </html>
