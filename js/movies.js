@@ -182,4 +182,7 @@ const LEVENY_MOVIES = [
     { title: "Moana: The Movie", href: "../movies/moana_the_movie_movie.html", genre: "family", poster: "images/posters/moana_the_movie.jpg", discover: 1 , background: "images/backgrounds/moana_the_movie_backg.jpg"},
     { title: "Moana", href: "../movies/moana_movie.html", genre: "animation", poster: "images/posters/moana.jpg", discover: 1 , background: "images/backgrounds/moana_backg.jpg"},
     { title: "Moana 2", href: "../movies/moana_2_movie.html", genre: "animation", poster: "images/posters/moana_2.jpg", discover: 1 , background: "images/backgrounds/moana_2_backg.jpg"},
+    { title: "One Night Only", href: "../movies/one_night_only_movie.html", genre: "romance", poster: "images/posters/one_night_only.jpg", discover: 3 , background: "images/backgrounds/one_night_only_backg.jpg"},
+    { title: "La La Land", href: "../movies/la_la_land_movie.html", genre: "romance", poster: "images/posters/la_la_land.jpg", discover: 7 , background: "images/backgrounds/la_la_land_backg.jpg"},
+    { title: "Portal To Hell", href: "../movies/portal_to_hell_movie.html", genre: "horror", poster: "images/posters/portal_to_hell.jpg", discover: 6 , background: "images/backgrounds/portal_to_hell_backg.jpg"},
 ];
