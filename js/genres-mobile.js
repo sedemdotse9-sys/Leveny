@@ -1,4 +1,3 @@
-
 function __isMobileViewport() {
   // True for phones/tablets in portrait (width <=1024) AND for tablets
   // rotated to landscape (their short side, now the height, is <=1024
@@ -17,6 +16,16 @@ function __isMobileViewport() {
    2. Homepage grid sections hide
    3. Genre results view appears (2 cols × 9 rows = 18 per page)
    4. Back button restores homepage view
+
+   ★ FIXED — new movies were sinking to the bottom of each genre's
+   list. movies.js always appends new entries at the END of
+   LEVENY_MOVIES (oldest → newest), and this file's own
+   getMovieData() was preserving that order, so a brand-new movie
+   landed on the last page instead of the first. The homepage
+   avoids this by reversing before display (see js/search.js).
+   getMovieData() now reverses each genre's array the same way, so
+   the newest-added movie in a genre shows up first — consistent
+   with the homepage.
 ============================================================ */
 
 if (__isMobileViewport()) {
@@ -27,8 +36,16 @@ if (__isMobileViewport()) {
        On index.html it won't exist, so we build our own
        from the data-genre attributes already on every .movie-item. */
     function getMovieData() {
-        /* If genres.js has already populated moviesByGenre, use it */
-        if (typeof moviesByGenre !== 'undefined') return moviesByGenre;
+        /* If genres.js has already populated moviesByGenre, use it —
+           but return newest-first copies so we don't rely on (or
+           mutate) whatever order genres.js built it in. */
+        if (typeof moviesByGenre !== 'undefined') {
+            const newestFirst = {};
+            Object.keys(moviesByGenre).forEach(genre => {
+                newestFirst[genre] = moviesByGenre[genre].slice().reverse();
+            });
+            return newestFirst;
+        }
 
         /* Otherwise build it from the DOM (index.html path) */
         const map = {};
@@ -45,6 +62,12 @@ if (__isMobileViewport()) {
                 link:  link.href,
             });
         });
+
+        // ★ FIXED — reverse so newest-added (last one found in the DOM)
+        // shows first, same convention as the homepage and the
+        // moviesByGenre branch above.
+        Object.keys(map).forEach(genre => map[genre].reverse());
+
         return map;
     }
 

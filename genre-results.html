@@ -658,12 +658,14 @@ function __isMobileViewport() {
     ============================================================ */
     let movies = [];
 
-    if (typeof LEVENY_MOVIES !== 'undefined') {
-      movies = LEVENY_MOVIES.filter(m => {
+  if (typeof LEVENY_MOVIES !== 'undefined') {
+    movies = LEVENY_MOVIES
+      .filter(m => {
         const g = (m.genre || '').toLowerCase().replace(/[^a-z]/g, '');
         return g === genreKey;
-      });
-    }
+      })
+      .reverse(); // newest-added (last in movies.js) shows first, matches homepage
+  }
 
     if (bannerCount) bannerCount.textContent = movies.length + ' movie' + (movies.length !== 1 ? 's' : '');
 
