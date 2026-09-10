@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 7, name: 'Purple', label: 'PURPLE THEMED MOVIES' },
     ];
 
-    const MOVIES_PER_PAGE = 40;
+    const MOVIES_PER_PAGE = 25;
 
     let currentThemeIndex = 0; // index into THEMES
     let currentPage = 1;
@@ -225,9 +225,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalPages = getTotalPages(movies);
         if (page < 1 || page > totalPages) return;
         currentPage = page;
+        window.scrollTo({ top: 0, behavior: 'instant' });
         displayMovies(movies);
         generatePageNumbers(movies);
         updatePaginationButtons(movies);
-        if (moviesGrid) moviesGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 });
