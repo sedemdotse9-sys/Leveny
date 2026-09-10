@@ -191,4 +191,6 @@ const LEVENY_MOVIES = [
     { title: "DC League of Super-Pets", href: "../movies/dc_league_of_super_pets_movie.html", genre: "animation", poster: "images/posters/dc_league_of_super_pets.jpg", discover: 4 , background: "images/backgrounds/dc_league_of_super_pets_backg.jpg"},
     { title: "Drawn Together", href: "../movies/drawn_together_movie.html", genre: "romance", poster: "images/posters/drawn_together.jpg", discover: 2 , background: "images/backgrounds/drawn_together_backg.jpg"},
     { title: "PAW Patrol: The Dino Movie", href: "../movies/paw_patrol_the_dino_movie_movie.html", genre: "animation", poster: "images/posters/paw_patrol_the_dino_movie.jpg", discover: 3 , background: "images/backgrounds/paw_patrol_the_dino_movie_backg.jpg"},
+    { title: "Demon Slayer: Mugen Train", href: "../movies/demon_slayer_mugen_train_movie.html", genre: "animation", poster: "images/posters/demon_slayer_mugen_train.jpg", discover: 5 , background: "images/backgrounds/demon_slayer_mugen_train_backg.jpg"},
+    { title: "Demon Slayer: Kimetsu no Yaiba Infinity Castle", href: "../movies/demon_slayer_kimetsu_no_yaiba_infinity_castle_movie.html", genre: "animation", poster: "images/posters/demon_slayer_kimetsu_no_yaiba_infinity_castle.jpg", discover: 6 , background: "images/backgrounds/demon_slayer_kimetsu_no_yaiba_infinity_castle_backg.jpg"},
 ];
