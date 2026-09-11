@@ -196,4 +196,7 @@ const LEVENY_MOVIES = [
     { title: "Strung", href: "../movies/strung_movie.html", genre: "thriller", poster: "images/posters/strung.jpg", discover: 4 , background: "images/backgrounds/strung_backg.jpg"},
     { title: "Stree", href: "../movies/stree_movie.html", genre: "horror", poster: "images/posters/stree.jpg", discover: 4 , background: "images/backgrounds/stree_backg.jpg"},
     { title: "Stree 2", href: "../movies/stree_2_movie.html", genre: "horror", poster: "images/posters/stree_2.jpg", discover: 1 , background: "images/backgrounds/stree_2_backg.jpg"},
+    { title: "Knightfall", href: "../movies/knightfall_movie.html", genre: "action", poster: "images/posters/knightfall.jpg", discover: 4 , background: "images/backgrounds/knightfall_backg.jpg"},
+    { title: "Sweet Girl", href: "../movies/sweet_girl_movie.html", genre: "action", poster: "images/posters/sweet_girl.jpg", discover: 5 , background: "images/backgrounds/sweet_girl_backg.jpg"},
+    { title: "The Martian", href: "../movies/the_martian_movie.html", genre: "scifi", poster: "images/posters/the_martian.jpg", discover: 6 , background: "images/backgrounds/the_martian_backg.jpg"},
 ];
