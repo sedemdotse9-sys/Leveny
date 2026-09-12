@@ -15,6 +15,12 @@ import re
 import os
 
 # ----------------------------------------------------------------------
+# Site base URL — used to build the self-referencing canonical tag
+# that gets stamped into every generated movie page.
+# ----------------------------------------------------------------------
+BASE_URL = "https://leveny.online"
+
+# ----------------------------------------------------------------------
 # Genre -> (display label, accent hex) — taken directly from the
 # shared genre dropdown markup used across every page on the site.
 # ----------------------------------------------------------------------
@@ -98,6 +104,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
 <title>__TITLE__ | Leveny</title>
+<link href="__CANONICAL_URL__" rel="canonical"/>
 <link href="../css/style.css" rel="stylesheet"/>
 <link href="../css/__CSS_FILENAME__" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
@@ -1074,6 +1081,8 @@ def build_html(data):
     html = HTML_TEMPLATE
     html = html.replace("__TITLE__", data["title"])
     html = html.replace("__TITLE_UPPER__", data["title"].upper())
+    canonical_url = f"{BASE_URL}/movies/{data['html_filename']}"
+    html = html.replace("__CANONICAL_URL__", canonical_url)
     html = html.replace("__HTML_FILENAME__", data["html_filename"])
     html = html.replace("__CSS_FILENAME__", data["css_filename"])
     html = html.replace("__IMDB_ID__", data["imdb_id"])
