@@ -201,4 +201,5 @@ const LEVENY_MOVIES = [
     { title: "The Martian", href: "../movies/the_martian_movie.html", genre: "scifi", poster: "images/posters/the_martian.jpg", discover: 6 , background: "images/backgrounds/the_martian_backg.jpg"},
     { title: "After", href: "../movies/after_movie.html", genre: "romance", poster: "images/posters/after.jpg", discover: 1 , background: "images/backgrounds/after_backg.jpg"},
     { title: "365 Days", href: "../movies/365_days_movie.html", genre: "romance", poster: "images/posters/365_days.jpg", discover: 1 , background: "images/backgrounds/365_days_backg.jpg"},
+    { title: "Titanic", href: "../movies/titanic_movie.html", genre: "romance", poster: "images/posters/titanic.jpg", discover: 5 , background: "images/backgrounds/titanic_backg.jpg"},
 ];
