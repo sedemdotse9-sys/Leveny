@@ -1,0 +1,13 @@
+# Build dependencies — never commit these, they're huge and machine-specific
+node_modules/
+
+# Python cache from generator.py / app.py
+__pycache__/
+*.pyc
+
+# Backup files from editing — clutter, not meant to be live pages
+*.bak
+
+# Editor/OS noise
+.DS_Store
+Thumbs.db
