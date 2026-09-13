@@ -217,4 +217,8 @@ const LEVENY_MOVIES = [
     { title: "Men in Black II", href: "../movies/men_in_black_ii_movie.html", genre: "scifi", poster: "images/posters/men_in_black_ii.jpg", discover: 5 , background: "images/backgrounds/men_in_black_ii_backg.jpg"},
     { title: "Men in Black III", href: "../movies/men_in_black_iii_movie.html", genre: "scifi", poster: "images/posters/men_in_black_iii.jpg", discover: 5 , background: "images/backgrounds/men_in_black_iii_backg.jpg"},
     { title: "Men in Black: International", href: "../movies/men_in_black_international_movie.html", genre: "scifi", poster: "images/posters/men_in_black_international.jpg", discover: 5 , background: "images/backgrounds/men_in_black_international_backg.jpg"},
+    { title: "The Last Assassins", href: "../movies/the_last_assassins_movie.html", genre: "scifi", poster: "images/posters/the_last_assassins.jpg", discover: 1 , background: "images/backgrounds/the_last_assassins_backg.jpg"},
+    { title: "Pokémon Detective Pikachu", href: "../movies/pokemon_detective_pikachu_movie.html", genre: "fantasy", poster: "images/posters/pokemon_detective_pikachu.jpg", discover: 1 , background: "images/backgrounds/pokemon_detective_pikachu_backg.jpg"},
+    { title: "Jack Reacher: Never Go Back", href: "../movies/jack_reacher_never_go_back_movie.html", genre: "thriller", poster: "images/posters/jack_reacher_never_go_back.jpg", discover: 6 , background: "images/backgrounds/jack_reacher_never_go_back_backg.jpg"},
+    { title: "A Minecraft Movie", href: "../movies/a_minecraft_movie_movie.html", genre: "fantasy", poster: "images/posters/a_minecraft_movie.jpg", discover: 3 , background: "images/backgrounds/a_minecraft_movie_backg.jpg"},
 ];
