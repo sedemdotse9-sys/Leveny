@@ -223,4 +223,8 @@ const LEVENY_MOVIES = [
     { title: "A Minecraft Movie", href: "../movies/a_minecraft_movie_movie.html", genre: "fantasy", poster: "images/posters/a_minecraft_movie.jpg", discover: 3 , background: "images/backgrounds/a_minecraft_movie_backg.jpg"},
     { title: "Beast", href: "../movies/beast_movie.html", genre: "thriller", poster: "images/posters/beast.jpg", discover: 1 , background: "images/backgrounds/beast_backg.jpg"},
     { title: "Spectre", href: "../movies/spectre_movie.html", genre: "action", poster: "images/posters/spectre.jpg", discover: 5 , background: "images/backgrounds/spectre_backg.jpg"},
+    { title: "Dirty Games", href: "../movies/dirty_games_movie.html", genre: "action", poster: "images/posters/dirty_games.jpg", discover: 5 , background: "images/backgrounds/dirty_games_backg.jpg"},
+    { title: "The End of Oak Street", href: "../movies/the_end_of_oak_street_movie.html", genre: "fantasy", poster: "images/posters/the_end_of_oak_street.jpg", discover: 5 , background: "images/backgrounds/the_end_of_oak_street_backg.jpg"},
+    { title: "Primitive War", href: "../movies/primitive_war_movie.html", genre: "scifi", poster: "images/posters/primitive_war.jpg", discover: 5 , background: "images/backgrounds/primitive_war_backg.jpg"},
+    { title: "Barbie", href: "../movies/barbie_movie.html", genre: "fantasy", poster: "images/posters/barbie.jpg", discover: 7 , background: "images/backgrounds/barbie_backg.jpg"},
 ];
