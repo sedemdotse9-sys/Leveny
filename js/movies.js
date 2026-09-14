@@ -227,4 +227,6 @@ const LEVENY_MOVIES = [
     { title: "The End of Oak Street", href: "../movies/the_end_of_oak_street_movie.html", genre: "fantasy", poster: "images/posters/the_end_of_oak_street.jpg", discover: 5 , background: "images/backgrounds/the_end_of_oak_street_backg.jpg"},
     { title: "Primitive War", href: "../movies/primitive_war_movie.html", genre: "scifi", poster: "images/posters/primitive_war.jpg", discover: 5 , background: "images/backgrounds/primitive_war_backg.jpg"},
     { title: "Barbie", href: "../movies/barbie_movie.html", genre: "fantasy", poster: "images/posters/barbie.jpg", discover: 7 , background: "images/backgrounds/barbie_backg.jpg"},
+    { title: "Jurassic Park", href: "../movies/jurassic_park_movie.html", genre: "scifi", poster: "images/posters/jurassic_park.jpg", discover: 5 , background: "images/backgrounds/jurassic_park_backg.jpg"},
+    { title: "Jurassic Park III", href: "../movies/jurassic_park_iii_movie.html", genre: "scifi", poster: "images/posters/jurassic_park_iii.jpg", discover: 3 , background: "images/backgrounds/jurassic_park_iii_backg.jpg"},
 ];
