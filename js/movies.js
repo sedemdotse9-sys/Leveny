@@ -221,4 +221,6 @@ const LEVENY_MOVIES = [
     { title: "Pokémon Detective Pikachu", href: "../movies/pokemon_detective_pikachu_movie.html", genre: "fantasy", poster: "images/posters/pokemon_detective_pikachu.jpg", discover: 1 , background: "images/backgrounds/pokemon_detective_pikachu_backg.jpg"},
     { title: "Jack Reacher: Never Go Back", href: "../movies/jack_reacher_never_go_back_movie.html", genre: "thriller", poster: "images/posters/jack_reacher_never_go_back.jpg", discover: 6 , background: "images/backgrounds/jack_reacher_never_go_back_backg.jpg"},
     { title: "A Minecraft Movie", href: "../movies/a_minecraft_movie_movie.html", genre: "fantasy", poster: "images/posters/a_minecraft_movie.jpg", discover: 3 , background: "images/backgrounds/a_minecraft_movie_backg.jpg"},
+    { title: "Beast", href: "../movies/beast_movie.html", genre: "thriller", poster: "images/posters/beast.jpg", discover: 1 , background: "images/backgrounds/beast_backg.jpg"},
+    { title: "Spectre", href: "../movies/spectre_movie.html", genre: "action", poster: "images/posters/spectre.jpg", discover: 5 , background: "images/backgrounds/spectre_backg.jpg"},
 ];
