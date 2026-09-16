@@ -234,4 +234,9 @@ const LEVENY_MOVIES = [
     { title: "Nimrods", href: "../movies/nimrods_movie.html", genre: "family", poster: "images/posters/nimrods.jpg", discover: 5 , background: "images/backgrounds/nimrods_backg.jpg"},
     { title: "Gator Face", href: "../movies/gator_face_movie.html", genre: "horror", poster: "images/posters/gator_face.jpg", discover: 4 , background: "images/backgrounds/gator_face_backg.jpg"},
     { title: "LEGO Star Wars: The Mandalorian", href: "../movies/lego_star_wars_the_mandalorian_movie.html", genre: "animation", poster: "images/posters/lego_star_wars_the_mandalorian.jpg", discover: 5 , background: "images/backgrounds/lego_star_wars_the_mandalorian_backg.jpg"},
+    { title: "The Sheep Detectives", href: "../movies/the_sheep_detectives_movie.html", genre: "family", poster: "images/posters/the_sheep_detectives.jpg", discover: 3 , background: "images/backgrounds/the_sheep_detectives_backg.jpg"},
+    { title: "Paddington", href: "../movies/paddington_movie.html", genre: "family", poster: "images/posters/paddington.jpg", discover: 2 , background: "images/backgrounds/paddington_backg.jpg"},
+    { title: "Paddington 2", href: "../movies/paddington_2_movie.html", genre: "family", poster: "images/posters/paddington_2.jpg", discover: 1 , background: "images/backgrounds/paddington_2_backg.jpg"},
+    { title: "Paddington in Peru", href: "../movies/paddington_in_peru_movie.html", genre: "family", poster: "images/posters/paddington_in_peru.jpg", discover: 2 , background: "images/backgrounds/paddington_in_peru_backg.jpg"},
+    { title: "Jumanji: The Next Level", href: "../movies/jumanji_the_next_level_movie.html", genre: "action", poster: "images/posters/jumanji_the_next_level.jpg", discover: 2 , background: "images/backgrounds/jumanji_the_next_level_backg.jpg"},
 ];
