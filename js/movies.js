@@ -233,4 +233,5 @@ const LEVENY_MOVIES = [
     { title: "Falling Into Place", href: "../movies/falling_into_place_movie.html", genre: "romance", poster: "images/posters/falling_into_place.jpg", discover: 2 , background: "images/backgrounds/falling_into_place_backg.jpg"},
     { title: "Nimrods", href: "../movies/nimrods_movie.html", genre: "family", poster: "images/posters/nimrods.jpg", discover: 5 , background: "images/backgrounds/nimrods_backg.jpg"},
     { title: "Gator Face", href: "../movies/gator_face_movie.html", genre: "horror", poster: "images/posters/gator_face.jpg", discover: 4 , background: "images/backgrounds/gator_face_backg.jpg"},
+    { title: "LEGO Star Wars: The Mandalorian", href: "../movies/lego_star_wars_the_mandalorian_movie.html", genre: "animation", poster: "images/posters/lego_star_wars_the_mandalorian.jpg", discover: 5 , background: "images/backgrounds/lego_star_wars_the_mandalorian_backg.jpg"},
 ];
