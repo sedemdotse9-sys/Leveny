@@ -691,6 +691,120 @@ header hr {
   }
 }
 
+/* ============================================================
+   Large Desktop Monitors & TVs (1441px and up)
+   Everything above used clamp() to scale smoothly up to 1440px,
+   then plateaus — fixed pixel values built for a ~1440px screen.
+   On a 1920px monitor, an ultrawide, or a 4K TV that means the
+   nav bar, hero text and posters all stay pinned to their
+   1440px size while empty space opens up on the right and
+   everything reads small relative to the screen.
+
+   This block picks up exactly where the block above stops and
+   keeps scaling the SAME elements the SAME way (current sizes as
+   the floor, clamp()'d ceilings for very large screens) so the
+   design and its proportions never change — it just keeps
+   growing gracefully instead of freezing at 1440px.
+============================================================ */
+@media screen and (min-width: 1441px) {
+  .nav_bar {
+    padding: 0 clamp(70px, 5vw, 140px);
+  }
+
+  .nav_bar .logo {
+    font-size: clamp(35px, 2vw, 58px);
+  }
+
+  .nav_links {
+    gap: clamp(35px, 2vw, 52px);
+  }
+
+  .nav_links a,
+  .shared-dropdown .genre-link {
+    font-size: clamp(21px, 1.1vw, 28px);
+  }
+
+  .nav_links a i,
+  .shared-dropdown .genre-link i {
+    font-size: clamp(15px, 0.8vw, 20px);
+  }
+
+  .search-box input {
+    width: clamp(260px, 12vw, 420px);
+    font-size: clamp(16px, 0.85vw, 20px);
+  }
+
+  header hr {
+    width: calc(100% - clamp(140px, 10vw, 280px));
+    margin-left: clamp(70px, 5vw, 140px);
+  }
+
+  .main_body p,
+  .main_body_2 p,
+  .main_body_3 p,
+  .main_body_4 p,
+  .main_body_5 p,
+  .main_body_6 p,
+  .main_body_7 p {
+    padding-left: clamp(80px, 5vw, 140px);
+    font-size: clamp(40px, 2.6vw, 68px);
+  }
+
+  .main_2 p, .main_3 p, .main_4 p, .main_5 p, .main_6 p, .main_7 p {
+    margin-left: clamp(80px, 5vw, 140px);
+    font-size: clamp(19px, 1vw, 26px);
+    max-width: clamp(790px, 32vw, 950px);
+    line-height: 1.35;
+  }
+
+  .main_3 p {
+    max-width: clamp(680px, 30vw, 850px);
+  }
+
+  .watch_btn {
+    margin-left: clamp(80px, 5vw, 140px);
+    padding: clamp(9px, 0.7vw, 14px) clamp(11px, 0.9vw, 18px);
+  }
+
+  .more_btn {
+    padding: clamp(9px, 0.7vw, 14px) clamp(11px, 0.9vw, 18px);
+  }
+
+  .watch_btn a,
+  .more_btn a,
+  .plus-sign {
+    font-size: clamp(17px, 0.9vw, 22px);
+  }
+
+  .movie-section {
+    margin-top: clamp(50px, 3vw, 75px);
+  }
+
+  .movie-list,
+  .movie-list-2,
+  .movie-list-3,
+  .movie-list-4,
+  .movie-list-5,
+  .movie-list-6,
+  .movie-list-7 {
+    margin-left: clamp(105px, 6vw, 170px);
+    margin-top: clamp(80px, 4.5vw, 110px);
+    gap: clamp(27px, 1.6vw, 42px);
+  }
+
+  .movie-item img {
+    width: clamp(160px, 9.5vw, 205px);
+    height: clamp(230px, 13.5vw, 295px);
+  }
+
+  .arrow_left,
+  .arrow_right {
+    width: clamp(28px, 1.6vw, 38px);
+    height: clamp(28px, 1.6vw, 38px);
+    font-size: clamp(15px, 0.9vw, 19px);
+  }
+}
+
 /* Large Tablets (1024px and below) */
 @media screen and (max-width: 1024px),
        screen and (orientation: landscape) and (max-height: 1024px) and (pointer: coarse) {

@@ -239,4 +239,7 @@ const LEVENY_MOVIES = [
     { title: "Paddington 2", href: "../movies/paddington_2_movie.html", genre: "family", poster: "images/posters/paddington_2.jpg", discover: 1 , background: "images/backgrounds/paddington_2_backg.jpg"},
     { title: "Paddington in Peru", href: "../movies/paddington_in_peru_movie.html", genre: "family", poster: "images/posters/paddington_in_peru.jpg", discover: 2 , background: "images/backgrounds/paddington_in_peru_backg.jpg"},
     { title: "Jumanji: The Next Level", href: "../movies/jumanji_the_next_level_movie.html", genre: "action", poster: "images/posters/jumanji_the_next_level.jpg", discover: 2 , background: "images/backgrounds/jumanji_the_next_level_backg.jpg"},
+    { title: "Shark Frenzy", href: "../movies/shark_frenzy_movie.html", genre: "thriller", poster: "images/posters/shark_frenzy.jpg", discover: 3 , background: "images/backgrounds/shark_frenzy_backg.jpg"},
+    { title: "Free Birds", href: "../movies/free_birds_movie.html", genre: "animation", poster: "images/posters/free_birds.jpg", discover: 2 , background: "images/backgrounds/free_birds_backg.jpg"},
+    { title: "Angry Birds", href: "../movies/angry_birds_movie.html", genre: "animation", poster: "images/posters/angry_birds.jpg", discover: 1 , background: "images/backgrounds/angry_birds_backg.jpg"},
 ];
