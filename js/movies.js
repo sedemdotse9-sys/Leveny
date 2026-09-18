@@ -242,4 +242,9 @@ const LEVENY_MOVIES = [
     { title: "Shark Frenzy", href: "../movies/shark_frenzy_movie.html", genre: "thriller", poster: "images/posters/shark_frenzy.jpg", discover: 3 , background: "images/backgrounds/shark_frenzy_backg.jpg"},
     { title: "Free Birds", href: "../movies/free_birds_movie.html", genre: "animation", poster: "images/posters/free_birds.jpg", discover: 2 , background: "images/backgrounds/free_birds_backg.jpg"},
     { title: "Angry Birds", href: "../movies/angry_birds_movie.html", genre: "animation", poster: "images/posters/angry_birds.jpg", discover: 1 , background: "images/backgrounds/angry_birds_backg.jpg"},
+    { title: "Angry Birds 2", href: "../movies/angry_birds_2_movie.html", genre: "animation", poster: "images/posters/angry_birds_2.jpg", discover: 1 , background: "images/backgrounds/angry_birds_2_backg.jpg"},
+    { title: "Bad Boys", href: "../movies/bad_boys_movie.html", genre: "action", poster: "images/posters/bad_boys.jpg", discover: 6 , background: "images/backgrounds/bad_boys_backg.jpg"},
+    { title: "Bad Boys II", href: "../movies/bad_boys_ii_movie.html", genre: "action", poster: "images/posters/bad_boys_ii.jpg", discover: 2 , background: "images/backgrounds/bad_boys_ii_backg.jpg"},
+    { title: "Bad Boys For Life", href: "../movies/bad_boys_for_life_movie.html", genre: "action", poster: "images/posters/bad_boys_for_life.jpg", discover: 6 , background: "images/backgrounds/bad_boys_for_life_backg.jpg"},
+    { title: "Bad Boys: Ride or Die", href: "../movies/bad_boys_ride_or_die_movie.html", genre: "action", poster: "images/posters/bad_boys_ride_or_die.jpg", discover: 7 , background: "images/backgrounds/bad_boys_ride_or_die_backg.jpg"},
 ];
