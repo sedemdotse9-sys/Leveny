@@ -247,4 +247,6 @@ const LEVENY_MOVIES = [
     { title: "Bad Boys II", href: "../movies/bad_boys_ii_movie.html", genre: "action", poster: "images/posters/bad_boys_ii.jpg", discover: 2 , background: "images/backgrounds/bad_boys_ii_backg.jpg"},
     { title: "Bad Boys For Life", href: "../movies/bad_boys_for_life_movie.html", genre: "action", poster: "images/posters/bad_boys_for_life.jpg", discover: 6 , background: "images/backgrounds/bad_boys_for_life_backg.jpg"},
     { title: "Bad Boys: Ride or Die", href: "../movies/bad_boys_ride_or_die_movie.html", genre: "action", poster: "images/posters/bad_boys_ride_or_die.jpg", discover: 7 , background: "images/backgrounds/bad_boys_ride_or_die_backg.jpg"},
+    { title: "Inside Out", href: "../movies/inside_out_movie.html", genre: "animation", poster: "images/posters/inside_out.jpg", discover: 1 , background: "images/backgrounds/inside_out_backg.jpg"},
+    { title: "Inside Out 2", href: "../movies/inside_out_2_movie.html", genre: "animation", poster: "images/posters/inside_out_2.jpg", discover: 1 , background: "images/backgrounds/inside_out_2_backg.jpg"},
 ];
