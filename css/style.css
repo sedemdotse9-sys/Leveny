@@ -475,6 +475,174 @@ footer a{
 
 /* -------------------- RESPONSIVE DESIGN -------------------- */
 
+/* ============================================================
+   Small Laptops / Narrow Desktops (1025px – 1440px)
+   Mirrors the same clamp() scaling approach used on the homepage.
+   Nothing here touches anything below 1025px (the existing tablet
+   block still owns that) or above 1440px (the Large Desktop block
+   below owns that) — this just fills the previously-unscaled gap
+   where .movie-page's fixed desktop sizes (700px video + 520px
+   details + gaps/padding, ~1510px total) would otherwise overflow
+   or squeeze a 1025–1440px wide screen.
+============================================================ */
+@media screen and (min-width: 1025px) and (max-width: 1440px) {
+  .nav_bar {
+    padding: 0 clamp(24px, 4vw, 70px);
+  }
+
+  .logo {
+    font-size: clamp(24px, 2.2vw, 30px);
+  }
+
+  .nav_links {
+    gap: clamp(16px, 2vw, 35px);
+  }
+
+  .nav_links a,
+  .shared-dropdown .genre-link {
+    font-size: clamp(15px, 1.4vw, 22px);
+  }
+
+  header hr {
+    width: calc(100% - clamp(48px, 8vw, 140px));
+  }
+
+  .movie-page {
+    gap: clamp(30px, 4vw, 80px);
+    padding: 130px clamp(30px, 4vw, 80px) 50px;
+  }
+
+  .video-section {
+    max-width: clamp(500px, 50vw, 750px);
+  }
+
+  .video-section iframe,
+  .frost-wrap,
+  .frost-wrap iframe,
+  .download-btn {
+    width: clamp(460px, 48vw, 700px);
+  }
+
+  .video-section iframe,
+  .frost-wrap iframe {
+    height: clamp(280px, 27vw, 430px);
+  }
+
+  .details-section {
+    max-width: clamp(360px, 34vw, 520px);
+  }
+
+  .movie-title {
+    font-size: clamp(26px, 2.2vw, 32px);
+  }
+
+  .related-movies {
+    gap: clamp(20px, 2.4vw, 35px);
+  }
+
+  .related-card {
+    width: clamp(170px, 16vw, 230px);
+  }
+
+  .poster {
+    width: clamp(170px, 16vw, 230px);
+    height: clamp(100px, 9vw, 130px);
+  }
+
+  .related-title {
+    font-size: clamp(15px, 1.2vw, 18px);
+  }
+}
+
+/* ============================================================
+   Large Desktop Monitors & TVs (1441px and up)
+   Everything above plateaus at its 1440px size. On a 1920px
+   monitor, an ultrawide, or a 4K TV that leaves empty space and
+   makes the video/poster/text read small relative to the screen.
+   This picks up exactly where the block above stops and keeps
+   scaling the SAME elements the SAME way — current 1440px sizes
+   as the floor, clamp()'d ceilings for very large screens — so
+   proportions never change, they just keep growing gracefully.
+============================================================ */
+@media screen and (min-width: 1441px) {
+  .nav_bar {
+    padding: 0 clamp(70px, 5vw, 140px);
+  }
+
+  .logo {
+    font-size: clamp(30px, 1.8vw, 46px);
+  }
+
+  .nav_links {
+    gap: clamp(35px, 2vw, 50px);
+  }
+
+  .nav_links a,
+  .shared-dropdown .genre-link {
+    font-size: clamp(22px, 1.1vw, 28px);
+  }
+
+  .nav_links a i,
+  .shared-dropdown .genre-link i {
+    font-size: clamp(15px, 0.8vw, 20px);
+  }
+
+  header hr {
+    width: calc(100% - clamp(140px, 10vw, 280px));
+  }
+
+  .movie-page {
+    gap: clamp(80px, 5vw, 130px);
+    padding: 150px clamp(80px, 6vw, 140px) 70px;
+  }
+
+  .video-section {
+    max-width: clamp(750px, 42vw, 950px);
+  }
+
+  .video-section iframe,
+  .frost-wrap,
+  .frost-wrap iframe,
+  .download-btn {
+    width: clamp(700px, 40vw, 900px);
+  }
+
+  .video-section iframe,
+  .frost-wrap iframe {
+    height: clamp(430px, 24vw, 550px);
+  }
+
+  .details-section {
+    max-width: clamp(520px, 28vw, 680px);
+  }
+
+  .movie-title {
+    font-size: clamp(32px, 1.8vw, 44px);
+  }
+
+  .info,
+  .summary {
+    font-size: clamp(16px, 0.9vw, 19px);
+  }
+
+  .related-movies {
+    gap: clamp(35px, 2vw, 48px);
+  }
+
+  .related-card {
+    width: clamp(230px, 13vw, 290px);
+  }
+
+  .poster {
+    width: clamp(230px, 13vw, 290px);
+    height: clamp(130px, 7.5vw, 165px);
+  }
+
+  .related-title {
+    font-size: clamp(18px, 1vw, 22px);
+  }
+}
+
 /* Large Tablets (1024px and below) */
 @media screen and (max-width: 1024px),
        screen and (orientation: landscape) and (max-height: 1024px) and (pointer: coarse) {
