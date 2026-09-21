@@ -247,4 +247,10 @@ const LEVENY_MOVIES = [
     { title: "Bad Boys II", href: "../movies/bad_boys_ii_movie.html", genre: "action", poster: "images/posters/bad_boys_ii.jpg", discover: 2 , background: "images/backgrounds/bad_boys_ii_backg.jpg"},
     { title: "Bad Boys For Life", href: "../movies/bad_boys_for_life_movie.html", genre: "action", poster: "images/posters/bad_boys_for_life.jpg", discover: 6 , background: "images/backgrounds/bad_boys_for_life_backg.jpg"},
     { title: "Bad Boys: Ride or Die", href: "../movies/bad_boys_ride_or_die_movie.html", genre: "action", poster: "images/posters/bad_boys_ride_or_die.jpg", discover: 7 , background: "images/backgrounds/bad_boys_ride_or_die_backg.jpg"},
+    { title: "Inside Out", href: "../movies/inside_out_movie.html", genre: "animation", poster: "images/posters/inside_out.jpg", discover: 1 , background: "images/backgrounds/inside_out_backg.jpg"},
+    { title: "Inside Out 2", href: "../movies/inside_out_2_movie.html", genre: "animation", poster: "images/posters/inside_out_2.jpg", discover: 1 , background: "images/backgrounds/inside_out_2_backg.jpg"},
+    { title: "Ice Cream Man", href: "../movies/ice_cream_man_movie.html", genre: "horror", poster: "images/posters/ice_cream_man.jpg", discover: 1 , background: "images/backgrounds/ice_cream_man_backg.jpg"},
+    { title: "Pixels", href: "../movies/pixels_movie.html", genre: "fantasy", poster: "images/posters/pixels.jpg", discover: 2 , background: "images/backgrounds/pixels_backg.jpg"},
+    { title: "Kingsman: The Secret Service", href: "../movies/kingsman_the_secret_service_movie.html", genre: "action", poster: "images/posters/kingsman_the_secret_service.jpg", discover: 5 , background: "images/backgrounds/kingsman_the_secret_service_backg.jpg"},
+    { title: "Kingsman: The Golden Circle", href: "../movies/kingsman_the_golden_circle_movie.html", genre: "action", poster: "images/posters/kingsman_the_golden_circle.jpg", discover: 1 , background: "images/backgrounds/kingsman_the_golden_circle_backg.jpg"},
 ];

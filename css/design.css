@@ -470,7 +470,7 @@ header {
 /* -------------------- FOOTER (now inside the slide) -------------------- */
 .slider-wrapper footer.copyright {
     position: fixed;
-    bottom: 12px;
+    bottom: 6px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 3000;           /* same layer as your arrows, above slide content */
