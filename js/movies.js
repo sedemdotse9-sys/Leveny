@@ -253,4 +253,7 @@ const LEVENY_MOVIES = [
     { title: "Pixels", href: "../movies/pixels_movie.html", genre: "fantasy", poster: "images/posters/pixels.jpg", discover: 2 , background: "images/backgrounds/pixels_backg.jpg"},
     { title: "Kingsman: The Secret Service", href: "../movies/kingsman_the_secret_service_movie.html", genre: "action", poster: "images/posters/kingsman_the_secret_service.jpg", discover: 5 , background: "images/backgrounds/kingsman_the_secret_service_backg.jpg"},
     { title: "Kingsman: The Golden Circle", href: "../movies/kingsman_the_golden_circle_movie.html", genre: "action", poster: "images/posters/kingsman_the_golden_circle.jpg", discover: 1 , background: "images/backgrounds/kingsman_the_golden_circle_backg.jpg"},
+    { title: "One Last Shock", href: "../movies/one_last_shock_movie.html", genre: "action", poster: "images/posters/one_last_shock.jpg", discover: 3 , background: "images/backgrounds/one_last_shock_backg.jpg"},
+    { title: "Idiots", href: "../movies/idiots_movie.html", genre: "family", poster: "images/posters/idiots.jpg", discover: 7 , background: "images/backgrounds/idiots_backg.jpg"},
+    { title: "3 Idiots", href: "../movies/3_idiots_movie.html", genre: "family", poster: "images/posters/3_idiots.jpg", discover: 2 , background: "images/backgrounds/3_idiots_backg.jpg"},
 ];
