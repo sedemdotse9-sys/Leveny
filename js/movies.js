@@ -256,4 +256,8 @@ const LEVENY_MOVIES = [
     { title: "One Last Shock", href: "../movies/one_last_shock_movie.html", genre: "action", poster: "images/posters/one_last_shock.jpg", discover: 3 , background: "images/backgrounds/one_last_shock_backg.jpg"},
     { title: "Idiots", href: "../movies/idiots_movie.html", genre: "family", poster: "images/posters/idiots.jpg", discover: 7 , background: "images/backgrounds/idiots_backg.jpg"},
     { title: "3 Idiots", href: "../movies/3_idiots_movie.html", genre: "family", poster: "images/posters/3_idiots.jpg", discover: 2 , background: "images/backgrounds/3_idiots_backg.jpg"},
+    { title: "Legend of the White Dragon", href: "../movies/legend_of_the_white_dragon_movie.html", genre: "fantasy", poster: "images/posters/legend_of_the_white_dragon.jpg", discover: 1 , background: "images/backgrounds/legend_of_the_white_dragon_backg.jpg"},
+    { title: "The Love Hypothesis", href: "../movies/the_love_hypothesis_movie.html", genre: "romance", poster: "images/posters/the_love_hypothesis.jpg", discover: 3 , background: "images/backgrounds/the_love_hypothesis_backg.jpg"},
+    { title: "Deb is Boss", href: "../movies/deb_is_boss_movie.html", genre: "romance", poster: "images/posters/deb_is_boss.jpg", discover: 3 , background: "images/backgrounds/deb_is_boss_backg.jpg"},
+    { title: "Broad Trip", href: "../movies/broad_trip_movie.html", genre: "romance", poster: "images/posters/broad_trip.jpg", discover: 7 , background: "images/backgrounds/broad_trip_backg.jpg"},
 ];
