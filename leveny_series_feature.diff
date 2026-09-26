@@ -1,0 +1,1637 @@
+diff --git a/app.py b/app.py
+index e4b08f0..1c2c967 100644
+--- a/app.py
++++ b/app.py
+@@ -20,11 +20,14 @@ tool in a subfolder instead of the repo root), just change it.
+ """
+ 
+ import os
+-from flask import Flask, render_template, request, redirect, url_for, flash
++import json
++from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
+ 
+ from generator import (
+     GENRE_META, GENRE_ORDER, build_html, build_css,
+     build_movies_js_entry, append_to_movies_js, next_css_filename,
++    build_series_html, build_movies_js_entry_series, find_series_file,
++    parse_series_data, merge_series_episodes, rebuild_series_html_from_record,
+ )
+ 
+ # ----------------------------------------------------------------------
+@@ -32,6 +35,7 @@ from generator import (
+ # ----------------------------------------------------------------------
+ SITE_ROOT = os.path.dirname(os.path.abspath(__file__))
+ MOVIES_DIR = os.path.join(SITE_ROOT, "movies")
++SERIES_DIR = os.path.join(SITE_ROOT, "series")
+ CSS_DIR = os.path.join(SITE_ROOT, "css")
+ MOVIES_JS_PATH = os.path.join(SITE_ROOT, "js", "movies.js")
+ 
+@@ -151,5 +155,178 @@ def generate():
+     return redirect(url_for("index"))
+ 
+ 
++@app.route("/check_series", methods=["GET"])
++def check_series():
++    """
++    Called by the form's JS as the user types a series title, so it can
++    switch between "brand new series" fields and "add episodes to an
++    existing series" fields.
++    """
++    title = request.args.get("title", "").strip()
++    if not title:
++        return jsonify({"exists": False})
++
++    path, filename, exists = find_series_file(SERIES_DIR, title)
++    if not exists:
++        return jsonify({"exists": False, "filename": filename})
++
++    with open(path, "r", encoding="utf-8") as fh:
++        html_text = fh.read()
++
++    record = parse_series_data(html_text)
++    if not record:
++        # A file sits at that path but isn't a Leveny series page we
++        # know how to parse — treat it as "new" would be unsafe (it'd
++        # overwrite it), so report it separately instead.
++        return jsonify({"exists": True, "filename": filename, "unrecognized": True})
++
++    return jsonify({
++        "exists": True,
++        "filename": filename,
++        "meta": record["meta"],
++        "seasons": record["seasons"],
++    })
++
++
++@app.route("/generate_series", methods=["POST"])
++def generate_series():
++    f = request.form
++
++    title = f.get("title", "").strip()
++    season = f.get("season", "").strip()
++    episodes_raw = f.get("episodes_json", "").strip()
++
++    errors = []
++    if not title:
++        errors.append("Title is required.")
++    if not season.isdigit():
++        errors.append("Season must be a whole number.")
++
++    episodes = []
++    if not episodes_raw:
++        errors.append("At least one episode (with a download link) is required.")
++    else:
++        try:
++            for ep in json.loads(episodes_raw):
++                dl = str(ep.get("download", "")).strip()
++                if not dl:
++                    raise ValueError("empty download link")
++                episodes.append({"episode": int(ep["episode"]), "download": dl})
++            if not episodes:
++                errors.append("At least one episode (with a download link) is required.")
++        except Exception:
++            errors.append("Episode data was malformed — please re-add the episode rows.")
++
++    if errors:
++        for e in errors:
++            flash(e, "error")
++        return redirect(url_for("index"))
++
++    os.makedirs(SERIES_DIR, exist_ok=True)
++    os.makedirs(CSS_DIR, exist_ok=True)
++
++    path, filename, exists = find_series_file(SERIES_DIR, title)
++
++    if exists:
++        # -------- Adding episodes to an existing series --------
++        with open(path, "r", encoding="utf-8") as fh:
++            existing_html = fh.read()
++
++        record = parse_series_data(existing_html)
++        if not record:
++            flash(
++                f"series/{filename} already exists but isn't a series page this "
++                f"tool created — it was left untouched.",
++                "error",
++            )
++            return redirect(url_for("index"))
++
++        merge_series_episodes(record, season, episodes)
++        html_content = rebuild_series_html_from_record(record)
++
++        with open(path, "w", encoding="utf-8") as fh:
++            fh.write(html_content)
++
++        flash(f'Added {len(episodes)} episode(s) to Season {season} of "{title}"!', "success")
++        flash(f"series/{filename}", "file")
++        return redirect(url_for("index"))
++
++    # -------- Brand-new series --------
++    genre = f.get("genre", "").strip()
++    imdb_id = f.get("imdb_id", "").strip()
++    summary = f.get("summary", "").strip()
++    year = f.get("year", "").strip()
++    runtime = f.get("runtime", "").strip()
++    poster_file = f.get("poster_file", "").strip()
++    background_file = f.get("background_file", "").strip()
++    discover = f.get("discover", "").strip()
++
++    if genre not in GENRE_META:
++        errors.append("Please choose a valid genre.")
++    if not imdb_id:
++        errors.append("Show IMDb ID is required.")
++    if not summary:
++        errors.append("Summary is required.")
++    if not year.isdigit():
++        errors.append("Year must be a number.")
++    if not runtime.isdigit():
++        errors.append("Episode runtime must be a number (minutes).")
++    if not poster_file:
++        errors.append("Poster filename is required (even if the image isn't ready yet).")
++    if not background_file:
++        errors.append("Background filename is required (even if the image isn't ready yet).")
++    if not discover.isdigit():
++        errors.append("Discover page number must be a number.")
++
++    if errors:
++        for e in errors:
++            flash(e, "error")
++        return redirect(url_for("index"))
++
++    css_filename = next_css_filename(CSS_DIR)
++    css_path = os.path.join(CSS_DIR, css_filename)
++
++    data = {
++        "title": title,
++        "genre": genre,
++        "html_filename": filename,
++        "css_filename": css_filename,
++        "imdb_id": imdb_id,
++        "summary": summary,
++        "year": year,
++        "runtime": runtime,
++        "poster_file": poster_file,
++        "background_file": background_file,
++        "background_path": f"images/backgrounds/{background_file}",
++        "discover": discover,
++        "seasons": {season: episodes},
++    }
++
++    html_content = build_series_html(data)
++    css_content = build_css(data)
++    entry_line = build_movies_js_entry_series(data)
++
++    with open(path, "w", encoding="utf-8") as fh:
++        fh.write(html_content)
++    with open(css_path, "w", encoding="utf-8") as fh:
++        fh.write(css_content)
++
++    try:
++        append_to_movies_js(MOVIES_JS_PATH, entry_line)
++        js_ok = True
++    except Exception as e:
++        js_ok = False
++        flash(f"Series page + CSS were created, but movies.js could not be updated automatically: {e}", "error")
++        flash(f"Add this line yourself to js/movies.js:  {entry_line}", "error")
++
++    if js_ok:
++        flash(f'"{title}" (Series) was created successfully!', "success")
++        flash(f"series/{filename}", "file")
++        flash(f"css/{css_filename}", "file")
++        flash("Entry appended to js/movies.js", "file")
++
++    return redirect(url_for("index"))
++
++
+ if __name__ == "__main__":
+     app.run(debug=True)
+diff --git a/css/design.css b/css/design.css
+index 8e209d4..eba01ef 100644
+--- a/css/design.css
++++ b/css/design.css
+@@ -452,6 +452,15 @@ header {
+ }
+ 
+ /* -------------------- MOVIE ITEMS -------------------- */
++/* Movie/Series type tag — see css/style.css for the movie-page version. */
++.type-tag {
++  font-size: 0.72em;
++  font-weight: 500;
++  opacity: 0.6;
++  margin-left: 6px;
++  letter-spacing: 0.3px;
++}
++
+ .movie-item img {
+     width: 160px;
+     height: 230px;
+diff --git a/css/discover.css b/css/discover.css
+index 388d47d..dacb3aa 100644
+--- a/css/discover.css
++++ b/css/discover.css
+@@ -478,6 +478,21 @@ header hr {
+ }
+ .movie-title p { font-size: 12px; color: rgba(148,163,184,0.9); margin: 0; font-weight: 500; }
+ 
++/* Movie/Series type tag shown after the title. Overrides the h4's
++   gradient text-clip so it reads as a plain dim label. */
++.type-tag {
++    font-size: 0.72em;
++    font-weight: 500;
++    opacity: 0.65;
++    margin-left: 6px;
++    letter-spacing: 0.3px;
++}
++.movie-title h4 .type-tag {
++    background: none;
++    -webkit-background-clip: initial;
++    -webkit-text-fill-color: rgba(255,255,255,0.65);
++}
++
+ .grid-movie-item:hover {
+     transform: translateY(-12px) scale(1.02);
+     box-shadow: 0 35px 70px var(--card-shadow), 0 0 0 1px rgba(255,255,255,0.15), inset 0 1px 0 rgba(255,255,255,0.2);
+diff --git a/css/genres.css b/css/genres.css
+index 59ef807..05b959a 100644
+--- a/css/genres.css
++++ b/css/genres.css
+@@ -239,6 +239,15 @@
+     margin: 0;
+ }
+ 
++/* Movie/Series type tag shown after the title. */
++.type-tag {
++    font-size: 0.72em;
++    font-weight: 500;
++    opacity: 0.6;
++    margin-left: 6px;
++    letter-spacing: 0.3px;
++}
++
+ /* -------------------- PAGE FOOTER (moved inside .genres-container) -------------------- */
+ /* ★ ADDED — previously this footer sat below <main>, outside the
+    dark container, on the plain white <body> background — that gap
+diff --git a/css/mobile.css b/css/mobile.css
+index 15d5937..5a74bd4 100644
+--- a/css/mobile.css
++++ b/css/mobile.css
+@@ -527,6 +527,15 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accen
+ 
+     body.dark-mode .mob-card-genre { color: #555; }
+ 
++    /* Movie/Series type tag shown after a title. */
++    .type-tag {
++        font-size: 0.72em;
++        font-weight: 500;
++        opacity: 0.6;
++        margin-left: 6px;
++        letter-spacing: 0.3px;
++    }
++
+     #mobileBottomNav {
+         display: flex;
+         position: fixed;
+diff --git a/css/series.css b/css/series.css
+new file mode 100644
+index 0000000..8c3bb7e
+--- /dev/null
++++ b/css/series.css
+@@ -0,0 +1,171 @@
++/* ============================================================
++   series.css — Leveny
++   Season / Episode selector bar used only on series pages
++   (movies/*.html pages never load this file).
++
++   Desktop: .episode-select-bar sits right above .download-btn.
++   Mobile:  .mob-episode-select-bar sits right above #mobDownloadBtn.
++
++   Both bars hold two side-by-side pills — Season on the left,
++   Episode on the right — each toggling its own dropdown panel.
++   Colors borrow the page's own --mob-accent variable (set per page
++   in css/style<N>.css) so the highlight matches the movie's genre
++   accent automatically.
++============================================================ */
++
++/* -------------------- DESKTOP -------------------- */
++.episode-select-bar {
++  display: flex;
++  gap: 12px;
++  width: 100%;
++  max-width: 700px;
++  margin-top: 25px;
++}
++
++.select-pill {
++  position: relative;
++  flex: 1;
++  background: rgba(20, 20, 20, 0.85);
++  border: 1px solid rgba(255, 255, 255, 0.14);
++  border-radius: 10px;
++  padding: 13px 16px;
++  display: flex;
++  align-items: center;
++  justify-content: center;
++  gap: 10px;
++  cursor: pointer;
++  font-family: "Roboto Slab", Rockwell, sans-serif;
++  color: #fff;
++  font-size: 15px;
++  font-weight: 600;
++  user-select: none;
++  transition: background 0.2s ease;
++}
++
++.select-pill:hover {
++  background: rgba(38, 38, 38, 0.9);
++}
++
++.select-pill-chevron {
++  font-size: 12px;
++  opacity: 0.7;
++  transition: transform 0.2s ease;
++}
++
++.select-pill.open .select-pill-chevron {
++  transform: rotate(180deg);
++}
++
++.select-panel {
++  position: absolute;
++  top: calc(100% + 8px);
++  left: 0;
++  right: 0;
++  max-height: 260px;
++  overflow-y: auto;
++  background: rgba(14, 14, 14, 0.97);
++  border: 1px solid rgba(255, 255, 255, 0.14);
++  border-radius: 10px;
++  display: none;
++  z-index: 60;
++  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
++}
++
++.select-pill.open .select-panel {
++  display: block;
++}
++
++.select-panel-item {
++  padding: 11px 16px;
++  font-size: 14px;
++  font-family: "Roboto Slab", Rockwell, sans-serif;
++  color: #eee;
++  cursor: pointer;
++  transition: background 0.15s ease;
++}
++
++.select-panel-item:hover {
++  background: rgba(255, 255, 255, 0.08);
++}
++
++.select-panel-item.active {
++  color: var(--mob-accent, #00a8ff);
++  font-weight: 700;
++}
++
++/* -------------------- MOBILE -------------------- */
++.mob-episode-select-bar {
++  display: flex;
++  gap: 10px;
++}
++
++.mob-select-pill {
++  position: relative;
++  flex: 1;
++  background: rgba(255, 255, 255, 0.10);
++  backdrop-filter: blur(14px);
++  -webkit-backdrop-filter: blur(14px);
++  border: 1px solid var(--mob-accent-dim, rgba(255, 255, 255, 0.15));
++  border-radius: 14px;
++  padding: 12px 14px;
++  display: flex;
++  align-items: center;
++  justify-content: center;
++  gap: 8px;
++  cursor: pointer;
++  font-family: "Roboto Slab", Rockwell, sans-serif;
++  color: var(--mob-accent, #00a8ff);
++  font-size: 14px;
++  font-weight: 700;
++  user-select: none;
++}
++
++body.dark-mode .mob-select-pill {
++  background: var(--mob-accent-dim, rgba(255, 255, 255, 0.08));
++}
++
++.mob-select-pill-chevron {
++  font-size: 11px;
++  opacity: 0.75;
++  transition: transform 0.2s ease;
++}
++
++.mob-select-pill.open .mob-select-pill-chevron {
++  transform: rotate(180deg);
++}
++
++.mob-select-panel {
++  position: absolute;
++  top: calc(100% + 8px);
++  left: 0;
++  right: 0;
++  max-height: 220px;
++  overflow-y: auto;
++  background: rgba(20, 20, 20, 0.97);
++  border-radius: 14px;
++  border: 1px solid rgba(255, 255, 255, 0.14);
++  display: none;
++  z-index: 60;
++  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
++}
++
++.mob-select-pill.open .mob-select-panel {
++  display: block;
++}
++
++.mob-select-panel-item {
++  padding: 11px 16px;
++  font-size: 13px;
++  font-family: "Roboto Slab", Rockwell, sans-serif;
++  color: #eee;
++  cursor: pointer;
++}
++
++.mob-select-panel-item:active {
++  background: rgba(255, 255, 255, 0.08);
++}
++
++.mob-select-panel-item.active {
++  color: var(--mob-accent, #00a8ff);
++  font-weight: 700;
++}
+diff --git a/css/style.css b/css/style.css
+index 57975ba..9e4ba57 100644
+--- a/css/style.css
++++ b/css/style.css
+@@ -401,6 +401,17 @@ header hr {
+   color: black;
+ }
+ 
++/* Movie/Series type tag — shown next to titles in search results,
++   discover/genre grids, and related cards so users can tell at a
++   glance whether something is a movie or a series. */
++.type-tag {
++  font-size: 0.72em;
++  font-weight: 500;
++  opacity: 0.6;
++  margin-left: 6px;
++  letter-spacing: 0.3px;
++}
++
+ /* -------------------- INFO / SUMMARY -------------------- */
+ .info {
+   font-family: Bahnschrift, sans-serif;
+diff --git a/generator.py b/generator.py
+index 1846fb3..883485e 100644
+--- a/generator.py
++++ b/generator.py
+@@ -13,6 +13,7 @@ below (sourced from the site's own shared genre dropdown menu).
+ 
+ import re
+ import os
++import json
+ 
+ # ----------------------------------------------------------------------
+ # Site base URL — used to build the self-referencing canonical tag
+@@ -1150,3 +1151,248 @@ def append_to_movies_js(movies_js_path, entry_line):
+ 
+     with open(movies_js_path, "w", encoding="utf-8") as f:
+         f.write(new_content)
++
++
++# ----------------------------------------------------------------------
++# SERIES SUPPORT
++# ----------------------------------------------------------------------
++# Series pages live in series/ (a sibling of movies/, same folder
++# depth, so every "../css/..." / "../js/..." reference in the shared
++# template still resolves correctly). A series page is built from the
++# SAME HTML_TEMPLATE as a movie page — HTML_SERIES_TEMPLATE below is
++# derived from it programmatically so shared markup (nav, footer,
++# genre panel, dark mode, broken-link reporting, etc.) never drifts
++# between the two — with three things patched in:
++#   1. css/series.css, for the Season/Episode selector pills
++#   2. a vidsrc.me TV embed URL (imdb/season/episode) instead of the
++#      movie embed URL, and the selector bar itself, right above both
++#      download buttons
++#   3. js/series-select.js + the embedded JSON blob it reads, which
++#      is also how this file re-parses an existing series page later
++#      when new episodes are added to it
++# ----------------------------------------------------------------------
++
++TV_STREAM_BASE = "https://vidsrc.me/embed/tv"
++
++_SERIES_DESKTOP_BAR = (
++    '<div class="episode-select-bar" id="episodeSelectBar">\n'
++    '<div class="select-pill" id="seasonPillDesktop">\n'
++    '<span class="select-pill-label" id="seasonLabelDesktop">Season 1</span>\n'
++    '<i class="fas fa-chevron-down select-pill-chevron"></i>\n'
++    '<div class="select-panel" id="seasonPanelDesktop"></div>\n'
++    "</div>\n"
++    '<div class="select-pill" id="episodePillDesktop">\n'
++    '<span class="select-pill-label" id="episodeLabelDesktop">Episode 1</span>\n'
++    '<i class="fas fa-chevron-down select-pill-chevron"></i>\n'
++    '<div class="select-panel" id="episodePanelDesktop"></div>\n'
++    "</div>\n"
++    "</div>\n"
++)
++
++_SERIES_MOBILE_BAR = (
++    '<div class="mob-episode-select-bar" id="mobEpisodeSelectBar">\n'
++    '<div class="mob-select-pill" id="seasonPillMobile">\n'
++    '<span class="mob-select-pill-label" id="seasonLabelMobile">Season 1</span>\n'
++    '<i class="fas fa-chevron-down mob-select-pill-chevron"></i>\n'
++    '<div class="mob-select-panel" id="seasonPanelMobile"></div>\n'
++    "</div>\n"
++    '<div class="mob-select-pill" id="episodePillMobile">\n'
++    '<span class="mob-select-pill-label" id="episodeLabelMobile">Episode 1</span>\n'
++    '<i class="fas fa-chevron-down mob-select-pill-chevron"></i>\n'
++    '<div class="mob-select-panel" id="episodePanelMobile"></div>\n'
++    "</div>\n"
++    "</div>\n"
++)
++
++
++def _build_series_template():
++    t = HTML_TEMPLATE
++
++    t = t.replace(
++        '<link href="../css/__CSS_FILENAME__" rel="stylesheet"/>',
++        '<link href="../css/__CSS_FILENAME__" rel="stylesheet"/>\n'
++        '<link href="../css/series.css" rel="stylesheet"/>',
++    )
++
++    t = t.replace(
++        'src="https://vidsrc.me/embed/movie/__IMDB_ID__"',
++        'src="' + TV_STREAM_BASE + '/__IMDB_ID__/__INITIAL_SEASON__/__INITIAL_EPISODE__"',
++    )
++
++    # Both download buttons start out pointing at whichever episode is
++    # initially selected.
++    t = t.replace("__DOWNLOAD_LINK__", "__INITIAL_DOWNLOAD_LINK__")
++
++    t = t.replace(
++        '<div class="frost-click" id="frostClick"></div>\n'
++        "</div>\n"
++        '<button class="download-btn">',
++        '<div class="frost-click" id="frostClick"></div>\n'
++        "</div>\n" + _SERIES_DESKTOP_BAR + '<button class="download-btn">',
++    )
++
++    t = t.replace(
++        '<div id="mobFrostClick"></div>\n'
++        "</div>\n"
++        "</div>\n"
++        '<a download="" href="__INITIAL_DOWNLOAD_LINK__" id="mobDownloadBtn">',
++        '<div id="mobFrostClick"></div>\n'
++        "</div>\n"
++        "</div>\n" + _SERIES_MOBILE_BAR
++        + '<a download="" href="__INITIAL_DOWNLOAD_LINK__" id="mobDownloadBtn">',
++    )
++
++    t = t.replace(
++        '<script src="../js/search.js"></script>',
++        '<script src="../js/search.js"></script>\n'
++        '<script type="application/json" id="levenySeriesData">__SERIES_DATA_JSON__</script>\n'
++        '<script src="../js/series-select.js"></script>',
++    )
++
++    return t
++
++
++HTML_SERIES_TEMPLATE = _build_series_template()
++
++
++def _sorted_season_keys(seasons):
++    return sorted(seasons.keys(), key=lambda k: int(k))
++
++
++def _sorted_episodes(episode_list):
++    return sorted(episode_list, key=lambda e: int(e["episode"]))
++
++
++def _series_json_blob(data):
++    """
++    Builds the embedded JSON object js/series-select.js reads in the
++    browser, plus a `meta` sub-object that isn't used by that script
++    but lets this file fully reconstruct the page later when new
++    episodes are added to an existing series.
++    """
++    payload = {
++        "imdb_id": data["imdb_id"],
++        "seasons": data["seasons"],
++        "meta": {
++            "title": data["title"],
++            "genre": data["genre"],
++            "summary": data["summary"],
++            "year": data["year"],
++            "runtime": data["runtime"],
++            "poster_file": data["poster_file"],
++            "background_file": data["background_file"],
++            "discover": data["discover"],
++            "css_filename": data["css_filename"],
++            "html_filename": data["html_filename"],
++            "imdb_id": data["imdb_id"],
++        },
++    }
++    # Escape "</" so a stray "</script"-like substring in any field
++    # (e.g. a download URL) can never break out of the JSON <script> tag.
++    return json.dumps(payload).replace("</", "<\\/")
++
++
++def build_series_html(data):
++    """
++    data must contain: title, html_filename, css_filename, imdb_id,
++    summary, year, runtime, genre, poster_file, background_file,
++    discover, and seasons — a dict of {"1": [{"episode":1,"download":"..."}]}.
++    """
++    genre_meta = GENRE_META[data["genre"]]
++
++    season_keys = _sorted_season_keys(data["seasons"])
++    initial_season = season_keys[0]
++    initial_episodes = _sorted_episodes(data["seasons"][initial_season])
++    initial_episode = initial_episodes[0]["episode"]
++    initial_download = initial_episodes[0]["download"]
++
++    html = HTML_SERIES_TEMPLATE
++    html = html.replace("__TITLE__", data["title"])
++    html = html.replace("__TITLE_UPPER__", data["title"].upper())
++    canonical_url = f"{BASE_URL}/series/{data['html_filename']}"
++    html = html.replace("__CANONICAL_URL__", canonical_url)
++    html = html.replace("__HTML_FILENAME__", data["html_filename"])
++    html = html.replace("__CSS_FILENAME__", data["css_filename"])
++    html = html.replace("__IMDB_ID__", data["imdb_id"])
++    html = html.replace("__INITIAL_SEASON__", str(initial_season))
++    html = html.replace("__INITIAL_EPISODE__", str(initial_episode))
++    html = html.replace("__INITIAL_DOWNLOAD_LINK__", initial_download)
++    html = html.replace("__SUMMARY__", data["summary"])
++    html = html.replace("__YEAR__", str(data["year"]))
++    html = html.replace("__RUNTIME__", str(data["runtime"]))
++    html = html.replace("__GENRE_LABEL__", genre_meta["label"])
++    html = html.replace("__SERIES_DATA_JSON__", _series_json_blob(data))
++    return html
++
++
++def parse_series_data(html_text):
++    """
++    Pulls the embedded #levenySeriesData JSON back out of an existing
++    series page, e.g. so new episodes can be merged into it. Returns
++    None if the page has no such block (i.e. it isn't a series page).
++    """
++    match = re.search(
++        r'<script type="application/json" id="levenySeriesData">(.*?)</script>',
++        html_text,
++        re.DOTALL,
++    )
++    if not match:
++        return None
++    raw = match.group(1).replace("<\\/", "</")
++    return json.loads(raw)
++
++
++def find_series_file(series_dir, title):
++    """
++    Returns (path, filename) for the series HTML file this title would
++    map to, and whether it already exists on disk.
++    """
++    slug = slugify_filename(title)
++    filename = f"{slug}_series.html"
++    path = os.path.join(series_dir, filename)
++    return path, filename, os.path.exists(path)
++
++
++def merge_series_episodes(series_record, season, new_episodes):
++    """
++    Adds/overwrites episodes for `season` in an existing series record
++    (as returned by parse_series_data), in place, and returns it.
++    """
++    season_key = str(season)
++    existing = {
++        int(e["episode"]): e
++        for e in series_record["seasons"].get(season_key, [])
++    }
++    for ep in new_episodes:
++        existing[int(ep["episode"])] = {
++            "episode": int(ep["episode"]),
++            "download": ep["download"],
++        }
++    series_record["seasons"][season_key] = _sorted_episodes(list(existing.values()))
++    return series_record
++
++
++def rebuild_series_html_from_record(series_record):
++    """
++    Regenerates a full series page from a record previously read back
++    via parse_series_data (after merging in new episodes, for example).
++    """
++    meta = series_record["meta"]
++    data = dict(meta)
++    data["imdb_id"] = series_record.get("imdb_id", meta.get("imdb_id"))
++    data["seasons"] = series_record["seasons"]
++    return build_series_html(data)
++
++
++def build_movies_js_entry_series(data):
++    genre_meta = GENRE_META[data["genre"]]
++    title_escaped = data["title"].replace('"', '\\"')
++    return (
++        f'    {{ title: "{title_escaped}", '
++        f'href: "../series/{data["html_filename"]}", '
++        f'genre: "{data["genre"]}", '
++        f'type: "series", '
++        f'poster: "images/posters/{data["poster_file"]}", '
++        f'discover: {data["discover"]} , '
++        f'background: "images/backgrounds/{data["background_file"]}"}},'
++    )
+diff --git a/js/discover.js b/js/discover.js
+index 67c27af..5c4610b 100644
+--- a/js/discover.js
++++ b/js/discover.js
+@@ -105,6 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
+             .reverse() // newest-added movie of this color shows first
+             .map(m => ({
+                 title: m.title,
++                type: m.type || 'movie',
+                 img: m.poster.replace('images/', 'images/'), // poster path as-is
+                 link: m.href.replace('../', ''),
+             }));
+@@ -158,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
+                     <div class="image-overlay"></div>
+                 </div>
+                 <div class="movie-title">
+-                    <h4>${movie.title}</h4>
++                    <h4>${movie.title} <span class="type-tag">| ${movie.type === 'series' ? 'Series' : 'Movie'}</span></h4>
+                     <p>${theme.name} Theme</p>
+                 </div>`;
+             moviesGrid.appendChild(a);
+diff --git a/js/genres-mobile.js b/js/genres-mobile.js
+index fc84565..30aab43 100644
+--- a/js/genres-mobile.js
++++ b/js/genres-mobile.js
+@@ -57,6 +57,7 @@ if (__isMobileViewport()) {
+             if (!map[genre]) map[genre] = [];
+             map[genre].push({
+                 title: item.dataset.title || img.alt || 'Movie',
++                type:  item.dataset.type || 'movie',
+                 year:  '',
+                 img:   img.src,
+                 link:  link.href,
+@@ -159,7 +160,7 @@ if (__isMobileViewport()) {
+                 a.innerHTML = `
+                     <img class="mob-card-img" src="${movie.img}" alt="${movie.title}" loading="lazy">
+                     <div class="mob-card-info">
+-                        <div class="mob-card-title">${movie.title}</div>
++                        <div class="mob-card-title">${movie.title} <span class="type-tag">| ${movie.type === 'series' ? 'Series' : 'Movie'}</span></div>
+                         <div class="mob-card-genre">${GENRE_LABELS[activeGenre] || activeGenre}</div>
+                     </div>`;
+                 genreGrid.appendChild(a);
+diff --git a/js/genres.js b/js/genres.js
+index 7996ca2..bcd22ec 100644
+--- a/js/genres.js
++++ b/js/genres.js
+@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
+         if (!moviesByGenre[genre]) moviesByGenre[genre] = [];
+         moviesByGenre[genre].push({
+             title: m.title,
++            type:  m.type || 'movie',
+             year:  m.year  || '',   // add year to movies.js entries if needed
+             img:   m.poster,
+             link:  m.href,
+@@ -141,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function () {
+         card.innerHTML = `
+             <img src="${movie.img}" alt="${movie.title}" loading="lazy">
+             <div class="movie-info-slider">
+-                <h4>${movie.title}</h4>
++                <h4>${movie.title} <span class="type-tag">| ${movie.type === 'series' ? 'Series' : 'Movie'}</span></h4>
+                 <p>${movie.year}</p>
+             </div>
+         `;
+diff --git a/js/related.js b/js/related.js
+index 68a6f95..4984bd4 100644
+--- a/js/related.js
++++ b/js/related.js
+@@ -57,6 +57,17 @@
+         return href.split('/').pop();
+     }
+ 
++    // Extracts the folder a movies.js href points into, e.g.
++    // "../movies/x.html" -> "movies", "../series/y.html" -> "series".
++    function folderOf(href) {
++        const match = href.match(/\.\.\/([^\/]+)\//);
++        return match ? match[1] : '';
++    }
++
++    function typeLabel(m) {
++        return m.type === 'series' ? 'Series' : 'Movie';
++    }
++
+     function cap(s) {
+         return s.charAt(0).toUpperCase() + s.slice(1);
+     }
+@@ -97,6 +108,17 @@
+     if (!current) return; // page isn't recognized as a movie page, do nothing
+ 
+     const currentTitleKey = titleKey(current.title);
++    const currentFolder = folderOf(currentHref) || folderOf(current.href);
++
++    // A related card may point into a different folder than the page
++    // it's shown on (e.g. a movie related to a series). Same-folder
++    // targets keep the plain filename link that's always worked;
++    // cross-folder targets need the "../<folder>/" prefix.
++    function relatedLink(m) {
++        const file = fileName(m.href);
++        const folder = folderOf(m.href);
++        return folder === currentFolder ? file : `../${folder}/${file}`;
++    }
+ 
+     // ---- TIER 1: title/franchise matches ----
+     const titleMatches = (currentTitleKey.length >= MIN_TITLE_KEY_LENGTH)
+@@ -135,8 +157,8 @@
+     if (desktopWrap) {
+         desktopWrap.innerHTML = desktopRelated.map(m => `
+             <div class="related-card">
+-                <a href="${fileName(m.href)}" class="poster" style="background-image: url('../${m.background}');"></a>
+-                <p class="related-title">${m.title}</p>
++                <a href="${relatedLink(m)}" class="poster" style="background-image: url('../${m.background}');"></a>
++                <p class="related-title">${m.title} <span class="type-tag">| ${typeLabel(m)}</span></p>
+             </div>
+         `).join('');
+     }
+@@ -145,10 +167,10 @@
+     const mobileWrap = document.getElementById('mobRelatedGrid');
+     if (mobileWrap) {
+         mobileWrap.innerHTML = related.map(m => `
+-            <a href="${fileName(m.href)}" class="mob-related-card">
++            <a href="${relatedLink(m)}" class="mob-related-card">
+                 <img src="../${m.poster}" alt="${m.title}" loading="lazy">
+                 <div class="mob-related-card-info">
+-                    <div class="mob-related-card-title">${m.title}</div>
++                    <div class="mob-related-card-title">${m.title} <span class="type-tag">| ${typeLabel(m)}</span></div>
+                     <div class="mob-related-card-genre">${cap(m.genre)}</div>
+                 </div>
+             </a>
+diff --git a/js/search.js b/js/search.js
+index 3a53968..2541970 100644
+--- a/js/search.js
++++ b/js/search.js
+@@ -144,11 +144,14 @@ document.addEventListener("DOMContentLoaded", () => {
+ 
+     if (searchInput && searchDropdown) {
+ 
+-        // ★ CHANGED — adjust path based on whether we're on homepage or a movie page
+-        const isDesktopMoviePage = window.location.pathname.includes('/movies/');
++        // ★ CHANGED — adjust path based on whether we're on homepage or a
++        // detail page (a /movies/ OR /series/ page — both sit at the same
++        // folder depth off the site root).
++        const isDesktopDetailPage = /\/(movies|series)\//.test(window.location.pathname);
+         const desktopMovies = LEVENY_MOVIES.map(m => ({
+             title: m.title,
+-            link:  isDesktopMoviePage ? m.href : m.href.replace('../movies/', 'movies/')
++            type:  m.type || 'movie',
++            link:  isDesktopDetailPage ? m.href : m.href.replace('../', '')
+         }));
+ 
+         function renderDesktopDropdown(results) {
+@@ -157,8 +160,9 @@ document.addEventListener("DOMContentLoaded", () => {
+ 
+             results.slice(0, 8).forEach(movie => {
+                 const item = document.createElement("div");
+-                item.className   = "dropdown-item";
+-                item.textContent = movie.title;
++                item.className = "dropdown-item";
++                const typeLabel = movie.type === 'series' ? 'Series' : 'Movie';
++                item.innerHTML = `${movie.title} <span class="type-tag">| ${typeLabel}</span>`;
+                 item.onclick = () => { searchInput.value = ""; searchDropdown.style.display = "none"; window.location.href = movie.link; };
+                 searchDropdown.appendChild(item);
+             });
+@@ -231,15 +235,18 @@ function initMobileMovieSearch() {
+                 const matches = __fuzzySearchMovies(LEVENY_MOVIES, q);
+ 
+                 mobDrop.style.display = 'block';
+-                // ★ CHANGED — detect if we're on homepage or a movie page
+-                const isMoviePage = window.location.pathname.includes('/movies/');
++                // ★ CHANGED — detect if we're on homepage or a detail page
++                // (a /movies/ OR /series/ page)
++                const isMobileDetailPage = /\/(movies|series)\//.test(window.location.pathname);
+ 
+                 mobDrop.innerHTML = matches.length
+                     ? matches.map(m => {
+-                        // ★ CHANGED — homepage needs "movies/..." but movie pages need "../movies/..."
+-                        const href = isMoviePage ? m.href : m.href.replace('../movies/', 'movies/');
++                        // ★ CHANGED — homepage needs "movies/..." / "series/..."
++                        // but detail pages need "../movies/..." / "../series/..."
++                        const href = isMobileDetailPage ? m.href : m.href.replace('../', '');
++                        const typeLabel = m.type === 'series' ? 'Series' : 'Movie';
+                         return `<div class="mob-search-drop-item" data-href="${href}">
+-                            <i class="fas fa-film"></i>${m.title}
++                            <i class="fas fa-film"></i>${m.title} <span class="type-tag">| ${typeLabel}</span>
+                         </div>`;
+                 }).join('')
+                     : `<div class="mob-search-drop-item">
+diff --git a/js/series-select.js b/js/series-select.js
+new file mode 100644
+index 0000000..04f3e82
+--- /dev/null
++++ b/js/series-select.js
+@@ -0,0 +1,177 @@
++/* ============================================================
++   series-select.js — Leveny
++   Only loaded on series pages (movies/*.html pages never include
++   this file). Reads the embedded #levenySeriesData JSON block and
++   wires up the Season / Episode selector pills (desktop + mobile),
++   keeping them in sync and updating BOTH the video stream and the
++   download link whenever the selection changes.
++
++   Expected embedded data shape:
++   {
++     "imdb_id": "tt1234567",
++     "seasons": {
++       "1": [ { "episode": 1, "download": "https://..." }, ... ],
++       "2": [ ... ]
++     }
++   }
++============================================================ */
++(function () {
++    const dataEl = document.getElementById('levenySeriesData');
++    if (!dataEl) return; // not a series page
++
++    let seriesData;
++    try {
++        seriesData = JSON.parse(dataEl.textContent);
++    } catch (e) {
++        console.error('Leveny: could not parse series data', e);
++        return;
++    }
++
++    const imdbId = seriesData.imdb_id;
++    const seasons = seriesData.seasons || {};
++    const seasonKeys = Object.keys(seasons)
++        .map(Number)
++        .filter(n => !isNaN(n))
++        .sort((a, b) => a - b);
++
++    if (!seasonKeys.length) return;
++
++    let currentSeason = seasonKeys[0];
++    let currentEpisode = episodesFor(currentSeason)[0]
++        ? episodesFor(currentSeason)[0].episode
++        : 1;
++
++    function episodesFor(season) {
++        const list = seasons[String(season)] || [];
++        return list.slice().sort((a, b) => a.episode - b.episode);
++    }
++
++    function currentEpisodeRecord() {
++        const list = episodesFor(currentSeason);
++        return list.find(e => e.episode === currentEpisode) || list[0];
++    }
++
++    // ---- DOM refs (desktop + mobile pairs) ----
++    const seasonPillD  = document.getElementById('seasonPillDesktop');
++    const episodePillD = document.getElementById('episodePillDesktop');
++    const seasonLabelD  = document.getElementById('seasonLabelDesktop');
++    const episodeLabelD = document.getElementById('episodeLabelDesktop');
++    const seasonPanelD  = document.getElementById('seasonPanelDesktop');
++    const episodePanelD = document.getElementById('episodePanelDesktop');
++
++    const seasonPillM  = document.getElementById('seasonPillMobile');
++    const episodePillM = document.getElementById('episodePillMobile');
++    const seasonLabelM  = document.getElementById('seasonLabelMobile');
++    const episodeLabelM = document.getElementById('episodeLabelMobile');
++    const seasonPanelM  = document.getElementById('seasonPanelMobile');
++    const episodePanelM = document.getElementById('episodePanelMobile');
++
++    const allPills = [seasonPillD, episodePillD, seasonPillM, episodePillM].filter(Boolean);
++
++    function closeAllPanels(except) {
++        allPills.forEach(p => { if (p !== except) p.classList.remove('open'); });
++    }
++
++    function togglePanel(pill) {
++        const isOpen = pill.classList.contains('open');
++        closeAllPanels(null);
++        if (!isOpen) pill.classList.add('open');
++    }
++
++    document.addEventListener('click', e => {
++        allPills.forEach(pill => {
++            if (pill && !pill.contains(e.target)) pill.classList.remove('open');
++        });
++    });
++
++    function buildPanelItems(panelEl, itemClass, items, activeValue, onPick) {
++        if (!panelEl) return;
++        panelEl.innerHTML = '';
++        items.forEach(item => {
++            const row = document.createElement('div');
++            row.className = itemClass + (item.value === activeValue ? ' active' : '');
++            row.textContent = item.label;
++            row.addEventListener('click', ev => {
++                ev.stopPropagation();
++                onPick(item.value);
++            });
++            panelEl.appendChild(row);
++        });
++    }
++
++    function renderSeasonPanels() {
++        const items = seasonKeys.map(s => ({ value: s, label: `Season ${s}` }));
++        buildPanelItems(seasonPanelD, 'select-panel-item', items, currentSeason, pickSeason);
++        buildPanelItems(seasonPanelM, 'mob-select-panel-item', items, currentSeason, pickSeason);
++    }
++
++    function renderEpisodePanels() {
++        const items = episodesFor(currentSeason).map(e => ({ value: e.episode, label: `Episode ${e.episode}` }));
++        buildPanelItems(episodePanelD, 'select-panel-item', items, currentEpisode, pickEpisode);
++        buildPanelItems(episodePanelM, 'mob-select-panel-item', items, currentEpisode, pickEpisode);
++    }
++
++    function renderLabels() {
++        const seasonText = `Season ${currentSeason}`;
++        const episodeText = `Episode ${currentEpisode}`;
++        if (seasonLabelD) seasonLabelD.textContent = seasonText;
++        if (seasonLabelM) seasonLabelM.textContent = seasonText;
++        if (episodeLabelD) episodeLabelD.textContent = episodeText;
++        if (episodeLabelM) episodeLabelM.textContent = episodeText;
++    }
++
++    function updateStream() {
++        const record = currentEpisodeRecord();
++        if (!record) return;
++
++        const streamUrl = `https://vidsrc.me/embed/tv/${imdbId}/${currentSeason}/${currentEpisode}`;
++
++        const desktopIframe = document.querySelector('.video-section iframe');
++        const mobileIframe  = document.querySelector('#mobVideoWrap iframe');
++        if (desktopIframe) desktopIframe.src = streamUrl;
++        if (mobileIframe)  mobileIframe.src = streamUrl;
++
++        // A new episode is new content — make the viewer click to
++        // unblur again, same as loading the page fresh.
++        const frostWrap = document.getElementById('frostWrap');
++        const mobFrostWrap = document.getElementById('mobFrostWrap');
++        if (frostWrap) frostWrap.classList.remove('unblurred');
++        if (mobFrostWrap) mobFrostWrap.classList.remove('unblurred');
++
++        const desktopDownload = document.querySelector('.download-btn a');
++        const mobileDownload  = document.getElementById('mobDownloadBtn');
++        if (desktopDownload) desktopDownload.href = record.download;
++        if (mobileDownload)  mobileDownload.href = record.download;
++    }
++
++    function pickSeason(season) {
++        currentSeason = season;
++        const eps = episodesFor(currentSeason);
++        currentEpisode = eps[0] ? eps[0].episode : 1;
++        renderSeasonPanels();
++        renderEpisodePanels();
++        renderLabels();
++        updateStream();
++        closeAllPanels(null);
++    }
++
++    function pickEpisode(episode) {
++        currentEpisode = episode;
++        renderEpisodePanels();
++        renderLabels();
++        updateStream();
++        closeAllPanels(null);
++    }
++
++    if (seasonPillD)  seasonPillD.addEventListener('click', () => togglePanel(seasonPillD));
++    if (episodePillD) episodePillD.addEventListener('click', () => togglePanel(episodePillD));
++    if (seasonPillM)  seasonPillM.addEventListener('click', () => togglePanel(seasonPillM));
++    if (episodePillM) episodePillM.addEventListener('click', () => togglePanel(episodePillM));
++
++    renderSeasonPanels();
++    renderEpisodePanels();
++    renderLabels();
++    // NOTE: the page ships with season 1 / episode 1's stream + download
++    // already baked into the markup, so we don't call updateStream() on
++    // load — only once the viewer actually changes the selection.
++})();
+diff --git a/templates/form.html b/templates/form.html
+index 317f026..6752587 100644
+--- a/templates/form.html
++++ b/templates/form.html
+@@ -3,7 +3,7 @@
+ <head>
+ <meta charset="utf-8"/>
+ <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+-<title>Add Movie | Leveny</title>
++<title>Add Movie or Series | Leveny</title>
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+ <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet"/>
+ <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&display=swap" rel="stylesheet"/>
+@@ -108,6 +108,48 @@
+     background: rgba(255,255,255,0.6);
+     border-top:1px solid rgba(0,0,0,0.08);
+   }
++
++  /* -------- Movie/Series mode toggle -------- */
++  .mode-toggle {
++    display:flex; gap:8px; margin-bottom:22px;
++    background: rgba(255,255,255,0.05); border:1px solid var(--accent-dim);
++    border-radius:14px; padding:4px;
++  }
++  body.light .mode-toggle { background: rgba(255,255,255,0.6); }
++  .mode-btn {
++    flex:1; padding:11px; border:none; border-radius:11px; cursor:pointer;
++    background:transparent; color:#f0f0f0; opacity:.6;
++    font-family:"Roboto Slab", Rockwell, sans-serif; font-weight:700; font-size:14px;
++    transition: background .2s, opacity .2s;
++  }
++  body.light .mode-btn { color:#111; }
++  .mode-btn.active {
++    background: var(--accent); color:#fff; opacity:1;
++    box-shadow: 0 0 14px var(--accent-glow);
++  }
++
++  /* -------- Existing-series notice -------- */
++  #existingSeriesNotice {
++    display:none;
++    background: rgba(0,168,255,0.10); border:1px solid var(--accent);
++    color:#9fd8ff; padding:12px 14px; border-radius:12px; font-size:13px;
++    margin-bottom:16px; line-height:1.5;
++  }
++
++  /* -------- Episode rows -------- */
++  #episodeRows { display:flex; flex-direction:column; gap:10px; margin-bottom:10px; }
++  .episode-row { display:flex; gap:8px; align-items:center; }
++  .episode-row input[type=number] { width:84px; flex:none; }
++  .episode-row input[type=text] { flex:1; }
++  .episode-row-remove {
++    flex:none; width:38px; height:38px; border-radius:10px; border:1px solid var(--accent-dim);
++    background:rgba(231,76,60,0.12); color:#ff8a80; cursor:pointer; font-size:16px;
++  }
++  #addEpisodeBtn {
++    width:100%; padding:11px; border-radius:12px; cursor:pointer;
++    background: var(--accent-dim); color: var(--accent); border:1px dashed var(--accent);
++    font-family:"Roboto Slab", Rockwell, sans-serif; font-weight:700; font-size:13px;
++  }
+ </style>
+ </head>
+ <body>
+@@ -117,8 +159,8 @@
+ </div>
+ 
+ <main>
+-  <h1>Add a Movie</h1>
+-  <p class="sub">Generates the HTML page, page CSS, and a movies.js entry.</p>
++  <h1 id="pageTitle">Add a Movie</h1>
++  <p class="sub" id="pageSub">Generates the HTML page, page CSS, and a movies.js entry.</p>
+ 
+   {% with messages = get_flashed_messages(with_categories=true) %}
+     {% if messages %}
+@@ -128,78 +170,157 @@
+     {% endif %}
+   {% endwith %}
+ 
+-  <form method="POST" action="{{ url_for('generate') }}">
++  <div class="mode-toggle">
++    <button type="button" class="mode-btn active" id="modeMovieBtn">🎬 Add Movie</button>
++    <button type="button" class="mode-btn" id="modeSeriesBtn">📺 Add Series</button>
++  </div>
++
++  <form method="POST" id="mainForm" action="{{ url_for('generate') }}">
+     <div class="field">
+-      <label>Movie Title</label>
++      <label id="titleLabel">Movie Title</label>
+       <input type="text" name="title" id="titleInput" placeholder="e.g. Transformers One" required>
++      <div class="hint" id="titleHint" style="display:none;">Type the series name — if it already exists on the site, this form will switch to adding new episodes to it instead of recreating it.</div>
+     </div>
+ 
+-    <div class="field">
+-      <label>Genre</label>
+-      <select name="genre" required>
+-        <option value="" disabled selected>Choose a genre</option>
+-        {% for g in genres %}
+-          <option value="{{ g }}">{{ genre_meta[g].label }}</option>
+-        {% endfor %}
+-      </select>
+-    </div>
++    <div id="existingSeriesNotice"></div>
+ 
+-    <div class="row2">
++    <!-- ===================== MOVIE-ONLY FIELDS ===================== -->
++    <div id="movieFields" class="mode-section">
+       <div class="field">
+-        <label>HTML filename</label>
+-        <input type="text" name="html_filename" id="htmlFilename" placeholder="transformers_one_movie.html" required>
+-        <div class="autofilled-hint">Auto-generated from the title — edit it and it'll stop auto-updating.</div>
++        <label>Genre</label>
++        <select name="genre" id="movieGenre">
++          <option value="" disabled selected>Choose a genre</option>
++          {% for g in genres %}
++            <option value="{{ g }}">{{ genre_meta[g].label }}</option>
++          {% endfor %}
++        </select>
++      </div>
++
++      <div class="row2">
++        <div class="field">
++          <label>HTML filename</label>
++          <input type="text" name="html_filename" id="htmlFilename" placeholder="transformers_one_movie.html">
++          <div class="autofilled-hint">Auto-generated from the title — edit it and it'll stop auto-updating.</div>
++        </div>
++        <div class="field">
++          <label>CSS filename</label>
++          <input type="text" name="css_filename" id="cssFilename" value="{{ next_css }}">
++          <div class="autofilled-hint">Auto-suggested from the highest style*.css in your css/ folder.</div>
++        </div>
+       </div>
++
+       <div class="field">
+-        <label>CSS filename</label>
+-        <input type="text" name="css_filename" id="cssFilename" value="{{ next_css }}" required>
+-        <div class="autofilled-hint">Auto-suggested from the highest style*.css in your css/ folder.</div>
++        <label>IMDb ID</label>
++        <input type="text" name="imdb_id" id="movieImdb" placeholder="tt7718688">
++        <div class="hint">Used for the vidsrc.me embed URL.</div>
+       </div>
+-    </div>
+ 
+-    <div class="field">
+-      <label>IMDb ID</label>
+-      <input type="text" name="imdb_id" placeholder="tt7718688" required>
+-      <div class="hint">Used for the vidsrc.me embed URL.</div>
+-    </div>
++      <div class="field">
++        <label>Download link</label>
++        <input type="text" name="download_link" id="movieDownload" placeholder="https://transfer.it/t/...">
++      </div>
+ 
+-    <div class="field">
+-      <label>Download link</label>
+-      <input type="text" name="download_link" placeholder="https://transfer.it/t/..." required>
+-    </div>
++      <div class="field">
++        <label>Summary</label>
++        <textarea name="summary" id="movieSummary" placeholder="Used for both desktop and mobile."></textarea>
++      </div>
+ 
+-    <div class="field">
+-      <label>Summary</label>
+-      <textarea name="summary" placeholder="Used for both desktop and mobile." required></textarea>
++      <div class="row2">
++        <div class="field">
++          <label>Year</label>
++          <input type="number" name="year" id="movieYear" placeholder="2026">
++        </div>
++        <div class="field">
++          <label>Runtime (minutes)</label>
++          <input type="number" name="runtime" id="movieRuntime" placeholder="104">
++        </div>
++      </div>
++
++      <div class="row2">
++        <div class="field">
++          <label>Poster filename</label>
++          <input type="text" name="poster_file" id="posterFilename" placeholder="transformers_one.jpg">
++          <div class="hint">images/posters/&lt;this&gt; — fine if the file doesn't exist yet.</div>
++        </div>
++        <div class="field">
++          <label>Background filename</label>
++          <input type="text" name="background_file" id="backgroundFilename" placeholder="transformers_one_backg.jpg">
++          <div class="hint">images/backgrounds/&lt;this&gt;</div>
++        </div>
++      </div>
++
++      <div class="field">
++        <label>Discover page number</label>
++        <input type="number" name="discover" id="movieDiscover" placeholder="4">
++      </div>
+     </div>
+ 
+-    <div class="row2">
++    <!-- ============== SERIES: NEW-SERIES-ONLY FIELDS ================ -->
++    <div id="seriesNewFields" class="mode-section" style="display:none;">
+       <div class="field">
+-        <label>Year</label>
+-        <input type="number" name="year" placeholder="2026" required>
++        <label>Genre</label>
++        <select name="genre" id="seriesGenre">
++          <option value="" disabled selected>Choose a genre</option>
++          {% for g in genres %}
++            <option value="{{ g }}">{{ genre_meta[g].label }}</option>
++          {% endfor %}
++        </select>
+       </div>
++
+       <div class="field">
+-        <label>Runtime (minutes)</label>
+-        <input type="number" name="runtime" placeholder="104" required>
++        <label>Show IMDb ID</label>
++        <input type="text" name="imdb_id" id="seriesImdb" placeholder="tt0903747">
++        <div class="hint">One IMDb ID for the whole show — the vidsrc.me stream is built as imdb/season/episode, so every episode uses this same ID.</div>
+       </div>
+-    </div>
+ 
+-    <div class="row2">
+       <div class="field">
+-        <label>Poster filename</label>
+-        <input type="text" name="poster_file" id="posterFilename" placeholder="transformers_one.jpg" required>
+-        <div class="hint">images/posters/&lt;this&gt; — fine if the file doesn't exist yet.</div>
++        <label>Summary</label>
++        <textarea name="summary" id="seriesSummary" placeholder="Used for both desktop and mobile."></textarea>
++      </div>
++
++      <div class="row2">
++        <div class="field">
++          <label>Year</label>
++          <input type="number" name="year" id="seriesYear" placeholder="2026">
++        </div>
++        <div class="field">
++          <label>Episode runtime (minutes)</label>
++          <input type="number" name="runtime" id="seriesRuntime" placeholder="45">
++        </div>
++      </div>
++
++      <div class="row2">
++        <div class="field">
++          <label>Poster filename</label>
++          <input type="text" name="poster_file" id="seriesPosterFilename" placeholder="breaking_bad.jpg">
++          <div class="hint">images/posters/&lt;this&gt;</div>
++        </div>
++        <div class="field">
++          <label>Background filename</label>
++          <input type="text" name="background_file" id="seriesBackgroundFilename" placeholder="breaking_bad_backg.jpg">
++          <div class="hint">images/backgrounds/&lt;this&gt;</div>
++        </div>
+       </div>
++
+       <div class="field">
+-        <label>Background filename</label>
+-        <input type="text" name="background_file" id="backgroundFilename" placeholder="transformers_one_backg.jpg" required>
+-        <div class="hint">images/backgrounds/&lt;this&gt;</div>
++        <label>Discover page number</label>
++        <input type="number" name="discover" id="seriesDiscover" placeholder="4">
+       </div>
+     </div>
+ 
+-    <div class="field">
+-      <label>Discover page number</label>
+-      <input type="number" name="discover" placeholder="4" required>
++    <!-- ======== SERIES: SEASON / EPISODES (new + existing) ========= -->
++    <div id="seriesEpisodeFields" class="mode-section" style="display:none;">
++      <div class="field">
++        <label id="seasonLabel">Season number</label>
++        <input type="number" name="season" id="seasonInput" min="1" value="1">
++      </div>
++
++      <div class="field">
++        <label>Episodes</label>
++        <div id="episodeRows"></div>
++        <button type="button" id="addEpisodeBtn">+ Add Episode</button>
++      </div>
++      <input type="hidden" name="episodes_json" id="episodesJsonInput">
+     </div>
+ 
+     <button id="submitBtn" type="submit">Generate Movie Page</button>
+@@ -209,6 +330,7 @@
+ <div id="bottomNav">movies/ &nbsp;·&nbsp; css/ &nbsp;·&nbsp; js/movies.js</div>
+ 
+ <script>
++  // ------------------------------------------------------------------
+   // Auto-generate html/poster/background filenames from the title,
+   // mirroring the site's existing convention:
+   //   "Around The World In 80 Days"
+@@ -217,6 +339,7 @@
+   //     -> around_the_world_in_80_days_backg.jpg
+   // Runs of non [a-z0-9'] chars collapse to a single underscore;
+   // apostrophes are kept (matches e.g. the_devil's_mouth_movie.html).
++  // ------------------------------------------------------------------
+   function slugify(title) {
+     return title
+       .toLowerCase()
+@@ -224,10 +347,10 @@
+       .replace(/^_+|_+$/g, '');
+   }
+ 
+-  const titleInput = document.getElementById('titleInput');
+-  const htmlField = document.getElementById('htmlFilename');
++  const titleInput  = document.getElementById('titleInput');
++  const htmlField   = document.getElementById('htmlFilename');
+   const posterField = document.getElementById('posterFilename');
+-  const bgField = document.getElementById('backgroundFilename');
++  const bgField     = document.getElementById('backgroundFilename');
+ 
+   // Track whether the user has manually typed into a field —
+   // once they do, we stop overwriting it on further title changes.
+@@ -237,13 +360,206 @@
+   posterField.addEventListener('input', () => { dirty.poster = true; });
+   bgField.addEventListener('input', () => { dirty.background = true; });
+ 
+-  titleInput.addEventListener('input', () => {
++  function autofillMovieFilenames() {
+     const slug = slugify(titleInput.value);
+     if (!slug) return;
+     if (!dirty.html) htmlField.value = slug + '_movie.html';
+     if (!dirty.poster) posterField.value = slug + '.jpg';
+     if (!dirty.background) bgField.value = slug + '_backg.jpg';
++  }
++
++  // ------------------------------------------------------------------
++  // Movie <-> Series mode toggle
++  // ------------------------------------------------------------------
++  const modeMovieBtn  = document.getElementById('modeMovieBtn');
++  const modeSeriesBtn = document.getElementById('modeSeriesBtn');
++  const movieFields   = document.getElementById('movieFields');
++  const seriesNewFields = document.getElementById('seriesNewFields');
++  const seriesEpisodeFields = document.getElementById('seriesEpisodeFields');
++  const existingNotice = document.getElementById('existingSeriesNotice');
++  const titleHint = document.getElementById('titleHint');
++  const mainForm = document.getElementById('mainForm');
++  const submitBtn = document.getElementById('submitBtn');
++  const pageTitle = document.getElementById('pageTitle');
++  const pageSub = document.getElementById('pageSub');
++  const titleLabel = document.getElementById('titleLabel');
++  const bottomNav = document.getElementById('bottomNav');
++  const seasonLabel = document.getElementById('seasonLabel');
++
++  const MOVIE_URL = "{{ url_for('generate') }}";
++  const SERIES_URL = "{{ url_for('generate_series') }}";
++  const CHECK_SERIES_URL = "{{ url_for('check_series') }}";
++
++  let mode = 'movie';       // 'movie' | 'series'
++  let seriesExists = false; // does the currently-typed series title already exist?
++
++  function setFieldsEnabled(container, enabled) {
++    container.querySelectorAll('input, select, textarea').forEach(el => {
++      el.disabled = !enabled;
++    });
++  }
++
++  function applyMode() {
++    if (mode === 'movie') {
++      pageTitle.textContent = 'Add a Movie';
++      pageSub.textContent = 'Generates the HTML page, page CSS, and a movies.js entry.';
++      titleLabel.textContent = 'Movie Title';
++      titleHint.style.display = 'none';
++      existingNotice.style.display = 'none';
++      movieFields.style.display = '';
++      seriesNewFields.style.display = 'none';
++      seriesEpisodeFields.style.display = 'none';
++      submitBtn.textContent = 'Generate Movie Page';
++      mainForm.action = MOVIE_URL;
++      bottomNav.textContent = 'movies/ \u00b7 css/ \u00b7 js/movies.js';
++      setFieldsEnabled(movieFields, true);
++      setFieldsEnabled(seriesNewFields, false);
++      setFieldsEnabled(seriesEpisodeFields, false);
++    } else {
++      pageTitle.textContent = 'Add a Series';
++      pageSub.textContent = 'Generates a series page, or adds episodes to one you already have.';
++      titleLabel.textContent = 'Series Title';
++      titleHint.style.display = '';
++      movieFields.style.display = 'none';
++      mainForm.action = SERIES_URL;
++      bottomNav.textContent = 'series/ \u00b7 css/ \u00b7 js/movies.js';
++      setFieldsEnabled(movieFields, false);
++      seriesEpisodeFields.style.display = '';
++      setFieldsEnabled(seriesEpisodeFields, true);
++      applySeriesExistence();
++    }
++  }
++
++  function applySeriesExistence() {
++    if (seriesExists) {
++      seriesNewFields.style.display = 'none';
++      setFieldsEnabled(seriesNewFields, false);
++      existingNotice.style.display = '';
++      submitBtn.textContent = 'Add Episode(s)';
++      seasonLabel.textContent = 'Season number (existing or new)';
++    } else {
++      seriesNewFields.style.display = '';
++      setFieldsEnabled(seriesNewFields, true);
++      existingNotice.style.display = 'none';
++      submitBtn.textContent = 'Create Series';
++      seasonLabel.textContent = 'Season number';
++    }
++  }
++
++  modeMovieBtn.addEventListener('click', () => {
++    mode = 'movie';
++    modeMovieBtn.classList.add('active');
++    modeSeriesBtn.classList.remove('active');
++    applyMode();
++  });
++
++  modeSeriesBtn.addEventListener('click', () => {
++    mode = 'series';
++    modeSeriesBtn.classList.add('active');
++    modeMovieBtn.classList.remove('active');
++    applyMode();
++  });
++
++  // ------------------------------------------------------------------
++  // Looking up whether a typed series title already exists
++  // ------------------------------------------------------------------
++  let checkTimer = null;
++
++  function scheduleSeriesCheck() {
++    if (mode !== 'series') return;
++    clearTimeout(checkTimer);
++    const title = titleInput.value.trim();
++    if (!title) {
++      seriesExists = false;
++      applySeriesExistence();
++      resetEpisodeRows(1);
++      return;
++    }
++    checkTimer = setTimeout(() => {
++      fetch(CHECK_SERIES_URL + '?title=' + encodeURIComponent(title))
++        .then(r => r.json())
++        .then(data => {
++          if (mode !== 'series') return; // user switched away meanwhile
++          seriesExists = !!data.exists && !data.unrecognized;
++          applySeriesExistence();
++
++          if (seriesExists) {
++            const seasonKeys = Object.keys(data.seasons || {}).map(Number).sort((a, b) => a - b);
++            const highestSeason = seasonKeys.length ? seasonKeys[seasonKeys.length - 1] : 1;
++            const highestSeasonEpisodes = (data.seasons[String(highestSeason)] || [])
++              .map(e => e.episode);
++            const nextEpisode = highestSeasonEpisodes.length ? Math.max(...highestSeasonEpisodes) + 1 : 1;
++
++            existingNotice.innerHTML =
++              '<strong>"' + title + '"</strong> already exists (' + seasonKeys.length +
++              ' season' + (seasonKeys.length === 1 ? '' : 's') + ' so far). ' +
++              'Whatever you add below will be merged into it \u2014 the show\u2019s existing ' +
++              'genre, summary, poster, etc. are kept as they are.';
++
++            document.getElementById('seasonInput').value = highestSeason;
++            resetEpisodeRows(nextEpisode);
++          } else {
++            resetEpisodeRows(1);
++          }
++        })
++        .catch(() => { /* offline or route unavailable — just leave "new series" mode */ });
++    }, 400);
++  }
++
++  titleInput.addEventListener('input', () => {
++    if (mode === 'movie') autofillMovieFilenames();
++    else scheduleSeriesCheck();
++  });
++
++  // ------------------------------------------------------------------
++  // Dynamic episode rows
++  // ------------------------------------------------------------------
++  const episodeRowsEl = document.getElementById('episodeRows');
++  const addEpisodeBtn = document.getElementById('addEpisodeBtn');
++  const episodesJsonInput = document.getElementById('episodesJsonInput');
++
++  function addEpisodeRow(episodeNumber, downloadValue) {
++    const row = document.createElement('div');
++    row.className = 'episode-row';
++    row.innerHTML =
++      '<input type="number" class="ep-num" min="1" value="' + episodeNumber + '" placeholder="Ep #">' +
++      '<input type="text" class="ep-download" placeholder="https://wildshare.net/..." value="' + (downloadValue || '') + '">' +
++      '<button type="button" class="episode-row-remove" aria-label="Remove episode">\u00d7</button>';
++    row.querySelector('.episode-row-remove').addEventListener('click', () => {
++      if (episodeRowsEl.children.length > 1) row.remove();
++    });
++    episodeRowsEl.appendChild(row);
++  }
++
++  function resetEpisodeRows(startingEpisode) {
++    episodeRowsEl.innerHTML = '';
++    addEpisodeRow(startingEpisode || 1, '');
++  }
++
++  addEpisodeBtn.addEventListener('click', () => {
++    const nums = Array.from(episodeRowsEl.querySelectorAll('.ep-num')).map(i => parseInt(i.value, 10) || 0);
++    const next = nums.length ? Math.max(...nums) + 1 : 1;
++    addEpisodeRow(next, '');
+   });
++
++  resetEpisodeRows(1);
++
++  mainForm.addEventListener('submit', (e) => {
++    if (mode !== 'series') return; // movie mode needs no extra work
++    const episodes = Array.from(episodeRowsEl.children).map(row => ({
++      episode: parseInt(row.querySelector('.ep-num').value, 10),
++      download: row.querySelector('.ep-download').value.trim(),
++    })).filter(ep => ep.download && !isNaN(ep.episode));
++
++    if (!episodes.length) {
++      e.preventDefault();
++      alert('Add at least one episode with a download link.');
++      return;
++    }
++    episodesJsonInput.value = JSON.stringify(episodes);
++  });
++
++  applyMode();
+ </script>
+ </body>
+ </html>
