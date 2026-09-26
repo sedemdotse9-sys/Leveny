@@ -260,4 +260,5 @@ const LEVENY_MOVIES = [
     { title: "The Love Hypothesis", href: "../movies/the_love_hypothesis_movie.html", genre: "romance", poster: "images/posters/the_love_hypothesis.jpg", discover: 3 , background: "images/backgrounds/the_love_hypothesis_backg.jpg"},
     { title: "Deb is Boss", href: "../movies/deb_is_boss_movie.html", genre: "romance", poster: "images/posters/deb_is_boss.jpg", discover: 3 , background: "images/backgrounds/deb_is_boss_backg.jpg"},
     { title: "Broad Trip", href: "../movies/broad_trip_movie.html", genre: "romance", poster: "images/posters/broad_trip.jpg", discover: 7 , background: "images/backgrounds/broad_trip_backg.jpg"},
+    { title: "The Deputy", href: "../movies/the_deputy_movie.html", genre: "action", poster: "images/posters/the_deputy.jpg", discover: 3 , background: "images/backgrounds/the_deputy_backg.jpg"},
 ];

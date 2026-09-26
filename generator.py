@@ -13,6 +13,7 @@ below (sourced from the site's own shared genre dropdown menu).
 
 import re
 import os
+import json
 
 # ----------------------------------------------------------------------
 # Site base URL — used to build the self-referencing canonical tag
@@ -1150,3 +1151,248 @@ def append_to_movies_js(movies_js_path, entry_line):
 
     with open(movies_js_path, "w", encoding="utf-8") as f:
         f.write(new_content)
+
+
+# ----------------------------------------------------------------------
+# SERIES SUPPORT
+# ----------------------------------------------------------------------
+# Series pages live in series/ (a sibling of movies/, same folder
+# depth, so every "../css/..." / "../js/..." reference in the shared
+# template still resolves correctly). A series page is built from the
+# SAME HTML_TEMPLATE as a movie page — HTML_SERIES_TEMPLATE below is
+# derived from it programmatically so shared markup (nav, footer,
+# genre panel, dark mode, broken-link reporting, etc.) never drifts
+# between the two — with three things patched in:
+#   1. css/series.css, for the Season/Episode selector pills
+#   2. a vidsrc.me TV embed URL (imdb/season/episode) instead of the
+#      movie embed URL, and the selector bar itself, right above both
+#      download buttons
+#   3. js/series-select.js + the embedded JSON blob it reads, which
+#      is also how this file re-parses an existing series page later
+#      when new episodes are added to it
+# ----------------------------------------------------------------------
+
+TV_STREAM_BASE = "https://vidsrc.me/embed/tv"
+
+_SERIES_DESKTOP_BAR = (
+    '<div class="episode-select-bar" id="episodeSelectBar">\n'
+    '<div class="select-pill" id="seasonPillDesktop">\n'
+    '<span class="select-pill-label" id="seasonLabelDesktop">Season 1</span>\n'
+    '<i class="fas fa-chevron-down select-pill-chevron"></i>\n'
+    '<div class="select-panel" id="seasonPanelDesktop"></div>\n'
+    "</div>\n"
+    '<div class="select-pill" id="episodePillDesktop">\n'
+    '<span class="select-pill-label" id="episodeLabelDesktop">Episode 1</span>\n'
+    '<i class="fas fa-chevron-down select-pill-chevron"></i>\n'
+    '<div class="select-panel" id="episodePanelDesktop"></div>\n'
+    "</div>\n"
+    "</div>\n"
+)
+
+_SERIES_MOBILE_BAR = (
+    '<div class="mob-episode-select-bar" id="mobEpisodeSelectBar">\n'
+    '<div class="mob-select-pill" id="seasonPillMobile">\n'
+    '<span class="mob-select-pill-label" id="seasonLabelMobile">Season 1</span>\n'
+    '<i class="fas fa-chevron-down mob-select-pill-chevron"></i>\n'
+    '<div class="mob-select-panel" id="seasonPanelMobile"></div>\n'
+    "</div>\n"
+    '<div class="mob-select-pill" id="episodePillMobile">\n'
+    '<span class="mob-select-pill-label" id="episodeLabelMobile">Episode 1</span>\n'
+    '<i class="fas fa-chevron-down mob-select-pill-chevron"></i>\n'
+    '<div class="mob-select-panel" id="episodePanelMobile"></div>\n'
+    "</div>\n"
+    "</div>\n"
+)
+
+
+def _build_series_template():
+    t = HTML_TEMPLATE
+
+    t = t.replace(
+        '<link href="../css/__CSS_FILENAME__" rel="stylesheet"/>',
+        '<link href="../css/__CSS_FILENAME__" rel="stylesheet"/>\n'
+        '<link href="../css/series.css" rel="stylesheet"/>',
+    )
+
+    t = t.replace(
+        'src="https://vidsrc.me/embed/movie/__IMDB_ID__"',
+        'src="' + TV_STREAM_BASE + '/__IMDB_ID__/__INITIAL_SEASON__/__INITIAL_EPISODE__"',
+    )
+
+    # Both download buttons start out pointing at whichever episode is
+    # initially selected.
+    t = t.replace("__DOWNLOAD_LINK__", "__INITIAL_DOWNLOAD_LINK__")
+
+    t = t.replace(
+        '<div class="frost-click" id="frostClick"></div>\n'
+        "</div>\n"
+        '<button class="download-btn">',
+        '<div class="frost-click" id="frostClick"></div>\n'
+        "</div>\n" + _SERIES_DESKTOP_BAR + '<button class="download-btn">',
+    )
+
+    t = t.replace(
+        '<div id="mobFrostClick"></div>\n'
+        "</div>\n"
+        "</div>\n"
+        '<a download="" href="__INITIAL_DOWNLOAD_LINK__" id="mobDownloadBtn">',
+        '<div id="mobFrostClick"></div>\n'
+        "</div>\n"
+        "</div>\n" + _SERIES_MOBILE_BAR
+        + '<a download="" href="__INITIAL_DOWNLOAD_LINK__" id="mobDownloadBtn">',
+    )
+
+    t = t.replace(
+        '<script src="../js/search.js"></script>',
+        '<script src="../js/search.js"></script>\n'
+        '<script type="application/json" id="levenySeriesData">__SERIES_DATA_JSON__</script>\n'
+        '<script src="../js/series-select.js"></script>',
+    )
+
+    return t
+
+
+HTML_SERIES_TEMPLATE = _build_series_template()
+
+
+def _sorted_season_keys(seasons):
+    return sorted(seasons.keys(), key=lambda k: int(k))
+
+
+def _sorted_episodes(episode_list):
+    return sorted(episode_list, key=lambda e: int(e["episode"]))
+
+
+def _series_json_blob(data):
+    """
+    Builds the embedded JSON object js/series-select.js reads in the
+    browser, plus a `meta` sub-object that isn't used by that script
+    but lets this file fully reconstruct the page later when new
+    episodes are added to an existing series.
+    """
+    payload = {
+        "imdb_id": data["imdb_id"],
+        "seasons": data["seasons"],
+        "meta": {
+            "title": data["title"],
+            "genre": data["genre"],
+            "summary": data["summary"],
+            "year": data["year"],
+            "runtime": data["runtime"],
+            "poster_file": data["poster_file"],
+            "background_file": data["background_file"],
+            "discover": data["discover"],
+            "css_filename": data["css_filename"],
+            "html_filename": data["html_filename"],
+            "imdb_id": data["imdb_id"],
+        },
+    }
+    # Escape "</" so a stray "</script"-like substring in any field
+    # (e.g. a download URL) can never break out of the JSON <script> tag.
+    return json.dumps(payload).replace("</", "<\\/")
+
+
+def build_series_html(data):
+    """
+    data must contain: title, html_filename, css_filename, imdb_id,
+    summary, year, runtime, genre, poster_file, background_file,
+    discover, and seasons — a dict of {"1": [{"episode":1,"download":"..."}]}.
+    """
+    genre_meta = GENRE_META[data["genre"]]
+
+    season_keys = _sorted_season_keys(data["seasons"])
+    initial_season = season_keys[0]
+    initial_episodes = _sorted_episodes(data["seasons"][initial_season])
+    initial_episode = initial_episodes[0]["episode"]
+    initial_download = initial_episodes[0]["download"]
+
+    html = HTML_SERIES_TEMPLATE
+    html = html.replace("__TITLE__", data["title"])
+    html = html.replace("__TITLE_UPPER__", data["title"].upper())
+    canonical_url = f"{BASE_URL}/series/{data['html_filename']}"
+    html = html.replace("__CANONICAL_URL__", canonical_url)
+    html = html.replace("__HTML_FILENAME__", data["html_filename"])
+    html = html.replace("__CSS_FILENAME__", data["css_filename"])
+    html = html.replace("__IMDB_ID__", data["imdb_id"])
+    html = html.replace("__INITIAL_SEASON__", str(initial_season))
+    html = html.replace("__INITIAL_EPISODE__", str(initial_episode))
+    html = html.replace("__INITIAL_DOWNLOAD_LINK__", initial_download)
+    html = html.replace("__SUMMARY__", data["summary"])
+    html = html.replace("__YEAR__", str(data["year"]))
+    html = html.replace("__RUNTIME__", str(data["runtime"]))
+    html = html.replace("__GENRE_LABEL__", genre_meta["label"])
+    html = html.replace("__SERIES_DATA_JSON__", _series_json_blob(data))
+    return html
+
+
+def parse_series_data(html_text):
+    """
+    Pulls the embedded #levenySeriesData JSON back out of an existing
+    series page, e.g. so new episodes can be merged into it. Returns
+    None if the page has no such block (i.e. it isn't a series page).
+    """
+    match = re.search(
+        r'<script type="application/json" id="levenySeriesData">(.*?)</script>',
+        html_text,
+        re.DOTALL,
+    )
+    if not match:
+        return None
+    raw = match.group(1).replace("<\\/", "</")
+    return json.loads(raw)
+
+
+def find_series_file(series_dir, title):
+    """
+    Returns (path, filename) for the series HTML file this title would
+    map to, and whether it already exists on disk.
+    """
+    slug = slugify_filename(title)
+    filename = f"{slug}_series.html"
+    path = os.path.join(series_dir, filename)
+    return path, filename, os.path.exists(path)
+
+
+def merge_series_episodes(series_record, season, new_episodes):
+    """
+    Adds/overwrites episodes for `season` in an existing series record
+    (as returned by parse_series_data), in place, and returns it.
+    """
+    season_key = str(season)
+    existing = {
+        int(e["episode"]): e
+        for e in series_record["seasons"].get(season_key, [])
+    }
+    for ep in new_episodes:
+        existing[int(ep["episode"])] = {
+            "episode": int(ep["episode"]),
+            "download": ep["download"],
+        }
+    series_record["seasons"][season_key] = _sorted_episodes(list(existing.values()))
+    return series_record
+
+
+def rebuild_series_html_from_record(series_record):
+    """
+    Regenerates a full series page from a record previously read back
+    via parse_series_data (after merging in new episodes, for example).
+    """
+    meta = series_record["meta"]
+    data = dict(meta)
+    data["imdb_id"] = series_record.get("imdb_id", meta.get("imdb_id"))
+    data["seasons"] = series_record["seasons"]
+    return build_series_html(data)
+
+
+def build_movies_js_entry_series(data):
+    genre_meta = GENRE_META[data["genre"]]
+    title_escaped = data["title"].replace('"', '\\"')
+    return (
+        f'    {{ title: "{title_escaped}", '
+        f'href: "../series/{data["html_filename"]}", '
+        f'genre: "{data["genre"]}", '
+        f'type: "series", '
+        f'poster: "images/posters/{data["poster_file"]}", '
+        f'discover: {data["discover"]} , '
+        f'background: "images/backgrounds/{data["background_file"]}"}},'
+    )

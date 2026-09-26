@@ -452,6 +452,15 @@ header {
 }
 
 /* -------------------- MOVIE ITEMS -------------------- */
+/* Movie/Series type tag — see css/style.css for the movie-page version. */
+.type-tag {
+  font-size: 0.72em;
+  font-weight: 500;
+  opacity: 0.6;
+  margin-left: 6px;
+  letter-spacing: 0.3px;
+}
+
 .movie-item img {
     width: 160px;
     height: 230px;

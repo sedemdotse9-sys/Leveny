@@ -478,6 +478,21 @@ header hr {
 }
 .movie-title p { font-size: 12px; color: rgba(148,163,184,0.9); margin: 0; font-weight: 500; }
 
+/* Movie/Series type tag shown after the title. Overrides the h4's
+   gradient text-clip so it reads as a plain dim label. */
+.type-tag {
+    font-size: 0.72em;
+    font-weight: 500;
+    opacity: 0.65;
+    margin-left: 6px;
+    letter-spacing: 0.3px;
+}
+.movie-title h4 .type-tag {
+    background: none;
+    -webkit-background-clip: initial;
+    -webkit-text-fill-color: rgba(255,255,255,0.65);
+}
+
 .grid-movie-item:hover {
     transform: translateY(-12px) scale(1.02);
     box-shadow: 0 35px 70px var(--card-shadow), 0 0 0 1px rgba(255,255,255,0.15), inset 0 1px 0 rgba(255,255,255,0.2);

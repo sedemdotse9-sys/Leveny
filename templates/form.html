@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Add Movie | Leveny</title>
+<title>Add Movie or Series | Leveny</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700&display=swap" rel="stylesheet"/>
@@ -108,6 +108,48 @@
     background: rgba(255,255,255,0.6);
     border-top:1px solid rgba(0,0,0,0.08);
   }
+
+  /* -------- Movie/Series mode toggle -------- */
+  .mode-toggle {
+    display:flex; gap:8px; margin-bottom:22px;
+    background: rgba(255,255,255,0.05); border:1px solid var(--accent-dim);
+    border-radius:14px; padding:4px;
+  }
+  body.light .mode-toggle { background: rgba(255,255,255,0.6); }
+  .mode-btn {
+    flex:1; padding:11px; border:none; border-radius:11px; cursor:pointer;
+    background:transparent; color:#f0f0f0; opacity:.6;
+    font-family:"Roboto Slab", Rockwell, sans-serif; font-weight:700; font-size:14px;
+    transition: background .2s, opacity .2s;
+  }
+  body.light .mode-btn { color:#111; }
+  .mode-btn.active {
+    background: var(--accent); color:#fff; opacity:1;
+    box-shadow: 0 0 14px var(--accent-glow);
+  }
+
+  /* -------- Existing-series notice -------- */
+  #existingSeriesNotice {
+    display:none;
+    background: rgba(0,168,255,0.10); border:1px solid var(--accent);
+    color:#9fd8ff; padding:12px 14px; border-radius:12px; font-size:13px;
+    margin-bottom:16px; line-height:1.5;
+  }
+
+  /* -------- Episode rows -------- */
+  #episodeRows { display:flex; flex-direction:column; gap:10px; margin-bottom:10px; }
+  .episode-row { display:flex; gap:8px; align-items:center; }
+  .episode-row input[type=number] { width:84px; flex:none; }
+  .episode-row input[type=text] { flex:1; }
+  .episode-row-remove {
+    flex:none; width:38px; height:38px; border-radius:10px; border:1px solid var(--accent-dim);
+    background:rgba(231,76,60,0.12); color:#ff8a80; cursor:pointer; font-size:16px;
+  }
+  #addEpisodeBtn {
+    width:100%; padding:11px; border-radius:12px; cursor:pointer;
+    background: var(--accent-dim); color: var(--accent); border:1px dashed var(--accent);
+    font-family:"Roboto Slab", Rockwell, sans-serif; font-weight:700; font-size:13px;
+  }
 </style>
 </head>
 <body>
@@ -117,8 +159,8 @@
 </div>
 
 <main>
-  <h1>Add a Movie</h1>
-  <p class="sub">Generates the HTML page, page CSS, and a movies.js entry.</p>
+  <h1 id="pageTitle">Add a Movie</h1>
+  <p class="sub" id="pageSub">Generates the HTML page, page CSS, and a movies.js entry.</p>
 
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -128,78 +170,157 @@
     {% endif %}
   {% endwith %}
 
-  <form method="POST" action="{{ url_for('generate') }}">
+  <div class="mode-toggle">
+    <button type="button" class="mode-btn active" id="modeMovieBtn">🎬 Add Movie</button>
+    <button type="button" class="mode-btn" id="modeSeriesBtn">📺 Add Series</button>
+  </div>
+
+  <form method="POST" id="mainForm" action="{{ url_for('generate') }}">
     <div class="field">
-      <label>Movie Title</label>
+      <label id="titleLabel">Movie Title</label>
       <input type="text" name="title" id="titleInput" placeholder="e.g. Transformers One" required>
+      <div class="hint" id="titleHint" style="display:none;">Type the series name — if it already exists on the site, this form will switch to adding new episodes to it instead of recreating it.</div>
     </div>
 
-    <div class="field">
-      <label>Genre</label>
-      <select name="genre" required>
-        <option value="" disabled selected>Choose a genre</option>
-        {% for g in genres %}
-          <option value="{{ g }}">{{ genre_meta[g].label }}</option>
-        {% endfor %}
-      </select>
-    </div>
+    <div id="existingSeriesNotice"></div>
 
-    <div class="row2">
+    <!-- ===================== MOVIE-ONLY FIELDS ===================== -->
+    <div id="movieFields" class="mode-section">
       <div class="field">
-        <label>HTML filename</label>
-        <input type="text" name="html_filename" id="htmlFilename" placeholder="transformers_one_movie.html" required>
-        <div class="autofilled-hint">Auto-generated from the title — edit it and it'll stop auto-updating.</div>
+        <label>Genre</label>
+        <select name="genre" id="movieGenre">
+          <option value="" disabled selected>Choose a genre</option>
+          {% for g in genres %}
+            <option value="{{ g }}">{{ genre_meta[g].label }}</option>
+          {% endfor %}
+        </select>
       </div>
+
+      <div class="row2">
+        <div class="field">
+          <label>HTML filename</label>
+          <input type="text" name="html_filename" id="htmlFilename" placeholder="transformers_one_movie.html">
+          <div class="autofilled-hint">Auto-generated from the title — edit it and it'll stop auto-updating.</div>
+        </div>
+        <div class="field">
+          <label>CSS filename</label>
+          <input type="text" name="css_filename" id="cssFilename" value="{{ next_css }}">
+          <div class="autofilled-hint">Auto-suggested from the highest style*.css in your css/ folder.</div>
+        </div>
+      </div>
+
       <div class="field">
-        <label>CSS filename</label>
-        <input type="text" name="css_filename" id="cssFilename" value="{{ next_css }}" required>
-        <div class="autofilled-hint">Auto-suggested from the highest style*.css in your css/ folder.</div>
+        <label>IMDb ID</label>
+        <input type="text" name="imdb_id" id="movieImdb" placeholder="tt7718688">
+        <div class="hint">Used for the vidsrc.me embed URL.</div>
       </div>
-    </div>
 
-    <div class="field">
-      <label>IMDb ID</label>
-      <input type="text" name="imdb_id" placeholder="tt7718688" required>
-      <div class="hint">Used for the vidsrc.me embed URL.</div>
-    </div>
-
-    <div class="field">
-      <label>Download link</label>
-      <input type="text" name="download_link" placeholder="https://transfer.it/t/..." required>
-    </div>
-
-    <div class="field">
-      <label>Summary</label>
-      <textarea name="summary" placeholder="Used for both desktop and mobile." required></textarea>
-    </div>
-
-    <div class="row2">
       <div class="field">
-        <label>Year</label>
-        <input type="number" name="year" placeholder="2026" required>
+        <label>Download link</label>
+        <input type="text" name="download_link" id="movieDownload" placeholder="https://transfer.it/t/...">
       </div>
+
       <div class="field">
-        <label>Runtime (minutes)</label>
-        <input type="number" name="runtime" placeholder="104" required>
+        <label>Summary</label>
+        <textarea name="summary" id="movieSummary" placeholder="Used for both desktop and mobile."></textarea>
+      </div>
+
+      <div class="row2">
+        <div class="field">
+          <label>Year</label>
+          <input type="number" name="year" id="movieYear" placeholder="2026">
+        </div>
+        <div class="field">
+          <label>Runtime (minutes)</label>
+          <input type="number" name="runtime" id="movieRuntime" placeholder="104">
+        </div>
+      </div>
+
+      <div class="row2">
+        <div class="field">
+          <label>Poster filename</label>
+          <input type="text" name="poster_file" id="posterFilename" placeholder="transformers_one.jpg">
+          <div class="hint">images/posters/&lt;this&gt; — fine if the file doesn't exist yet.</div>
+        </div>
+        <div class="field">
+          <label>Background filename</label>
+          <input type="text" name="background_file" id="backgroundFilename" placeholder="transformers_one_backg.jpg">
+          <div class="hint">images/backgrounds/&lt;this&gt;</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Discover page number</label>
+        <input type="number" name="discover" id="movieDiscover" placeholder="4">
       </div>
     </div>
 
-    <div class="row2">
+    <!-- ============== SERIES: NEW-SERIES-ONLY FIELDS ================ -->
+    <div id="seriesNewFields" class="mode-section" style="display:none;">
       <div class="field">
-        <label>Poster filename</label>
-        <input type="text" name="poster_file" id="posterFilename" placeholder="transformers_one.jpg" required>
-        <div class="hint">images/posters/&lt;this&gt; — fine if the file doesn't exist yet.</div>
+        <label>Genre</label>
+        <select name="genre" id="seriesGenre">
+          <option value="" disabled selected>Choose a genre</option>
+          {% for g in genres %}
+            <option value="{{ g }}">{{ genre_meta[g].label }}</option>
+          {% endfor %}
+        </select>
       </div>
+
       <div class="field">
-        <label>Background filename</label>
-        <input type="text" name="background_file" id="backgroundFilename" placeholder="transformers_one_backg.jpg" required>
-        <div class="hint">images/backgrounds/&lt;this&gt;</div>
+        <label>Show IMDb ID</label>
+        <input type="text" name="imdb_id" id="seriesImdb" placeholder="tt0903747">
+        <div class="hint">One IMDb ID for the whole show — the vidsrc.me stream is built as imdb/season/episode, so every episode uses this same ID.</div>
+      </div>
+
+      <div class="field">
+        <label>Summary</label>
+        <textarea name="summary" id="seriesSummary" placeholder="Used for both desktop and mobile."></textarea>
+      </div>
+
+      <div class="row2">
+        <div class="field">
+          <label>Year</label>
+          <input type="number" name="year" id="seriesYear" placeholder="2026">
+        </div>
+        <div class="field">
+          <label>Episode runtime (minutes)</label>
+          <input type="number" name="runtime" id="seriesRuntime" placeholder="45">
+        </div>
+      </div>
+
+      <div class="row2">
+        <div class="field">
+          <label>Poster filename</label>
+          <input type="text" name="poster_file" id="seriesPosterFilename" placeholder="breaking_bad.jpg">
+          <div class="hint">images/posters/&lt;this&gt;</div>
+        </div>
+        <div class="field">
+          <label>Background filename</label>
+          <input type="text" name="background_file" id="seriesBackgroundFilename" placeholder="breaking_bad_backg.jpg">
+          <div class="hint">images/backgrounds/&lt;this&gt;</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Discover page number</label>
+        <input type="number" name="discover" id="seriesDiscover" placeholder="4">
       </div>
     </div>
 
-    <div class="field">
-      <label>Discover page number</label>
-      <input type="number" name="discover" placeholder="4" required>
+    <!-- ======== SERIES: SEASON / EPISODES (new + existing) ========= -->
+    <div id="seriesEpisodeFields" class="mode-section" style="display:none;">
+      <div class="field">
+        <label id="seasonLabel">Season number</label>
+        <input type="number" name="season" id="seasonInput" min="1" value="1">
+      </div>
+
+      <div class="field">
+        <label>Episodes</label>
+        <div id="episodeRows"></div>
+        <button type="button" id="addEpisodeBtn">+ Add Episode</button>
+      </div>
+      <input type="hidden" name="episodes_json" id="episodesJsonInput">
     </div>
 
     <button id="submitBtn" type="submit">Generate Movie Page</button>
@@ -209,6 +330,7 @@
 <div id="bottomNav">movies/ &nbsp;·&nbsp; css/ &nbsp;·&nbsp; js/movies.js</div>
 
 <script>
+  // ------------------------------------------------------------------
   // Auto-generate html/poster/background filenames from the title,
   // mirroring the site's existing convention:
   //   "Around The World In 80 Days"
@@ -217,6 +339,7 @@
   //     -> around_the_world_in_80_days_backg.jpg
   // Runs of non [a-z0-9'] chars collapse to a single underscore;
   // apostrophes are kept (matches e.g. the_devil's_mouth_movie.html).
+  // ------------------------------------------------------------------
   function slugify(title) {
     return title
       .toLowerCase()
@@ -224,10 +347,10 @@
       .replace(/^_+|_+$/g, '');
   }
 
-  const titleInput = document.getElementById('titleInput');
-  const htmlField = document.getElementById('htmlFilename');
+  const titleInput  = document.getElementById('titleInput');
+  const htmlField   = document.getElementById('htmlFilename');
   const posterField = document.getElementById('posterFilename');
-  const bgField = document.getElementById('backgroundFilename');
+  const bgField     = document.getElementById('backgroundFilename');
 
   // Track whether the user has manually typed into a field —
   // once they do, we stop overwriting it on further title changes.
@@ -237,13 +360,206 @@
   posterField.addEventListener('input', () => { dirty.poster = true; });
   bgField.addEventListener('input', () => { dirty.background = true; });
 
-  titleInput.addEventListener('input', () => {
+  function autofillMovieFilenames() {
     const slug = slugify(titleInput.value);
     if (!slug) return;
     if (!dirty.html) htmlField.value = slug + '_movie.html';
     if (!dirty.poster) posterField.value = slug + '.jpg';
     if (!dirty.background) bgField.value = slug + '_backg.jpg';
+  }
+
+  // ------------------------------------------------------------------
+  // Movie <-> Series mode toggle
+  // ------------------------------------------------------------------
+  const modeMovieBtn  = document.getElementById('modeMovieBtn');
+  const modeSeriesBtn = document.getElementById('modeSeriesBtn');
+  const movieFields   = document.getElementById('movieFields');
+  const seriesNewFields = document.getElementById('seriesNewFields');
+  const seriesEpisodeFields = document.getElementById('seriesEpisodeFields');
+  const existingNotice = document.getElementById('existingSeriesNotice');
+  const titleHint = document.getElementById('titleHint');
+  const mainForm = document.getElementById('mainForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const pageTitle = document.getElementById('pageTitle');
+  const pageSub = document.getElementById('pageSub');
+  const titleLabel = document.getElementById('titleLabel');
+  const bottomNav = document.getElementById('bottomNav');
+  const seasonLabel = document.getElementById('seasonLabel');
+
+  const MOVIE_URL = "{{ url_for('generate') }}";
+  const SERIES_URL = "{{ url_for('generate_series') }}";
+  const CHECK_SERIES_URL = "{{ url_for('check_series') }}";
+
+  let mode = 'movie';       // 'movie' | 'series'
+  let seriesExists = false; // does the currently-typed series title already exist?
+
+  function setFieldsEnabled(container, enabled) {
+    container.querySelectorAll('input, select, textarea').forEach(el => {
+      el.disabled = !enabled;
+    });
+  }
+
+  function applyMode() {
+    if (mode === 'movie') {
+      pageTitle.textContent = 'Add a Movie';
+      pageSub.textContent = 'Generates the HTML page, page CSS, and a movies.js entry.';
+      titleLabel.textContent = 'Movie Title';
+      titleHint.style.display = 'none';
+      existingNotice.style.display = 'none';
+      movieFields.style.display = '';
+      seriesNewFields.style.display = 'none';
+      seriesEpisodeFields.style.display = 'none';
+      submitBtn.textContent = 'Generate Movie Page';
+      mainForm.action = MOVIE_URL;
+      bottomNav.textContent = 'movies/ \u00b7 css/ \u00b7 js/movies.js';
+      setFieldsEnabled(movieFields, true);
+      setFieldsEnabled(seriesNewFields, false);
+      setFieldsEnabled(seriesEpisodeFields, false);
+    } else {
+      pageTitle.textContent = 'Add a Series';
+      pageSub.textContent = 'Generates a series page, or adds episodes to one you already have.';
+      titleLabel.textContent = 'Series Title';
+      titleHint.style.display = '';
+      movieFields.style.display = 'none';
+      mainForm.action = SERIES_URL;
+      bottomNav.textContent = 'series/ \u00b7 css/ \u00b7 js/movies.js';
+      setFieldsEnabled(movieFields, false);
+      seriesEpisodeFields.style.display = '';
+      setFieldsEnabled(seriesEpisodeFields, true);
+      applySeriesExistence();
+    }
+  }
+
+  function applySeriesExistence() {
+    if (seriesExists) {
+      seriesNewFields.style.display = 'none';
+      setFieldsEnabled(seriesNewFields, false);
+      existingNotice.style.display = '';
+      submitBtn.textContent = 'Add Episode(s)';
+      seasonLabel.textContent = 'Season number (existing or new)';
+    } else {
+      seriesNewFields.style.display = '';
+      setFieldsEnabled(seriesNewFields, true);
+      existingNotice.style.display = 'none';
+      submitBtn.textContent = 'Create Series';
+      seasonLabel.textContent = 'Season number';
+    }
+  }
+
+  modeMovieBtn.addEventListener('click', () => {
+    mode = 'movie';
+    modeMovieBtn.classList.add('active');
+    modeSeriesBtn.classList.remove('active');
+    applyMode();
   });
+
+  modeSeriesBtn.addEventListener('click', () => {
+    mode = 'series';
+    modeSeriesBtn.classList.add('active');
+    modeMovieBtn.classList.remove('active');
+    applyMode();
+  });
+
+  // ------------------------------------------------------------------
+  // Looking up whether a typed series title already exists
+  // ------------------------------------------------------------------
+  let checkTimer = null;
+
+  function scheduleSeriesCheck() {
+    if (mode !== 'series') return;
+    clearTimeout(checkTimer);
+    const title = titleInput.value.trim();
+    if (!title) {
+      seriesExists = false;
+      applySeriesExistence();
+      resetEpisodeRows(1);
+      return;
+    }
+    checkTimer = setTimeout(() => {
+      fetch(CHECK_SERIES_URL + '?title=' + encodeURIComponent(title))
+        .then(r => r.json())
+        .then(data => {
+          if (mode !== 'series') return; // user switched away meanwhile
+          seriesExists = !!data.exists && !data.unrecognized;
+          applySeriesExistence();
+
+          if (seriesExists) {
+            const seasonKeys = Object.keys(data.seasons || {}).map(Number).sort((a, b) => a - b);
+            const highestSeason = seasonKeys.length ? seasonKeys[seasonKeys.length - 1] : 1;
+            const highestSeasonEpisodes = (data.seasons[String(highestSeason)] || [])
+              .map(e => e.episode);
+            const nextEpisode = highestSeasonEpisodes.length ? Math.max(...highestSeasonEpisodes) + 1 : 1;
+
+            existingNotice.innerHTML =
+              '<strong>"' + title + '"</strong> already exists (' + seasonKeys.length +
+              ' season' + (seasonKeys.length === 1 ? '' : 's') + ' so far). ' +
+              'Whatever you add below will be merged into it \u2014 the show\u2019s existing ' +
+              'genre, summary, poster, etc. are kept as they are.';
+
+            document.getElementById('seasonInput').value = highestSeason;
+            resetEpisodeRows(nextEpisode);
+          } else {
+            resetEpisodeRows(1);
+          }
+        })
+        .catch(() => { /* offline or route unavailable — just leave "new series" mode */ });
+    }, 400);
+  }
+
+  titleInput.addEventListener('input', () => {
+    if (mode === 'movie') autofillMovieFilenames();
+    else scheduleSeriesCheck();
+  });
+
+  // ------------------------------------------------------------------
+  // Dynamic episode rows
+  // ------------------------------------------------------------------
+  const episodeRowsEl = document.getElementById('episodeRows');
+  const addEpisodeBtn = document.getElementById('addEpisodeBtn');
+  const episodesJsonInput = document.getElementById('episodesJsonInput');
+
+  function addEpisodeRow(episodeNumber, downloadValue) {
+    const row = document.createElement('div');
+    row.className = 'episode-row';
+    row.innerHTML =
+      '<input type="number" class="ep-num" min="1" value="' + episodeNumber + '" placeholder="Ep #">' +
+      '<input type="text" class="ep-download" placeholder="https://wildshare.net/..." value="' + (downloadValue || '') + '">' +
+      '<button type="button" class="episode-row-remove" aria-label="Remove episode">\u00d7</button>';
+    row.querySelector('.episode-row-remove').addEventListener('click', () => {
+      if (episodeRowsEl.children.length > 1) row.remove();
+    });
+    episodeRowsEl.appendChild(row);
+  }
+
+  function resetEpisodeRows(startingEpisode) {
+    episodeRowsEl.innerHTML = '';
+    addEpisodeRow(startingEpisode || 1, '');
+  }
+
+  addEpisodeBtn.addEventListener('click', () => {
+    const nums = Array.from(episodeRowsEl.querySelectorAll('.ep-num')).map(i => parseInt(i.value, 10) || 0);
+    const next = nums.length ? Math.max(...nums) + 1 : 1;
+    addEpisodeRow(next, '');
+  });
+
+  resetEpisodeRows(1);
+
+  mainForm.addEventListener('submit', (e) => {
+    if (mode !== 'series') return; // movie mode needs no extra work
+    const episodes = Array.from(episodeRowsEl.children).map(row => ({
+      episode: parseInt(row.querySelector('.ep-num').value, 10),
+      download: row.querySelector('.ep-download').value.trim(),
+    })).filter(ep => ep.download && !isNaN(ep.episode));
+
+    if (!episodes.length) {
+      e.preventDefault();
+      alert('Add at least one episode with a download link.');
+      return;
+    }
+    episodesJsonInput.value = JSON.stringify(episodes);
+  });
+
+  applyMode();
 </script>
 </body>
 </html>

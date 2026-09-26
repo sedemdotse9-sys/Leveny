@@ -144,11 +144,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (searchInput && searchDropdown) {
 
-        // ★ CHANGED — adjust path based on whether we're on homepage or a movie page
-        const isDesktopMoviePage = window.location.pathname.includes('/movies/');
+        // ★ CHANGED — adjust path based on whether we're on homepage or a
+        // detail page (a /movies/ OR /series/ page — both sit at the same
+        // folder depth off the site root).
+        const isDesktopDetailPage = /\/(movies|series)\//.test(window.location.pathname);
         const desktopMovies = LEVENY_MOVIES.map(m => ({
             title: m.title,
-            link:  isDesktopMoviePage ? m.href : m.href.replace('../movies/', 'movies/')
+            type:  m.type || 'movie',
+            link:  isDesktopDetailPage ? m.href : m.href.replace('../', '')
         }));
 
         function renderDesktopDropdown(results) {
@@ -157,8 +160,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             results.slice(0, 8).forEach(movie => {
                 const item = document.createElement("div");
-                item.className   = "dropdown-item";
-                item.textContent = movie.title;
+                item.className = "dropdown-item";
+                const typeLabel = movie.type === 'series' ? 'Series' : 'Movie';
+                item.innerHTML = `${movie.title} <span class="type-tag">| ${typeLabel}</span>`;
                 item.onclick = () => { searchInput.value = ""; searchDropdown.style.display = "none"; window.location.href = movie.link; };
                 searchDropdown.appendChild(item);
             });
@@ -231,15 +235,18 @@ function initMobileMovieSearch() {
                 const matches = __fuzzySearchMovies(LEVENY_MOVIES, q);
 
                 mobDrop.style.display = 'block';
-                // ★ CHANGED — detect if we're on homepage or a movie page
-                const isMoviePage = window.location.pathname.includes('/movies/');
+                // ★ CHANGED — detect if we're on homepage or a detail page
+                // (a /movies/ OR /series/ page)
+                const isMobileDetailPage = /\/(movies|series)\//.test(window.location.pathname);
 
                 mobDrop.innerHTML = matches.length
                     ? matches.map(m => {
-                        // ★ CHANGED — homepage needs "movies/..." but movie pages need "../movies/..."
-                        const href = isMoviePage ? m.href : m.href.replace('../movies/', 'movies/');
+                        // ★ CHANGED — homepage needs "movies/..." / "series/..."
+                        // but detail pages need "../movies/..." / "../series/..."
+                        const href = isMobileDetailPage ? m.href : m.href.replace('../', '');
+                        const typeLabel = m.type === 'series' ? 'Series' : 'Movie';
                         return `<div class="mob-search-drop-item" data-href="${href}">
-                            <i class="fas fa-film"></i>${m.title}
+                            <i class="fas fa-film"></i>${m.title} <span class="type-tag">| ${typeLabel}</span>
                         </div>`;
                 }).join('')
                     : `<div class="mob-search-drop-item">

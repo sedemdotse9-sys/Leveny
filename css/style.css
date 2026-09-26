@@ -401,6 +401,17 @@ header hr {
   color: black;
 }
 
+/* Movie/Series type tag — shown next to titles in search results,
+   discover/genre grids, and related cards so users can tell at a
+   glance whether something is a movie or a series. */
+.type-tag {
+  font-size: 0.72em;
+  font-weight: 500;
+  opacity: 0.6;
+  margin-left: 6px;
+  letter-spacing: 0.3px;
+}
+
 /* -------------------- INFO / SUMMARY -------------------- */
 .info {
   font-family: Bahnschrift, sans-serif;
