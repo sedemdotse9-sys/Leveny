@@ -20,11 +20,14 @@ tool in a subfolder instead of the repo root), just change it.
 """
 
 import os
-from flask import Flask, render_template, request, redirect, url_for, flash
+import json
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 
 from generator import (
     GENRE_META, GENRE_ORDER, build_html, build_css,
     build_movies_js_entry, append_to_movies_js, next_css_filename,
+    build_series_html, build_movies_js_entry_series, find_series_file,
+    parse_series_data, merge_series_episodes, rebuild_series_html_from_record,
 )
 
 # ----------------------------------------------------------------------
@@ -32,6 +35,7 @@ from generator import (
 # ----------------------------------------------------------------------
 SITE_ROOT = os.path.dirname(os.path.abspath(__file__))
 MOVIES_DIR = os.path.join(SITE_ROOT, "movies")
+SERIES_DIR = os.path.join(SITE_ROOT, "series")
 CSS_DIR = os.path.join(SITE_ROOT, "css")
 MOVIES_JS_PATH = os.path.join(SITE_ROOT, "js", "movies.js")
 
@@ -145,6 +149,179 @@ def generate():
     if js_ok:
         flash(f'"{title}" was created successfully!', "success")
         flash(f"movies/{html_filename}", "file")
+        flash(f"css/{css_filename}", "file")
+        flash("Entry appended to js/movies.js", "file")
+
+    return redirect(url_for("index"))
+
+
+@app.route("/check_series", methods=["GET"])
+def check_series():
+    """
+    Called by the form's JS as the user types a series title, so it can
+    switch between "brand new series" fields and "add episodes to an
+    existing series" fields.
+    """
+    title = request.args.get("title", "").strip()
+    if not title:
+        return jsonify({"exists": False})
+
+    path, filename, exists = find_series_file(SERIES_DIR, title)
+    if not exists:
+        return jsonify({"exists": False, "filename": filename})
+
+    with open(path, "r", encoding="utf-8") as fh:
+        html_text = fh.read()
+
+    record = parse_series_data(html_text)
+    if not record:
+        # A file sits at that path but isn't a Leveny series page we
+        # know how to parse — treat it as "new" would be unsafe (it'd
+        # overwrite it), so report it separately instead.
+        return jsonify({"exists": True, "filename": filename, "unrecognized": True})
+
+    return jsonify({
+        "exists": True,
+        "filename": filename,
+        "meta": record["meta"],
+        "seasons": record["seasons"],
+    })
+
+
+@app.route("/generate_series", methods=["POST"])
+def generate_series():
+    f = request.form
+
+    title = f.get("title", "").strip()
+    season = f.get("season", "").strip()
+    episodes_raw = f.get("episodes_json", "").strip()
+
+    errors = []
+    if not title:
+        errors.append("Title is required.")
+    if not season.isdigit():
+        errors.append("Season must be a whole number.")
+
+    episodes = []
+    if not episodes_raw:
+        errors.append("At least one episode (with a download link) is required.")
+    else:
+        try:
+            for ep in json.loads(episodes_raw):
+                dl = str(ep.get("download", "")).strip()
+                if not dl:
+                    raise ValueError("empty download link")
+                episodes.append({"episode": int(ep["episode"]), "download": dl})
+            if not episodes:
+                errors.append("At least one episode (with a download link) is required.")
+        except Exception:
+            errors.append("Episode data was malformed — please re-add the episode rows.")
+
+    if errors:
+        for e in errors:
+            flash(e, "error")
+        return redirect(url_for("index"))
+
+    os.makedirs(SERIES_DIR, exist_ok=True)
+    os.makedirs(CSS_DIR, exist_ok=True)
+
+    path, filename, exists = find_series_file(SERIES_DIR, title)
+
+    if exists:
+        # -------- Adding episodes to an existing series --------
+        with open(path, "r", encoding="utf-8") as fh:
+            existing_html = fh.read()
+
+        record = parse_series_data(existing_html)
+        if not record:
+            flash(
+                f"series/{filename} already exists but isn't a series page this "
+                f"tool created — it was left untouched.",
+                "error",
+            )
+            return redirect(url_for("index"))
+
+        merge_series_episodes(record, season, episodes)
+        html_content = rebuild_series_html_from_record(record)
+
+        with open(path, "w", encoding="utf-8") as fh:
+            fh.write(html_content)
+
+        flash(f'Added {len(episodes)} episode(s) to Season {season} of "{title}"!', "success")
+        flash(f"series/{filename}", "file")
+        return redirect(url_for("index"))
+
+    # -------- Brand-new series --------
+    genre = f.get("genre", "").strip()
+    imdb_id = f.get("imdb_id", "").strip()
+    summary = f.get("summary", "").strip()
+    year = f.get("year", "").strip()
+    runtime = f.get("runtime", "").strip()
+    poster_file = f.get("poster_file", "").strip()
+    background_file = f.get("background_file", "").strip()
+    discover = f.get("discover", "").strip()
+
+    if genre not in GENRE_META:
+        errors.append("Please choose a valid genre.")
+    if not imdb_id:
+        errors.append("Show IMDb ID is required.")
+    if not summary:
+        errors.append("Summary is required.")
+    if not year.isdigit():
+        errors.append("Year must be a number.")
+    if not runtime.isdigit():
+        errors.append("Episode runtime must be a number (minutes).")
+    if not poster_file:
+        errors.append("Poster filename is required (even if the image isn't ready yet).")
+    if not background_file:
+        errors.append("Background filename is required (even if the image isn't ready yet).")
+    if not discover.isdigit():
+        errors.append("Discover page number must be a number.")
+
+    if errors:
+        for e in errors:
+            flash(e, "error")
+        return redirect(url_for("index"))
+
+    css_filename = next_css_filename(CSS_DIR)
+    css_path = os.path.join(CSS_DIR, css_filename)
+
+    data = {
+        "title": title,
+        "genre": genre,
+        "html_filename": filename,
+        "css_filename": css_filename,
+        "imdb_id": imdb_id,
+        "summary": summary,
+        "year": year,
+        "runtime": runtime,
+        "poster_file": poster_file,
+        "background_file": background_file,
+        "background_path": f"images/backgrounds/{background_file}",
+        "discover": discover,
+        "seasons": {season: episodes},
+    }
+
+    html_content = build_series_html(data)
+    css_content = build_css(data)
+    entry_line = build_movies_js_entry_series(data)
+
+    with open(path, "w", encoding="utf-8") as fh:
+        fh.write(html_content)
+    with open(css_path, "w", encoding="utf-8") as fh:
+        fh.write(css_content)
+
+    try:
+        append_to_movies_js(MOVIES_JS_PATH, entry_line)
+        js_ok = True
+    except Exception as e:
+        js_ok = False
+        flash(f"Series page + CSS were created, but movies.js could not be updated automatically: {e}", "error")
+        flash(f"Add this line yourself to js/movies.js:  {entry_line}", "error")
+
+    if js_ok:
+        flash(f'"{title}" (Series) was created successfully!', "success")
+        flash(f"series/{filename}", "file")
         flash(f"css/{css_filename}", "file")
         flash("Entry appended to js/movies.js", "file")
 

@@ -105,6 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .reverse() // newest-added movie of this color shows first
             .map(m => ({
                 title: m.title,
+                type: m.type || 'movie',
                 img: m.poster.replace('images/', 'images/'), // poster path as-is
                 link: m.href.replace('../', ''),
             }));
@@ -158,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="image-overlay"></div>
                 </div>
                 <div class="movie-title">
-                    <h4>${movie.title}</h4>
+                    <h4>${movie.title} <span class="type-tag">| ${movie.type === 'series' ? 'Series' : 'Movie'}</span></h4>
                     <p>${theme.name} Theme</p>
                 </div>`;
             moviesGrid.appendChild(a);

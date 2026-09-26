@@ -57,6 +57,17 @@
         return href.split('/').pop();
     }
 
+    // Extracts the folder a movies.js href points into, e.g.
+    // "../movies/x.html" -> "movies", "../series/y.html" -> "series".
+    function folderOf(href) {
+        const match = href.match(/\.\.\/([^\/]+)\//);
+        return match ? match[1] : '';
+    }
+
+    function typeLabel(m) {
+        return m.type === 'series' ? 'Series' : 'Movie';
+    }
+
     function cap(s) {
         return s.charAt(0).toUpperCase() + s.slice(1);
     }
@@ -97,6 +108,17 @@
     if (!current) return; // page isn't recognized as a movie page, do nothing
 
     const currentTitleKey = titleKey(current.title);
+    const currentFolder = folderOf(currentHref) || folderOf(current.href);
+
+    // A related card may point into a different folder than the page
+    // it's shown on (e.g. a movie related to a series). Same-folder
+    // targets keep the plain filename link that's always worked;
+    // cross-folder targets need the "../<folder>/" prefix.
+    function relatedLink(m) {
+        const file = fileName(m.href);
+        const folder = folderOf(m.href);
+        return folder === currentFolder ? file : `../${folder}/${file}`;
+    }
 
     // ---- TIER 1: title/franchise matches ----
     const titleMatches = (currentTitleKey.length >= MIN_TITLE_KEY_LENGTH)
@@ -135,8 +157,8 @@
     if (desktopWrap) {
         desktopWrap.innerHTML = desktopRelated.map(m => `
             <div class="related-card">
-                <a href="${fileName(m.href)}" class="poster" style="background-image: url('../${m.background}');"></a>
-                <p class="related-title">${m.title}</p>
+                <a href="${relatedLink(m)}" class="poster" style="background-image: url('../${m.background}');"></a>
+                <p class="related-title">${m.title} <span class="type-tag">| ${typeLabel(m)}</span></p>
             </div>
         `).join('');
     }
@@ -145,10 +167,10 @@
     const mobileWrap = document.getElementById('mobRelatedGrid');
     if (mobileWrap) {
         mobileWrap.innerHTML = related.map(m => `
-            <a href="${fileName(m.href)}" class="mob-related-card">
+            <a href="${relatedLink(m)}" class="mob-related-card">
                 <img src="../${m.poster}" alt="${m.title}" loading="lazy">
                 <div class="mob-related-card-info">
-                    <div class="mob-related-card-title">${m.title}</div>
+                    <div class="mob-related-card-title">${m.title} <span class="type-tag">| ${typeLabel(m)}</span></div>
                     <div class="mob-related-card-genre">${cap(m.genre)}</div>
                 </div>
             </a>

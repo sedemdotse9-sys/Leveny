@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!moviesByGenre[genre]) moviesByGenre[genre] = [];
         moviesByGenre[genre].push({
             title: m.title,
+            type:  m.type || 'movie',
             year:  m.year  || '',   // add year to movies.js entries if needed
             img:   m.poster,
             link:  m.href,
@@ -141,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function () {
         card.innerHTML = `
             <img src="${movie.img}" alt="${movie.title}" loading="lazy">
             <div class="movie-info-slider">
-                <h4>${movie.title}</h4>
+                <h4>${movie.title} <span class="type-tag">| ${movie.type === 'series' ? 'Series' : 'Movie'}</span></h4>
                 <p>${movie.year}</p>
             </div>
         `;

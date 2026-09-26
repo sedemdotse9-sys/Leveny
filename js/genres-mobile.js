@@ -57,6 +57,7 @@ if (__isMobileViewport()) {
             if (!map[genre]) map[genre] = [];
             map[genre].push({
                 title: item.dataset.title || img.alt || 'Movie',
+                type:  item.dataset.type || 'movie',
                 year:  '',
                 img:   img.src,
                 link:  link.href,
@@ -159,7 +160,7 @@ if (__isMobileViewport()) {
                 a.innerHTML = `
                     <img class="mob-card-img" src="${movie.img}" alt="${movie.title}" loading="lazy">
                     <div class="mob-card-info">
-                        <div class="mob-card-title">${movie.title}</div>
+                        <div class="mob-card-title">${movie.title} <span class="type-tag">| ${movie.type === 'series' ? 'Series' : 'Movie'}</span></div>
                         <div class="mob-card-genre">${GENRE_LABELS[activeGenre] || activeGenre}</div>
                     </div>`;
                 genreGrid.appendChild(a);
