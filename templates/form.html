@@ -138,9 +138,10 @@
 
   /* -------- Episode rows -------- */
   #episodeRows { display:flex; flex-direction:column; gap:10px; margin-bottom:10px; }
-  .episode-row { display:flex; gap:8px; align-items:center; }
-  .episode-row input[type=number] { width:84px; flex:none; }
-  .episode-row input[type=text] { flex:1; }
+  .episode-row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  .episode-row input[type=number] { width:64px; flex:none; }
+  .episode-row input.ep-title { flex:1 1 140px; }
+  .episode-row input.ep-download { flex:1 1 200px; }
   .episode-row-remove {
     flex:none; width:38px; height:38px; border-radius:10px; border:1px solid var(--accent-dim);
     background:rgba(231,76,60,0.12); color:#ff8a80; cursor:pointer; font-size:16px;
@@ -518,11 +519,12 @@
   const addEpisodeBtn = document.getElementById('addEpisodeBtn');
   const episodesJsonInput = document.getElementById('episodesJsonInput');
 
-  function addEpisodeRow(episodeNumber, downloadValue) {
+  function addEpisodeRow(episodeNumber, downloadValue, titleValue) {
     const row = document.createElement('div');
     row.className = 'episode-row';
     row.innerHTML =
       '<input type="number" class="ep-num" min="1" value="' + episodeNumber + '" placeholder="Ep #">' +
+      '<input type="text" class="ep-title" placeholder="Episode title (optional)" value="' + (titleValue || '') + '">' +
       '<input type="text" class="ep-download" placeholder="https://wildshare.net/..." value="' + (downloadValue || '') + '">' +
       '<button type="button" class="episode-row-remove" aria-label="Remove episode">\u00d7</button>';
     row.querySelector('.episode-row-remove').addEventListener('click', () => {
@@ -548,6 +550,7 @@
     if (mode !== 'series') return; // movie mode needs no extra work
     const episodes = Array.from(episodeRowsEl.children).map(row => ({
       episode: parseInt(row.querySelector('.ep-num').value, 10),
+      title: row.querySelector('.ep-title').value.trim(),
       download: row.querySelector('.ep-download').value.trim(),
     })).filter(ep => ep.download && !isNaN(ep.episode));
 

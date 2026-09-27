@@ -93,6 +93,19 @@
   font-weight: 700;
 }
 
+.episode-title-display {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "Roboto Slab", Rockwell, sans-serif;
+  color: #ddd;
+  opacity: 0.8;
+}
+
+.episode-title-display:empty {
+  display: none;
+}
+
 /* -------------------- MOBILE -------------------- */
 .mob-episode-select-bar {
   display: flex;
@@ -168,4 +181,17 @@ body.dark-mode .mob-select-pill {
 .mob-select-panel-item.active {
   color: var(--mob-accent, #00a8ff);
   font-weight: 700;
+}
+
+.mob-episode-title-display {
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: "Roboto Slab", Rockwell, sans-serif;
+  color: var(--mob-accent, #00a8ff);
+  opacity: 0.85;
+}
+
+.mob-episode-title-display:empty {
+  display: none;
 }

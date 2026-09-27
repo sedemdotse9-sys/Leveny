@@ -58,6 +58,7 @@
     const episodeLabelD = document.getElementById('episodeLabelDesktop');
     const seasonPanelD  = document.getElementById('seasonPanelDesktop');
     const episodePanelD = document.getElementById('episodePanelDesktop');
+    const episodeTitleD = document.getElementById('episodeTitleDesktop');
 
     const seasonPillM  = document.getElementById('seasonPillMobile');
     const episodePillM = document.getElementById('episodePillMobile');
@@ -65,6 +66,7 @@
     const episodeLabelM = document.getElementById('episodeLabelMobile');
     const seasonPanelM  = document.getElementById('seasonPanelMobile');
     const episodePanelM = document.getElementById('episodePanelMobile');
+    const episodeTitleM = document.getElementById('episodeTitleMobile');
 
     const allPills = [seasonPillD, episodePillD, seasonPillM, episodePillM].filter(Boolean);
 
@@ -106,7 +108,10 @@
     }
 
     function renderEpisodePanels() {
-        const items = episodesFor(currentSeason).map(e => ({ value: e.episode, label: `Episode ${e.episode}` }));
+        const items = episodesFor(currentSeason).map(e => ({
+            value: e.episode,
+            label: e.title ? `Episode ${e.episode}: ${e.title}` : `Episode ${e.episode}`,
+        }));
         buildPanelItems(episodePanelD, 'select-panel-item', items, currentEpisode, pickEpisode);
         buildPanelItems(episodePanelM, 'mob-select-panel-item', items, currentEpisode, pickEpisode);
     }
@@ -118,6 +123,11 @@
         if (seasonLabelM) seasonLabelM.textContent = seasonText;
         if (episodeLabelD) episodeLabelD.textContent = episodeText;
         if (episodeLabelM) episodeLabelM.textContent = episodeText;
+
+        const record = currentEpisodeRecord();
+        const titleText = record && record.title ? record.title : '';
+        if (episodeTitleD) episodeTitleD.textContent = titleText;
+        if (episodeTitleM) episodeTitleM.textContent = titleText;
     }
 
     function updateStream() {
