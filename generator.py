@@ -1232,6 +1232,70 @@ _EPISODE_TITLE_MIRROR_SCRIPT = (
     "</script>"
 )
 
+_EPISODE_DETAILS_SCRIPT = r"""<script>
+(function () {
+  // Swaps summary / year / runtime when a different episode is picked.
+  // Each episode carries its own values in #levenySeriesData; anything
+  // left blank falls back to the show-level values in `meta`.
+  var el = document.getElementById('levenySeriesData');
+  if (!el) return;
+  var data;
+  try { data = JSON.parse(el.textContent); } catch (e) { return; }
+  var meta = data.meta || {};
+
+  function num(s) { var m = /\d+/.exec(s || ''); return m ? parseInt(m[0], 10) : null; }
+  function label(id) { var n = document.getElementById(id); return n ? n.textContent : ''; }
+  function setText(id, v) { var n = document.getElementById(id); if (n) n.textContent = v; }
+
+  // Desktop info line keeps the year as a bare text node, so find it once.
+  var infoYearNode = null;
+  var info = document.querySelector('.info');
+  if (info) {
+    var walker = document.createTreeWalker(info, NodeFilter.SHOW_TEXT);
+    var node;
+    while ((node = walker.nextNode())) {
+      if (/\b\d{4}\b/.test(node.nodeValue)) { infoYearNode = node; break; }
+    }
+  }
+
+  function apply(sId, eId) {
+    var s = num(label(sId)), e = num(label(eId));
+    if (s === null || e === null) return;
+    var list = (data.seasons || {})[String(s)] || [];
+    var ep = null;
+    for (var i = 0; i < list.length; i++) {
+      if (parseInt(list[i].episode, 10) === e) { ep = list[i]; break; }
+    }
+    if (!ep) return;
+    var summary = ep.summary || meta.summary || '';
+    var year = ep.year || meta.year || '';
+    var runtime = ep.runtime || meta.runtime || '';
+    setText('episodeSummaryDesktop', summary);
+    setText('mobMovieSummary', summary);
+    setText('infoRuntime', runtime + 'mins 00secs');
+    setText('mobInfoYear', year);
+    setText('mobInfoRuntime', runtime + ' mins');
+    if (infoYearNode) infoYearNode.nodeValue = infoYearNode.nodeValue.replace(/\b\d{4}\b/, year);
+  }
+
+  // Desktop and mobile each have their own pair of labels. Only the pair
+  // that actually changed is applied, so an untouched pair can never
+  // overwrite the episode you just picked.
+  var pairs = [
+    ['seasonLabelDesktop', 'episodeLabelDesktop'],
+    ['seasonLabelMobile', 'episodeLabelMobile']
+  ];
+  pairs.forEach(function (p) {
+    p.forEach(function (id) {
+      var n = document.getElementById(id);
+      if (n) new MutationObserver(function () { apply(p[0], p[1]); })
+        .observe(n, {childList: true, characterData: true, subtree: true});
+    });
+  });
+})();
+</script>"""
+
+
 def _build_series_template():
     t = HTML_TEMPLATE
 
@@ -1281,12 +1345,26 @@ def _build_series_template():
         '<span id="mobInfoEpisodeTitle"></span>',
     )
 
+    # Give the per-episode values ids so the page script can swap them.
+    t = t.replace(
+        "<span>__RUNTIME__mins 00secs</span>",
+        '<span id="infoRuntime">__RUNTIME__mins 00secs</span>',
+    )
+    t = t.replace("<span>__YEAR__</span>", '<span id="mobInfoYear">__YEAR__</span>')
+    t = t.replace(
+        "<span>__RUNTIME__ mins</span>",
+        '<span id="mobInfoRuntime">__RUNTIME__ mins</span>',
+    )
+    t = t.replace(
+        '<p class="summary">', '<p class="summary" id="episodeSummaryDesktop">'
+    )
+
     t = t.replace(
         '<script src="../js/search.js"></script>',
         '<script src="../js/search.js"></script>\n'
         '<script type="application/json" id="levenySeriesData">__SERIES_DATA_JSON__</script>\n'
         '<script src="../js/series-select.js"></script>\n'
-        + _EPISODE_TITLE_MIRROR_SCRIPT,
+        + _EPISODE_TITLE_MIRROR_SCRIPT + "\n" + _EPISODE_DETAILS_SCRIPT,
     )
 
     return t
@@ -1345,6 +1423,10 @@ def build_series_html(data):
     initial_episodes = _sorted_episodes(data["seasons"][initial_season])
     initial_episode = initial_episodes[0]["episode"]
     initial_download = initial_episodes[0]["download"]
+    first_ep = initial_episodes[0]
+    initial_summary = first_ep.get("summary") or data["summary"]
+    initial_year = first_ep.get("year") or data["year"]
+    initial_runtime = first_ep.get("runtime") or data["runtime"]
 
     html = HTML_SERIES_TEMPLATE
     html = html.replace("__TITLE__", data["title"])
@@ -1357,9 +1439,9 @@ def build_series_html(data):
     html = html.replace("__INITIAL_SEASON__", str(initial_season))
     html = html.replace("__INITIAL_EPISODE__", str(initial_episode))
     html = html.replace("__INITIAL_DOWNLOAD_LINK__", initial_download)
-    html = html.replace("__SUMMARY__", data["summary"])
-    html = html.replace("__YEAR__", str(data["year"]))
-    html = html.replace("__RUNTIME__", str(data["runtime"]))
+    html = html.replace("__SUMMARY__", initial_summary)
+    html = html.replace("__YEAR__", str(initial_year))
+    html = html.replace("__RUNTIME__", str(initial_runtime))
     html = html.replace("__GENRE_LABEL__", genre_meta["label"])
     html = html.replace("__SERIES_DATA_JSON__", _series_json_blob(data))
     return html
@@ -1379,7 +1461,35 @@ def parse_series_data(html_text):
     if not match:
         return None
     raw = match.group(1).replace("<\\/", "</")
-    return json.loads(raw)
+    return normalize_series_record(json.loads(raw))
+
+
+# Fields every episode can carry on its own (same areas as the first
+# episode's form fields). Anything left blank falls back to show level.
+EPISODE_EXTRA_FIELDS = ("imdb_id", "summary", "year", "runtime")
+
+
+def normalize_series_record(series_record):
+    """
+    Older pages (e.g. a series created with only episode 1) store the
+    IMDb ID / summary / year / runtime once, at show level. This copies
+    those values onto every episode that doesn't have its own, so the
+    first episode is recognised as a normal, fully-filled episode and
+    can be edited like any other.
+    """
+    meta = series_record.get("meta", {}) or {}
+    defaults = {
+        "imdb_id": series_record.get("imdb_id") or meta.get("imdb_id"),
+        "summary": meta.get("summary"),
+        "year": meta.get("year"),
+        "runtime": meta.get("runtime"),
+    }
+    for episodes in series_record.get("seasons", {}).values():
+        for ep in episodes:
+            for key, value in defaults.items():
+                if value and not ep.get(key):
+                    ep[key] = str(value)
+    return series_record
 
 
 def find_series_file(series_dir, title):
@@ -1411,6 +1521,10 @@ def merge_series_episodes(series_record, season, new_episodes):
         title = (ep.get("title") or "").strip()
         if title:
             record["title"] = title
+        for key in EPISODE_EXTRA_FIELDS:
+            value = str(ep.get(key) or "").strip()
+            if value:
+                record[key] = value
         existing[int(ep["episode"])] = record
     series_record["seasons"][season_key] = _sorted_episodes(list(existing.values()))
     return series_record

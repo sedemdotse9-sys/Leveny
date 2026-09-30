@@ -519,6 +519,25 @@ body.dark-mode #mobileSearchResults .mob-search-drop-item i { color: var(--accen
 
     body.dark-mode .mob-card-title { color: #f0f0f0; }
 
+    /* Title + Movie/Series tag on one line: the title shrinks with an
+       ellipsis, the tag always stays visible. */
+    .mob-card-title.mob-card-title-flex {
+        display: flex;
+        align-items: baseline;
+    }
+
+    .mob-card-title-name {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .mob-card-title-flex .type-tag {
+        flex: none;
+        white-space: nowrap;
+    }
+
     .mob-card-genre {
         font-size: 11px;
         font-family: "Roboto Slab", Rockwell, sans-serif;

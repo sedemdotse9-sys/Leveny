@@ -739,7 +739,7 @@ header hr {
   }
 
   .search-box input {
-    width: clamp(260px, 12vw, 420px);
+    width: clamp(200px, 30vw, 375px);
     font-size: clamp(16px, 0.85vw, 20px);
   }
 

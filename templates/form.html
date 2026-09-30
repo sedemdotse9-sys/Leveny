@@ -138,10 +138,16 @@
 
   /* -------- Episode rows -------- */
   #episodeRows { display:flex; flex-direction:column; gap:10px; margin-bottom:10px; }
-  .episode-row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
-  .episode-row input[type=number] { width:64px; flex:none; }
-  .episode-row input.ep-title { flex:1 1 140px; }
-  .episode-row input.ep-download { flex:1 1 200px; }
+  .episode-row {
+    display:flex; flex-direction:column; gap:8px; padding:12px;
+    border:1px solid var(--accent-dim); border-radius:14px;
+    background:rgba(255,255,255,0.03);
+  }
+  .ep-line { display:flex; gap:8px; align-items:center; }
+  .ep-line input { flex:1 1 0; min-width:0; }
+  .episode-row input.ep-num { flex:none; width:72px; }
+  .episode-row input.ep-imdb { flex:2 1 0; }
+  .episode-row textarea.ep-summary { min-height:78px; resize:vertical; }
   .episode-row-remove {
     flex:none; width:38px; height:38px; border-radius:10px; border:1px solid var(--accent-dim);
     background:rgba(231,76,60,0.12); color:#ff8a80; cursor:pointer; font-size:16px;
@@ -521,8 +527,9 @@
             existingNotice.innerHTML =
               '<strong>"' + title + '"</strong> already exists (' + seasonKeys.length +
               ' season' + (seasonKeys.length === 1 ? '' : 's') + ' so far). ' +
-              'Whatever you add below will be merged into it \u2014 the show\u2019s existing ' +
-              'genre, summary, poster, etc. are kept as they are.';
+              'Whatever you add below will be merged into it. Each episode has its own IMDb ID, ' +
+              'summary, year and runtime \u2014 leave one blank to reuse the show\u2019s. ' +
+              'Genre, poster and background stay as they are.';
 
             document.getElementById('seasonInput').value = highestSeason;
             defaultNextEpisode = nextEpisode;
@@ -553,17 +560,32 @@
   const addEpisodeBtn = document.getElementById('addEpisodeBtn');
   const episodesJsonInput = document.getElementById('episodesJsonInput');
 
-  function addEpisodeRow(episodeNumber, downloadValue, titleValue) {
+  // `extra` holds this episode's own imdb_id / summary / year / runtime.
+  // Anything left blank falls back to the show's values on the page.
+  function addEpisodeRow(episodeNumber, downloadValue, titleValue, extra) {
+    extra = extra || {};
     const row = document.createElement('div');
     row.className = 'episode-row';
     row.innerHTML =
-      '<input type="number" class="ep-num" min="1" placeholder="Ep #">' +
-      '<input type="text" class="ep-title" placeholder="Episode title (optional)">' +
-      '<input type="text" class="ep-download" placeholder="https://wildshare.net/...">' +
-      '<button type="button" class="episode-row-remove" aria-label="Remove episode">\u00d7</button>';
+      '<div class="ep-line">' +
+        '<input type="number" class="ep-num" min="1" placeholder="Ep #">' +
+        '<input type="text" class="ep-title" placeholder="Episode title (optional)">' +
+        '<button type="button" class="episode-row-remove" aria-label="Remove episode">\u00d7</button>' +
+      '</div>' +
+      '<input type="text" class="ep-download" placeholder="Download link: https://wildshare.net/...">' +
+      '<div class="ep-line">' +
+        '<input type="text" class="ep-imdb" placeholder="IMDb ID (blank = show\u2019s)">' +
+        '<input type="number" class="ep-year" min="1900" placeholder="Year">' +
+        '<input type="number" class="ep-runtime" min="1" placeholder="Mins">' +
+      '</div>' +
+      '<textarea class="ep-summary" placeholder="Episode summary (blank = show\u2019s summary)"></textarea>';
     row.querySelector('.ep-num').value = episodeNumber;
     row.querySelector('.ep-title').value = titleValue || '';
     row.querySelector('.ep-download').value = downloadValue || '';
+    row.querySelector('.ep-imdb').value = extra.imdb_id || '';
+    row.querySelector('.ep-year').value = extra.year || '';
+    row.querySelector('.ep-runtime').value = extra.runtime || '';
+    row.querySelector('.ep-summary').value = extra.summary || '';
     row.querySelector('.episode-row-remove').addEventListener('click', () => {
       if (episodeRowsEl.children.length > 1) row.remove();
     });
@@ -669,7 +691,7 @@
     document.getElementById('editOrigSeason').value = editSeasonSel.value;
     document.getElementById('editOrigEpisode').value = ep.episode;
     episodeRowsEl.innerHTML = '';
-    addEpisodeRow(ep.episode, ep.download, ep.title || '');
+    addEpisodeRow(ep.episode, ep.download, ep.title || '', ep);
     addEpisodeBtn.style.display = 'none';
     cancelEditBtn.style.display = '';
     submitBtn.textContent = 'Save Changes';
@@ -691,6 +713,10 @@
       episode: parseInt(row.querySelector('.ep-num').value, 10),
       title: row.querySelector('.ep-title').value.trim(),
       download: row.querySelector('.ep-download').value.trim(),
+      imdb_id: row.querySelector('.ep-imdb').value.trim(),
+      year: row.querySelector('.ep-year').value.trim(),
+      runtime: row.querySelector('.ep-runtime').value.trim(),
+      summary: row.querySelector('.ep-summary').value.trim(),
     })).filter(ep => ep.download && !isNaN(ep.episode));
 
     if (!episodes.length) {
