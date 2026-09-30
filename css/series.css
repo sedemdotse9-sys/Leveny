@@ -19,7 +19,11 @@
   gap: 12px;
   width: 100%;
   max-width: 700px;
-  margin-top: 25px;
+  margin-top: 8px;
+}
+
+.download-btn {
+  margin-top: 8px;
 }
 
 .select-pill {
@@ -158,12 +162,21 @@ body.dark-mode .mob-select-pill {
   border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.14);
   display: none;
-  z-index: 60;
+  z-index: 1001;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
 }
 
 .mob-select-pill.open .mob-select-panel {
   display: block;
+}
+
+/* The pill uses backdrop-filter, which makes it its own stacking
+   context. That traps the panel's z-index inside the pill, so the
+   Download button / info card below could draw over the open list.
+   Lifting the open pill itself fixes that, and the panel gets a
+   much higher z-index than before. */
+.mob-select-pill.open {
+  z-index: 1000;
 }
 
 .mob-select-panel-item {

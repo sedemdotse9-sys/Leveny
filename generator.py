@@ -1187,7 +1187,7 @@ _SERIES_DESKTOP_BAR = (
     '<div class="select-panel" id="episodePanelDesktop"></div>\n'
     "</div>\n"
     "</div>\n"
-    '<div class="episode-title-display" id="episodeTitleDesktop"></div>\n'
+    '<div class="episode-title-display" id="episodeTitleDesktop" style="display:none;"></div>\n'
 )
 
 _SERIES_MOBILE_BAR = (
@@ -1203,9 +1203,34 @@ _SERIES_MOBILE_BAR = (
     '<div class="mob-select-panel" id="episodePanelMobile"></div>\n'
     "</div>\n"
     "</div>\n"
-    '<div class="mob-episode-title-display" id="episodeTitleMobile"></div>\n'
+    '<div class="mob-episode-title-display" id="episodeTitleMobile" style="display:none;"></div>\n'
 )
 
+
+_EPISODE_TITLE_MIRROR_SCRIPT = (
+    "<script>\n"
+    "(function () {\n"
+    "  function mirror(srcId, dstId) {\n"
+    "    var src = document.getElementById(srcId);\n"
+    "    var dst = document.getElementById(dstId);\n"
+    "    if (!src || !dst || !dst.parentNode) return;\n"
+    "    // The \"| \" separator is a plain text node placed just before the\n"
+    "    // span, so only the episode name itself ends up highlighted.\n"
+    "    var sep = document.createTextNode('');\n"
+    "    dst.parentNode.insertBefore(sep, dst);\n"
+    "    function update() {\n"
+    "      var t = src.textContent.trim();\n"
+    "      sep.nodeValue = t ? '| ' : '';\n"
+    "      dst.textContent = t;\n"
+    "    }\n"
+    "    update();\n"
+    "    new MutationObserver(update).observe(src, {childList: true, characterData: true, subtree: true});\n"
+    "  }\n"
+    "  mirror('episodeTitleDesktop', 'infoEpisodeTitle');\n"
+    "  mirror('episodeTitleMobile', 'mobInfoEpisodeTitle');\n"
+    "})();\n"
+    "</script>"
+)
 
 def _build_series_template():
     t = HTML_TEMPLATE
@@ -1244,11 +1269,24 @@ def _build_series_template():
         + '<a download="" href="__INITIAL_DOWNLOAD_LINK__" id="mobDownloadBtn">',
     )
 
+    # Episode title next to the genre: desktop info line + mobile meta row.
+    t = t.replace(
+        "__YEAR__  |  <span>__RUNTIME__mins 00secs</span>  |  __GENRE_LABEL__",
+        "__YEAR__  |  <span>__RUNTIME__mins 00secs</span>  |  __GENRE_LABEL__"
+        ' <span id="infoEpisodeTitle"></span>',
+    )
+    t = t.replace(
+        '<span class="mob-meta-badge">__GENRE_LABEL__</span>',
+        '<span class="mob-meta-badge">__GENRE_LABEL__</span>\n'
+        '<span id="mobInfoEpisodeTitle"></span>',
+    )
+
     t = t.replace(
         '<script src="../js/search.js"></script>',
         '<script src="../js/search.js"></script>\n'
         '<script type="application/json" id="levenySeriesData">__SERIES_DATA_JSON__</script>\n'
-        '<script src="../js/series-select.js"></script>',
+        '<script src="../js/series-select.js"></script>\n'
+        + _EPISODE_TITLE_MIRROR_SCRIPT,
     )
 
     return t
@@ -1375,6 +1413,25 @@ def merge_series_episodes(series_record, season, new_episodes):
             record["title"] = title
         existing[int(ep["episode"])] = record
     series_record["seasons"][season_key] = _sorted_episodes(list(existing.values()))
+    return series_record
+
+
+def remove_series_episode(series_record, season, episode):
+    """
+    Removes one episode from an existing series record (in place). If
+    that leaves its season empty, the season is dropped too. Used when
+    an episode is edited and its season/number changed, so the old
+    entry doesn't linger next to the new one.
+    """
+    season_key = str(int(season))
+    remaining = [
+        e for e in series_record["seasons"].get(season_key, [])
+        if int(e["episode"]) != int(episode)
+    ]
+    if remaining:
+        series_record["seasons"][season_key] = remaining
+    else:
+        series_record["seasons"].pop(season_key, None)
     return series_record
 
 

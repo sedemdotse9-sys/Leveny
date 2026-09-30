@@ -28,6 +28,7 @@ from generator import (
     build_movies_js_entry, append_to_movies_js, next_css_filename,
     build_series_html, build_movies_js_entry_series, find_series_file,
     parse_series_data, merge_series_episodes, rebuild_series_html_from_record,
+    remove_series_episode,
 )
 
 # ----------------------------------------------------------------------
@@ -188,6 +189,27 @@ def check_series():
     })
 
 
+@app.route("/list_series", methods=["GET"])
+def list_series():
+    """
+    Returns the titles of every existing series page, so the form can
+    suggest them while you type in the title box.
+    """
+    titles = []
+    if os.path.isdir(SERIES_DIR):
+        for name in sorted(os.listdir(SERIES_DIR)):
+            if not name.endswith("_series.html"):
+                continue
+            try:
+                with open(os.path.join(SERIES_DIR, name), "r", encoding="utf-8") as fh:
+                    record = parse_series_data(fh.read())
+            except Exception:
+                continue
+            if record and record.get("meta", {}).get("title"):
+                titles.append(record["meta"]["title"])
+    return jsonify(titles)
+
+
 @app.route("/generate_series", methods=["POST"])
 def generate_series():
     f = request.form
@@ -245,13 +267,44 @@ def generate_series():
             )
             return redirect(url_for("index"))
 
-        merge_series_episodes(record, season, episodes)
+        season_key = str(int(season))
+
+        # If this save comes from "edit an existing episode", the form
+        # tells us which season/episode was loaded. Season, episode
+        # number, title and link may all have been changed, so drop the
+        # original entry first (otherwise a renumbered episode would
+        # appear twice).
+        orig_season = f.get("edit_original_season", "").strip()
+        orig_episode = f.get("edit_original_episode", "").strip()
+        editing = orig_season.isdigit() and orig_episode.isdigit()
+
+        if editing:
+            new_ep = episodes[0]["episode"]
+            moved = (season_key != str(int(orig_season))) or (new_ep != int(orig_episode))
+            if moved:
+                clash = any(
+                    int(e["episode"]) == new_ep
+                    for e in record["seasons"].get(season_key, [])
+                )
+                if clash:
+                    flash(
+                        f"Season {season_key} Episode {new_ep} already exists — nothing was "
+                        f"changed. Pick a different number, or edit that episode instead.",
+                        "error",
+                    )
+                    return redirect(url_for("index"))
+            remove_series_episode(record, orig_season, orig_episode)
+
+        merge_series_episodes(record, season_key, episodes)
         html_content = rebuild_series_html_from_record(record)
 
         with open(path, "w", encoding="utf-8") as fh:
             fh.write(html_content)
 
-        flash(f'Added {len(episodes)} episode(s) to Season {season} of "{title}"!', "success")
+        if editing:
+            flash(f'Updated Season {season_key} Episode {episodes[0]["episode"]} of "{title}"!', "success")
+        else:
+            flash(f'Added {len(episodes)} episode(s) to Season {season_key} of "{title}"!', "success")
         flash(f"series/{filename}", "file")
         return redirect(url_for("index"))
 
