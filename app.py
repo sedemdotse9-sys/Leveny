@@ -211,7 +211,11 @@ def generate_series():
                 dl = str(ep.get("download", "")).strip()
                 if not dl:
                     raise ValueError("empty download link")
-                episodes.append({"episode": int(ep["episode"]), "download": dl})
+                episode_record = {"episode": int(ep["episode"]), "download": dl}
+                ep_title = str(ep.get("title", "")).strip()
+                if ep_title:
+                    episode_record["title"] = ep_title
+                episodes.append(episode_record)
             if not episodes:
                 errors.append("At least one episode (with a download link) is required.")
         except Exception:

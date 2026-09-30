@@ -1,0 +1,178 @@
+diff --git a/app.py b/app.py
+index 1c2c967..b02b938 100644
+--- a/app.py
++++ b/app.py
+@@ -211,7 +211,11 @@ def generate_series():
+                 dl = str(ep.get("download", "")).strip()
+                 if not dl:
+                     raise ValueError("empty download link")
+-                episodes.append({"episode": int(ep["episode"]), "download": dl})
++                episode_record = {"episode": int(ep["episode"]), "download": dl}
++                ep_title = str(ep.get("title", "")).strip()
++                if ep_title:
++                    episode_record["title"] = ep_title
++                episodes.append(episode_record)
+             if not episodes:
+                 errors.append("At least one episode (with a download link) is required.")
+         except Exception:
+diff --git a/css/series.css b/css/series.css
+index 8c3bb7e..4403210 100644
+--- a/css/series.css
++++ b/css/series.css
+@@ -93,6 +93,19 @@
+   font-weight: 700;
+ }
+ 
++.episode-title-display {
++  margin-top: 10px;
++  font-size: 14px;
++  font-weight: 500;
++  font-family: "Roboto Slab", Rockwell, sans-serif;
++  color: #ddd;
++  opacity: 0.8;
++}
++
++.episode-title-display:empty {
++  display: none;
++}
++
+ /* -------------------- MOBILE -------------------- */
+ .mob-episode-select-bar {
+   display: flex;
+@@ -169,3 +182,16 @@ body.dark-mode .mob-select-pill {
+   color: var(--mob-accent, #00a8ff);
+   font-weight: 700;
+ }
++
++.mob-episode-title-display {
++  margin-top: 8px;
++  font-size: 13px;
++  font-weight: 500;
++  font-family: "Roboto Slab", Rockwell, sans-serif;
++  color: var(--mob-accent, #00a8ff);
++  opacity: 0.85;
++}
++
++.mob-episode-title-display:empty {
++  display: none;
++}
+diff --git a/generator.py b/generator.py
+index 883485e..4287809 100644
+--- a/generator.py
++++ b/generator.py
+@@ -1187,6 +1187,7 @@ _SERIES_DESKTOP_BAR = (
+     '<div class="select-panel" id="episodePanelDesktop"></div>\n'
+     "</div>\n"
+     "</div>\n"
++    '<div class="episode-title-display" id="episodeTitleDesktop"></div>\n'
+ )
+ 
+ _SERIES_MOBILE_BAR = (
+@@ -1202,6 +1203,7 @@ _SERIES_MOBILE_BAR = (
+     '<div class="mob-select-panel" id="episodePanelMobile"></div>\n'
+     "</div>\n"
+     "</div>\n"
++    '<div class="mob-episode-title-display" id="episodeTitleMobile"></div>\n'
+ )
+ 
+ 
+@@ -1364,10 +1366,14 @@ def merge_series_episodes(series_record, season, new_episodes):
+         for e in series_record["seasons"].get(season_key, [])
+     }
+     for ep in new_episodes:
+-        existing[int(ep["episode"])] = {
++        record = {
+             "episode": int(ep["episode"]),
+             "download": ep["download"],
+         }
++        title = (ep.get("title") or "").strip()
++        if title:
++            record["title"] = title
++        existing[int(ep["episode"])] = record
+     series_record["seasons"][season_key] = _sorted_episodes(list(existing.values()))
+     return series_record
+ 
+diff --git a/js/series-select.js b/js/series-select.js
+index 04f3e82..54e1d44 100644
+--- a/js/series-select.js
++++ b/js/series-select.js
+@@ -58,6 +58,7 @@
+     const episodeLabelD = document.getElementById('episodeLabelDesktop');
+     const seasonPanelD  = document.getElementById('seasonPanelDesktop');
+     const episodePanelD = document.getElementById('episodePanelDesktop');
++    const episodeTitleD = document.getElementById('episodeTitleDesktop');
+ 
+     const seasonPillM  = document.getElementById('seasonPillMobile');
+     const episodePillM = document.getElementById('episodePillMobile');
+@@ -65,6 +66,7 @@
+     const episodeLabelM = document.getElementById('episodeLabelMobile');
+     const seasonPanelM  = document.getElementById('seasonPanelMobile');
+     const episodePanelM = document.getElementById('episodePanelMobile');
++    const episodeTitleM = document.getElementById('episodeTitleMobile');
+ 
+     const allPills = [seasonPillD, episodePillD, seasonPillM, episodePillM].filter(Boolean);
+ 
+@@ -106,7 +108,10 @@
+     }
+ 
+     function renderEpisodePanels() {
+-        const items = episodesFor(currentSeason).map(e => ({ value: e.episode, label: `Episode ${e.episode}` }));
++        const items = episodesFor(currentSeason).map(e => ({
++            value: e.episode,
++            label: e.title ? `Episode ${e.episode}: ${e.title}` : `Episode ${e.episode}`,
++        }));
+         buildPanelItems(episodePanelD, 'select-panel-item', items, currentEpisode, pickEpisode);
+         buildPanelItems(episodePanelM, 'mob-select-panel-item', items, currentEpisode, pickEpisode);
+     }
+@@ -118,6 +123,11 @@
+         if (seasonLabelM) seasonLabelM.textContent = seasonText;
+         if (episodeLabelD) episodeLabelD.textContent = episodeText;
+         if (episodeLabelM) episodeLabelM.textContent = episodeText;
++
++        const record = currentEpisodeRecord();
++        const titleText = record && record.title ? record.title : '';
++        if (episodeTitleD) episodeTitleD.textContent = titleText;
++        if (episodeTitleM) episodeTitleM.textContent = titleText;
+     }
+ 
+     function updateStream() {
+diff --git a/templates/form.html b/templates/form.html
+index 6752587..5921b49 100644
+--- a/templates/form.html
++++ b/templates/form.html
+@@ -138,9 +138,10 @@
+ 
+   /* -------- Episode rows -------- */
+   #episodeRows { display:flex; flex-direction:column; gap:10px; margin-bottom:10px; }
+-  .episode-row { display:flex; gap:8px; align-items:center; }
+-  .episode-row input[type=number] { width:84px; flex:none; }
+-  .episode-row input[type=text] { flex:1; }
++  .episode-row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
++  .episode-row input[type=number] { width:64px; flex:none; }
++  .episode-row input.ep-title { flex:1 1 140px; }
++  .episode-row input.ep-download { flex:1 1 200px; }
+   .episode-row-remove {
+     flex:none; width:38px; height:38px; border-radius:10px; border:1px solid var(--accent-dim);
+     background:rgba(231,76,60,0.12); color:#ff8a80; cursor:pointer; font-size:16px;
+@@ -518,11 +519,12 @@
+   const addEpisodeBtn = document.getElementById('addEpisodeBtn');
+   const episodesJsonInput = document.getElementById('episodesJsonInput');
+ 
+-  function addEpisodeRow(episodeNumber, downloadValue) {
++  function addEpisodeRow(episodeNumber, downloadValue, titleValue) {
+     const row = document.createElement('div');
+     row.className = 'episode-row';
+     row.innerHTML =
+       '<input type="number" class="ep-num" min="1" value="' + episodeNumber + '" placeholder="Ep #">' +
++      '<input type="text" class="ep-title" placeholder="Episode title (optional)" value="' + (titleValue || '') + '">' +
+       '<input type="text" class="ep-download" placeholder="https://wildshare.net/..." value="' + (downloadValue || '') + '">' +
+       '<button type="button" class="episode-row-remove" aria-label="Remove episode">\u00d7</button>';
+     row.querySelector('.episode-row-remove').addEventListener('click', () => {
+@@ -548,6 +550,7 @@
+     if (mode !== 'series') return; // movie mode needs no extra work
+     const episodes = Array.from(episodeRowsEl.children).map(row => ({
+       episode: parseInt(row.querySelector('.ep-num').value, 10),
++      title: row.querySelector('.ep-title').value.trim(),
+       download: row.querySelector('.ep-download').value.trim(),
+     })).filter(ep => ep.download && !isNaN(ep.episode));
+ 

@@ -1187,6 +1187,7 @@ _SERIES_DESKTOP_BAR = (
     '<div class="select-panel" id="episodePanelDesktop"></div>\n'
     "</div>\n"
     "</div>\n"
+    '<div class="episode-title-display" id="episodeTitleDesktop"></div>\n'
 )
 
 _SERIES_MOBILE_BAR = (
@@ -1202,6 +1203,7 @@ _SERIES_MOBILE_BAR = (
     '<div class="mob-select-panel" id="episodePanelMobile"></div>\n'
     "</div>\n"
     "</div>\n"
+    '<div class="mob-episode-title-display" id="episodeTitleMobile"></div>\n'
 )
 
 
@@ -1364,10 +1366,14 @@ def merge_series_episodes(series_record, season, new_episodes):
         for e in series_record["seasons"].get(season_key, [])
     }
     for ep in new_episodes:
-        existing[int(ep["episode"])] = {
+        record = {
             "episode": int(ep["episode"]),
             "download": ep["download"],
         }
+        title = (ep.get("title") or "").strip()
+        if title:
+            record["title"] = title
+        existing[int(ep["episode"])] = record
     series_record["seasons"][season_key] = _sorted_episodes(list(existing.values()))
     return series_record
 
