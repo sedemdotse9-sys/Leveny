@@ -265,4 +265,6 @@ const LEVENY_MOVIES = [
     { title: "Coyote vs. Acme", href: "../movies/coyote_vs_acme_movie.html", genre: "family", poster: "images/posters/coyote_vs_acme.jpg", discover: 6 , background: "images/backgrounds/coyote_vs_acme_backg.jpg"},
     { title: "The Nice Ones", href: "../movies/the_nice_ones_movie.html", genre: "thriller", poster: "images/posters/the_nice_ones.jpg", discover: 5 , background: "images/backgrounds/the_nice_ones_backg.jpg"},
     { title: "The Uprising", href: "../movies/the_uprising_movie.html", genre: "fantasy", poster: "images/posters/the_uprising.jpg", discover: 5 , background: "images/backgrounds/the_uprising_backg.jpg"},
+    { title: "Ghost Light", href: "../movies/ghost_light_movie.html", genre: "horror", poster: "images/posters/ghost_light.jpg", discover: 4 , background: "images/backgrounds/ghost_light_backg.jpg"},
+    { title: "Runner", href: "../movies/runner_movie.html", genre: "action", poster: "images/posters/runner.jpg", discover: 6 , background: "images/backgrounds/runner_backg.jpg"},
 ];
