@@ -146,6 +146,13 @@
     flex:none; width:38px; height:38px; border-radius:10px; border:1px solid var(--accent-dim);
     background:rgba(231,76,60,0.12); color:#ff8a80; cursor:pointer; font-size:16px;
   }
+  .edit-picker { display:flex; gap:8px; }
+  .edit-picker select { flex:1; }
+  #cancelEditBtn {
+    display:none; margin-top:10px; padding:9px 14px; border-radius:10px; cursor:pointer;
+    background:rgba(231,76,60,0.12); color:#ff8a80; border:1px solid var(--accent-dim);
+    font-family:"Roboto Slab", Rockwell, sans-serif; font-weight:700; font-size:12px;
+  }
   #addEpisodeBtn {
     width:100%; padding:11px; border-radius:12px; cursor:pointer;
     background: var(--accent-dim); color: var(--accent); border:1px dashed var(--accent);
@@ -179,7 +186,8 @@
   <form method="POST" id="mainForm" action="{{ url_for('generate') }}">
     <div class="field">
       <label id="titleLabel">Movie Title</label>
-      <input type="text" name="title" id="titleInput" placeholder="e.g. Transformers One" required>
+      <input type="text" name="title" id="titleInput" placeholder="e.g. Transformers One" required autocomplete="off">
+      <datalist id="seriesTitleList"></datalist>
       <div class="hint" id="titleHint" style="display:none;">Type the series name — if it already exists on the site, this form will switch to adding new episodes to it instead of recreating it.</div>
     </div>
 
@@ -311,6 +319,16 @@
 
     <!-- ======== SERIES: SEASON / EPISODES (new + existing) ========= -->
     <div id="seriesEpisodeFields" class="mode-section" style="display:none;">
+      <div class="field" id="editEpisodeBox" style="display:none;">
+        <label>Edit an existing episode (optional)</label>
+        <div class="edit-picker">
+          <select id="editSeasonSelect"></select>
+          <select id="editEpisodeSelect"></select>
+        </div>
+        <div class="hint">Pick a season and episode to load what you entered earlier. Change anything below — season, episode number, title or download link — then press Save Changes.</div>
+        <button type="button" id="cancelEditBtn">Cancel editing</button>
+      </div>
+
       <div class="field">
         <label id="seasonLabel">Season number</label>
         <input type="number" name="season" id="seasonInput" min="1" value="1">
@@ -322,6 +340,8 @@
         <button type="button" id="addEpisodeBtn">+ Add Episode</button>
       </div>
       <input type="hidden" name="episodes_json" id="episodesJsonInput">
+      <input type="hidden" name="edit_original_season" id="editOrigSeason">
+      <input type="hidden" name="edit_original_episode" id="editOrigEpisode">
     </div>
 
     <button id="submitBtn" type="submit">Generate Movie Page</button>
@@ -390,6 +410,7 @@
   const MOVIE_URL = "{{ url_for('generate') }}";
   const SERIES_URL = "{{ url_for('generate_series') }}";
   const CHECK_SERIES_URL = "{{ url_for('check_series') }}";
+  const LIST_SERIES_URL = "{{ url_for('list_series') }}";
 
   let mode = 'movie';       // 'movie' | 'series'
   let seriesExists = false; // does the currently-typed series title already exist?
@@ -416,6 +437,7 @@
       setFieldsEnabled(movieFields, true);
       setFieldsEnabled(seriesNewFields, false);
       setFieldsEnabled(seriesEpisodeFields, false);
+      titleInput.removeAttribute('list');
     } else {
       pageTitle.textContent = 'Add a Series';
       pageSub.textContent = 'Generates a series page, or adds episodes to one you already have.';
@@ -427,6 +449,8 @@
       setFieldsEnabled(movieFields, false);
       seriesEpisodeFields.style.display = '';
       setFieldsEnabled(seriesEpisodeFields, true);
+      titleInput.setAttribute('list', 'seriesTitleList');
+      loadSeriesTitles();
       applySeriesExistence();
     }
   }
@@ -473,6 +497,9 @@
     if (!title) {
       seriesExists = false;
       applySeriesExistence();
+      existingSeasons = {};
+      populateEditPickers();
+      resetEditUI();
       resetEpisodeRows(1);
       return;
     }
@@ -498,8 +525,15 @@
               'genre, summary, poster, etc. are kept as they are.';
 
             document.getElementById('seasonInput').value = highestSeason;
+            defaultNextEpisode = nextEpisode;
+            existingSeasons = data.seasons || {};
+            populateEditPickers();
+            resetEditUI();
             resetEpisodeRows(nextEpisode);
           } else {
+            existingSeasons = {};
+            populateEditPickers();
+            resetEditUI();
             resetEpisodeRows(1);
           }
         })
@@ -523,10 +557,13 @@
     const row = document.createElement('div');
     row.className = 'episode-row';
     row.innerHTML =
-      '<input type="number" class="ep-num" min="1" value="' + episodeNumber + '" placeholder="Ep #">' +
-      '<input type="text" class="ep-title" placeholder="Episode title (optional)" value="' + (titleValue || '') + '">' +
-      '<input type="text" class="ep-download" placeholder="https://wildshare.net/..." value="' + (downloadValue || '') + '">' +
+      '<input type="number" class="ep-num" min="1" placeholder="Ep #">' +
+      '<input type="text" class="ep-title" placeholder="Episode title (optional)">' +
+      '<input type="text" class="ep-download" placeholder="https://wildshare.net/...">' +
       '<button type="button" class="episode-row-remove" aria-label="Remove episode">\u00d7</button>';
+    row.querySelector('.ep-num').value = episodeNumber;
+    row.querySelector('.ep-title').value = titleValue || '';
+    row.querySelector('.ep-download').value = downloadValue || '';
     row.querySelector('.episode-row-remove').addEventListener('click', () => {
       if (episodeRowsEl.children.length > 1) row.remove();
     });
@@ -545,6 +582,108 @@
   });
 
   resetEpisodeRows(1);
+
+  // ------------------------------------------------------------------
+  // Suggest existing series titles as you type (native <datalist>)
+  // ------------------------------------------------------------------
+  const seriesTitleList = document.getElementById('seriesTitleList');
+
+  function loadSeriesTitles() {
+    fetch(LIST_SERIES_URL)
+      .then(r => r.json())
+      .then(titles => {
+        seriesTitleList.innerHTML = '';
+        titles.forEach(t => {
+          const opt = document.createElement('option');
+          opt.value = t;
+          seriesTitleList.appendChild(opt);
+        });
+      })
+      .catch(() => { /* route missing — typing the exact title still works */ });
+  }
+
+  // ------------------------------------------------------------------
+  // Edit an existing episode: pick season + episode, fields fill in
+  // ------------------------------------------------------------------
+  const editBox = document.getElementById('editEpisodeBox');
+  const editSeasonSel = document.getElementById('editSeasonSelect');
+  const editEpisodeSel = document.getElementById('editEpisodeSelect');
+  const cancelEditBtn = document.getElementById('cancelEditBtn');
+  const seasonInput = document.getElementById('seasonInput');
+
+  let existingSeasons = {};   // { "1": [{episode, title?, download}, ...], ... }
+  let defaultNextEpisode = 1; // what "add new episodes" mode suggests
+
+  function fillSelect(sel, items, placeholder) {
+    sel.innerHTML = '';
+    const ph = document.createElement('option');
+    ph.value = '';
+    ph.textContent = placeholder;
+    sel.appendChild(ph);
+    items.forEach(([value, label]) => {
+      const o = document.createElement('option');
+      o.value = value;
+      o.textContent = label;
+      sel.appendChild(o);
+    });
+  }
+
+  function populateEditPickers() {
+    const keys = Object.keys(existingSeasons).map(Number).sort((a, b) => a - b);
+    fillSelect(editSeasonSel, keys.map(k => [String(k), 'Season ' + k]), 'Season\u2026');
+    fillSelect(editEpisodeSel, [], 'Episode\u2026');
+    editBox.style.display = keys.length ? '' : 'none';
+  }
+
+  // Puts the form back into normal "add episodes" behaviour.
+  function resetEditUI() {
+    document.getElementById('editOrigSeason').value = '';
+    document.getElementById('editOrigEpisode').value = '';
+    seasonInput.readOnly = false;
+    addEpisodeBtn.style.display = '';
+    cancelEditBtn.style.display = 'none';
+  }
+
+  editSeasonSel.addEventListener('change', () => {
+    const eps = (existingSeasons[editSeasonSel.value] || [])
+      .slice()
+      .sort((a, b) => a.episode - b.episode);
+    fillSelect(
+      editEpisodeSel,
+      eps.map(e => [String(e.episode), 'Episode ' + e.episode + (e.title ? ' \u2014 ' + e.title : '')]),
+      'Episode\u2026'
+    );
+  });
+
+  editEpisodeSel.addEventListener('change', () => {
+    const ep = (existingSeasons[editSeasonSel.value] || [])
+      .find(e => String(e.episode) === editEpisodeSel.value);
+    if (!ep) return;
+
+    // Load the saved info into a single row. Everything stays editable
+    // (season, episode number, title, link); the original season/episode
+    // are remembered so saving replaces this exact entry, even if it
+    // gets renumbered or moved to another season.
+    seasonInput.value = editSeasonSel.value;
+    seasonInput.readOnly = false;
+    document.getElementById('editOrigSeason').value = editSeasonSel.value;
+    document.getElementById('editOrigEpisode').value = ep.episode;
+    episodeRowsEl.innerHTML = '';
+    addEpisodeRow(ep.episode, ep.download, ep.title || '');
+    addEpisodeBtn.style.display = 'none';
+    cancelEditBtn.style.display = '';
+    submitBtn.textContent = 'Save Changes';
+  });
+
+  cancelEditBtn.addEventListener('click', () => {
+    resetEditUI();
+    editSeasonSel.value = '';
+    fillSelect(editEpisodeSel, [], 'Episode\u2026');
+    const keys = Object.keys(existingSeasons).map(Number).sort((a, b) => a - b);
+    if (keys.length) seasonInput.value = keys[keys.length - 1];
+    resetEpisodeRows(defaultNextEpisode);
+    applySeriesExistence(); // restores the "Add Episode(s)" button label
+  });
 
   mainForm.addEventListener('submit', (e) => {
     if (mode !== 'series') return; // movie mode needs no extra work
