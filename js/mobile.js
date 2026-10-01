@@ -260,7 +260,8 @@ function initMobileHome() {
     const allMovies = (typeof LEVENY_MOVIES !== 'undefined' ? LEVENY_MOVIES.slice().reverse() : []).map(m => ({
         title: m.title,
         genre: (m.genre || 'all').toLowerCase().replace(/[^a-z]/g, ''),
-        href:  m.href.replace('../movies/', 'movies/'), // homepage sits at root, movies.js hrefs are written for movie pages
+        type:  m.type || 'movie',                       // movies.js only sets type on series; missing = movie
+        href:  m.href.replace('../', ''),               // homepage sits at root; movies.js hrefs are written for /movies/ and /series/ pages
         src:   m.poster,
         alt:   m.title
     }));
@@ -324,8 +325,8 @@ function renderGrid(movies, page = 1) {
             >
 
             <div class="mob-card-info">
-                <div class="mob-card-title">
-                    ${movie.title}
+                <div class="mob-card-title mob-card-title-flex">
+                    <span class="mob-card-title-name">${movie.title}</span><span class="type-tag">| ${movie.type === 'series' ? 'Series' : 'Movie'}</span>
                 </div>
 
                 <div class="mob-card-genre">

@@ -267,4 +267,8 @@ const LEVENY_MOVIES = [
     { title: "The Uprising", href: "../movies/the_uprising_movie.html", genre: "fantasy", poster: "images/posters/the_uprising.jpg", discover: 5 , background: "images/backgrounds/the_uprising_backg.jpg"},
     { title: "Ghost Light", href: "../movies/ghost_light_movie.html", genre: "horror", poster: "images/posters/ghost_light.jpg", discover: 4 , background: "images/backgrounds/ghost_light_backg.jpg"},
     { title: "Runner", href: "../movies/runner_movie.html", genre: "action", poster: "images/posters/runner.jpg", discover: 6 , background: "images/backgrounds/runner_backg.jpg"},
+    { title: "Accursed", href: "../movies/accursed_movie.html", genre: "horror", poster: "images/posters/accursed.jpg", discover: 4 , background: "images/backgrounds/accursed_backg.jpg"},
+    { title: "Last Reckoning", href: "../movies/last_reckoning_movie.html", genre: "thriller", poster: "images/posters/last_reckoning.jpg", discover: 2 , background: "images/backgrounds/last_reckoning_backg.jpg"},
+    { title: "Bloodshot", href: "../movies/bloodshot_movie.html", genre: "action", poster: "images/posters/bloodshot.jpg", discover: 4 , background: "images/backgrounds/bloodshot_backg.jpg"},
+    { title: "Mortal Kombat II", href: "../movies/mortal_kombat_ii_movie.html", genre: "fantasy", poster: "images/posters/mortal_kombat_ii.jpg", discover: 5 , background: "images/backgrounds/mortal_kombat_ii_backg.jpg"},
 ];

@@ -160,7 +160,7 @@ if (__isMobileViewport()) {
                 a.innerHTML = `
                     <img class="mob-card-img" src="${movie.img}" alt="${movie.title}" loading="lazy">
                     <div class="mob-card-info">
-                        <div class="mob-card-title">${movie.title} <span class="type-tag">| ${movie.type === 'series' ? 'Series' : 'Movie'}</span></div>
+                        <div class="mob-card-title mob-card-title-flex"><span class="mob-card-title-name">${movie.title}</span><span class="type-tag">| ${movie.type === 'series' ? 'Series' : 'Movie'}</span></div>
                         <div class="mob-card-genre">${GENRE_LABELS[activeGenre] || activeGenre}</div>
                     </div>`;
                 genreGrid.appendChild(a);

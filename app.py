@@ -237,6 +237,17 @@ def generate_series():
                 ep_title = str(ep.get("title", "")).strip()
                 if ep_title:
                     episode_record["title"] = ep_title
+                # Per-episode IMDb ID / summary / year / runtime. Blank
+                # means "reuse the show's value".
+                for key in ("imdb_id", "summary", "year", "runtime"):
+                    value = str(ep.get(key, "")).strip()
+                    if not value:
+                        continue
+                    if key in ("year", "runtime") and not value.isdigit():
+                        errors.append(
+                            f"Episode {episode_record['episode']}: {key} must be a number."
+                        )
+                    episode_record[key] = value
                 episodes.append(episode_record)
             if not episodes:
                 errors.append("At least one episode (with a download link) is required.")
