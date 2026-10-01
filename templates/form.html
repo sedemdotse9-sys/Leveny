@@ -475,6 +475,7 @@
       submitBtn.textContent = 'Create Series';
       seasonLabel.textContent = 'Season number';
     }
+    syncEpisodeExtras();
   }
 
   modeMovieBtn.addEventListener('click', () => {
@@ -560,6 +561,26 @@
   const addEpisodeBtn = document.getElementById('addEpisodeBtn');
   const episodesJsonInput = document.getElementById('episodesJsonInput');
 
+  // When creating a brand-new series, the show details above (IMDb ID,
+  // summary, year, runtime) ARE the first episode's details, so the first
+  // row hides its own copy of those fields instead of asking twice. Later
+  // rows, and every row when adding to an existing series, keep them.
+  function syncEpisodeExtras() {
+    const rowsEl = document.getElementById('episodeRows');
+    if (!rowsEl) return;
+    const isNewSeries = mode === 'series' && !seriesExists;
+    rowsEl.querySelectorAll('.episode-row').forEach((row, i) => {
+      const hide = isNewSeries && i === 0;
+      const extra = row.querySelector('.ep-extra');
+      const note = row.querySelector('.ep-first-note');
+      if (hide) {
+        extra.querySelectorAll('input, textarea').forEach(el => { el.value = ''; });
+      }
+      extra.style.display = hide ? 'none' : '';
+      note.style.display = hide ? '' : 'none';
+    });
+  }
+
   // `extra` holds this episode's own imdb_id / summary / year / runtime.
   // Anything left blank falls back to the show's values on the page.
   function addEpisodeRow(episodeNumber, downloadValue, titleValue, extra) {
@@ -573,12 +594,15 @@
         '<button type="button" class="episode-row-remove" aria-label="Remove episode">\u00d7</button>' +
       '</div>' +
       '<input type="text" class="ep-download" placeholder="Download link: https://wildshare.net/...">' +
-      '<div class="ep-line">' +
-        '<input type="text" class="ep-imdb" placeholder="IMDb ID (blank = show\u2019s)">' +
-        '<input type="number" class="ep-year" min="1900" placeholder="Year">' +
-        '<input type="number" class="ep-runtime" min="1" placeholder="Mins">' +
+      '<div class="ep-extra">' +
+        '<div class="ep-line">' +
+          '<input type="text" class="ep-imdb" placeholder="IMDb ID (blank = show\u2019s)">' +
+          '<input type="number" class="ep-year" min="1900" placeholder="Year">' +
+          '<input type="number" class="ep-runtime" min="1" placeholder="Mins">' +
+        '</div>' +
+        '<textarea class="ep-summary" placeholder="Episode summary (blank = show\u2019s summary)"></textarea>' +
       '</div>' +
-      '<textarea class="ep-summary" placeholder="Episode summary (blank = show\u2019s summary)"></textarea>';
+      '<div class="hint ep-first-note" style="display:none;">This episode uses the show details entered above.</div>';
     row.querySelector('.ep-num').value = episodeNumber;
     row.querySelector('.ep-title').value = titleValue || '';
     row.querySelector('.ep-download').value = downloadValue || '';
@@ -587,9 +611,10 @@
     row.querySelector('.ep-runtime').value = extra.runtime || '';
     row.querySelector('.ep-summary').value = extra.summary || '';
     row.querySelector('.episode-row-remove').addEventListener('click', () => {
-      if (episodeRowsEl.children.length > 1) row.remove();
+      if (episodeRowsEl.children.length > 1) { row.remove(); syncEpisodeExtras(); }
     });
     episodeRowsEl.appendChild(row);
+    syncEpisodeExtras();
   }
 
   function resetEpisodeRows(startingEpisode) {

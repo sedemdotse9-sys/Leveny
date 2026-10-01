@@ -261,7 +261,6 @@ const LEVENY_MOVIES = [
     { title: "Deb is Boss", href: "../movies/deb_is_boss_movie.html", genre: "romance", poster: "images/posters/deb_is_boss.jpg", discover: 3 , background: "images/backgrounds/deb_is_boss_backg.jpg"},
     { title: "Broad Trip", href: "../movies/broad_trip_movie.html", genre: "romance", poster: "images/posters/broad_trip.jpg", discover: 7 , background: "images/backgrounds/broad_trip_backg.jpg"},
     { title: "The Deputy", href: "../movies/the_deputy_movie.html", genre: "action", poster: "images/posters/the_deputy.jpg", discover: 3 , background: "images/backgrounds/the_deputy_backg.jpg"},
-    { title: "Breaking Bad", href: "../series/breaking_bad_series.html", genre: "action", type: "series", poster: "images/posters/breaking_bad.jpg", discover: 3 , background: "images/backgrounds/breaking_bad_backg.jpg"},
     { title: "Coyote vs. Acme", href: "../movies/coyote_vs_acme_movie.html", genre: "family", poster: "images/posters/coyote_vs_acme.jpg", discover: 6 , background: "images/backgrounds/coyote_vs_acme_backg.jpg"},
     { title: "The Nice Ones", href: "../movies/the_nice_ones_movie.html", genre: "thriller", poster: "images/posters/the_nice_ones.jpg", discover: 5 , background: "images/backgrounds/the_nice_ones_backg.jpg"},
     { title: "The Uprising", href: "../movies/the_uprising_movie.html", genre: "fantasy", poster: "images/posters/the_uprising.jpg", discover: 5 , background: "images/backgrounds/the_uprising_backg.jpg"},
@@ -271,4 +270,8 @@ const LEVENY_MOVIES = [
     { title: "Last Reckoning", href: "../movies/last_reckoning_movie.html", genre: "thriller", poster: "images/posters/last_reckoning.jpg", discover: 2 , background: "images/backgrounds/last_reckoning_backg.jpg"},
     { title: "Bloodshot", href: "../movies/bloodshot_movie.html", genre: "action", poster: "images/posters/bloodshot.jpg", discover: 4 , background: "images/backgrounds/bloodshot_backg.jpg"},
     { title: "Mortal Kombat II", href: "../movies/mortal_kombat_ii_movie.html", genre: "fantasy", poster: "images/posters/mortal_kombat_ii.jpg", discover: 5 , background: "images/backgrounds/mortal_kombat_ii_backg.jpg"},
+    { title: "Sakamoto Days", href: "../movies/sakamoto_days_movie.html", genre: "thriller", poster: "images/posters/sakamoto_days.jpg", discover: 2 , background: "images/backgrounds/sakamoto_days_backg.jpg"},
+    { title: "Doing Life", href: "../movies/doing_life_movie.html", genre: "romance", poster: "images/posters/doing_life.jpg", discover: 5 , background: "images/backgrounds/doing_life_backg.jpg"},
+    { title: "Hazbin Hotel", href: "../series/hazbin_hotel_series.html", genre: "animation", type: "series", poster: "images/posters/hazbin_hotel.jpg", discover: 4 , background: "images/backgrounds/hazbin_hotel_backg.jpg"},
+    { title: "Breaking Bad", href: "../series/breaking_bad_series.html", genre: "action", type: "series", poster: "images/posters/breaking_bad.jpg", discover: 3 , background: "images/backgrounds/breaking_bad_backg.jpg"},
 ];

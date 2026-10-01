@@ -28,7 +28,7 @@ from generator import (
     build_movies_js_entry, append_to_movies_js, next_css_filename,
     build_series_html, build_movies_js_entry_series, find_series_file,
     parse_series_data, merge_series_episodes, rebuild_series_html_from_record,
-    remove_series_episode,
+    remove_series_episode, move_movies_js_entry_to_end,
 )
 
 # ----------------------------------------------------------------------
@@ -316,6 +316,21 @@ def generate_series():
             flash(f'Updated Season {season_key} Episode {episodes[0]["episode"]} of "{title}"!', "success")
         else:
             flash(f'Added {len(episodes)} episode(s) to Season {season_key} of "{title}"!', "success")
+            # New episodes = "updated": send the series back to the top of
+            # the lists (last entry in movies.js is shown first).
+            try:
+                moved = move_movies_js_entry_to_end(MOVIES_JS_PATH, f"../series/{filename}")
+            except Exception as e:
+                moved = False
+                flash(f"Episodes were added, but movies.js could not be reordered: {e}", "error")
+            else:
+                if moved:
+                    flash("Moved to the top of the lists in js/movies.js", "file")
+                else:
+                    flash(
+                        f'Couldn\'t find the "{title}" entry in js/movies.js, so it was not moved to the top.',
+                        "error",
+                    )
         flash(f"series/{filename}", "file")
         return redirect(url_for("index"))
 

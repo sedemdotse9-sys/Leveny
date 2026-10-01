@@ -1153,6 +1153,57 @@ def append_to_movies_js(movies_js_path, entry_line):
         f.write(new_content)
 
 
+def move_movies_js_entry_to_end(movies_js_path, href):
+    """
+    Moves the entry whose href matches to the very end of the
+    LEVENY_MOVIES array. Everything on the site treats "last in the
+    array" as "newest" (the mobile homepage grid, the discover rows and
+    the genre lists all reverse the array), so this is what makes a
+    series jump back to the top when new episodes are added.
+
+    Returns True if the entry is now last (moved, or already there) and
+    False if it couldn't be found / isn't a one-line entry.
+    """
+    with open(movies_js_path, "r", encoding="utf-8", newline="") as f:
+        content = f.read()
+
+    lines = content.splitlines(keepends=True)
+    pattern = re.compile(r'href:\s*"' + re.escape(href) + r'"')
+
+    matches = [i for i, l in enumerate(lines) if pattern.search(l)]
+    if not matches:
+        return False
+    i = matches[0]
+    if "{" not in lines[i] or "}" not in lines[i]:
+        return False  # entry spans several lines; don't risk breaking it
+
+    closers = [j for j, l in enumerate(lines) if l.strip().startswith("];")]
+    if not closers:
+        return False
+    close = closers[-1]
+
+    last = max(j for j in range(close) if lines[j].strip())
+    if last == i:
+        return True  # already the newest entry
+
+    newline = "\r\n" if lines[i].endswith("\r\n") else "\n"
+    entry = lines.pop(i)
+    last -= 1  # everything after i shifted up by one
+
+    def with_comma(line):
+        body = line.rstrip("\r\n")
+        ending = line[len(body):]
+        return (body if body.rstrip().endswith(",") else body + ",") + ending
+
+    lines[last] = with_comma(lines[last])
+    entry = with_comma(entry.rstrip("\r\n")) .rstrip("\r\n") + newline
+    lines.insert(last + 1, entry)
+
+    with open(movies_js_path, "w", encoding="utf-8", newline="") as f:
+        f.write("".join(lines))
+    return True
+
+
 # ----------------------------------------------------------------------
 # SERIES SUPPORT
 # ----------------------------------------------------------------------
