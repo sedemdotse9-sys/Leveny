@@ -137,15 +137,7 @@
   }
 
   /* -------- Episode rows -------- */
-  /* Episode list: scrolls once there are more than five episodes
-     (the height limit is set by JS in limitEpisodeListHeight()). */
-  #episodeRows {
-    display:flex; flex-direction:column; gap:0; margin-bottom:10px;
-    overflow-y:auto; scrollbar-width:thin;
-    scrollbar-color: var(--accent-dim) transparent;
-  }
-  #episodeRows::-webkit-scrollbar { width:6px; }
-  #episodeRows::-webkit-scrollbar-thumb { background:var(--accent-dim); border-radius:3px; }
+  #episodeRows { display:flex; flex-direction:column; gap:0; margin-bottom:10px; }
   .episode-row {
     display:flex; flex-direction:column; gap:10px; padding:14px 6px;
     border-bottom:1px solid rgba(255,255,255,0.08);
@@ -588,20 +580,7 @@
       extra.style.display = hide ? 'none' : '';
       note.style.display = hide ? '' : 'none';
     });
-    limitEpisodeListHeight();
   }
-
-  // Show at most five episodes at once; beyond that the list scrolls.
-  function limitEpisodeListHeight() {
-    const rowsEl = document.getElementById('episodeRows');
-    if (!rowsEl) return;
-    const rows = rowsEl.querySelectorAll('.episode-row');
-    if (rows.length <= 5) { rowsEl.style.maxHeight = ''; return; }
-    let h = 0;
-    for (let i = 0; i < 5; i++) h += rows[i].offsetHeight;
-    if (h > 0) rowsEl.style.maxHeight = h + 'px';
-  }
-  window.addEventListener('resize', limitEpisodeListHeight);
 
   // `extra` holds this episode's own summary / year / runtime.
   // Anything left blank falls back to the show's values on the page.
