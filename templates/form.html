@@ -137,16 +137,24 @@
   }
 
   /* -------- Episode rows -------- */
-  #episodeRows { display:flex; flex-direction:column; gap:10px; margin-bottom:10px; }
-  .episode-row {
-    display:flex; flex-direction:column; gap:8px; padding:12px;
-    border:1px solid var(--accent-dim); border-radius:14px;
-    background:rgba(255,255,255,0.03);
+  /* Episode list: scrolls once there are more than five episodes
+     (the height limit is set by JS in limitEpisodeListHeight()). */
+  #episodeRows {
+    display:flex; flex-direction:column; gap:0; margin-bottom:10px;
+    overflow-y:auto; scrollbar-width:thin;
+    scrollbar-color: var(--accent-dim) transparent;
   }
+  #episodeRows::-webkit-scrollbar { width:6px; }
+  #episodeRows::-webkit-scrollbar-thumb { background:var(--accent-dim); border-radius:3px; }
+  .episode-row {
+    display:flex; flex-direction:column; gap:10px; padding:14px 6px;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .episode-row:last-child { border-bottom:none; }
+  .ep-extra { display:flex; flex-direction:column; gap:10px; }
   .ep-line { display:flex; gap:8px; align-items:center; }
   .ep-line input { flex:1 1 0; min-width:0; }
   .episode-row input.ep-num { flex:none; width:72px; }
-  .episode-row input.ep-imdb { flex:2 1 0; }
   .episode-row textarea.ep-summary { min-height:78px; resize:vertical; }
   .episode-row-remove {
     flex:none; width:38px; height:38px; border-radius:10px; border:1px solid var(--accent-dim);
@@ -528,8 +536,9 @@
             existingNotice.innerHTML =
               '<strong>"' + title + '"</strong> already exists (' + seasonKeys.length +
               ' season' + (seasonKeys.length === 1 ? '' : 's') + ' so far). ' +
-              'Whatever you add below will be merged into it. Each episode has its own IMDb ID, ' +
-              'summary, year and runtime \u2014 leave one blank to reuse the show\u2019s. ' +
+              'Whatever you add below will be merged into it. The show\u2019s IMDb ID ' +
+              'stays the same for every episode. Each episode can have its own summary, year and ' +
+              'runtime \u2014 leave one blank to reuse the show\u2019s. ' +
               'Genre, poster and background stay as they are.';
 
             document.getElementById('seasonInput').value = highestSeason;
@@ -579,9 +588,22 @@
       extra.style.display = hide ? 'none' : '';
       note.style.display = hide ? '' : 'none';
     });
+    limitEpisodeListHeight();
   }
 
-  // `extra` holds this episode's own imdb_id / summary / year / runtime.
+  // Show at most five episodes at once; beyond that the list scrolls.
+  function limitEpisodeListHeight() {
+    const rowsEl = document.getElementById('episodeRows');
+    if (!rowsEl) return;
+    const rows = rowsEl.querySelectorAll('.episode-row');
+    if (rows.length <= 5) { rowsEl.style.maxHeight = ''; return; }
+    let h = 0;
+    for (let i = 0; i < 5; i++) h += rows[i].offsetHeight;
+    if (h > 0) rowsEl.style.maxHeight = h + 'px';
+  }
+  window.addEventListener('resize', limitEpisodeListHeight);
+
+  // `extra` holds this episode's own summary / year / runtime.
   // Anything left blank falls back to the show's values on the page.
   function addEpisodeRow(episodeNumber, downloadValue, titleValue, extra) {
     extra = extra || {};
@@ -596,7 +618,6 @@
       '<input type="text" class="ep-download" placeholder="Download link: https://wildshare.net/...">' +
       '<div class="ep-extra">' +
         '<div class="ep-line">' +
-          '<input type="text" class="ep-imdb" placeholder="IMDb ID (blank = show\u2019s)">' +
           '<input type="number" class="ep-year" min="1900" placeholder="Year">' +
           '<input type="number" class="ep-runtime" min="1" placeholder="Mins">' +
         '</div>' +
@@ -606,7 +627,6 @@
     row.querySelector('.ep-num').value = episodeNumber;
     row.querySelector('.ep-title').value = titleValue || '';
     row.querySelector('.ep-download').value = downloadValue || '';
-    row.querySelector('.ep-imdb').value = extra.imdb_id || '';
     row.querySelector('.ep-year').value = extra.year || '';
     row.querySelector('.ep-runtime').value = extra.runtime || '';
     row.querySelector('.ep-summary').value = extra.summary || '';
@@ -738,7 +758,6 @@
       episode: parseInt(row.querySelector('.ep-num').value, 10),
       title: row.querySelector('.ep-title').value.trim(),
       download: row.querySelector('.ep-download').value.trim(),
-      imdb_id: row.querySelector('.ep-imdb').value.trim(),
       year: row.querySelector('.ep-year').value.trim(),
       runtime: row.querySelector('.ep-runtime').value.trim(),
       summary: row.querySelector('.ep-summary').value.trim(),
@@ -751,6 +770,14 @@
     }
     episodesJsonInput.value = JSON.stringify(episodes);
   });
+
+  // After saving a series, the server sends us back with ?mode=series so the
+  // form stays on the Series tab instead of dropping to Movie.
+  if (new URLSearchParams(window.location.search).get('mode') === 'series') {
+    mode = 'series';
+    modeSeriesBtn.classList.add('active');
+    modeMovieBtn.classList.remove('active');
+  }
 
   applyMode();
 </script>

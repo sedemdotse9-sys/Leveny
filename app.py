@@ -257,7 +257,7 @@ def generate_series():
     if errors:
         for e in errors:
             flash(e, "error")
-        return redirect(url_for("index"))
+        return redirect(url_for("index", mode="series"))
 
     os.makedirs(SERIES_DIR, exist_ok=True)
     os.makedirs(CSS_DIR, exist_ok=True)
@@ -276,7 +276,7 @@ def generate_series():
                 f"tool created — it was left untouched.",
                 "error",
             )
-            return redirect(url_for("index"))
+            return redirect(url_for("index", mode="series"))
 
         season_key = str(int(season))
 
@@ -303,8 +303,16 @@ def generate_series():
                         f"changed. Pick a different number, or edit that episode instead.",
                         "error",
                     )
-                    return redirect(url_for("index"))
+                    return redirect(url_for("index", mode="series"))
             remove_series_episode(record, orig_season, orig_episode)
+
+        # The show's IMDb ID is fixed once the series exists: every episode
+        # added or edited uses it, whatever the form sent.
+        series_imdb = str(record.get("imdb_id") or record.get("meta", {}).get("imdb_id") or "").strip()
+        for ep in episodes:
+            ep.pop("imdb_id", None)
+            if series_imdb:
+                ep["imdb_id"] = series_imdb
 
         merge_series_episodes(record, season_key, episodes)
         html_content = rebuild_series_html_from_record(record)
@@ -332,7 +340,7 @@ def generate_series():
                         "error",
                     )
         flash(f"series/{filename}", "file")
-        return redirect(url_for("index"))
+        return redirect(url_for("index", mode="series"))
 
     # -------- Brand-new series --------
     genre = f.get("genre", "").strip()
@@ -364,7 +372,10 @@ def generate_series():
     if errors:
         for e in errors:
             flash(e, "error")
-        return redirect(url_for("index"))
+        return redirect(url_for("index", mode="series"))
+
+    for ep in episodes:
+        ep.pop("imdb_id", None)  # new series: every episode uses the show's IMDb ID
 
     css_filename = next_css_filename(CSS_DIR)
     css_path = os.path.join(CSS_DIR, css_filename)
@@ -408,7 +419,7 @@ def generate_series():
         flash(f"css/{css_filename}", "file")
         flash("Entry appended to js/movies.js", "file")
 
-    return redirect(url_for("index"))
+    return redirect(url_for("index", mode="series"))
 
 
 if __name__ == "__main__":
