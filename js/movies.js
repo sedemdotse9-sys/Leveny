@@ -277,4 +277,8 @@ const LEVENY_MOVIES = [
     { title: "Game of Thrones", href: "../series/game_of_thrones_series.html", genre: "fantasy", type: "series", poster: "images/posters/game_of_thrones.jpg", discover: 5 , background: "images/backgrounds/game_of_thrones_backg.jpg"},
     { title: "A Simple Favor", href: "../movies/a_simple_favor_movie.html", genre: "thriller", poster: "images/posters/a_simple_favor.jpg", discover: 1 , background: "images/backgrounds/a_simple_favor_backg.jpg"},
     { title: "Mr. & Mrs. Smith", href: "../movies/mr_mrs_smith_movie.html", genre: "romance", poster: "images/posters/mr_mrs_smith.jpg", discover: 5 , background: "images/backgrounds/mr_mrs_smith_backg.jpg"},
+    { title: "Madea's Destination Wedding", href: "../movies/madea's_destination_wedding_movie.html", genre: "drama", poster: "images/posters/madea's_destination_wedding.jpg", discover: 2 , background: "images/backgrounds/madea_destination_wedding_backg.jpg"},
+    { title: "The Croods", href: "../movies/the_croods_movie.html", genre: "animation", poster: "images/posters/the_croods.jpg", discover: 3 , background: "images/backgrounds/the_croods_backg.jpg"},
+    { title: "The Croods: A New Age", href: "../movies/the_croods_a_new_age_movie.html", genre: "animation", poster: "images/posters/the_croods_a_new_age.jpg", discover: 3 , background: "images/backgrounds/the_croods_a_new_age_backg.jpg"},
+    { title: "GOAT", href: "../movies/goat_movie.html", genre: "animation", poster: "images/posters/goat.jpg", discover: 2 , background: "images/backgrounds/goat_backg.jpg"},
 ];
