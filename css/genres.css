@@ -151,6 +151,7 @@
 #horror { background: linear-gradient(135deg, #c62828, #e53935); }
 #musical { background: linear-gradient(135deg, #d81b60, #ec407a); }
 #romance { background: linear-gradient(135deg, #ff4d6d, #ff758f); }
+#drama { background: linear-gradient(135deg, #5d4037, #8d6e63); }
 
 .genre-slide-header {
     text-align: center;
