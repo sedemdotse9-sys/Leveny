@@ -275,4 +275,6 @@ const LEVENY_MOVIES = [
     { title: "Hazbin Hotel", href: "../series/hazbin_hotel_series.html", genre: "animation", type: "series", poster: "images/posters/hazbin_hotel.jpg", discover: 4 , background: "images/backgrounds/hazbin_hotel_backg.jpg"},
     { title: "Breaking Bad", href: "../series/breaking_bad_series.html", genre: "action", type: "series", poster: "images/posters/breaking_bad.jpg", discover: 3 , background: "images/backgrounds/breaking_bad_backg.jpg"},
     { title: "Game of Thrones", href: "../series/game_of_thrones_series.html", genre: "fantasy", type: "series", poster: "images/posters/game_of_thrones.jpg", discover: 5 , background: "images/backgrounds/game_of_thrones_backg.jpg"},
+    { title: "A Simple Favor", href: "../movies/a_simple_favor_movie.html", genre: "thriller", poster: "images/posters/a_simple_favor.jpg", discover: 1 , background: "images/backgrounds/a_simple_favor_backg.jpg"},
+    { title: "Mr. & Mrs. Smith", href: "../movies/mr_mrs_smith_movie.html", genre: "romance", poster: "images/posters/mr_mrs_smith.jpg", discover: 5 , background: "images/backgrounds/mr_mrs_smith_backg.jpg"},
 ];
