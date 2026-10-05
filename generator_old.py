@@ -37,7 +37,6 @@ GENRE_META = {
     "musical":   {"label": "Musical",   "accent": "#e84393"},
     "romance":   {"label": "Romance",   "accent": "#ff4d6d"},
     "drama":   {"label": "Drama",   "accent": "#b07d4f"},
-    "drama": {"label": "Drama", "accent": "#b07d4f"},
 }
 
 GENRE_ORDER = ["action", "superhero", "animation", "fantasy", "scifi",
