@@ -281,4 +281,8 @@ const LEVENY_MOVIES = [
     { title: "The Croods", href: "../movies/the_croods_movie.html", genre: "animation", poster: "images/posters/the_croods.jpg", discover: 3 , background: "images/backgrounds/the_croods_backg.jpg"},
     { title: "The Croods: A New Age", href: "../movies/the_croods_a_new_age_movie.html", genre: "animation", poster: "images/posters/the_croods_a_new_age.jpg", discover: 3 , background: "images/backgrounds/the_croods_a_new_age_backg.jpg"},
     { title: "GOAT", href: "../movies/goat_movie.html", genre: "animation", poster: "images/posters/goat.jpg", discover: 2 , background: "images/backgrounds/goat_backg.jpg"},
+    { title: "The Adam Project", href: "../movies/the_adam_project_movie.html", genre: "scifi", poster: "images/posters/the_adam_project.jpg", discover: 1 , background: "images/backgrounds/the_adam_project_backg.jpg"},
+    { title: "The Mechanic", href: "../movies/the_mechanic_movie.html", genre: "action", poster: "images/posters/the_mechanic.jpg", discover: 5 , background: "images/backgrounds/the_mechanic_backg.jpg"},
+    { title: "Red Notice", href: "../movies/red_notice_movie.html", genre: "action", poster: "images/posters/red_notice.jpg", discover: 4 , background: "images/backgrounds/red_notice_backg.jpg"},
+    { title: "Free Guy", href: "../movies/free_guy_movie.html", genre: "scifi", poster: "images/posters/free_guy.jpg", discover: 1 , background: "images/backgrounds/free_guy_backg.jpg"},
 ];
