@@ -285,4 +285,7 @@ const LEVENY_MOVIES = [
     { title: "The Mechanic", href: "../movies/the_mechanic_movie.html", genre: "action", poster: "images/posters/the_mechanic.jpg", discover: 5 , background: "images/backgrounds/the_mechanic_backg.jpg"},
     { title: "Red Notice", href: "../movies/red_notice_movie.html", genre: "action", poster: "images/posters/red_notice.jpg", discover: 4 , background: "images/backgrounds/red_notice_backg.jpg"},
     { title: "Free Guy", href: "../movies/free_guy_movie.html", genre: "scifi", poster: "images/posters/free_guy.jpg", discover: 1 , background: "images/backgrounds/free_guy_backg.jpg"},
+    { title: "Insidious: Out of the Further", href: "../movies/insidious_out_of_the_further_movie.html", genre: "horror", poster: "images/posters/insidious_out_of_the_further.jpg", discover: 1 , background: "images/backgrounds/insidious_out_of_the_further_backg.jpg"},
+    { title: "Onslaught", href: "../movies/onslaught_movie.html", genre: "thriller", poster: "images/posters/onslaught.jpg", discover: 5 , background: "images/backgrounds/onslaught_backg.jpg"},
+    { title: "Fall 2: Deadpoint", href: "../movies/fall_2_deadpoint_movie.html", genre: "thriller", poster: "images/posters/fall_2_deadpoint.jpg", discover: 1 , background: "images/backgrounds/fall_2_deadpoint_backg.jpg"},
 ];
