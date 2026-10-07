@@ -290,4 +290,6 @@ const LEVENY_MOVIES = [
     { title: "Soulm8te", href: "../movies/soulm8te_movie.html", genre: "thriller", poster: "images/posters/soulm8te.jpg", discover: 1 , background: "images/backgrounds/soulm8te_backg.jpg"},
     { title: "The Beast Within", href: "../movies/the_beast_within_movie.html", genre: "thriller", poster: "images/posters/the_beast_within.jpg", discover: 5 , background: "images/backgrounds/the_beast_within_backg.jpg"},
     { title: "Breaking Bad", href: "../series/breaking_bad_series.html", genre: "action", type: "series", poster: "images/posters/breaking_bad.jpg", discover: 3 , background: "images/backgrounds/breaking_bad_backg.jpg"},
+    { title: "& Sons", href: "../movies/sons_movie.html", genre: "drama", poster: "images/posters/sons.jpg", discover: 2 , background: "images/backgrounds/sons_backg.jpg"},
+    { title: "The Great Wall", href: "../movies/the_great_wall_movie.html", genre: "fantasy", poster: "images/posters/the_great_wall.jpg", discover: 5 , background: "images/backgrounds/the_great_wall_backg.jpg"},
 ];
