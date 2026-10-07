@@ -288,4 +288,6 @@ const LEVENY_MOVIES = [
     { title: "Insidious: Out of the Further", href: "../movies/insidious_out_of_the_further_movie.html", genre: "horror", poster: "images/posters/insidious_out_of_the_further.jpg", discover: 1 , background: "images/backgrounds/insidious_out_of_the_further_backg.jpg"},
     { title: "Onslaught", href: "../movies/onslaught_movie.html", genre: "thriller", poster: "images/posters/onslaught.jpg", discover: 5 , background: "images/backgrounds/onslaught_backg.jpg"},
     { title: "Fall 2: Deadpoint", href: "../movies/fall_2_deadpoint_movie.html", genre: "thriller", poster: "images/posters/fall_2_deadpoint.jpg", discover: 1 , background: "images/backgrounds/fall_2_deadpoint_backg.jpg"},
+    { title: "Soulm8te", href: "../movies/soulm8te_movie.html", genre: "thriller", poster: "images/posters/soulm8te.jpg", discover: 1 , background: "images/backgrounds/soulm8te_backg.jpg"},
+    { title: "The Beast Within", href: "../movies/the_beast_within_movie.html", genre: "thriller", poster: "images/posters/the_beast_within.jpg", discover: 5 , background: "images/backgrounds/the_beast_within_backg.jpg"},
 ];
