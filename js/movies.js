@@ -292,4 +292,8 @@ const LEVENY_MOVIES = [
     { title: "Breaking Bad", href: "../series/breaking_bad_series.html", genre: "action", type: "series", poster: "images/posters/breaking_bad.jpg", discover: 3 , background: "images/backgrounds/breaking_bad_backg.jpg"},
     { title: "& Sons", href: "../movies/sons_movie.html", genre: "drama", poster: "images/posters/sons.jpg", discover: 2 , background: "images/backgrounds/sons_backg.jpg"},
     { title: "The Great Wall", href: "../movies/the_great_wall_movie.html", genre: "fantasy", poster: "images/posters/the_great_wall.jpg", discover: 5 , background: "images/backgrounds/the_great_wall_backg.jpg"},
+    { title: "Matchbox the Movie", href: "../movies/matchbox_the_movie_movie.html", genre: "action", poster: "images/posters/matchbox_the_movie.jpg", discover: 2 , background: "images/backgrounds/matchbox_the_movie_backg.jpg"},
+    { title: "The Florist", href: "../movies/the_florist_movie.html", genre: "thriller", poster: "images/posters/the_florist.jpg", discover: 2 , background: "images/backgrounds/the_florist_backg.jpg"},
+    { title: "A Doctor to Die For: The Sarah Harris Story", href: "../movies/a_doctor_to_die_for_the_sarah_harris_story_movie.html", genre: "drama", poster: "images/posters/a_doctor_to_die_for_the_sarah_harris_story.jpg", discover: 5 , background: "images/backgrounds/a_doctor_to_die_for_the_sarah_harris_story_backg.jpg"},
+    { title: "The Ocean Between Them", href: "../movies/the_ocean_between_them_movie.html", genre: "drama", poster: "images/posters/the_ocean_between_them.jpg", discover: 1 , background: "images/backgrounds/the_ocean_between_them_backg.jpg"},
 ];
