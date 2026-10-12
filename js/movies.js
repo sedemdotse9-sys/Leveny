@@ -296,4 +296,7 @@ const LEVENY_MOVIES = [
     { title: "The Florist", href: "../movies/the_florist_movie.html", genre: "thriller", poster: "images/posters/the_florist.jpg", discover: 2 , background: "images/backgrounds/the_florist_backg.jpg"},
     { title: "A Doctor to Die For: The Sarah Harris Story", href: "../movies/a_doctor_to_die_for_the_sarah_harris_story_movie.html", genre: "drama", poster: "images/posters/a_doctor_to_die_for_the_sarah_harris_story.jpg", discover: 5 , background: "images/backgrounds/a_doctor_to_die_for_the_sarah_harris_story_backg.jpg"},
     { title: "The Ocean Between Them", href: "../movies/the_ocean_between_them_movie.html", genre: "drama", poster: "images/posters/the_ocean_between_them.jpg", discover: 1 , background: "images/backgrounds/the_ocean_between_them_backg.jpg"},
+    { title: "Vengeance/Venganza", href: "../movies/vengeance_venganza_movie.html", genre: "action", poster: "images/posters/vengeance_venganza.jpg", discover: 5 , background: "images/backgrounds/vengeance_venganza_backg.jpg"},
+    { title: "My Dearest Assassin", href: "../movies/my_dearest_assassin_movie.html", genre: "thriller", poster: "images/posters/my_dearest_assassin.jpg", discover: 5 , background: "images/backgrounds/my_dearest_assassin_backg.jpg"},
+    { title: "Apex", href: "../movies/apex_movie.html", genre: "action", poster: "images/posters/apex.jpg", discover: 3 , background: "images/backgrounds/apex_backg.jpg"},
 ];
