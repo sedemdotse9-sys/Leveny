@@ -299,4 +299,5 @@ const LEVENY_MOVIES = [
     { title: "Vengeance/Venganza", href: "../movies/vengeance_venganza_movie.html", genre: "action", poster: "images/posters/vengeance_venganza.jpg", discover: 5 , background: "images/backgrounds/vengeance_venganza_backg.jpg"},
     { title: "My Dearest Assassin", href: "../movies/my_dearest_assassin_movie.html", genre: "thriller", poster: "images/posters/my_dearest_assassin.jpg", discover: 5 , background: "images/backgrounds/my_dearest_assassin_backg.jpg"},
     { title: "Apex", href: "../movies/apex_movie.html", genre: "action", poster: "images/posters/apex.jpg", discover: 3 , background: "images/backgrounds/apex_backg.jpg"},
+    { title: "Solo Leveling", href: "../series/solo_leveling_series.html", genre: "animation", type: "series", poster: "images/posters/solo_leveling.jpg", discover: 1 , background: "images/backgrounds/solo_leveling_backg.jpg"},
 ];
