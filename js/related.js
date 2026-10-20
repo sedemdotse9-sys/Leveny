@@ -1,57 +1,41 @@
 /* ============================================================
    related.js — Leveny
    Auto-generates "Related Movies" (desktop + mobile) from
-   LEVENY_MOVIES — no more hand-editing related movies per page.
+   LEVENY_MOVIES.
+
+   Desktop: 2 posters under the movie description, and 2 more
+            directly under "Broken download link?".
+   Mobile:  4 posters in the grid below the info card.
 
    MATCHING PRIORITY (highest to lowest):
-     1. TITLE / FRANCHISE matches — e.g. "Zombies 4: Dawn of the
-        Vampires" relates to "Zombies", "Zombies 2", "Zombies 3"
-        even though they may not share the same genre tag. This
-        is checked first and always wins a slot over genre-only
-        matches.
-     2. GENRE matches — same genre, excluding anything already
-        picked by title.
-     3. RANDOM padding — only used if the above two tiers don't
-        fill all the slots.
-
-   Each tier is internally shuffled so repeat visits show some
-   variety, but a lower tier can never bump a higher tier out of
-   the shown slots — title matches always show first.
+     1. TITLE / FRANCHISE matches (e.g. "Zombies 4" -> "Zombies")
+     2. GENRE matches
+     3. RANDOM padding, only if the above don't fill the slots
 
    HOW TO USE ON A MOVIE PAGE:
 
-   1. Tell the page which movie it IS, by adding a data attribute
-      to <body> using the SAME href you already use for it in movies.js:
-
+   1. Tell the page which movie it IS:
         <body data-current-movie="../movies/a_quiet_place_movie.html">
 
-   2. Empty out the related movies containers (delete the hardcoded
-      <div class="related-card">...</div> / mob-related-card entries,
-      just leave the empty wrapper divs):
-
+   2. Leave these containers empty:
         <div class="related-movies"></div>
         <div id="mobRelatedGrid"></div>
 
    3. Load this AFTER movies.js:
-
         <script src="../js/movies.js"></script>
         <script src="../js/related.js"></script>
 
-   That's it. Related movies are generated automatically, on both
-   layouts, and stay in sync automatically whenever you add/edit
-   movies.js.
-
    NOTE: related cards use each movie's BACKGROUND image
-   (m.background), not its poster — matches the movie page's own
-   backdrop style rather than the discover/genre poster look.
+   (m.background) on desktop and its POSTER (m.poster) on mobile.
 ============================================================ */
 
 (function () {
     if (typeof LEVENY_MOVIES === 'undefined') return;
 
-    const DESKTOP_RELATED_COUNT = 2;
-    const MOBILE_RELATED_COUNT = 4;
-    const MIN_TITLE_KEY_LENGTH = 3; // guards against over-matching on very short/stripped keys
+    const DESKTOP_TOP_COUNT = 2;         // under the movie description
+    const DESKTOP_UNDER_LINK_COUNT = 2;  // under "Broken download link?"
+    const MOBILE_RELATED_COUNT = 4;      // total on mobile
+    const MIN_TITLE_KEY_LENGTH = 3;      // guards against over-matching on very short/stripped keys
 
     function fileName(href) {
         return href.split('/').pop();
@@ -86,7 +70,6 @@
          "Zombies 4: Dawn of the Vampires" -> "zombies"
          "Toy Story 3"                     -> "toy story"
          "Spider-Man: Into the Spider-Verse" -> "spiderman"
-         "Spider-Man: Across the Spider-Verse" -> "spiderman"
        Strips: everything after a colon, standalone numbers, the
        word "part", roman numerals I-X, and punctuation. */
     function titleKey(title) {
@@ -112,8 +95,8 @@
 
     // A related card may point into a different folder than the page
     // it's shown on (e.g. a movie related to a series). Same-folder
-    // targets keep the plain filename link that's always worked;
-    // cross-folder targets need the "../<folder>/" prefix.
+    // targets keep the plain filename link; cross-folder targets need
+    // the "../<folder>/" prefix.
     function relatedLink(m) {
         const file = fileName(m.href);
         const folder = folderOf(m.href);
@@ -146,21 +129,34 @@
         candidates = candidates.concat(others);
     }
 
-    // Pick MOBILE_RELATED_COUNT once — desktop just shows the first
-    // DESKTOP_RELATED_COUNT of this same list, so the 2 shown on desktop
-    // are always a subset of the 4 shown on mobile.
+    // Pick MOBILE_RELATED_COUNT once. Desktop shows the first 2 under the
+    // description and the next 2 under the broken link, so all 4 are
+    // different movies.
     const related = candidates.slice(0, MOBILE_RELATED_COUNT);
-    const desktopRelated = related.slice(0, DESKTOP_RELATED_COUNT);
 
-    // ---- DESKTOP ----
-    const desktopWrap = document.querySelector('.related-movies');
-    if (desktopWrap) {
-        desktopWrap.innerHTML = desktopRelated.map(m => `
+    function desktopCard(m) {
+        return `
             <div class="related-card">
                 <a href="${relatedLink(m)}" class="poster" style="background-image: url('../${m.background}');"></a>
                 <p class="related-title">${m.title} <span class="type-tag">| ${typeLabel(m)}</span></p>
             </div>
-        `).join('');
+        `;
+    }
+
+    // ---- DESKTOP: 2 under the movie description ----
+    const topWrap = document.querySelector('.related-movies');
+    if (topWrap) {
+        topWrap.innerHTML = related.slice(0, DESKTOP_TOP_COUNT).map(desktopCard).join('');
+    }
+
+    // ---- DESKTOP: 2 directly under "Broken download link?" ----
+    const brokenLink = document.querySelector('.video-section .broken-link');
+    const underLink = related.slice(DESKTOP_TOP_COUNT, DESKTOP_TOP_COUNT + DESKTOP_UNDER_LINK_COUNT);
+    if (brokenLink && underLink.length) {
+        const bottomWrap = document.createElement('div');
+        bottomWrap.className = 'related-movies-under-link';
+        bottomWrap.innerHTML = underLink.map(desktopCard).join('');
+        brokenLink.insertAdjacentElement('afterend', bottomWrap);
     }
 
     // ---- MOBILE ----

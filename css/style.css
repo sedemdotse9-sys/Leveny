@@ -1163,3 +1163,45 @@ img {
     text-align: center;
 }
 }
+
+/* === AUTO-INJECTED v3.2: under-link posters === */
+/* Two posters under "Broken download link?". The row is the same
+   width as the Download button and the pair is centered in it, using
+   the same gap as the pair under the movie description. */
+.related-movies-under-link {
+  display: flex;
+  justify-content: center;
+  gap: clamp(20px, 2.4vw, 35px);
+  width: 700px;
+  margin-top: 18px;
+}
+
+.related-movies-under-link .related-card {
+  width: 230px;
+}
+
+.related-movies-under-link .poster {
+  width: 100%;
+}
+
+/* Keep the row matched to the Download button at each screen size. */
+@media screen and (min-width: 1025px) and (max-width: 1440px) {
+  .related-movies-under-link {
+    width: clamp(460px, 48vw, 700px);
+  }
+
+  .related-movies-under-link .related-card {
+    width: clamp(170px, 16vw, 230px);
+  }
+}
+
+@media screen and (min-width: 1441px) {
+  .related-movies-under-link {
+    width: clamp(700px, 40vw, 900px);
+    gap: clamp(35px, 2vw, 48px);
+  }
+
+  .related-movies-under-link .related-card {
+    width: clamp(230px, 13vw, 290px);
+  }
+}

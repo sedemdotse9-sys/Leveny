@@ -1067,7 +1067,7 @@ CSS_TEMPLATE = """@import url('https://fonts.googleapis.com/css2?family=Roboto+S
       text-align: center;
       padding: 8px 12px 4px;
       font-family: "Roboto Slab", Rockwell, sans-serif;
-      font-size: 15px;
+      font-size: 12px;
 }
 
     #mobFooter a {

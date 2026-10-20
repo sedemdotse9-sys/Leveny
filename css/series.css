@@ -220,3 +220,8 @@ body.dark-mode .mob-select-pill {
 .mob-episode-title-display:empty {
   display: none;
 }
+
+/* === AUTO-INJECTED v3: info line on one line === */
+.details-section .info {
+  white-space: nowrap;
+}
