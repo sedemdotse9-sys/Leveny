@@ -8,8 +8,8 @@ index.html, css/ and js/), then run:  py apply_tweaks_v3.py
      -> css/series.css
   2. Desktop related movies: 2 posters under the movie description and
      2 more directly under "Broken download link?". The two under the
-     link are centered under the Download button, with the same gap as
-     the pair under the description.
+     link are centered under the Download button, with a wider gap
+     between them.
      -> js/related.js and css/style.css
   3. Movie pages: mobile disclaimer text is 12px (matches the homepage).
      -> every css/style<N>.css file
@@ -67,21 +67,22 @@ SERIES_BLOCK = """
 """
 
 # ---------- 2a. Under-link posters layout (css/style.css) ----------
-STYLE_NEW_MARK = "AUTO-INJECTED v3.2: under-link posters"
+STYLE_NEW_MARK = "AUTO-INJECTED v3.3: under-link posters"
 STYLE_OLD_MARKS = [
     "/* === AUTO-INJECTED: desktop related posters",
     "/* === AUTO-INJECTED v3: related posters under link",
     "/* === AUTO-INJECTED v3.1: under-link posters",
+    "/* === AUTO-INJECTED v3.2: under-link posters",
 ]
 STYLE_BLOCK = """
-/* === AUTO-INJECTED v3.2: under-link posters === */
+/* === AUTO-INJECTED v3.3: under-link posters === */
 /* Two posters under "Broken download link?". The row is the same
-   width as the Download button and the pair is centered in it, using
-   the same gap as the pair under the movie description. */
+   width as the Download button and the pair is centered in it, with
+   a wider gap between the two posters. */
 .related-movies-under-link {
   display: flex;
   justify-content: center;
-  gap: clamp(20px, 2.4vw, 35px);
+  gap: clamp(40px, 4vw, 60px);
   width: 700px;
   margin-top: 18px;
 }
@@ -108,7 +109,7 @@ STYLE_BLOCK = """
 @media screen and (min-width: 1441px) {
   .related-movies-under-link {
     width: clamp(700px, 40vw, 900px);
-    gap: clamp(35px, 2vw, 48px);
+    gap: clamp(60px, 3.5vw, 80px);
   }
 
   .related-movies-under-link .related-card {
@@ -308,7 +309,7 @@ def style_fn(text):
     if STYLE_NEW_MARK in text:
         return text, "already applied"
     text = cut_block(text, STYLE_OLD_MARKS)
-    return text.rstrip() + "\n" + STYLE_BLOCK, "under-link posters centered under the download button"
+    return text.rstrip() + "\n" + STYLE_BLOCK, "under-link posters spaced wider and centered"
 
 
 def related_fn(text):
