@@ -479,7 +479,7 @@ header {
 /* -------------------- FOOTER (now inside the slide) -------------------- */
 .slider-wrapper footer.copyright {
     position: fixed;
-    bottom: 2px;
+    bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 3000;           /* same layer as your arrows, above slide content */
@@ -683,7 +683,7 @@ header hr {
   .movie-list-7 {
     margin-left: clamp(40px, 6vw, 105px);
     gap: clamp(16px, 1.8vw, 27px);
-    margin-top: clamp(30px, 50vw, 30px);
+    margin-top: clamp(50px, 70vw, 50px);
   }
 
   .movie-item img {
@@ -949,7 +949,7 @@ header hr {
   .movie-list-7 {
     margin-left: 20px;
     margin-right: 20px;
-    gap: 28px;           /* increased proportionally */
+    gap: 28px;           
   }
 
   .movie-item img {
