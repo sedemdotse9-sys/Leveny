@@ -315,4 +315,5 @@ const LEVENY_MOVIES = [
     { title: "By Any Means", href: "../movies/by_any_means_movie.html", genre: "action", poster: "images/posters/by_any_means.jpg", discover: 2 , background: "images/backgrounds/by_any_means_backg.jpg"},
     { title: "Tiny Fugitives", href: "../movies/tiny_fugitives_movie.html", genre: "family", poster: "images/posters/tiny_fugitives.jpg", discover: 6 , background: "images/backgrounds/tiny_fugitives_backg.jpg"},
     { title: "The Weight", href: "../movies/the_weight_movie.html", genre: "thriller", poster: "images/posters/the_weight.jpg", discover: 3 , background: "images/backgrounds/the_weight_backg.jpg"},
+    { title: "Hope", href: "../movies/hope_movie.html", genre: "thriller", poster: "images/posters/hope.jpg", discover: 3 , background: "images/backgrounds/hope_backg.jpg"},
 ];
