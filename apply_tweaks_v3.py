@@ -67,22 +67,23 @@ SERIES_BLOCK = """
 """
 
 # ---------- 2a. Under-link posters layout (css/style.css) ----------
-STYLE_NEW_MARK = "AUTO-INJECTED v3.3: under-link posters"
+STYLE_NEW_MARK = "AUTO-INJECTED v3.4: under-link posters"
 STYLE_OLD_MARKS = [
     "/* === AUTO-INJECTED: desktop related posters",
     "/* === AUTO-INJECTED v3: related posters under link",
     "/* === AUTO-INJECTED v3.1: under-link posters",
     "/* === AUTO-INJECTED v3.2: under-link posters",
+    "/* === AUTO-INJECTED v3.3: under-link posters",
 ]
 STYLE_BLOCK = """
-/* === AUTO-INJECTED v3.3: under-link posters === */
+/* === AUTO-INJECTED v3.4: under-link posters === */
 /* Two posters under "Broken download link?". The row is the same
    width as the Download button and the pair is centered in it, with
    a wider gap between the two posters. */
 .related-movies-under-link {
   display: flex;
   justify-content: center;
-  gap: clamp(40px, 4vw, 60px);
+  gap: clamp(60px, 6vw, 90px);
   width: 700px;
   margin-top: 18px;
 }
@@ -109,7 +110,7 @@ STYLE_BLOCK = """
 @media screen and (min-width: 1441px) {
   .related-movies-under-link {
     width: clamp(700px, 40vw, 900px);
-    gap: clamp(60px, 3.5vw, 80px);
+    gap: clamp(90px, 5vw, 120px);
   }
 
   .related-movies-under-link .related-card {

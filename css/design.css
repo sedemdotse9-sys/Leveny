@@ -628,8 +628,9 @@ header hr {
   }
 
   .search-dropdown {
-    margin-top: 30px;
+    margin-top: 32px;
     width: 30%;
+    margin-right: 92px;
     /* z-index: 9000; */
   }
 
