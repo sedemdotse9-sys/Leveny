@@ -575,7 +575,7 @@ img { max-width: 100%; height: auto; }
     #mobGenrePanel,
     #mobGenreBackdrop,
     #mobFooter { display: none !important;
-    font-size: 15px;
+    font-size: 12px;
     text-align: center;
 }
 }
