@@ -1355,3 +1355,18 @@ img {
     font-family: "Roboto Slab", Rockwell, sans-serif;
     font-size: 15px;
 }
+
+/* === AUTO-INJECTED: big-screen poster gap ===
+   Screens 1441px and wider only: tighter gap between the homepage
+   posters. Smaller screens are unchanged. */
+@media screen and (min-width: 1441px) {
+  .movie-list,
+  .movie-list-2,
+  .movie-list-3,
+  .movie-list-4,
+  .movie-list-5,
+  .movie-list-6,
+  .movie-list-7 {
+    gap: clamp(14px, 1.1vw, 26px);
+  }
+}
