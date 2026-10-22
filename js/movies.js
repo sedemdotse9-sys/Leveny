@@ -289,7 +289,6 @@ const LEVENY_MOVIES = [
     { title: "Fall 2: Deadpoint", href: "../movies/fall_2_deadpoint_movie.html", genre: "thriller", poster: "images/posters/fall_2_deadpoint.jpg", discover: 1 , background: "images/backgrounds/fall_2_deadpoint_backg.jpg"},
     { title: "Soulm8te", href: "../movies/soulm8te_movie.html", genre: "thriller", poster: "images/posters/soulm8te.jpg", discover: 1 , background: "images/backgrounds/soulm8te_backg.jpg"},
     { title: "The Beast Within", href: "../movies/the_beast_within_movie.html", genre: "thriller", poster: "images/posters/the_beast_within.jpg", discover: 5 , background: "images/backgrounds/the_beast_within_backg.jpg"},
-    { title: "Breaking Bad", href: "../series/breaking_bad_series.html", genre: "action", type: "series", poster: "images/posters/breaking_bad.jpg", discover: 3 , background: "images/backgrounds/breaking_bad_backg.jpg"},
     { title: "& Sons", href: "../movies/sons_movie.html", genre: "drama", poster: "images/posters/sons.jpg", discover: 2 , background: "images/backgrounds/sons_backg.jpg"},
     { title: "The Great Wall", href: "../movies/the_great_wall_movie.html", genre: "fantasy", poster: "images/posters/the_great_wall.jpg", discover: 5 , background: "images/backgrounds/the_great_wall_backg.jpg"},
     { title: "Matchbox the Movie", href: "../movies/matchbox_the_movie_movie.html", genre: "action", poster: "images/posters/matchbox_the_movie.jpg", discover: 2 , background: "images/backgrounds/matchbox_the_movie_backg.jpg"},
@@ -321,4 +320,5 @@ const LEVENY_MOVIES = [
     { title: "Guardians of the Galaxy Vol. 2", href: "../movies/guardians_of_the_galaxy_vol_2_movie.html", genre: "scifi", poster: "images/posters/guardians_of_the_galaxy_vol_2.jpg", discover: 2 , background: "images/backgrounds/guardians_of_the_galaxy_vol_2_backg.jpg"},
     { title: "Charmed", href: "../series/charmed_series.html", genre: "fantasy", type: "series", poster: "images/posters/charmed.jpg", discover: 5 , background: "images/backgrounds/charmed_backg.jpg"},
     { title: "Hell's Paradise", href: "../series/hell's_paradise_series.html", genre: "animation", type: "series", poster: "images/posters/hells_paradise.jpg", discover: 4 , background: "images/backgrounds/hells_paradise_backg.jpg"},
+    { title: "Breaking Bad", href: "../series/breaking_bad_series.html", genre: "action", type: "series", poster: "images/posters/breaking_bad.jpg", discover: 3 , background: "images/backgrounds/breaking_bad_backg.jpg"},
 ];
