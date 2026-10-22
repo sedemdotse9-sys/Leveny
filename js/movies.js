@@ -137,7 +137,7 @@ const LEVENY_MOVIES = [
     { title: "Atlas", href: "../movies/atlas_movie.html", genre: "scifi", poster: "images/posters/atlas.jpg", discover: 6 , background: "images/backgrounds/atlas_backg.jpg"},
     { title: "Batman: Knightfall Part 1: Knightfall", href: "../movies/batman_knightfall_part_1_knightfall_movie.html", genre: "superhero", poster: "images/posters/batman_knightfall_part_1_knightfall.jpg", discover: 5 , background: "images/backgrounds/batman_knightfall_part_1_knightfall_backg.jpg"},
     { title: "Hadestown: The Musical", href: "../movies/hadestown_the_musical_movie.html", genre: "musical", poster: "images/posters/hadestown_the_musical.jpg", discover: 1 , background: "images/backgrounds/hadestown_the_musical_backg.jpg"},
-    { title: "Back To The 90's", href: "../movies/back_to_the_90's_movie.html", genre: "scifi", poster: "images/posters/back_to_the_90's.jpg", discover: 1 , background: "images/backgrounds/back_to_the_90's_backg.jpg"},
+    { title: "Back To The 90's", href: "../movies/back_to_the_90's_movie.html", genre: "scifi", poster: "images/posters/back_to_the_90's.jpg", discover: 1 , background: "images/backgrounds/back_to_the_90s_backg.jpg"},
     { title: "Now You See Me 2", href: "../movies/now_you_see_me_2_movie.html", genre: "fantasy", poster: "images/posters/now_you_see_me_2.jpg", discover: 5 , background: "images/backgrounds/now_you_see_me_2_backg.jpg"},
     { title: "Now You See Me: Now You Don't", href: "../movies/now_you_see_me_now_you_don't_movie.html", genre: "fantasy", poster: "images/posters/now_you_see_me_now_you_don't.jpg", discover: 1 , background: "images/backgrounds/now_you_see_me_now_you_dont_backg.jpg"},
     { title: "Enola Holmes", href: "../movies/enola_holmes_movie.html", genre: "family", poster: "images/posters/enola_holmes.jpg", discover: 1 , background: "images/backgrounds/enola_holmes_backg.jpg"},
@@ -318,4 +318,6 @@ const LEVENY_MOVIES = [
     { title: "Hope", href: "../movies/hope_movie.html", genre: "thriller", poster: "images/posters/hope.jpg", discover: 3 , background: "images/backgrounds/hope_backg.jpg"},
     { title: "Kraken", href: "../movies/kraken_movie.html", genre: "thriller", poster: "images/posters/kraken.jpg", discover: 1 , background: "images/backgrounds/kraken_backg.jpg"},
     { title: "Wasteland Cop", href: "../movies/wasteland_cop_movie.html", genre: "action", poster: "images/posters/wasteland_cop.jpg", discover: 2 , background: "images/backgrounds/wasteland_cop_backg.jpg"},
+    { title: "Guardians of the Galaxy Vol. 2", href: "../movies/guardians_of_the_galaxy_vol_2_movie.html", genre: "scifi", poster: "images/posters/guardians_of_the_galaxy_vol_2.jpg", discover: 2 , background: "images/backgrounds/guardians_of_the_galaxy_vol_2_backg.jpg"},
+    { title: "Charmed", href: "../series/charmed_series.html", genre: "fantasy", type: "series", poster: "images/posters/charmed.jpg", discover: 5 , background: "images/backgrounds/charmed_backg.jpg"},
 ];
