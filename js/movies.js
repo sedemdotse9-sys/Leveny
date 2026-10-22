@@ -321,4 +321,6 @@ const LEVENY_MOVIES = [
     { title: "Charmed", href: "../series/charmed_series.html", genre: "fantasy", type: "series", poster: "images/posters/charmed.jpg", discover: 5 , background: "images/backgrounds/charmed_backg.jpg"},
     { title: "Hell's Paradise", href: "../series/hell's_paradise_series.html", genre: "animation", type: "series", poster: "images/posters/hells_paradise.jpg", discover: 4 , background: "images/backgrounds/hells_paradise_backg.jpg"},
     { title: "Breaking Bad", href: "../series/breaking_bad_series.html", genre: "action", type: "series", poster: "images/posters/breaking_bad.jpg", discover: 3 , background: "images/backgrounds/breaking_bad_backg.jpg"},
+    { title: "Life Hack", href: "../movies/life_hack_movie.html", genre: "thriller", poster: "images/posters/life_hack.jpg", discover: 5 , background: "images/backgrounds/life_hack_backg.jpg"},
+    { title: "Aquaman", href: "../movies/aquaman_movie.html", genre: "superhero", poster: "images/posters/aquaman.jpg", discover: 2 , background: "images/backgrounds/aquaman_backg.jpg"},
 ];
