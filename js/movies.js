@@ -320,4 +320,5 @@ const LEVENY_MOVIES = [
     { title: "Wasteland Cop", href: "../movies/wasteland_cop_movie.html", genre: "action", poster: "images/posters/wasteland_cop.jpg", discover: 2 , background: "images/backgrounds/wasteland_cop_backg.jpg"},
     { title: "Guardians of the Galaxy Vol. 2", href: "../movies/guardians_of_the_galaxy_vol_2_movie.html", genre: "scifi", poster: "images/posters/guardians_of_the_galaxy_vol_2.jpg", discover: 2 , background: "images/backgrounds/guardians_of_the_galaxy_vol_2_backg.jpg"},
     { title: "Charmed", href: "../series/charmed_series.html", genre: "fantasy", type: "series", poster: "images/posters/charmed.jpg", discover: 5 , background: "images/backgrounds/charmed_backg.jpg"},
+    { title: "Hell's Paradise", href: "../series/hell's_paradise_series.html", genre: "animation", type: "series", poster: "images/posters/hells_paradise.jpg", discover: 4 , background: "images/backgrounds/hells_paradise_backg.jpg"},
 ];
