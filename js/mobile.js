@@ -263,7 +263,9 @@ function initMobileHome() {
         type:  m.type || 'movie',                       // movies.js only sets type on series; missing = movie
         href:  m.href.replace('../', ''),               // homepage sits at root; movies.js hrefs are written for /movies/ and /series/ pages
         src:   m.poster,
-        alt:   m.title
+        alt:   m.title,
+        season:  m.season,
+        episode: m.episode
     }));
 
     /* ============================================================
@@ -326,7 +328,7 @@ function renderGrid(movies, page = 1) {
 
             <div class="mob-card-info">
                 <div class="mob-card-title mob-card-title-flex">
-                    <span class="mob-card-title-name">${movie.title}</span><span class="type-tag">| ${movie.type === 'series' ? 'Series' : 'Movie'}</span>
+                    <span class="mob-card-title-name">${movie.title}</span>${levenyTagStack(movie)}
                 </div>
 
                 <div class="mob-card-genre">
@@ -532,3 +534,44 @@ function tryInitMobileHome() {
 }
 tryInitMobileHome();
 window.addEventListener('resize', tryInitMobileHome);
+
+/* === AUTO-INJECTED: series episode label ===
+   Shows "S# | E0#" directly under the "| Series" tag. Hidden when the
+   entry has no season/episode set. */
+function levenyEpisodeLabel(m) {
+    if (m.type !== 'series' || !m.season || !m.episode) return '';
+    return `<span class="leveny-ep">S${m.season} | E${String(m.episode).padStart(2, '0')}</span>`;
+}
+
+function levenyTagStack(m) {
+    const tag = `<span class="type-tag">| ${m.type === 'series' ? 'Series' : 'Movie'}</span>`;
+    const ep = levenyEpisodeLabel(m);
+    return ep ? `<span class="leveny-tag-stack">${tag}${ep}</span>` : tag;
+}
+
+function levenyInjectLabelStyles() {
+    if (document.getElementById('leveny-label-styles')) return;
+    const st = document.createElement('style');
+    st.id = 'leveny-label-styles';
+    st.textContent = `
+        .leveny-tag-stack {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: flex-start;
+            flex: none;
+            margin-left: 6px;
+            vertical-align: baseline;
+        }
+        .leveny-tag-stack .type-tag { margin-left: 0; }
+        .leveny-ep {
+            font-size: 0.8em;
+            font-weight: 700;
+            color: #FFD600;
+            letter-spacing: 0.3px;
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+    `;
+    document.head.appendChild(st);
+}
+levenyInjectLabelStyles();

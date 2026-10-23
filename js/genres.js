@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', function () {
             year:  m.year  || '',   // add year to movies.js entries if needed
             img:   m.poster,
             link:  m.href,
+            season:  m.season,
+            episode: m.episode,
         });
     });
 
@@ -142,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function () {
         card.innerHTML = `
             <img src="${movie.img}" alt="${movie.title}" loading="lazy">
             <div class="movie-info-slider">
-                <h4>${movie.title} <span class="type-tag">| ${movie.type === 'series' ? 'Series' : 'Movie'}</span></h4>
+                <h4>${movie.title} ${levenyTagStack(movie)}</h4>
                 <p>${movie.year}</p>
             </div>
         `;
@@ -179,3 +181,44 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 });
+
+/* === AUTO-INJECTED: series episode label ===
+   Shows "S# | E0#" directly under the "| Series" tag. Hidden when the
+   entry has no season/episode set. */
+function levenyEpisodeLabel(m) {
+    if (m.type !== 'series' || !m.season || !m.episode) return '';
+    return `<span class="leveny-ep">S${m.season} | E${String(m.episode).padStart(2, '0')}</span>`;
+}
+
+function levenyTagStack(m) {
+    const tag = `<span class="type-tag">| ${m.type === 'series' ? 'Series' : 'Movie'}</span>`;
+    const ep = levenyEpisodeLabel(m);
+    return ep ? `<span class="leveny-tag-stack">${tag}${ep}</span>` : tag;
+}
+
+function levenyInjectLabelStyles() {
+    if (document.getElementById('leveny-label-styles')) return;
+    const st = document.createElement('style');
+    st.id = 'leveny-label-styles';
+    st.textContent = `
+        .leveny-tag-stack {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: flex-start;
+            flex: none;
+            margin-left: 6px;
+            vertical-align: baseline;
+        }
+        .leveny-tag-stack .type-tag { margin-left: 0; }
+        .leveny-ep {
+            font-size: 0.8em;
+            font-weight: 700;
+            color: #FFD600;
+            letter-spacing: 0.3px;
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+    `;
+    document.head.appendChild(st);
+}
+levenyInjectLabelStyles();
