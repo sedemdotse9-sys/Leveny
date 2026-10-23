@@ -20,6 +20,7 @@ tool in a subfolder instead of the repo root), just change it.
 """
 
 import os
+import re
 import json
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 
@@ -39,6 +40,64 @@ MOVIES_DIR = os.path.join(SITE_ROOT, "movies")
 SERIES_DIR = os.path.join(SITE_ROOT, "series")
 CSS_DIR = os.path.join(SITE_ROOT, "css")
 MOVIES_JS_PATH = os.path.join(SITE_ROOT, "js", "movies.js")
+
+# ----------------------------------------------------------------------
+# Keeps each series' latest season/episode on its js/movies.js entry, so
+# the "S# | E0#" label on the cards is always current.
+# ----------------------------------------------------------------------
+def _latest_of(record):
+    best = None
+    for season, episodes in record.get("seasons", {}).items():
+        for ep in episodes:
+            key = (int(season), int(ep["episode"]))
+            if best is None or key > best:
+                best = key
+    return best
+
+
+def sync_series_latest_in_movies_js(filename, record):
+    if not os.path.exists(MOVIES_JS_PATH):
+        return False
+    with open(MOVIES_JS_PATH, "r", encoding="utf-8", newline="") as fh:
+        raw = fh.read()
+    crlf = "\r\n" in raw
+    lines = raw.replace("\r\n", "\n").split("\n")
+    idx = [i for i, line in enumerate(lines) if f"series/{filename}" in line]
+    if not idx:
+        return False
+    i = idx[0]
+    latest = _latest_of(record)
+    line = re.sub(r"season: \d+, episode: \d+, ", "", lines[i])
+    if latest:
+        line = line.replace(
+            'type: "series", ',
+            f'type: "series", season: {latest[0]}, episode: {latest[1]}, ',
+            1,
+        )
+    if line != lines[i]:
+        lines[i] = line
+        text = "\n".join(lines)
+        if crlf:
+            text = text.replace("\n", "\r\n")
+        with open(MOVIES_JS_PATH, "w", encoding="utf-8", newline="") as fh:
+            fh.write(text)
+    return True
+
+
+def sync_all_series_latest():
+    """Brings every series entry in movies.js up to date from its page."""
+    if not os.path.isdir(SERIES_DIR):
+        return
+    for name in sorted(os.listdir(SERIES_DIR)):
+        if not name.endswith("_series.html"):
+            continue
+        try:
+            with open(os.path.join(SERIES_DIR, name), "r", encoding="utf-8") as fh:
+                record = parse_series_data(fh.read())
+        except Exception:
+            continue
+        if record and record.get("seasons"):
+            sync_series_latest_in_movies_js(name, record)
 
 app = Flask(__name__)
 app.secret_key = "leveny-local-tool"  # local use only
@@ -265,7 +324,7 @@ def generate_series():
     path, filename, exists = find_series_file(SERIES_DIR, title)
 
     if exists:
-        # -------- Adding episodes to an existing series --------
+        # -------- Adding episodes to an existing series (or editing some) --------
         with open(path, "r", encoding="utf-8") as fh:
             existing_html = fh.read()
 
@@ -280,31 +339,47 @@ def generate_series():
 
         season_key = str(int(season))
 
-        # If this save comes from "edit an existing episode", the form
-        # tells us which season/episode was loaded. Season, episode
-        # number, title and link may all have been changed, so drop the
-        # original entry first (otherwise a renumbered episode would
-        # appear twice).
-        orig_season = f.get("edit_original_season", "").strip()
-        orig_episode = f.get("edit_original_episode", "").strip()
-        editing = orig_season.isdigit() and orig_episode.isdigit()
+        # Episodes being edited. The form sends every loaded episode as
+        # {"season", "episode"} in edit_originals_json. A single edit may
+        # still send edit_original_season / edit_original_episode.
+        originals = []
+        raw_originals = f.get("edit_originals_json", "").strip()
+        if raw_originals:
+            try:
+                for o in json.loads(raw_originals):
+                    s = str(o.get("season", "")).strip()
+                    e = str(o.get("episode", "")).strip()
+                    if s.isdigit() and e.isdigit():
+                        originals.append((str(int(s)), int(e)))
+            except Exception:
+                flash("Edit data was malformed, so nothing was changed.", "error")
+                return redirect(url_for("index", mode="series"))
+        else:
+            orig_season = f.get("edit_original_season", "").strip()
+            orig_episode = f.get("edit_original_episode", "").strip()
+            if orig_season.isdigit() and orig_episode.isdigit():
+                originals.append((str(int(orig_season)), int(orig_episode)))
+        editing = bool(originals)
 
         if editing:
-            new_ep = episodes[0]["episode"]
-            moved = (season_key != str(int(orig_season))) or (new_ep != int(orig_episode))
-            if moved:
-                clash = any(
-                    int(e["episode"]) == new_ep
-                    for e in record["seasons"].get(season_key, [])
+            # Take the originals out first, so renumbered or moved episodes
+            # don't end up listed twice.
+            for o_season, o_episode in originals:
+                remove_series_episode(record, o_season, o_episode)
+
+            # Refuse if a new number would land on an episode that isn't part
+            # of this edit. Nothing has been written yet, so nothing changes.
+            new_numbers = sorted({int(ep["episode"]) for ep in episodes})
+            taken = {int(e["episode"]) for e in record["seasons"].get(season_key, [])}
+            clashes = [n for n in new_numbers if n in taken]
+            if clashes:
+                flash(
+                    f"Season {season_key} already has episode(s) "
+                    f"{', '.join(str(n) for n in clashes)} that aren't part of this "
+                    f"edit, so nothing was changed. Pick different numbers.",
+                    "error",
                 )
-                if clash:
-                    flash(
-                        f"Season {season_key} Episode {new_ep} already exists — nothing was "
-                        f"changed. Pick a different number, or edit that episode instead.",
-                        "error",
-                    )
-                    return redirect(url_for("index", mode="series"))
-            remove_series_episode(record, orig_season, orig_episode)
+                return redirect(url_for("index", mode="series"))
 
         # The show's IMDb ID is fixed once the series exists: every episode
         # added or edited uses it, whatever the form sent.
@@ -320,8 +395,13 @@ def generate_series():
         with open(path, "w", encoding="utf-8") as fh:
             fh.write(html_content)
 
+        sync_series_latest_in_movies_js(filename, record)
+
         if editing:
-            flash(f'Updated Season {season_key} Episode {episodes[0]["episode"]} of "{title}"!', "success")
+            if len(episodes) == 1:
+                flash(f'Updated Season {season_key} Episode {episodes[0]["episode"]} of "{title}"!', "success")
+            else:
+                flash(f'Updated {len(episodes)} episodes in Season {season_key} of "{title}"!', "success")
         else:
             flash(f'Added {len(episodes)} episode(s) to Season {season_key} of "{title}"!', "success")
             # New episodes = "updated": send the series back to the top of
@@ -407,6 +487,7 @@ def generate_series():
 
     try:
         append_to_movies_js(MOVIES_JS_PATH, entry_line)
+        sync_series_latest_in_movies_js(filename, {"seasons": data["seasons"]})
         js_ok = True
     except Exception as e:
         js_ok = False
@@ -423,4 +504,5 @@ def generate_series():
 
 
 if __name__ == "__main__":
+    sync_all_series_latest()
     app.run(debug=True)

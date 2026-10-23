@@ -47,6 +47,26 @@ if (__isMobileViewport()) {
             return newestFirst;
         }
 
+        /* Build from movies.js when it's loaded (carries season/episode for series) */
+        if (typeof LEVENY_MOVIES !== 'undefined') {
+            const fromData = {};
+            LEVENY_MOVIES.slice().reverse().forEach(m => {
+                const genre = (m.genre || '').toLowerCase();
+                if (!genre) return;
+                if (!fromData[genre]) fromData[genre] = [];
+                fromData[genre].push({
+                    title:   m.title,
+                    type:    m.type || 'movie',
+                    year:    '',
+                    img:     new URL(m.poster, window.location.href).href,
+                    link:    new URL(m.href.replace(/^\.\.\//, ''), window.location.href).href,
+                    season:  m.season,
+                    episode: m.episode,
+                });
+            });
+            return fromData;
+        }
+
         /* Otherwise build it from the DOM (index.html path) */
         const map = {};
         document.querySelectorAll('.slide .movie-item').forEach(item => {
@@ -161,7 +181,7 @@ if (__isMobileViewport()) {
                 a.innerHTML = `
                     <img class="mob-card-img" src="${movie.img}" alt="${movie.title}" loading="lazy">
                     <div class="mob-card-info">
-                        <div class="mob-card-title mob-card-title-flex"><span class="mob-card-title-name">${movie.title}</span><span class="type-tag">| ${movie.type === 'series' ? 'Series' : 'Movie'}</span></div>
+                        <div class="mob-card-title mob-card-title-flex"><span class="mob-card-title-name">${movie.title}</span>${levenyTagStack(movie)}</div>
                         <div class="mob-card-genre">${GENRE_LABELS[activeGenre] || activeGenre}</div>
                     </div>`;
                 genreGrid.appendChild(a);
@@ -222,3 +242,44 @@ if (__isMobileViewport()) {
         hookGenreItems();
     }
 }
+
+/* === AUTO-INJECTED: series episode label ===
+   Shows "S# | E0#" directly under the "| Series" tag. Hidden when the
+   entry has no season/episode set. */
+function levenyEpisodeLabel(m) {
+    if (m.type !== 'series' || !m.season || !m.episode) return '';
+    return `<span class="leveny-ep">S${m.season} | E${String(m.episode).padStart(2, '0')}</span>`;
+}
+
+function levenyTagStack(m) {
+    const tag = `<span class="type-tag">| ${m.type === 'series' ? 'Series' : 'Movie'}</span>`;
+    const ep = levenyEpisodeLabel(m);
+    return ep ? `<span class="leveny-tag-stack">${tag}${ep}</span>` : tag;
+}
+
+function levenyInjectLabelStyles() {
+    if (document.getElementById('leveny-label-styles')) return;
+    const st = document.createElement('style');
+    st.id = 'leveny-label-styles';
+    st.textContent = `
+        .leveny-tag-stack {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: flex-start;
+            flex: none;
+            margin-left: 6px;
+            vertical-align: baseline;
+        }
+        .leveny-tag-stack .type-tag { margin-left: 0; }
+        .leveny-ep {
+            font-size: 0.8em;
+            font-weight: 700;
+            color: #FFD600;
+            letter-spacing: 0.3px;
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+    `;
+    document.head.appendChild(st);
+}
+levenyInjectLabelStyles();
