@@ -326,4 +326,5 @@ const LEVENY_MOVIES = [
     { title: "Betty’s Revenge", href: "../movies/betty_s_revenge_movie.html", genre: "horror", poster: "images/posters/betty_s_revenge.jpg", discover: 6 , background: "images/backgrounds/betty_s_revenge_backg.jpg"},
     { title: "Shaun the Sheep: The Beast of Mossy Bottom", href: "../movies/shaun_the_sheep_the_beast_of_mossy_bottom_movie.html", genre: "animation", poster: "images/posters/shaun_the_sheep_the_beast_of_mossy_bottom.jpg", discover: 7 , background: "images/backgrounds/shaun_the_sheep_the_beast_of_mossy_bottom_backg.jpg"},
     { title: "The Exit State", href: "../movies/the_exit_state_movie.html", genre: "thriller", poster: "images/posters/the_exit_state.jpg", discover: 4 , background: "images/backgrounds/the_exit_state_backg.jpg"},
+    { title: "Money Heist", href: "../series/money_heist_series.html", genre: "thriller", type: "series", season: 1, episode: 12, poster: "images/posters/money_heist.jpg", discover: 4 , background: "images/backgrounds/money_heist_backg.jpg"},
 ];
