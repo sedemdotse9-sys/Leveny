@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // ── 2. CONSTANTS ────────────────────────────────────────────────
-    const MOVIES_PER_ROW  = 6;
+    const MOVIES_PER_ROW  = 5;
     const ROWS_PER_PAGE   = 4;
     const MOVIES_PER_PAGE = MOVIES_PER_ROW * ROWS_PER_PAGE; // 24
 

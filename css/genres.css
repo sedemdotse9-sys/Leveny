@@ -334,15 +334,18 @@ body:has(.genres-container) .nav_bar {
     background: rgba(10, 10, 10, 0.55);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
-    padding-top: 12px;
+    padding-top: 20px;
     padding-bottom: 12px;
     margin-top: -20px;
+    position: relative;
+    top: 8px;
 }
 
 body:has(.genres-container) header hr {
     /* tweak to taste */
     border-color: rgba(255, 255, 255, 0.15);
-    margin-top: 0px;
+    position: relative;
+    top: -3px;
 }
 
 body:has(.genres-container) .search-box { 
@@ -485,4 +488,29 @@ body:has(.genres-container) .search-box {
         height: 35px;
         font-size: 14px;
     }
+}
+
+/* === AUTO-INJECTED: desktop poster size (matches discover) ===
+   Desktop only (1025px and wider). Same poster size and row layout as
+   the discover page: max 240px wide, 2:2.5 image ratio, 5 per row with
+   a 30px gap. Tablet and phone layouts above are unchanged. */
+@media screen and (min-width: 1025px) {
+  .movie-slider-container {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 240px));
+    justify-content: center;
+    gap: 30px;
+  }
+
+  .movie-card-slider {
+    width: 100%;
+    max-width: 240px;
+    justify-self: center;
+  }
+
+  .movie-card-slider img {
+    height: auto;
+    aspect-ratio: 2 / 2.5;
+    object-fit: cover;
+  }
 }
