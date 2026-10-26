@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
             link:  m.href,
             season:  m.season,
             episode: m.episode,
+            accessible: m.accessible,
         });
     });
 
@@ -148,6 +149,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 <p>${movie.year}</p>
             </div>
         `;
+        if (levenyIsLocked(movie)) {
+            card.classList.add('leveny-locked');
+            card.removeAttribute('href');
+        }
         return card;
     }
 
@@ -222,3 +227,26 @@ function levenyInjectLabelStyles() {
     document.head.appendChild(st);
 }
 levenyInjectLabelStyles();
+
+/* === AUTO-INJECTED: series lock ===
+   A series with accessible: false in movies.js shows greyed out and
+   can't be clicked. Movies and series without the setting are unchanged. */
+function levenyIsLocked(m) {
+    return m.type === 'series' && m.accessible === false;
+}
+
+function levenyInjectLockStyles() {
+    if (document.getElementById('leveny-lock-styles')) return;
+    const st = document.createElement('style');
+    st.id = 'leveny-lock-styles';
+    st.textContent = `
+        .leveny-locked {
+            filter: grayscale(100%) brightness(0.6);
+            opacity: 0.55;
+            pointer-events: none;
+            cursor: not-allowed;
+        }
+    `;
+    document.head.appendChild(st);
+}
+levenyInjectLockStyles();

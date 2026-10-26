@@ -62,6 +62,7 @@ if (__isMobileViewport()) {
                     link:    new URL(m.href.replace(/^\.\.\//, ''), window.location.href).href,
                     season:  m.season,
                     episode: m.episode,
+                    accessible: m.accessible,
                 });
             });
             return fromData;
@@ -184,6 +185,10 @@ if (__isMobileViewport()) {
                         <div class="mob-card-title mob-card-title-flex"><span class="mob-card-title-name">${movie.title}</span>${levenyTagStack(movie)}</div>
                         <div class="mob-card-genre">${GENRE_LABELS[activeGenre] || activeGenre}</div>
                     </div>`;
+                if (levenyIsLocked(movie)) {
+                    a.classList.add('leveny-locked');
+                    a.removeAttribute('href');
+                }
                 genreGrid.appendChild(a);
             });
         }
@@ -283,3 +288,26 @@ function levenyInjectLabelStyles() {
     document.head.appendChild(st);
 }
 levenyInjectLabelStyles();
+
+/* === AUTO-INJECTED: series lock ===
+   A series with accessible: false in movies.js shows greyed out and
+   can't be clicked. Movies and series without the setting are unchanged. */
+function levenyIsLocked(m) {
+    return m.type === 'series' && m.accessible === false;
+}
+
+function levenyInjectLockStyles() {
+    if (document.getElementById('leveny-lock-styles')) return;
+    const st = document.createElement('style');
+    st.id = 'leveny-lock-styles';
+    st.textContent = `
+        .leveny-locked {
+            filter: grayscale(100%) brightness(0.6);
+            opacity: 0.55;
+            pointer-events: none;
+            cursor: not-allowed;
+        }
+    `;
+    document.head.appendChild(st);
+}
+levenyInjectLockStyles();
