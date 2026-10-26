@@ -1370,3 +1370,47 @@ img {
     gap: clamp(14px, 1.1vw, 26px);
   }
 }
+
+/* === AUTO-INJECTED: homepage footer pinned (desktop) ===
+   Desktop only (1025px and wider). The page never scrolls: the slides
+   fill the window, a strip is kept clear at the bottom, and the footer
+   sits in that strip. Mobile and tablet layouts are unchanged. */
+@media screen and (min-width: 1025px) {
+  html,
+  body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .slider-wrapper {
+    height: 100vh;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .slider-container {
+    height: 100vh;
+    min-height: 0;
+  }
+
+  .slide {
+    height: 100vh;
+    min-height: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding-bottom: 56px; /* room kept clear for the footer bar */
+  }
+
+  .slider-wrapper footer.copyright {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    transform: none;
+    margin: 0;
+    padding: 12px 16px;
+    background: transparent;
+    z-index: 3000;
+  }
+}
