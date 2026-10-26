@@ -684,7 +684,7 @@ header hr {
   .movie-list-7 {
     margin-left: clamp(40px, 6vw, 105px);
     gap: clamp(16px, 1.8vw, 27px);
-    margin-top: clamp(50px, 70vw, 50px);
+    margin-top: clamp(30px, 30vw, 30px);
   }
 
   .movie-item img {
