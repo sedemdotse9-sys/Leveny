@@ -1371,13 +1371,12 @@ img {
   }
 }
 
-/* === AUTO-INJECTED: homepage footer pinned (desktop) ===
-   Desktop only (1025px and wider). The page never scrolls: the slides
-   fill the window, a strip is kept clear at the bottom, and the footer
-   sits in that strip. Mobile and tablet layouts are unchanged. */
+/* === AUTO-INJECTED: homepage footer pinned (desktop, homepage only) ===
+   Desktop only (1025px and wider). Only the homepage (the page with the
+   slider) stops scrolling. Every other page scrolls normally. */
 @media screen and (min-width: 1025px) {
-  html,
-  body {
+  html:has(.slider-wrapper),
+  body:has(.slider-wrapper) {
     height: 100%;
     overflow: hidden;
   }
