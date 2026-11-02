@@ -326,7 +326,7 @@ const LEVENY_MOVIES = [
     { title: "Betty’s Revenge", href: "../movies/betty_s_revenge_movie.html", genre: "horror", poster: "images/posters/betty_s_revenge.jpg", discover: 6 , background: "images/backgrounds/betty_s_revenge_backg.jpg"},
     { title: "Shaun the Sheep: The Beast of Mossy Bottom", href: "../movies/shaun_the_sheep_the_beast_of_mossy_bottom_movie.html", genre: "animation", poster: "images/posters/shaun_the_sheep_the_beast_of_mossy_bottom.jpg", discover: 7 , background: "images/backgrounds/shaun_the_sheep_the_beast_of_mossy_bottom_backg.jpg"},
     { title: "The Exit State", href: "../movies/the_exit_state_movie.html", genre: "thriller", poster: "images/posters/the_exit_state.jpg", discover: 4 , background: "images/backgrounds/the_exit_state_backg.jpg"},
-    { title: "Money Heist", href: "../series/money_heist_series.html", genre: "thriller", type: "series", season: 2, episode: 9, accessible: true, poster: "images/posters/money_heist.jpg", discover: 4 , background: "images/backgrounds/money_heist_backg.jpg"},
+    { title: "Money Heist", href: "../series/money_heist_series.html", genre: "thriller", type: "series", season: 2, episode: 9, accessible: false, poster: "images/posters/money_heist.jpg", discover: 4 , background: "images/backgrounds/money_heist_backg.jpg"},
     { title: "Written In Blood", href: "../movies/written_in_blood_movie.html", genre: "thriller", poster: "images/posters/written_in_blood.jpg", discover: 5 , background: "images/backgrounds/written_in_blood_backg.jpg"},
     { title: "Geo-Storm", href: "../movies/geo_storm_movie.html", genre: "scifi", poster: "images/posters/geo_storm.jpg", discover: 3 , background: "images/backgrounds/geo_storm_backg.jpg"},
     { title: "The Cycle", href: "../movies/the_cycle_movie.html", genre: "horror", poster: "images/posters/the_cycle.jpg", discover: 5 , background: "images/backgrounds/the_cycle_backg.jpg"},
@@ -344,4 +344,6 @@ const LEVENY_MOVIES = [
     { title: "Ever After", href: "../movies/ever_after_movie.html", genre: "horror", poster: "images/posters/ever_after.jpg", discover: 4 , background: "images/backgrounds/ever_after_backg.jpg"},
     { title: "Never After Dark", href: "../movies/never_after_dark_movie.html", genre: "thriller", poster: "images/posters/never_after_dark.jpg", discover: 5 , background: "images/backgrounds/never_after_dark_backg.jpg"},
     { title: "You, Me, Us", href: "../movies/you_me_us_movie.html", genre: "romance", poster: "images/posters/you_me_us.jpg", discover: 1 , background: "images/backgrounds/you_me_us_backg.jpg"},
+    { title: "Apocalypse Z: New World", href: "../movies/apocalypse_z_new_world_movie.html", genre: "thriller", poster: "images/posters/apocalypse_z_new_world.jpg", discover: 5 , background: "images/backgrounds/apocalypse_z_new_world_backg.jpg"},
+    { title: "Collision Course", href: "../movies/collision_course_movie.html", genre: "thriller", poster: "images/posters/collision_course.jpg", discover: 2 , background: "images/backgrounds/collision_course_backg.jpg"},
 ];
