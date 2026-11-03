@@ -346,4 +346,5 @@ const LEVENY_MOVIES = [
     { title: "You, Me, Us", href: "../movies/you_me_us_movie.html", genre: "romance", poster: "images/posters/you_me_us.jpg", discover: 1 , background: "images/backgrounds/you_me_us_backg.jpg"},
     { title: "Apocalypse Z: New World", href: "../movies/apocalypse_z_new_world_movie.html", genre: "thriller", poster: "images/posters/apocalypse_z_new_world.jpg", discover: 5 , background: "images/backgrounds/apocalypse_z_new_world_backg.jpg"},
     { title: "Collision Course", href: "../movies/collision_course_movie.html", genre: "thriller", poster: "images/posters/collision_course.jpg", discover: 2 , background: "images/backgrounds/collision_course_backg.jpg"},
+    { title: "Resident Evil", href: "../movies/resident_evil_movie.html", genre: "horror", poster: "images/posters/resident_evil.jpg", discover: 5 , background: "images/backgrounds/resident_evil_backg.jpg"},
 ];
