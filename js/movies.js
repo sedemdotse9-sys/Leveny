@@ -347,4 +347,6 @@ const LEVENY_MOVIES = [
     { title: "Apocalypse Z: New World", href: "../movies/apocalypse_z_new_world_movie.html", genre: "thriller", poster: "images/posters/apocalypse_z_new_world.jpg", discover: 5 , background: "images/backgrounds/apocalypse_z_new_world_backg.jpg"},
     { title: "Collision Course", href: "../movies/collision_course_movie.html", genre: "thriller", poster: "images/posters/collision_course.jpg", discover: 2 , background: "images/backgrounds/collision_course_backg.jpg"},
     { title: "Resident Evil", href: "../movies/resident_evil_movie.html", genre: "horror", poster: "images/posters/resident_evil.jpg", discover: 5 , background: "images/backgrounds/resident_evil_backg.jpg"},
+    { title: "Primetime", href: "../movies/primetime_movie.html", genre: "thriller", poster: "images/posters/primetime.jpg", discover: 1 , background: "images/backgrounds/primetime_backg.jpg"},
+    { title: "Model Citizen", href: "../movies/model_citizen_movie.html", genre: "scifi", poster: "images/posters/model_citizen.jpg", discover: 1 , background: "images/backgrounds/model_citizen_backg.jpg"},
 ];
